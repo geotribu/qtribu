@@ -227,7 +227,7 @@ class NetworkAccessManager(QObject):
         for k, v in list(headers.items()):
             self.msg_log("%s: %s" % (k, v))
         if method.lower() in ["post", "put"]:
-            if isinstance(body, file):
+            if hasattr(body, "read"):
                 body = body.read()
             self.reply = func(req, body)
         else:
