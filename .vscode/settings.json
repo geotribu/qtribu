@@ -1,0 +1,24 @@
+{
+    "python.pythonPath": ".venv/bin/python",
+    // Editor
+    "editor.rulers": [
+        88
+    ],
+    "editor.wordWrapColumn": 88,
+    "files.associations": {
+        "./requirements/*.txt": "pip-requirements"
+    },
+    // Formatter
+    "python.formatting.provider": "black",
+    "python.formatting.blackArgs": [
+        "--target-version=py38"
+    ],
+    // Linter
+    "python.linting.enabled": true,
+    "python.linting.flake8Enabled": true,
+    "python.linting.flake8Args": [
+        "--config=setup.cfg",
+        "--verbose"
+    ],
+    "python.linting.pylintEnabled": false
+}
