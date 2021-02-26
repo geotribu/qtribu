@@ -21,6 +21,8 @@
         "--verbose"
     ],
     "python.linting.pylintEnabled": false,
+    // Git
+    "git.enableCommitSigning": true,
     // Extensions
     "autoDocstring.docstringFormat": "sphinx"
 }
