@@ -20,5 +20,7 @@
         "--config=setup.cfg",
         "--verbose"
     ],
-    "python.linting.pylintEnabled": false
+    "python.linting.pylintEnabled": false,
+    // Extensions
+    "autoDocstring.docstringFormat": "sphinx"
 }
