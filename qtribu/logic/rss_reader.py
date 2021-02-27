@@ -17,7 +17,7 @@ from typing import Tuple
 
 # project
 from qtribu.logic.custom_datatypes import RssItem
-from qtribu.toolbelt import PluginLogHandler
+from qtribu.toolbelt import PlgLogger
 
 # ############################################################################
 # ########## Globals ###############
@@ -37,7 +37,7 @@ class RssMiniReader:
 
     def __init__(self):
         """Minimalist RSS feed parser."""
-        self.log = PluginLogHandler().log
+        self.log = PlgLogger().log
 
     def read_feed(self, in_xml: str) -> Tuple[RssItem]:
         """Parse eth feed XML as string and store items into an ordered tuple of tuples/

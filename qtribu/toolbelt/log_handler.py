@@ -15,7 +15,7 @@ from qtribu.__about__ import __title__
 # ##################################
 
 
-class PluginLogHandler(logging.Handler):
+class PlgLogger(logging.Handler):
     def __init__(self):
         """Python logging handler supercharged with QGIS useful methods."""
         pass

@@ -9,6 +9,7 @@
     Date                 : August 2016
     Copyright            : (C) 2016 Boundless, http://boundlessgeo.com
     Email                : apasotti at boundlessgeo dot com
+    Notes                : Enhanced in 2021 by Julien M. for Oslandia and Geotribu
 ***************************************************************************
 *                                                                         *
 *   This program is free software; you can redistribute it and/or modify  *
@@ -18,18 +19,38 @@
 *                                                                         *
 ***************************************************************************
 """
+
+# ############################################################################
+# ########## Imports ###############
+# ##################################
+
+# Standard library
+import logging
 import re
 import urllib.error
 import urllib.parse
 import urllib.request
 from builtins import str
 
+# PyQGIS
 from PyQt5.QtCore import QEventLoop, QObject, QUrl, pyqtSignal
 from PyQt5.QtNetwork import QNetworkReply, QNetworkRequest
 from qgis.core import QgsAuthManager, QgsMessageLog, QgsNetworkAccessManager
 
-# FIXME: ignored
+# project
+from qtribu.toolbelt import PlgLogger
+
+# ############################################################################
+# ########## Globals ###############
+# ##################################
+
 DEFAULT_MAX_REDIRECTS = 4
+logger = logging.getLogger(__name__)
+plg_logger = PlgLogger()
+
+# ############################################################################
+# ########## Exceptions ############
+# ##################################
 
 
 class RequestsException(Exception):
@@ -46,6 +67,11 @@ class RequestsExceptionConnectionError(RequestsException):
 
 class RequestsExceptionUserAbort(RequestsException):
     pass
+
+
+# ############################################################################
+# ########## Classes ###############
+# ##################################
 
 
 class Map(dict):
