@@ -4,7 +4,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 
 <!--
 
-## Unreleased [{version_tag}](https://github.com/opengisch/qgis-plugin-ci/releases/tag/{version_tag})
+Unreleased
+
+## [{version_tag}](https://github.com/geotribu/qtribu/releases/tag/{version_tag}) - YYYY-DD-mm
 
 ### Added
 
@@ -14,8 +16,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 
 -->
 
-## 0.1.0 - 01/03/2021
+## [0.1.0] - 2021-02-28
 
 - première version !
 - structure du dépôt et outillage de base (modularité, traduction, linter, documentation, packaging...)
-- fonctionnellement, le plugin consiste en un bouton qui permet d'afficher le dernier contenu publié dans le navigateur intégré
+- fonctionnellement, le plugin consiste en un bouton qui télécharge le flux RSS et affiche le dernier contenu publié dans le navigateur intégré à QGIS

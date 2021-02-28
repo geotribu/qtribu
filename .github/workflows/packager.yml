@@ -29,7 +29,7 @@ jobs:
             ${{ runner.os }}-pip-
 
       - name: Install system requirements
-        run: sudo apt-get install qt5-default qttools5-dev-tools
+        run: sudo apt install qt5-default qttools5-dev-tools
 
       - name: Install project requirements
         run: |
