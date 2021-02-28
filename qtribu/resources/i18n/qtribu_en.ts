@@ -3,27 +3,17 @@
 <context>
     <name>GeotribuPlugin</name>
     <message>
-        <location filename="../../plugin_main.py" line="60"/>
+        <location filename="../../plugin_main.py" line="59"/>
         <source>Request succeeded!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="74"/>
+        <location filename="../../plugin_main.py" line="73"/>
         <source>Last article from Geotribu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="79"/>
-        <source>Last article from Geotribu loaded and displayed.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../plugin_main.py" line="85"/>
-        <source>Houston,we&apos;ve got a problem: {}</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../plugin_main.py" line="40"/>
+        <location filename="../../plugin_main.py" line="39"/>
         <source>Newest article</source>
         <translation type="unfinished"></translation>
     </message>
