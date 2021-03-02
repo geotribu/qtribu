@@ -16,9 +16,7 @@ from qtribu.__about__ import __title__
 
 
 class PlgLogger(logging.Handler):
-    def __init__(self):
-        """Python logging handler supercharged with QGIS useful methods."""
-        pass
+    """Python logging handler supercharged with QGIS useful methods."""
 
     @staticmethod
     def log(

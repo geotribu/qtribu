@@ -2,6 +2,8 @@
 
 # standard library
 import logging
+from functools import lru_cache
+from inspect import currentframe
 from pathlib import Path
 from string import Template
 
@@ -27,6 +29,15 @@ logger = logging.getLogger(__name__)
 
 
 class PlgTranslator:
+    """Helper module to manage plugin translations.
+
+    :param qm_search_start_path: folder where to search fro QM files. \
+    Defaults to DIR_PLUGIN_ROOT
+    :type qm_search_start_path: Path, optional
+    :param tpl_filename: pattern of translations filenames. \
+    Defaults to Template(f"{__title__.lower()}_.qm")
+    :type tpl_filename: str, optional
+    """
 
     AVAILABLE_TRANSLATIONS: tuple = None
 
@@ -35,7 +46,8 @@ class PlgTranslator:
         qm_search_start_path: Path = DIR_PLUGIN_ROOT,
         tpl_filename: str = Template(f"{__title__.lower()}_$locale.qm"),
     ):
-        """Helper module to manage plugin translations."""
+        """Initialize method."""
+
         self.log = PlgLogger().log
 
         # list .qm files
@@ -62,6 +74,11 @@ class PlgTranslator:
             logger.info(info_msg)
 
     def get_translator(self) -> QTranslator:
+        """Load translation file into QTranslator.
+
+        :return: translator instance
+        :rtype: QTranslator
+        """
         if self.AVAILABLE_TRANSLATIONS is None:
             warn_msg = self.tr(
                 text="No translation found among plugin files and folders.",
@@ -75,9 +92,26 @@ class PlgTranslator:
             return None
 
         # load translation
-        translator = QTranslator()
-        translator.load(str(self.qm_filepath.resolve()))
-        return translator
+        self.translator = QTranslator()
+        self.translator.load(str(self.qm_filepath.resolve()))
+        return self.translator
 
-    def tr(self, text: str = None, context: str = "@default"):
+    @lru_cache
+    def tr(self, text: str, context: str = None) -> str:
+        """Translate a text using the installed translator.
+
+        :param text: text to translate, defaults to None.
+        :type text: str
+        :param context: where the text is located. In Python code, it's the class name. \
+        If None, it tries to automatically retrieve class name. Defaults to None.
+        :type context: str, optional
+
+        :return: translated text.
+        :rtype: str
+        """
+        if not context:
+            frame = currentframe().f_back
+            if "self" in frame.f_locals:
+                context = type(frame.f_locals["self"]).__name__
+
         return QApplication.translate(context, text)

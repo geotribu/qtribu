@@ -10,12 +10,7 @@ from qgis.PyQt.QtWidgets import QAction, QVBoxLayout, QWidget
 # project
 from qtribu.__about__ import DIR_PLUGIN_ROOT
 from qtribu.logic import RssMiniReader
-from qtribu.toolbelt import (
-    NetworkAccessManager,
-    PlgLogger,
-    PlgTranslator,
-    RequestsException,
-)
+from qtribu.toolbelt import NetworkRequestsManager, PlgLogger, PlgTranslator
 
 
 class GeotribuPlugin:
@@ -25,14 +20,12 @@ class GeotribuPlugin:
 
         # translation
         plg_translation_mngr = PlgTranslator()
-        self.translator = plg_translation_mngr.get_translator()
-        # self.translator = QTranslator()
-        # loc_path = str(DIR_PLUGIN_ROOT / "resources/i18n/qtribu_fr.qm")
-        # self.log(loc_path)
-        # self.translator.load(str(DIR_PLUGIN_ROOT / "resources/i18n/qtribu_fr.qm"))
-        QCoreApplication.installTranslator(self.translator)
+        translator = plg_translation_mngr.get_translator()
+        if translator:
+            QCoreApplication.installTranslator(translator)
         self.tr = plg_translation_mngr.tr
 
+        # sub-modules
         self.rss_rdr = RssMiniReader()
 
     def initGui(self):
@@ -50,14 +43,9 @@ class GeotribuPlugin:
         del self.action
 
     def run(self):
-        nam = NetworkAccessManager(None)
         try:
-            (response, content) = nam.request(
-                "https://static.geotribu.fr/feed_rss_created.xml"
-            )
-
-            self.log(message=self.tr("Request succeeded!"), log_level=3)
-            self.rss_rdr.read_feed(content)
+            qntwk = NetworkRequestsManager(tr=self.tr)
+            self.rss_rdr.read_feed(qntwk.get_from_source())
 
             if not self.rss_rdr.latest_item:
                 raise Exception("No item found")
@@ -70,9 +58,7 @@ class GeotribuPlugin:
             web.load(last_page)
             vlayout.addWidget(web)
             self.wdg_web.setLayout(vlayout)
-            self.wdg_web.setWindowTitle(
-                self.tr("Last article from Geotribu", context="GeotribuPlugin")
-            )
+            self.wdg_web.setWindowTitle(self.tr("Last article from Geotribu"))
             self.wdg_web.setWindowModality(Qt.WindowModal)
             self.wdg_web.show()
             self.wdg_web.resize(800, 600)
@@ -85,13 +71,12 @@ class GeotribuPlugin:
                 log_level=3,
                 push=False,
             )
-        except RequestsException as err:
+        except Exception as err:
             self.log(
                 message=self.tr(
-                    text="Houston,we've got a problem: {}".format(err),
+                    text="Houston, we've got a problem: {}".format(err),
                     context="GeotribuPlugin",
                 ),
                 log_level=2,
                 push=True,
             )
-            # Handle exception
