@@ -1,6 +1,4 @@
-# Development
-
-## Environment setup
+# Environnement de développement
 
 Typically on Ubuntu:
 

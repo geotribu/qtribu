@@ -52,11 +52,13 @@ extensions = [
     "sphinx.ext.viewcode",
     # 3rd party
     "myst_parser",
+    "sphinx_qt_documentation",
     # "sphinx_autodoc_typehints",
     "sphinx_copybutton",
     "sphinx_rtd_theme",
 ]
 
+qt_documentation = "PyQt5"
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
@@ -71,7 +73,7 @@ master_doc = "index"
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = "en"
+language = "fr"
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -86,8 +88,8 @@ pygments_style = "sphinx"
 
 # -- Theme
 
-# html_favicon = "../qtribu/resources/images/icon.png"
-# html_logo = "../qtribu/resources/images/icon.png"
+html_favicon = "../qtribu/resources/images/logo_geotribu.png"
+html_logo = "../qtribu/resources/images/logo_geotribu.png"
 # html_static_path = ["_static"]
 html_theme = "sphinx_rtd_theme"
 html_theme_options = {
@@ -122,7 +124,11 @@ myst_enable_extensions = [
 # -- EXTENSIONS --------------------------------------------------------
 
 # Configuration for intersphinx (refer to others docs).
-intersphinx_mapping = {"python": ("https://docs.python.org/3/", None)}
+intersphinx_mapping = {
+    "PyQt5": ("https://www.riverbankcomputing.com/static/Docs/PyQt5", None),
+    "python": ("https://docs.python.org/3/", None),
+    "qgis": ("https://qgis.org/pyqgis/master/", None),
+}
 
 
 # -- Options for Sphinx API doc ----------------------------------------------

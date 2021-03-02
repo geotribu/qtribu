@@ -1,12 +1,12 @@
 # {{ title }} - Documentation
 
-> **Author and contributors:** {{ author }}
-> **Version:** {{ version }}
+> **Author and contributors:** {{ author }}  
+> **Version:** {{ version }}  
 > **Source code:** {{ repo_url }}
 
 ```{toctree}
 ---
-caption: Contribution guide
+caption: Guide de contribution
 maxdepth: 1
 ---
 Code documentation <_apidoc/modules>
