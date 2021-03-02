@@ -58,3 +58,4 @@ jobs:
         release ${{ github.ref }}
         --github-token ${{ secrets.GITHUB_TOKEN }}
         --allow-uncommitted-changes
+        --create-plugin-repo
