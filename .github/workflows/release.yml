@@ -39,7 +39,7 @@ jobs:
     - name: Compile translations
       run: lrelease qtribu/resources/i18n/*.ts
 
-    - name : Get current changelog for ${VERSION}
+    - name : Get current changelog for ${GITHUB_REF/refs\/tags\//}
       run: qgis-plugin-ci changelog ${GITHUB_REF/refs\/tags\//} >> release.md
 
     - name: Create GitHub Release
@@ -55,7 +55,7 @@ jobs:
     - name: Deploy plugin
       run: >-
         qgis-plugin-ci
-        release ${{ github.ref }}
+        release ${GITHUB_REF/refs\/tags\//}
         --github-token ${{ secrets.GITHUB_TOKEN }}
         --allow-uncommitted-changes
         --create-plugin-repo
