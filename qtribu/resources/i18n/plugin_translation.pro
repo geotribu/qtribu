@@ -7,5 +7,4 @@ SOURCES= ../../plugin_main.py \
     ../../toolbelt/network_manager.py \
     ../../toolbelt/translator.py
 
-TRANSLATIONS = qtribu_en.ts \
-    qtribu_fr.ts
+TRANSLATIONS = qtribu_fr.ts
