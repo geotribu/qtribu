@@ -77,6 +77,12 @@ class NetworkRequestsManager:
                 )
                 raise ConnectionError(self.ntwk_requester.errorMessage())
 
+            self.log(
+                message=self.tr("Request to {} succeeded.".format(url)),
+                log_level=3,
+                push=0,
+            )
+
             req_reply = self.ntwk_requester.reply()
             if not req_reply.rawHeader(b"Content-Type") == "application/xml":
                 raise TypeError(
