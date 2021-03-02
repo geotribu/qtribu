@@ -52,13 +52,10 @@ extensions = [
     "sphinx.ext.viewcode",
     # 3rd party
     "myst_parser",
-    "sphinx_qt_documentation",
     # "sphinx_autodoc_typehints",
     "sphinx_copybutton",
     "sphinx_rtd_theme",
 ]
-
-qt_documentation = "PyQt5"
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
