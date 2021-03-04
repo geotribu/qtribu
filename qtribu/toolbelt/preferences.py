@@ -14,6 +14,7 @@ from qgis.PyQt.QtWidgets import QHBoxLayout
 
 # package
 from qtribu.__about__ import DIR_PLUGIN_ROOT
+from qtribu.resources.gui.dlg_settings import DlgSettings
 
 # ############################################################################
 # ########## Globals ###############
@@ -49,6 +50,8 @@ class PlgOptionsFactory(QgsOptionsWidgetFactory):
 class ConfigOptionsPage(QgsOptionsPageWidget):
     def __init__(self, parent):
         super().__init__(parent)
+        dlg_settings = DlgSettings(self)
         layout = QHBoxLayout()
         layout.setContentsMargins(0, 0, 0, 0)
+        dlg_settings.setLayout(layout)
         self.setLayout(layout)
