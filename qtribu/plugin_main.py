@@ -44,6 +44,11 @@ class GeotribuPlugin:
     def initGui(self):
         """Set up plugin UI elements."""
 
+        # settings page within the QGIS preferences menu
+        self.options_factory = PlgOptionsFactory()
+        self.options_factory.setTitle(__title__)
+        self.iface.registerOptionsWidgetFactory(self.options_factory)
+
         # -- Actions
         self.action_run = QAction(
             QIcon(str(DIR_PLUGIN_ROOT / "resources/images/logo_geotribu.png")),
