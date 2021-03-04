@@ -16,6 +16,10 @@ Unreleased
 
 -->
 
+## [0.2.1] - 2021-03-04
+
+- correction d'un import d'un futur module pas encore inclus
+
 ## [0.2.0] - 2021-03-04
 
 - ajout du raccourci vers l'aide en ligne
