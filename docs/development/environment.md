@@ -13,3 +13,17 @@ python -m pip install -U -r requirements/development.txt
 # install project as editable
 python -m pip install -e .
 ```
+
+## Gestion des traductions
+
+Mise à jour des textes à traduire :
+
+```bash
+pylupdate5 -noobsolete -verbose qtribu/resources/i18n/plugin_translation.pro
+```
+
+Une fois les traductions effectuées (dans Qlinguist par exemple), les compiiler :
+
+```bash
+lrelease qtribu/resources/i18n/*.ts
+```

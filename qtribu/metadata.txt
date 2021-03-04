@@ -1,6 +1,7 @@
 [general]
 name=QTribu
 about=Garde le contact avec ta Geotribu ! Made along a tutorial, it parses the RSS feed of the website and display pages into Qt Web.
+category=Web
 description=Geotribu (https://static.geotribu.fr) content right into QGIS.
 icon=resources/images/logo_geotribu.png
 tags=geotribu,blog,rss
@@ -19,5 +20,5 @@ qgisMinimumVersion=3.16
 qgisMaximumVersion=3.99
 
 # versionnement
-version=0.1.0
+version=0.2.1
 changelog=

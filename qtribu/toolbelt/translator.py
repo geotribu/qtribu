@@ -96,7 +96,7 @@ class PlgTranslator:
         self.translator.load(str(self.qm_filepath.resolve()))
         return self.translator
 
-    @lru_cache
+    @lru_cache(maxsize=128)
     def tr(self, text: str, context: str = None) -> str:
         """Translate a text using the installed translator.
 

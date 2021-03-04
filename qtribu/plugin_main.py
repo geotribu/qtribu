@@ -1,20 +1,28 @@
 #! python3  # noqa: E265
 
 # PyQGIS
+from qgis.gui import QgisInterface
 from qgis.PyQt.Qt import QUrl
 from qgis.PyQt.QtCore import QCoreApplication, Qt
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWebKitWidgets import QWebView
 from qgis.PyQt.QtWidgets import QAction, QVBoxLayout, QWidget
+from qgis.utils import showPluginHelp
 
 # project
-from qtribu.__about__ import DIR_PLUGIN_ROOT
+from qtribu.__about__ import DIR_PLUGIN_ROOT, __title__
 from qtribu.logic import RssMiniReader
 from qtribu.toolbelt import NetworkRequestsManager, PlgLogger, PlgTranslator
 
 
 class GeotribuPlugin:
-    def __init__(self, iface):
+    def __init__(self, iface: QgisInterface):
+        """Constructor.
+
+        :param iface: An interface instance that will be passed to this class which \
+        provides the hook by which you can manipulate the QGIS application at run time.
+        :type iface: QgsInterface
+        """
         self.iface = iface
         self.log = PlgLogger().log
 
@@ -29,20 +37,56 @@ class GeotribuPlugin:
         self.rss_rdr = RssMiniReader()
 
     def initGui(self):
-        self.action = QAction(
+        """Set up plugin UI elements."""
+
+        # -- Actions
+        self.action_run = QAction(
             QIcon(str(DIR_PLUGIN_ROOT / "resources/images/logo_geotribu.png")),
             self.tr("Newest article"),
             self.iface.mainWindow(),
         )
-        self.action.setToolTip(self.tr(text="Newest article", context="GeotribuPlugin"))
-        self.action.triggered.connect(self.run)
-        self.iface.addToolBarIcon(self.action)
+        self.action_run.setToolTip(
+            self.tr(text="Newest article", context="GeotribuPlugin")
+        )
+        self.action_run.triggered.connect(self.run)
+
+        self.action_help = QAction(
+            QIcon(":/images/themes/default/mActionHelpContents.svg"),
+            self.tr("Help", context="GeotribuPlugin"),
+            self.iface.mainWindow(),
+        )
+        self.action_help.triggered.connect(
+            lambda: showPluginHelp(filename="resources/help/index")
+        )
+
+        # -- Menu
+        self.iface.addPluginToWebMenu(__title__, self.action_run)
+        self.iface.addPluginToWebMenu(__title__, self.action_help)
+
+        # -- Toolbar
+        self.iface.addToolBarIcon(self.action_run)
 
     def unload(self):
-        self.iface.removeToolBarIcon(self.action)
-        del self.action
+        """Cleans up when plugin is disabled/uninstalled."""
+        # -- Clean up menu
+        self.iface.removePluginWebMenu(__title__, self.action_help)
+        self.iface.removePluginWebMenu(__title__, self.action_run)
+
+        # -- Clean up toolbar
+        self.iface.removeToolBarIcon(self.action_run)
+
+        # -- Clean up preferences panel in QGIS settings
+        self.iface.unregisterOptionsWidgetFactory(self.options_factory)
+
+        # remove actions
+        del self.action_run
+        del self.action_help
 
     def run(self):
+        """Main process.
+
+        :raises Exception: if there is no item in the feed
+        """
         try:
             qntwk = NetworkRequestsManager(tr=self.tr)
             self.rss_rdr.read_feed(qntwk.get_from_source())
