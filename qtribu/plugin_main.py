@@ -12,7 +12,12 @@ from qgis.utils import showPluginHelp
 # project
 from qtribu.__about__ import DIR_PLUGIN_ROOT, __title__
 from qtribu.logic import RssMiniReader
-from qtribu.toolbelt import NetworkRequestsManager, PlgLogger, PlgTranslator
+from qtribu.toolbelt import (
+    NetworkRequestsManager,
+    PlgLogger,
+    PlgOptionsFactory,
+    PlgTranslator,
+)
 
 
 class GeotribuPlugin:
