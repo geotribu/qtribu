@@ -6,6 +6,7 @@ on:
     paths:
       - 'docs/**/*'
       - '.github/workflows/docs_builder.yml'
+      - 'requirements/documentation.txt'
       - 'qtribu/**/*.py'
     tags: "*"
 
