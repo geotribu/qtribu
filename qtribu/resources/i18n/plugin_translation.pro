@@ -1,4 +1,4 @@
-FORMS =
+FORMS = ../gui/dlg_settings.ui
 
 SOURCES= ../../plugin_main.py \
     ../../logic/custom_datatypes.py \
