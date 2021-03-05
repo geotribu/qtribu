@@ -1,6 +1,7 @@
 #! python3  # noqa: E265
 
 # PyQGIS
+from qgis.core import QgsApplication
 from qgis.gui import QgisInterface
 from qgis.PyQt.Qt import QUrl
 from qgis.PyQt.QtCore import QCoreApplication, Qt
@@ -46,7 +47,6 @@ class GeotribuPlugin:
 
         # settings page within the QGIS preferences menu
         self.options_factory = PlgOptionsFactory()
-        self.options_factory.setTitle(__title__)
         self.iface.registerOptionsWidgetFactory(self.options_factory)
 
         # -- Actions
@@ -69,8 +69,18 @@ class GeotribuPlugin:
             lambda: showPluginHelp(filename="resources/help/index")
         )
 
+        self.action_settings = QAction(
+            QgsApplication.getThemeIcon("console/iconSettingsConsole.svg"),
+            self.tr("Settings"),
+            self.iface.mainWindow(),
+        )
+        self.action_settings.triggered.connect(
+            lambda: self.iface.showOptionsDialog(currentPage="QTribu")
+        )
+
         # -- Menu
         self.iface.addPluginToWebMenu(__title__, self.action_run)
+        self.iface.addPluginToWebMenu(__title__, self.action_settings)
         self.iface.addPluginToWebMenu(__title__, self.action_help)
 
         # -- Toolbar
@@ -81,6 +91,7 @@ class GeotribuPlugin:
         # -- Clean up menu
         self.iface.removePluginWebMenu(__title__, self.action_help)
         self.iface.removePluginWebMenu(__title__, self.action_run)
+        self.iface.removePluginWebMenu(__title__, self.action_settings)
 
         # -- Clean up toolbar
         self.iface.removeToolBarIcon(self.action_run)

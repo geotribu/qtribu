@@ -13,7 +13,7 @@ from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QHBoxLayout
 
 # package
-from qtribu.__about__ import DIR_PLUGIN_ROOT
+from qtribu.__about__ import DIR_PLUGIN_ROOT, __title__
 from qtribu.resources.gui.dlg_settings import DlgSettings
 
 # ############################################################################
@@ -46,12 +46,21 @@ class PlgOptionsFactory(QgsOptionsWidgetFactory):
     def createWidget(self, parent):
         return ConfigOptionsPage(parent)
 
+    def title(self):
+        return __title__
+
 
 class ConfigOptionsPage(QgsOptionsPageWidget):
     def __init__(self, parent):
         super().__init__(parent)
-        dlg_settings = DlgSettings(self)
+        self.dlg_settings = DlgSettings(self)
         layout = QHBoxLayout()
         layout.setContentsMargins(0, 0, 0, 0)
-        dlg_settings.setLayout(layout)
+        self.dlg_settings.setLayout(layout)
         self.setLayout(layout)
+
+    def apply(self):
+        """Called to permanently apply the settings shown in the options page (e.g. \
+        save them to QgsSettings objects). This is usually called when the options \
+        dialog is accepted."""
+        self.dlg_settings.save()
