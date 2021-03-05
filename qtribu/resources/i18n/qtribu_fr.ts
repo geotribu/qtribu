@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="fr" sourcelanguage="en">
+<!DOCTYPE TS>
+<TS version="2.1" language="fr" sourcelanguage="en">
 <context>
     <name>GeotribuPlugin</name>
     <message>
-        <location filename="../../plugin_main.py" line="115"/>
+        <location filename="../../plugin_main.py" line="126"/>
         <source>Last article from Geotribu</source>
         <translation>Dernier article publié sur Geotribu</translation>
     </message>
@@ -21,6 +22,11 @@
         <location filename="../../plugin_main.py" line="103"/>
         <source>No item found in the feed. Maybe, try again later.</source>
         <translation type="obsolete">Aucun élément trouvé dans le flux. Réessayer plus tard.</translation>
+    </message>
+    <message>
+        <location filename="../../plugin_main.py" line="72"/>
+        <source>Settings</source>
+        <translation>Réglages</translation>
     </message>
 </context>
 <context>
@@ -44,22 +50,27 @@
     <message>
         <location filename="../gui/dlg_settings.ui" line="14"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Réglages</translation>
     </message>
     <message>
-        <location filename="../gui/dlg_settings.ui" line="32"/>
-        <source>Open in web browser</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gui/dlg_settings.ui" line="39"/>
+        <location filename="../gui/dlg_settings.ui" line="48"/>
         <source>System default browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Par défaut du système</translation>
     </message>
     <message>
-        <location filename="../gui/dlg_settings.ui" line="46"/>
+        <location filename="../gui/dlg_settings.ui" line="38"/>
         <source>Embedded browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Embarqué de QGIS</translation>
+    </message>
+    <message>
+        <location filename="../gui/dlg_settings.ui" line="28"/>
+        <source>Which web browser to use to display articles.</source>
+        <translation>Dans quel navigateur ouvrir les pages.</translation>
+    </message>
+    <message>
+        <location filename="../gui/dlg_settings.ui" line="31"/>
+        <source>Open in web browser:</source>
+        <translation>Ouvrir dans le navigateur :</translation>
     </message>
 </context>
 </TS>
