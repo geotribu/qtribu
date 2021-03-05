@@ -1,11 +1,15 @@
 #! python3  # noqa: E265
 
+"""
+    Main plugin module.
+"""
+
 # PyQGIS
 from qgis.core import QgsApplication
 from qgis.gui import QgisInterface
 from qgis.PyQt.Qt import QUrl
 from qgis.PyQt.QtCore import QCoreApplication, Qt
-from qgis.PyQt.QtGui import QIcon
+from qgis.PyQt.QtGui import QDesktopServices, QIcon
 from qgis.PyQt.QtWebKitWidgets import QWebView
 from qgis.PyQt.QtWidgets import QAction, QVBoxLayout, QWidget
 from qgis.utils import showPluginHelp
@@ -17,8 +21,13 @@ from qtribu.toolbelt import (
     NetworkRequestsManager,
     PlgLogger,
     PlgOptionsFactory,
+    PlgOptionsManager,
     PlgTranslator,
 )
+
+# ############################################################################
+# ########## Classes ###############
+# ##################################
 
 
 class GeotribuPlugin:
@@ -115,18 +124,21 @@ class GeotribuPlugin:
             if not self.rss_rdr.latest_item:
                 raise Exception("No item found")
 
-            # display web page
-            self.wdg_web = QWidget()
-            vlayout = QVBoxLayout()
-            web = QWebView()
-            last_page = QUrl(self.rss_rdr.latest_item.url)
-            web.load(last_page)
-            vlayout.addWidget(web)
-            self.wdg_web.setLayout(vlayout)
-            self.wdg_web.setWindowTitle(self.tr("Last article from Geotribu"))
-            self.wdg_web.setWindowModality(Qt.WindowModal)
-            self.wdg_web.show()
-            self.wdg_web.resize(800, 600)
+            if PlgOptionsManager().get_plg_settings().get("browser") == 1:
+                # display web page
+                self.wdg_web = QWidget()
+                vlayout = QVBoxLayout()
+                web = QWebView()
+                last_page = QUrl(self.rss_rdr.latest_item.url)
+                web.load(last_page)
+                vlayout.addWidget(web)
+                self.wdg_web.setLayout(vlayout)
+                self.wdg_web.setWindowTitle(self.tr("Last article from Geotribu"))
+                self.wdg_web.setWindowModality(Qt.WindowModal)
+                self.wdg_web.show()
+                self.wdg_web.resize(900, 600)
+            else:
+                QDesktopServices.openUrl(QUrl(self.rss_rdr.latest_item.url))
 
             self.log(
                 message=self.tr(

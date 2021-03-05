@@ -8,6 +8,7 @@
 import logging
 
 # PyQGIS
+from qgis.core import QgsSettings
 from qgis.gui import QgsOptionsPageWidget, QgsOptionsWidgetFactory
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QHBoxLayout
@@ -21,19 +22,33 @@ from qtribu.resources.gui.dlg_settings import DlgSettings
 # ##################################
 
 logger = logging.getLogger(__name__)
+PLG_PREFERENCES: dict = {
+    "browser": "default",  # 1 = QGIS, 2 = system
+    "sources": {
+        "geotribu-rss-feed-created": "https://static.geotribu.fr/feed_rss_created.xml",
+        "geotribu-rss-feed-updated": "https://static.geotribu.fr/feed_rss_updated.xml",
+    },
+}
 
 # ############################################################################
 # ########## Classes ###############
 # ##################################
 
 
-PLG_PREFERENCES: dict = {
-    "browser": "default",  # default or qgis
-    "sources": {
-        "geotribu-rss-feed-created": "https://static.geotribu.fr/feed_rss_created.xml",
-        "geotribu-rss-feed-updated": "https://static.geotribu.fr/feed_rss_updated.xml",
-    },
-}
+class PlgOptionsManager:
+    @staticmethod
+    def get_plg_settings():
+        settings = QgsSettings()
+        settings = QgsSettings()
+        settings.beginGroup(__title__)
+
+        options_dict = {
+            "browser": settings.value("browser", 1),  # 1 = QGIS, 2 = system
+        }
+
+        settings.endGroup()
+
+        return options_dict
 
 
 class PlgOptionsFactory(QgsOptionsWidgetFactory):
