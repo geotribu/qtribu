@@ -16,6 +16,11 @@ Unreleased
 
 -->
 
+## [0.3.0] - 2021-03-06
+
+- préférences : menu réglages, intégration des options à l'interface de QGIS
+- ajout d'une option pour choisir dans quel navigateur internet ouvrir les pages : celui intégré à QGIS ou le navigateur par défaut de l'utilisateur/ice
+
 ## [0.2.1] - 2021-03-04
 
 - correction d'un import d'un futur module pas encore inclus
