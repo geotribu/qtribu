@@ -1,6 +1,6 @@
 # Environnement de développement
 
-Typically on Ubuntu:
+Sur Ubuntu :
 
 ```bash
 # create virtual environment linking to system packages (for pyqgis)
@@ -16,13 +16,17 @@ python -m pip install -e .
 
 ## Gestion des traductions
 
+```bash
+sudo apt install qttools5-dev-tools
+```
+
 Mise à jour des textes à traduire :
 
 ```bash
 pylupdate5 -noobsolete -verbose qtribu/resources/i18n/plugin_translation.pro
 ```
 
-Une fois les traductions effectuées (dans Qlinguist par exemple), les compiiler :
+Une fois les traductions effectuées (dans Qlinguist par exemple), les compiler :
 
 ```bash
 lrelease qtribu/resources/i18n/*.ts

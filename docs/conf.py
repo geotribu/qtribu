@@ -4,9 +4,9 @@
     Configuration for project documentation using Sphinx.
 """
 
-import sys
-
 # standard
+import sys
+from datetime import datetime
 from os import environ, path
 
 sys.path.insert(0, path.abspath(".."))  # move into project package
@@ -28,9 +28,10 @@ version = release = __about__.__version__
 github_doc_root = "{}/tree/master/doc/".format(__about__.__uri__)
 
 myst_substitutions = {
-    "title": project,
     "author": author,
+    "date_update": datetime.now().strftime("%d %B %Y"),
     "repo_url": __about__.__uri__,
+    "title": project,
     "version": version,
 }
 
