@@ -16,6 +16,10 @@ Unreleased
 
 -->
 
+## [0.3.1] - 2021-03-08
+
+- corrige un problème de type lors de la récupération des options enregistrées
+
 ## [0.3.0] - 2021-03-06
 
 - préférences : menu réglages, intégration des options à l'interface de QGIS
