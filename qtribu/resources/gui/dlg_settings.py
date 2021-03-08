@@ -83,7 +83,9 @@ class DlgSettings(QWidget, FORM_CLASS):
         settings.beginGroup(__title__)
 
         # retrieve options
-        self.opt_browser_group.button(settings.value("browser", 1)).setChecked(True)
+        self.opt_browser_group.button(
+            settings.value(key="browser", defaultValue=1, type=int)
+        ).setChecked(True)
 
         # store into output dict
         options_dict["browser"] = settings.value("browser", 1)

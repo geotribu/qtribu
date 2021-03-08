@@ -43,7 +43,9 @@ class PlgOptionsManager:
         settings.beginGroup(__title__)
 
         options_dict = {
-            "browser": settings.value("browser", 1),  # 1 = QGIS, 2 = system
+            "browser": settings.value(
+                key="browser", defaultValue=1, type=int
+            ),  # 1 = QGIS, 2 = system
         }
 
         settings.endGroup()
