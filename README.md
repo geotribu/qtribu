@@ -1,20 +1,13 @@
 # Plugin Geotribu pour QGIS
 
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
+
+[![Documentation Builder](https://github.com/geotribu/qtribu/actions/workflows/docs_builder.yml/badge.svg)](https://geotribu.github.io/qtribu/)
+[![Packager](https://github.com/geotribu/qtribu/actions/workflows/packager.yml/badge.svg)](https://github.com/geotribu/qtribu/actions/workflows/packager.yml)
+[![Releaser](https://github.com/geotribu/qtribu/actions/workflows/release.yml/badge.svg)](https://github.com/geotribu/qtribu/actions/workflows/release.yml)
+
 Inutile donc forcément indispensable.
 
-Idées en vrac :
-
-- vérifier s'il y a un nouvel article au lancement de QGIS -> changer l'icône lorsqu'un nouvel article apparaît
-- lister les articles dans un petit widget permettant de voir aussi la decription
-- comboboxes de filtre
-- bouton pour ouvrir un article
-- formulaire de soumission de news
-- charger tout le sitemap ?
-
-options :
-
-- réinitialiser l'historique de lecture
-- liste articles déjà ouverts
-- ouvrir dans un widget ou ouvrir dans le navigateur par défaut
-- proposer d'ajouter des flux RSS à parcourir
-- remplacer le flux d'accueil de QGIS par celui de Geotribu
+:book: :fr: [Voir la documentation](https://geotribu.github.io/qtribu/)
