@@ -75,6 +75,7 @@ class ConfigOptionsPage(QgsOptionsPageWidget):
         layout.setContentsMargins(0, 0, 0, 0)
         self.dlg_settings.setLayout(layout)
         self.setLayout(layout)
+        self.setObjectName("mOptionsPage{}".format(__title__))
 
     def apply(self):
         """Called to permanently apply the settings shown in the options page (e.g. \

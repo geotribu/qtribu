@@ -85,7 +85,9 @@ class GeotribuPlugin:
             self.iface.mainWindow(),
         )
         self.action_settings.triggered.connect(
-            lambda: self.iface.showOptionsDialog(currentPage="QTribu")
+            lambda: self.iface.showOptionsDialog(
+                currentPage="mOptionsPage{}".format(__title__)
+            )
         )
 
         self.action_splash = QAction(
