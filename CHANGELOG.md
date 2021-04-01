@@ -16,6 +16,10 @@ Unreleased
 
 -->
 
+## [0.4.0] - 2021-04-01
+
+- fin de la période de tests : publication dans le canal stable
+
 ## [0.3.1] - 2021-03-08
 
 - corrige un problème de type lors de la récupération des options enregistrées
