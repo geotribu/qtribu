@@ -37,8 +37,13 @@ PLG_PREFERENCES: dict = {
 
 class PlgOptionsManager:
     @staticmethod
-    def get_plg_settings():
-        settings = QgsSettings()
+    def get_plg_settings() -> dict:
+        """Load and return plugin settings as a dictionary. \
+        Useful to get user preferences across plugin logic.
+
+        :return: plugin settings
+        :rtype: dict
+        """
         settings = QgsSettings()
         settings.beginGroup(__title__)
 
