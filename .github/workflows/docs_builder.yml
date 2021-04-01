@@ -45,5 +45,5 @@ jobs:
 
     - name: Deploy to GitHub Pages
       run: |
-        python -m pip install ghp-import
+        python -m pip install -U ghp-import
         ghp-import --force --no-history --no-jekyll --push docs/_build/html
