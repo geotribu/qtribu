@@ -30,6 +30,12 @@ github_doc_root = "{}/tree/master/doc/".format(__about__.__uri__)
 myst_substitutions = {
     "author": author,
     "date_update": datetime.now().strftime("%d %B %Y"),
+    "qgis_version_max": __about__.__plugin_md__.get("general").get(
+        "qgismaximumversion"
+    ),
+    "qgis_version_min": __about__.__plugin_md__.get("general").get(
+        "qgisminimumversion"
+    ),
     "repo_url": __about__.__uri__,
     "title": project,
     "version": version,
@@ -47,7 +53,6 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.autosectionlabel",
     "sphinx.ext.githubpages",
-    "sphinx.ext.imgmath",
     "sphinx.ext.intersphinx",
     "sphinx.ext.extlinks",
     "sphinx.ext.viewcode",
@@ -91,28 +96,24 @@ html_logo = "../qtribu/resources/images/logo_geotribu.png"
 # html_static_path = ["_static"]
 html_theme = "sphinx_rtd_theme"
 html_theme_options = {
-    # "canonical_url": __about__.__uri_homepage__,
     "display_version": True,
-    # "github_url": __about__.__uri__,
     "logo_only": False,
     "prev_next_buttons_location": "both",
-    # "repository_url": __about__.__uri__,
     "style_external_links": True,
     "style_nav_header_background": "SteelBlue",
     # Toc options
-    "collapse_navigation": False,
+    "collapse_navigation": True,
     "includehidden": False,
     "navigation_depth": 4,
     "sticky_navigation": False,
     "titles_only": False,
 }
 
-
 myst_enable_extensions = [
-    "amsmath",
     "colon_fence",
     "deflist",
     "dollarmath",
+    "html_admonition",
     "html_image",
     "linkify",
     "replacements",
