@@ -9,16 +9,16 @@ tags=geotribu,blog,rss
 # credits and contact
 author=Julien Moura (Geotribu)
 email=geotribu@gmail.com
-homepage=https://static.geotribu.fr
-repository=https://github.com/geotribu/qtribu
-tracker=https://github.com/geotribu/qtribu/issues
+homepage=https://static.geotribu.fr/
+repository=https://github.com/geotribu/qtribu/
+tracker=https://github.com/geotribu/qtribu/issues/
 
 # experimental flag
 deprecated=False
-experimental=True
+experimental=False
 qgisMinimumVersion=3.16
 qgisMaximumVersion=3.99
 
 # versionnement
-version=0.3.1
+version=0.4.0
 changelog=

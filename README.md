@@ -8,6 +8,8 @@
 [![Packager](https://github.com/geotribu/qtribu/actions/workflows/packager.yml/badge.svg)](https://github.com/geotribu/qtribu/actions/workflows/packager.yml)
 [![Releaser](https://github.com/geotribu/qtribu/actions/workflows/release.yml/badge.svg)](https://github.com/geotribu/qtribu/actions/workflows/release.yml)
 
-Inutile donc forcément indispensable.
+Plugin pour QGIS > 3.16
+
+Inutile au travail du SIG donc forcément indispensable.
 
 :book: :fr: [Voir la documentation](https://geotribu.github.io/qtribu/)
