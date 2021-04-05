@@ -57,7 +57,6 @@ jobs:
       image: qgis/qgis:release-3_16
       env:
         DISPLAY: ":99"
-      # options: --tty qgis -v ${{ github.workspace }}:/tests_directory -w /tests_directory
       options: -v ${{ github.workspace }}:/tests_directory -w /tests_directory
 
     steps:
@@ -68,6 +67,7 @@ jobs:
           ls /usr/bin/qgis*
           ls .
           echo $PWD
-          mkdir -p /tests_directory/qtribu
+          # mkdir -p /tests_directory/qtribu
+          echo "youpi from the qgis container"
           ls /tests_directory
         name: Run in container
