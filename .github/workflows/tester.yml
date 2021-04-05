@@ -62,6 +62,7 @@ jobs:
     steps:
       - name: Get source code
         uses: actions/checkout@v2
+        path: /tests_directory
 
       - run: |
           ls /usr/bin/qgis*
