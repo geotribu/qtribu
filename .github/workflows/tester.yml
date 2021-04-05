@@ -46,22 +46,22 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
 
-  test-qgis:
-    runs-on: ubuntu-20.04
+  # test-qgis:
+  #   runs-on: ubuntu-20.04
 
-    container:
-      image: qgis/qgis:release-3_16
-      env:
-        DISPLAY: ":99"
-      options: -v ${{ github.workspace }}:/tests_directory
-      # options: -v ${{ github.workspace }}/qtribu:/tests_directory -w /tests_directory
+  #   container:
+  #     image: qgis/qgis:release-3_16
+  #     env:
+  #       DISPLAY: ":99"
+  #     options: -v ${{ github.workspace }}:/tests_directory
+  #     # options: -v ${{ github.workspace }}/qtribu:/tests_directory -w /tests_directory
 
-    steps:
-      - name: Get source code
-        uses: actions/checkout@v2
+  #   steps:
+  #     - name: Get source code
+  #       uses: actions/checkout@v2
 
-      - run: |
-          qgis_setup.sh
-          cp -R qtribu /root/.local/share/QGIS/QGIS3/profiles/default/python/plugins/
-          ls /root/.local/share/QGIS/QGIS3/profiles/default/python/plugins/qtribu
-        name: Run in container
+  #     - run: |
+  #         qgis_setup.sh
+  #         cp -R ${{ env.PROJECT_FOLDER }} /root/.local/share/QGIS/QGIS3/profiles/default/python/plugins/
+  #         ls /root/.local/share/QGIS/QGIS3/profiles/default/python/plugins/${{ env.PROJECT_FOLDER }}
+  #       name: Setup QGIS and plugin
