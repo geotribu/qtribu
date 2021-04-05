@@ -71,7 +71,7 @@ jobs:
       env:
         DISPLAY: ":99"
       volumes:
-        - qtribu:/tests_directory
+        - "\"$PWD\":/tests_directory"
 
     steps:
       - name: Get source code
