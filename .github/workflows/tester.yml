@@ -57,7 +57,7 @@ jobs:
       image: qgis/qgis:release-3_16
       env:
         DISPLAY: ":99"
-      # options: -v $GITHUB_WORKSPACE:/tests_directory/qtribu -w /tests_directory
+      options: -w /tests_directory
 
     steps:
       - name: Get source code
