@@ -8,8 +8,8 @@ on:
 
   pull_request:
     branches: [ main ]
-    paths:
-      - '**.py'
+    # paths:
+    #   - '**.py'
 
 env:
   PROJECT_FOLDER: "qtribu"
