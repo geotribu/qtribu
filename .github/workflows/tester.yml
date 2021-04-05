@@ -53,8 +53,8 @@ jobs:
       image: qgis/qgis:release-3_16
       env:
         DISPLAY: ":99"
-      # options: -v ${{ github.workspace }}/qtribu:/tests_directory
-      options: -v ${{ github.workspace }}/qtribu:/tests_directory -w /tests_directory
+      options: -v ${{ github.workspace }}:/tests_directory
+      # options: -v ${{ github.workspace }}/qtribu:/tests_directory -w /tests_directory
 
     steps:
       - name: Get source code
@@ -62,7 +62,6 @@ jobs:
 
       - run: |
           qgis_setup.sh
-          ls /root/.local/share/QGIS/QGIS3/profiles/default/python/plugins/
           cp -R qtribu /root/.local/share/QGIS/QGIS3/profiles/default/python/plugins/
-          ls /root/.local/share/QGIS/QGIS3/profiles/default/python/plugins/
+          ls /root/.local/share/QGIS/QGIS3/profiles/default/python/plugins/qtribu
         name: Run in container
