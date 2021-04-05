@@ -71,5 +71,5 @@ jobs:
           # mkdir -p /tests_directory/qtribu
           echo "youpi from the qgis container"
           ls /tests_directory
-          qgis_setup.sh
+          qgis_setup.sh qtribu
         name: Run in container
