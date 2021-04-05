@@ -65,8 +65,10 @@ jobs:
 
   # container:
     runs-on: ubuntu-20.04
-    container: qgis/qgis:release-3_16
+    container:
+      image: qgis/qgis:release-3_16
+      env:
+        DISPLAY: ":99"
     steps:
-      - run: |
-          qgis_setup.sh --help
+      - run: ls /usr/bin/qgis*
         name: Run in container
