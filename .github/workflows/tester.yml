@@ -70,5 +70,4 @@ jobs:
           ls .
           echo $PWD
           ls /tests_directory
-          /usr/bin/qgis_setup.sh --help
         name: Run in container
