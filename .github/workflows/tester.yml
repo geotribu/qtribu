@@ -47,19 +47,6 @@ jobs:
         uses: codecov/codecov-action@v1
 
   test-qgis:
-    # runs-on: ubuntu-20.04
-
-    # strategy:
-    #   matrix:
-    #     qgis_version: [release-3_16, release-3_18]
-
-    # env:
-    #   QGIS_TEST_VERSION: ${{ matrix.qgis_version }}
-
-    # steps:
-    #   - name: Checkout
-    #     uses: actions/checkout@v2
-
     #   - name: Test on QGIS
     #     run: docker-compose -f .docker/docker-compose.yml run qgis /usr/src/.docker/run-docker-tests.sh
 
@@ -71,7 +58,7 @@ jobs:
       env:
         DISPLAY: ":99"
       volumes:
-        - "\"$PWD\":/tests_directory"
+        - "\"$PWD\":/tests_directory/qtribu"
 
     steps:
       - name: Get source code
