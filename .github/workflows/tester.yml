@@ -47,18 +47,14 @@ jobs:
         uses: codecov/codecov-action@v1
 
   test-qgis:
-    #   - name: Test on QGIS
-    #     run: docker-compose -f .docker/docker-compose.yml run qgis /usr/src/.docker/run-docker-tests.sh
-
-  # container:
     runs-on: ubuntu-20.04
 
     container:
       image: qgis/qgis:release-3_16
       env:
         DISPLAY: ":99"
-      options: -v ${{ github.workspace }}/qtribu:/tests_directory
-      # options: -v ${{ github.workspace }}/qtribu:/tests_directory -w /tests_directory
+      # options: -v ${{ github.workspace }}/qtribu:/tests_directory
+      options: -v ${{ github.workspace }}/qtribu:/tests_directory -w /tests_directory
 
     steps:
       - name: Get source code
@@ -68,8 +64,6 @@ jobs:
           ls /usr/bin/qgis*
           ls .
           echo $PWD
-          sudo mkdir -p /tests_directory
-          sudo cp -R qtribu tests_directory
           ls /tests_directory
           qgis_setup.sh qtribu
         name: Run in container
