@@ -57,7 +57,7 @@ jobs:
       image: qgis/qgis:release-3_16
       env:
         DISPLAY: ":99"
-      options: -w /tests_directory -v ${{ github.ref == 'refs/heads/main' }}
+      options: --tty qgis -v ${{ github.workspace }}:/tests_directory -w /tests_directory
 
     steps:
       - name: Get source code
@@ -69,6 +69,6 @@ jobs:
           ls /usr/bin/qgis*
           ls .
           echo $PWD
-          ls /tests_directory
           mkdir -p /tests_directory/qtribu
+          ls /tests_directory
         name: Run in container
