@@ -20,31 +20,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Get source code
-      uses: actions/checkout@v2
+      - name: Get source code
+        uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v1
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
 
-    - uses: actions/cache@v2
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('requirements/*.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-
+      - uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements/*.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
 
-    - name: Install Python requirements
-      run: |
-        python -m pip install -U pip setuptools wheel
-        python -m pip install -U -r requirements/testing.txt
+      - name: Install Python requirements
+        run: |
+          python -m pip install -U pip setuptools wheel
+          python -m pip install -U -r requirements/testing.txt
 
-    - name: Run Unit tests
-      run: pytest
+      - name: Run Unit tests
+        run: pytest
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
 
   test-qgis:
     # runs-on: ubuntu-20.04
@@ -65,10 +65,17 @@ jobs:
 
   # container:
     runs-on: ubuntu-20.04
+
     container:
       image: qgis/qgis:release-3_16
       env:
         DISPLAY: ":99"
+
     steps:
-      - run: ls /usr/bin/qgis*
+      - name: Get source code
+        uses: actions/checkout@v2
+
+      - run: |
+          ls /usr/bin/qgis*
+          /usr/bin/qgis_setup.sh QTribu
         name: Run in container
