@@ -54,7 +54,7 @@ jobs:
       env:
         DISPLAY: ":99"
       # options: -v ${{ github.workspace }}/qtribu:/tests_directory
-      options: -v ${{ github.workspace }}/qtribu:/tests_directory -w /tests_directory
+      options: -v ${{ github.workspace }}:/tests_directory -w /tests_directory
 
     steps:
       - name: Get source code
