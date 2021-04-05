@@ -68,8 +68,8 @@ jobs:
           ls /usr/bin/qgis*
           ls .
           echo $PWD
-          mkdir -p /tests_directory
-          cp -R qtribu tests_directory
+          sudo mkdir -p /tests_directory
+          sudo cp -R qtribu tests_directory
           ls /tests_directory
           qgis_setup.sh qtribu
         name: Run in container
