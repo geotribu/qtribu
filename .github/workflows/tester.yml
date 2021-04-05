@@ -70,6 +70,8 @@ jobs:
       image: qgis/qgis:release-3_16
       env:
         DISPLAY: ":99"
+      volumes:
+        - ../qtribu:/tests_directory
 
     steps:
       - name: Get source code
@@ -77,5 +79,6 @@ jobs:
 
       - run: |
           ls /usr/bin/qgis*
-          /usr/bin/qgis_setup.sh QTribu
+          ls .
+          /usr/bin/qgis_setup.sh qtribu
         name: Run in container
