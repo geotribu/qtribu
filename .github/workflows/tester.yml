@@ -54,16 +54,15 @@ jobs:
       env:
         DISPLAY: ":99"
       # options: -v ${{ github.workspace }}/qtribu:/tests_directory
-      options: -v ${{ github.workspace }}:/tests_directory -w /tests_directory
+      options: -v ${{ github.workspace }}/qtribu:/tests_directory -w /tests_directory
 
     steps:
       - name: Get source code
         uses: actions/checkout@v2
 
       - run: |
-          ls /usr/bin/qgis*
-          ls .
-          echo $PWD
-          ls /tests_directory
-          qgis_setup.sh qtribu
+          qgis_setup.sh
+          ls /root/.local/share/QGIS/QGIS3/profiles/default/python/plugins/
+          cp -R qtribu /root/.local/share/QGIS/QGIS3/profiles/default/python/plugins/
+          ls /root/.local/share/QGIS/QGIS3/profiles/default/python/plugins/
         name: Run in container
