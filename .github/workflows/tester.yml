@@ -67,5 +67,6 @@ jobs:
       - run: |
           ls /usr/bin/qgis*
           ls .
+          ls /tests_directory
           /usr/bin/qgis_setup.sh qtribu
         name: Run in container
