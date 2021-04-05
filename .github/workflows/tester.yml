@@ -57,7 +57,7 @@ jobs:
       image: qgis/qgis:release-3_16
       env:
         DISPLAY: ":99"
-      options: -w /tests_directory
+      options: -w /tests_directory -v ${{ github.ref == 'refs/heads/main' }}
 
     steps:
       - name: Get source code
@@ -70,4 +70,5 @@ jobs:
           ls .
           echo $PWD
           ls /tests_directory
+          mkdir -p /tests_directory/qtribu
         name: Run in container
