@@ -31,9 +31,3 @@ repos:
   hooks:
     - id: isort
       args: ["--profile", "black", "--filter-files"]
-
-- repo: https://github.com/MarcoGorelli/absolufy-imports
-  rev: v0.3.0
-  hooks:
-    - id: absolufy-imports
-      args: [--application-directories=qtribu]
