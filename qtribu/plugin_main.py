@@ -16,14 +16,9 @@ from qgis.utils import showPluginHelp
 
 # project
 from qtribu.__about__ import DIR_PLUGIN_ROOT, __title__
+from qtribu.gui.dlg_settings import PlgOptionsFactory, PlgOptionsManager
 from qtribu.logic import RssMiniReader
-from qtribu.toolbelt import (
-    NetworkRequestsManager,
-    PlgLogger,
-    PlgOptionsFactory,
-    PlgOptionsManager,
-    PlgTranslator,
-)
+from qtribu.toolbelt import NetworkRequestsManager, PlgLogger, PlgTranslator
 
 # ############################################################################
 # ########## Classes ###############
@@ -60,7 +55,7 @@ class GeotribuPlugin:
 
         # -- Actions
         self.action_run = QAction(
-            QIcon(str(DIR_PLUGIN_ROOT / "resources/images/logo_geotribu.png")),
+            QIcon(str(DIR_PLUGIN_ROOT / "resources/images/logo_green_no_text.svg")),
             self.tr("Newest article"),
             self.iface.mainWindow(),
         )
@@ -138,7 +133,7 @@ class GeotribuPlugin:
                 self.wdg_web.setWindowTitle(self.tr("Last article from Geotribu"))
                 self.wdg_web.setWindowModality(Qt.WindowModal)
                 self.wdg_web.show()
-                self.wdg_web.resize(900, 600)
+                self.wdg_web.resize(1000, 600)
             else:
                 QDesktopServices.openUrl(QUrl(self.rss_rdr.latest_item.url))
 
