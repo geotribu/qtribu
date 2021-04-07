@@ -42,6 +42,9 @@ class DlgSettings(QWidget, FORM_CLASS):
         self.setupUi(self)
         self.log = PlgLogger().log
 
+        # header
+        self.lbl_title.setText(f"{__title__} - Version {__version__}")
+
         # group radio buttons
         self.opt_browser_group = QButtonGroup(self)
         self.opt_browser_group.addButton(self.opt_browser_qt, 1)
