@@ -16,7 +16,7 @@ from qgis.utils import showPluginHelp
 
 # project
 from qtribu.__about__ import DIR_PLUGIN_ROOT, __title__
-from qtribu.logic import RssMiniReader
+from qtribu.logic import PlgEasterEggs, RssMiniReader
 from qtribu.toolbelt import (
     NetworkRequestsManager,
     PlgLogger,
@@ -49,6 +49,7 @@ class GeotribuPlugin:
         self.tr = plg_translation_mngr.tr
 
         # sub-modules
+        self.easter_eggs = PlgEasterEggs(iface)
         self.rss_rdr = RssMiniReader()
 
     def initGui(self):
@@ -68,6 +69,13 @@ class GeotribuPlugin:
             self.tr(text="Newest article", context="GeotribuPlugin")
         )
         self.action_run.triggered.connect(self.run)
+
+        self.action_eastereggs = QAction(
+            QIcon(QgsApplication.iconPath(":repositoryDisabled.svg")),
+            self.tr("Enable/disable easter eggs"),
+            self.iface.mainWindow(),
+        )
+        self.action_eastereggs.triggered.connect(self.easter_eggs.switch())
 
         self.action_help = QAction(
             QIcon(":/images/themes/default/mActionHelpContents.svg"),
