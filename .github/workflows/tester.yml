@@ -16,32 +16,52 @@ env:
   PYTHON_VERSION: 3.7
 
 jobs:
-  tests:
+  tests-unit:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Get source code
-      uses: actions/checkout@v2
+      - name: Get source code
+        uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v1
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
 
-    - uses: actions/cache@v2
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('requirements/*.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-
+      - uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements/*.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
 
-    - name: Install Python requirements
-      run: |
-        python -m pip install -U pip setuptools wheel
-        python -m pip install -U -r requirements/testing.txt
+      - name: Install Python requirements
+        run: |
+          python -m pip install -U pip setuptools wheel
+          python -m pip install -U -r requirements/testing.txt
 
-    - name: Run Unit tests
-      run: pytest
+      - name: Run Unit tests
+        run: pytest
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+
+  # test-qgis:
+  #   runs-on: ubuntu-20.04
+
+  #   container:
+  #     image: qgis/qgis:release-3_16
+  #     env:
+  #       DISPLAY: ":99"
+  #     options: -v ${{ github.workspace }}:/tests_directory
+  #     # options: -v ${{ github.workspace }}/qtribu:/tests_directory -w /tests_directory
+
+  #   steps:
+  #     - name: Get source code
+  #       uses: actions/checkout@v2
+
+  #     - run: |
+  #         qgis_setup.sh
+  #         cp -R ${{ env.PROJECT_FOLDER }} /root/.local/share/QGIS/QGIS3/profiles/default/python/plugins/
+  #         ls /root/.local/share/QGIS/QGIS3/profiles/default/python/plugins/${{ env.PROJECT_FOLDER }}
+  #       name: Setup QGIS and plugin
