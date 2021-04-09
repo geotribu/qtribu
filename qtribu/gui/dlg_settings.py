@@ -9,6 +9,7 @@ import logging
 from pathlib import Path
 
 # PyQGIS
+from qgis.core import QgsSettings
 from qgis.gui import QgsOptionsPageWidget, QgsOptionsWidgetFactory
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import pyqtSignal
@@ -73,18 +74,17 @@ class DlgSettings(QWidget, FORM_CLASS):
     def save_settings(self):
         """Save options from UI form into QSettings."""
         # open settings group
-        # settings = QgsSettings()
-        # settings.beginGroup(__title__)
+        settings = QgsSettings()
+        settings.beginGroup(__title__)
 
-        # # save user options
-        # settings.setValue("browser", self.opt_browser_group.checkedId())
+        # save user options
+        settings.setValue("browser", self.opt_browser_group.checkedId())
 
-        # # save plugin version
-        # settings.setValue("version", __version__)
+        # save plugin version
+        settings.setValue("version", __version__)
 
-        # # close settings group
-        # settings.endGroup()
-        pass
+        # close settings group
+        settings.endGroup()
 
 
 class PlgOptionsFactory(QgsOptionsWidgetFactory):
