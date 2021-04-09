@@ -10,13 +10,15 @@ from pathlib import Path
 
 # PyQGIS
 from qgis.core import QgsSettings
+from qgis.gui import QgsOptionsPageWidget, QgsOptionsWidgetFactory
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import pyqtSignal
-from qgis.PyQt.QtWidgets import QButtonGroup, QWidget
+from qgis.PyQt.QtGui import QIcon
+from qgis.PyQt.QtWidgets import QButtonGroup, QHBoxLayout, QWidget
 
 # project
-from qtribu.__about__ import __title__, __version__
-from qtribu.toolbelt import PlgLogger
+from qtribu.__about__ import DIR_PLUGIN_ROOT, __title__, __version__
+from qtribu.toolbelt import PlgLogger, PlgOptionsManager
 
 # ############################################################################
 # ########## Globals ###############
@@ -51,7 +53,7 @@ class DlgSettings(QWidget, FORM_CLASS):
         self.opt_browser_group.addButton(self.opt_browser_os, 2)
 
         # load previously saved settings
-        self.load()
+        self.load_settings()
 
     def closeEvent(self, event):
         """Map on plugin close.
@@ -62,7 +64,14 @@ class DlgSettings(QWidget, FORM_CLASS):
         self.closingPlugin.emit()
         event.accept()
 
-    def save(self):
+    def load_settings(self) -> dict:
+        """Load options from QgsSettings into UI form."""
+        settings = PlgOptionsManager.get_plg_settings()
+
+        # retrieve options
+        self.opt_browser_group.button(settings.browser).setChecked(True)
+
+    def save_settings(self):
         """Save options from UI form into QSettings."""
         # open settings group
         settings = QgsSettings()
@@ -77,23 +86,33 @@ class DlgSettings(QWidget, FORM_CLASS):
         # close settings group
         settings.endGroup()
 
-    def load(self) -> dict:
-        """Load options from QgsSettings into UI form."""
-        options_dict = {}
 
-        # start
-        settings = QgsSettings()
-        settings.beginGroup(__title__)
+class PlgOptionsFactory(QgsOptionsWidgetFactory):
+    def __init__(self):
+        super().__init__()
 
-        # retrieve options
-        self.opt_browser_group.button(
-            settings.value(key="browser", defaultValue=1, type=int)
-        ).setChecked(True)
+    def icon(self):
+        return QIcon(str(DIR_PLUGIN_ROOT / "resources/images/logo_geotribu.png"))
 
-        # store into output dict
-        options_dict["browser"] = settings.value("browser", 1)
+    def createWidget(self, parent):
+        return ConfigOptionsPage(parent)
 
-        # end
-        settings.endGroup()
+    def title(self):
+        return __title__
 
-        return options_dict
+
+class ConfigOptionsPage(QgsOptionsPageWidget):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.dlg_settings = DlgSettings(self)
+        layout = QHBoxLayout()
+        layout.setContentsMargins(0, 0, 0, 0)
+        self.dlg_settings.setLayout(layout)
+        self.setLayout(layout)
+        self.setObjectName("mOptionsPage{}".format(__title__))
+
+    def apply(self):
+        """Called to permanently apply the settings shown in the options page (e.g. \
+        save them to QgsSettings objects). This is usually called when the options \
+        dialog is accepted."""
+        self.dlg_settings.save_settings()

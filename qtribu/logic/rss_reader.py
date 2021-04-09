@@ -16,6 +16,7 @@ from email.utils import parsedate
 from typing import Tuple
 
 # project
+from qtribu.__about__ import __title__, __version__
 from qtribu.logic.custom_datatypes import RssItem
 from qtribu.toolbelt import PlgLogger
 
@@ -32,8 +33,12 @@ logger = logging.getLogger(__name__)
 
 class RssMiniReader:
 
-    PATTERN_INCLUDE = ["articles/", "rdp/"]
     FEED_ITEMS: tuple = None
+    PATTERN_INCLUDE = ["articles/", "rdp/"]
+    HEADERS = {
+        b"Accept": b"application/xml",
+        b"User-Agent": bytes(f"{__title__}/{__version__}", "utf8"),
+    }
 
     def __init__(self):
         """Minimalist RSS feed parser."""
