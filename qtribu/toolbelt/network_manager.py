@@ -10,7 +10,6 @@
 
 # Standard library
 import logging
-from builtins import str
 
 # PyQGIS
 from qgis.core import QgsBlockingNetworkRequest
@@ -18,8 +17,9 @@ from qgis.PyQt.Qt import QByteArray, QUrl
 from qgis.PyQt.QtNetwork import QNetworkRequest
 
 # project
-from qtribu.toolbelt import PlgLogger
-from qtribu.toolbelt.preferences import PLG_PREFERENCES
+from qtribu.__about__ import __title__, __version__
+from qtribu.toolbelt.log_handler import PlgLogger
+from qtribu.toolbelt.preferences import PlgOptionsManager
 
 # ############################################################################
 # ########## Globals ###############
@@ -45,14 +45,14 @@ class NetworkRequestsManager:
         self.ntwk_requester = QgsBlockingNetworkRequest()
         self.tr = tr
 
-    def get_from_source(
-        self, source_ref: str = "geotribu-rss-feed-created"
-    ) -> QByteArray:
+    def build_url(self, url: str) -> QUrl:
+
+        url += PlgOptionsManager.get_plg_settings().request_path
+        return QUrl(url)
+
+    def get_from_source(self, headers: dict = None) -> QByteArray:
         """Method to retrieve a RSS feed from a referenced source in preferences. \
         Use cache.
-
-        :param source_ref: source reference name, defaults to "geotribu-rss-feed-created"
-        :type source_ref: str, optional
 
         :raises ConnectionError: if any problem occurs during feed fetching.
         :raises TypeError: if response mime-type is not valid
@@ -60,16 +60,25 @@ class NetworkRequestsManager:
         :return: feed response in bytes
         :rtype: QByteArray
         """
-        if source_ref not in PLG_PREFERENCES:
-            source_ref = "geotribu-rss-feed-created"
-
-        url = PLG_PREFERENCES.get("sources").get(source_ref)
+        url = self.build_url(PlgOptionsManager.get_plg_settings().rss_source)
 
         try:
+            # prepare request
+            req = QNetworkRequest(QUrl(url))
+            if headers:
+                for k, v in headers.items():
+                    req.setRawHeader(k, v)
+            else:
+                req.setHeader(
+                    QNetworkRequest.UserAgentHeader,
+                    bytes(f"{__title__}/{__version__}", "utf8"),
+                )
+
             req_status = self.ntwk_requester.get(
-                request=QNetworkRequest(QUrl(url)),
+                request=req,
                 forceRefresh=False,
             )
+
             # check if request is fine
             if req_status != QgsBlockingNetworkRequest.NoError:
                 self.log(

@@ -7,7 +7,7 @@
 # PyQGIS
 from qgis.core import QgsApplication
 from qgis.gui import QgisInterface
-from qgis.PyQt.Qt import QUrl
+from qgis.PyQt.Qt import QNetworkRequest
 from qgis.PyQt.QtCore import QCoreApplication, Qt
 from qgis.PyQt.QtGui import QDesktopServices, QIcon
 from qgis.PyQt.QtWebKitWidgets import QWebView
@@ -15,10 +15,15 @@ from qgis.PyQt.QtWidgets import QAction, QVBoxLayout, QWidget
 from qgis.utils import showPluginHelp
 
 # project
-from qtribu.__about__ import DIR_PLUGIN_ROOT, __title__
-from qtribu.gui.dlg_settings import PlgOptionsFactory, PlgOptionsManager
+from qtribu.__about__ import DIR_PLUGIN_ROOT, __title__, __version__
+from qtribu.gui.dlg_settings import PlgOptionsFactory
 from qtribu.logic import RssMiniReader
-from qtribu.toolbelt import NetworkRequestsManager, PlgLogger, PlgTranslator
+from qtribu.toolbelt import (
+    NetworkRequestsManager,
+    PlgLogger,
+    PlgOptionsManager,
+    PlgTranslator,
+)
 
 # ############################################################################
 # ########## Classes ###############
@@ -116,18 +121,21 @@ class GeotribuPlugin:
         """
         try:
             qntwk = NetworkRequestsManager(tr=self.tr)
-            self.rss_rdr.read_feed(qntwk.get_from_source())
-
+            self.rss_rdr.read_feed(qntwk.get_from_source(headers=self.rss_rdr.HEADERS))
             if not self.rss_rdr.latest_item:
                 raise Exception("No item found")
 
-            if PlgOptionsManager().get_plg_settings().get("browser") == 1:
+            if PlgOptionsManager().get_plg_settings().browser == 1:
                 # display web page
                 self.wdg_web = QWidget()
                 vlayout = QVBoxLayout()
                 web = QWebView()
-                last_page = QUrl(self.rss_rdr.latest_item.url)
-                web.load(last_page)
+                req = QNetworkRequest(qntwk.build_url(self.rss_rdr.latest_item.url))
+                req.setHeader(
+                    QNetworkRequest.UserAgentHeader,
+                    bytes(f"{__title__}/{__version__}", "utf8"),
+                )
+                web.load(req)
                 vlayout.addWidget(web)
                 self.wdg_web.setLayout(vlayout)
                 self.wdg_web.setWindowTitle(self.tr("Last article from Geotribu"))
@@ -135,7 +143,7 @@ class GeotribuPlugin:
                 self.wdg_web.show()
                 self.wdg_web.resize(1000, 600)
             else:
-                QDesktopServices.openUrl(QUrl(self.rss_rdr.latest_item.url))
+                QDesktopServices.openUrl(qntwk.build_url(self.rss_rdr.latest_item.url))
 
             self.log(
                 message=self.tr(
@@ -148,7 +156,7 @@ class GeotribuPlugin:
         except Exception as err:
             self.log(
                 message=self.tr(
-                    text="Houston, we've got a problem: {}".format(err),
+                    text="Michel, we've got a problem: {}".format(err),
                     context="GeotribuPlugin",
                 ),
                 log_level=2,
