@@ -16,6 +16,12 @@ Unreleased
 
 -->
 
+## [0.4.1] - 2021-04-09
+
+- améliorations diverses :
+    - meilleure gestion des paramètres du plugin
+    - personnalisation des en-têtes pour les appels réseau
+
 ## [0.4.0] - 2021-04-01
 
 - fin de la période de tests : publication dans le canal stable
