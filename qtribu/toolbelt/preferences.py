@@ -13,7 +13,8 @@ from qgis.core import QgsSettings
 
 # package
 from qtribu.__about__ import __title__, __version__
-from qtribu.toolbelt import PlgLogger
+
+from .log_handler import PlgLogger
 
 # ############################################################################
 # ########## Globals ###############
@@ -42,6 +43,9 @@ class PlgSettingsStructure(NamedTuple):
 
     # network
     network_http_user_agent: str = f"{__title__}/{__version__}"
+    request_path: str = (
+        f"?utm_source=QGIS&utm_medium={__title__}&utm_campaign=plugin_{__version__}"
+    )
 
     defaults = [
         False,
@@ -80,6 +84,11 @@ class PlgOptionsManager:
             version=settings.value(key="version", defaultValue=__version__, type=str),
             # usage
             browser=settings.value(key="browser", defaultValue=1, type=int),
+            rss_source=settings.value(
+                key="rss_source",
+                defaultValue="https://static.geotribu.fr/feed_rss_created.xml",
+                type=str,
+            ),
             # network
             network_http_user_agent=settings.value(
                 key="network_http_user_agent",

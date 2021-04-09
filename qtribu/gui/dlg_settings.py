@@ -9,7 +9,6 @@ import logging
 from pathlib import Path
 
 # PyQGIS
-from qgis.core import QgsSettings
 from qgis.gui import QgsOptionsPageWidget, QgsOptionsWidgetFactory
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import pyqtSignal
