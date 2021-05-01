@@ -1,0 +1,7 @@
+qtribu.logic.rss\_reader module
+===============================
+
+.. automodule:: qtribu.logic.rss_reader
+   :members:
+   :undoc-members:
+   :show-inheritance:

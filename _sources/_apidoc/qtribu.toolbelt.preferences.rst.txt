@@ -1,0 +1,7 @@
+qtribu.toolbelt.preferences module
+==================================
+
+.. automodule:: qtribu.toolbelt.preferences
+   :members:
+   :undoc-members:
+   :show-inheritance:

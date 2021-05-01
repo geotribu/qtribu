@@ -1,0 +1,25 @@
+qtribu package
+==============
+
+.. automodule:: qtribu
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   qtribu.gui
+   qtribu.logic
+   qtribu.toolbelt
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   qtribu.plugin_main

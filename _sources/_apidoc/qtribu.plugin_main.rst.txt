@@ -1,0 +1,7 @@
+qtribu.plugin\_main module
+==========================
+
+.. automodule:: qtribu.plugin_main
+   :members:
+   :undoc-members:
+   :show-inheritance:

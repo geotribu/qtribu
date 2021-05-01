@@ -1,0 +1,7 @@
+qtribu.gui.dlg\_settings module
+===============================
+
+.. automodule:: qtribu.gui.dlg_settings
+   :members:
+   :undoc-members:
+   :show-inheritance:

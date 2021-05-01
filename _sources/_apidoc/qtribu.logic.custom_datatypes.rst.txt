@@ -1,0 +1,7 @@
+qtribu.logic.custom\_datatypes module
+=====================================
+
+.. automodule:: qtribu.logic.custom_datatypes
+   :members:
+   :undoc-members:
+   :show-inheritance:

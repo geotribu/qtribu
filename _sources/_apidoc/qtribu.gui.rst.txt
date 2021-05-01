@@ -1,0 +1,15 @@
+qtribu.gui package
+==================
+
+.. automodule:: qtribu.gui
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   qtribu.gui.dlg_settings

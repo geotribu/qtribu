@@ -1,0 +1,7 @@
+qtribu
+======
+
+.. toctree::
+   :maxdepth: 4
+
+   qtribu
