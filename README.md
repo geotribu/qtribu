@@ -10,6 +10,6 @@
 
 Plugin pour QGIS > 3.16
 
-Inutile au travail du SIG donc forcément indispensable.
+Inutile au travail donc forcément indispensable.
 
 :book: :fr: [Voir la documentation](https://geotribu.github.io/qtribu/)
