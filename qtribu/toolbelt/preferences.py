@@ -45,7 +45,7 @@ class PlgSettingsStructure(NamedTuple):
     # network
     network_http_user_agent: str = f"{__title__}/{__version__}"
     request_path: str = (
-        f"?utm_source=QGIS&utm_medium={__title__}&utm_campaign=plugin_{__version__}"
+        f"utm_source=QGIS&utm_medium={__title__}&utm_campaign=plugin_{__version__}"
     )
 
     @property
@@ -93,7 +93,7 @@ class PlgOptionsManager:
             ),
             request_path=settings.value(
                 key="request_path",
-                defaultValue=f"?utm_source=QGIS&utm_medium={__title__}&utm_campaign=plugin_{__version__}",
+                defaultValue=f"utm_source=QGIS&utm_medium={__title__}&utm_campaign=plugin_{__version__}",
                 type=str,
             ),
         )

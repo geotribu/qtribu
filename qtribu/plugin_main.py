@@ -156,7 +156,7 @@ class GeotribuPlugin:
         except Exception as err:
             self.log(
                 message=self.tr(
-                    text="Michel, we've got a problem: {}".format(err),
+                    text=f"Michel, we've got a problem: {err}",
                     context="GeotribuPlugin",
                 ),
                 log_level=2,

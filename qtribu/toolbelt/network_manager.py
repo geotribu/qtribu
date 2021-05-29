@@ -10,6 +10,8 @@
 
 # Standard library
 import logging
+from functools import lru_cache
+from urllib.parse import urlparse, urlunparse
 
 # PyQGIS
 from qgis.core import QgsBlockingNetworkRequest
@@ -45,10 +47,13 @@ class NetworkRequestsManager:
         self.ntwk_requester = QgsBlockingNetworkRequest()
         self.tr = tr
 
+    @lru_cache(maxsize=128)
     def build_url(self, url: str) -> QUrl:
-
-        url += PlgOptionsManager.get_plg_settings().request_path
-        return QUrl(url)
+        parsed_url = urlparse(url)
+        clean_url = parsed_url._replace(
+            query=PlgOptionsManager.get_plg_settings().request_path
+        )
+        return QUrl(urlunparse(clean_url))
 
     def get_from_source(self, headers: dict = None) -> QByteArray:
         """Method to retrieve a RSS feed from a referenced source in preferences. \
