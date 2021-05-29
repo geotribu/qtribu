@@ -40,20 +40,13 @@ class PlgSettingsStructure(NamedTuple):
 
     # usage
     browser: int = 1
+    notify_push_info: bool = True
 
     # network
     network_http_user_agent: str = f"{__title__}/{__version__}"
     request_path: str = (
         f"?utm_source=QGIS&utm_medium={__title__}&utm_campaign=plugin_{__version__}"
     )
-
-    defaults = [
-        False,
-        __version__,
-        "https://static.geotribu.fr/feed_rss_created.xml",
-        1,
-        f"{__title__}/{__version__}",
-    ]
 
     @property
     def browser_as_str(self) -> str:
@@ -79,11 +72,14 @@ class PlgOptionsManager:
         settings.beginGroup(__title__)
 
         options = PlgSettingsStructure(
-            # normal
+            # global
             debug_mode=settings.value(key="debug_mode", defaultValue=False, type=bool),
             version=settings.value(key="version", defaultValue=__version__, type=str),
             # usage
             browser=settings.value(key="browser", defaultValue=1, type=int),
+            notify_push_info=settings.value(
+                key="notify_push_info", defaultValue=True, type=bool
+            ),
             rss_source=settings.value(
                 key="rss_source",
                 defaultValue="https://static.geotribu.fr/feed_rss_created.xml",
@@ -93,6 +89,11 @@ class PlgOptionsManager:
             network_http_user_agent=settings.value(
                 key="network_http_user_agent",
                 defaultValue=f"{__title__}/{__version__}",
+                type=str,
+            ),
+            request_path=settings.value(
+                key="request_path",
+                defaultValue=f"?utm_source=QGIS&utm_medium={__title__}&utm_campaign=plugin_{__version__}",
                 type=str,
             ),
         )

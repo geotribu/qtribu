@@ -6,18 +6,20 @@
 
 # standard
 import logging
+from functools import partial
 from pathlib import Path
 
 # PyQGIS
 from qgis.core import QgsSettings
 from qgis.gui import QgsOptionsPageWidget, QgsOptionsWidgetFactory
 from qgis.PyQt import uic
+from qgis.PyQt.Qt import QUrl
 from qgis.PyQt.QtCore import pyqtSignal
-from qgis.PyQt.QtGui import QIcon
+from qgis.PyQt.QtGui import QDesktopServices, QIcon
 from qgis.PyQt.QtWidgets import QButtonGroup, QHBoxLayout, QWidget
 
 # project
-from qtribu.__about__ import DIR_PLUGIN_ROOT, __title__, __version__
+from qtribu.__about__ import DIR_PLUGIN_ROOT, __title__, __uri_tracker__, __version__
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
 
 # ############################################################################
@@ -52,6 +54,14 @@ class DlgSettings(QWidget, FORM_CLASS):
         self.opt_browser_group.addButton(self.opt_browser_qt, 1)
         self.opt_browser_group.addButton(self.opt_browser_os, 2)
 
+        # customization
+        self.btn_report.setIcon(
+            QIcon(":images/themes/default/console/iconSyntaxErrorConsole.svg")
+        )
+        self.btn_report.pressed.connect(
+            partial(QDesktopServices.openUrl, QUrl(__uri_tracker__))
+        )
+
         # load previously saved settings
         self.load_settings()
 
@@ -68,8 +78,12 @@ class DlgSettings(QWidget, FORM_CLASS):
         """Load options from QgsSettings into UI form."""
         settings = PlgOptionsManager.get_plg_settings()
 
-        # retrieve options
+        # set UI from saved options
         self.opt_browser_group.button(settings.browser).setChecked(True)
+        self.opt_notif_push_msg.setChecked(settings.notify_push_info)
+
+        self.opt_debug.setChecked(settings.debug_mode)
+        self.lbl_version_saved_value.setText(settings.version)
 
     def save_settings(self):
         """Save options from UI form into QSettings."""
@@ -77,14 +91,22 @@ class DlgSettings(QWidget, FORM_CLASS):
         settings = QgsSettings()
         settings.beginGroup(__title__)
 
-        # save user options
+        # save features
         settings.setValue("browser", self.opt_browser_group.checkedId())
+        settings.setValue("notify_push_info", self.opt_notif_push_msg.isChecked())
 
-        # save plugin version
+        # save miscellaneous
+        settings.setValue("debug_mode", self.opt_debug.isChecked())
         settings.setValue("version", __version__)
 
         # close settings group
         settings.endGroup()
+
+        if __debug__:
+            self.log(
+                message="DEBUG - Settings successfully saved.",
+                log_level=4,
+            )
 
 
 class PlgOptionsFactory(QgsOptionsWidgetFactory):
