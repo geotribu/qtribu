@@ -97,6 +97,9 @@ class GeotribuPlugin:
         # -- Toolbar
         self.iface.addToolBarIcon(self.action_run)
 
+        # -- Post UI initialization
+        self.post_ui_init()
+
     def unload(self):
         """Cleans up when plugin is disabled/uninstalled."""
         # -- Clean up menu
@@ -114,8 +117,8 @@ class GeotribuPlugin:
         del self.action_run
         del self.action_help
 
-    def run(self):
-        """Main process.
+    def post_ui_init(self):
+        """Run after plugin's UI has been initialized.
 
         :raises Exception: if there is no item in the feed
         """
@@ -125,6 +128,50 @@ class GeotribuPlugin:
             if not self.rss_rdr.latest_item:
                 raise Exception("No item found")
 
+            # change tooltip
+            self.action_run.setToolTip(
+                "{} - {}".format(
+                    self.tr("Newest article"), self.rss_rdr.latest_item.title
+                )
+            )
+
+            # check if a new content has been published
+            if self.rss_rdr.has_new_content:
+                # change action icon
+                self.action_run.setIcon(
+                    QIcon(
+                        str(
+                            DIR_PLUGIN_ROOT / "resources/images/logo_orange_no_text.svg"
+                        )
+                    ),
+                )
+                # notify
+                self.log(
+                    message="{} {}".format(
+                        self.tr("New content published:"),
+                        self.rss_rdr.latest_item.title,
+                    ),
+                    log_level=3,
+                    push=PlgOptionsManager().get_plg_settings().notify_push_info,
+                )
+
+        except Exception as err:
+            self.log(
+                message=self.tr(
+                    text=f"Michel, we've got a problem: {err}",
+                    context="GeotribuPlugin",
+                ),
+                log_level=2,
+                push=True,
+            )
+
+    def run(self):
+        """Main process.
+
+        :raises Exception: if there is no item in the feed
+        """
+        try:
+            qntwk = NetworkRequestsManager(tr=self.tr)
             if PlgOptionsManager().get_plg_settings().browser == 1:
                 # display web page
                 self.wdg_web = QWidget()
@@ -142,6 +189,7 @@ class GeotribuPlugin:
                 self.wdg_web.setWindowModality(Qt.WindowModal)
                 self.wdg_web.show()
                 self.wdg_web.resize(1000, 600)
+
             else:
                 QDesktopServices.openUrl(qntwk.build_url(self.rss_rdr.latest_item.url))
 
@@ -153,6 +201,18 @@ class GeotribuPlugin:
                 log_level=3,
                 push=False,
             )
+
+            # save and restore
+            PlgOptionsManager().set_value_from_key(
+                key="latest_content_guid", value=self.rss_rdr.latest_item.guid
+            )
+            self.action_run.setIcon(
+                QIcon(str(DIR_PLUGIN_ROOT / "resources/images/logo_green_no_text.svg"))
+            )
+            self.action_run.setToolTip(
+                self.tr(text="Newest article", context="GeotribuPlugin")
+            )
+
         except Exception as err:
             self.log(
                 message=self.tr(

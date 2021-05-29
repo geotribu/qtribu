@@ -18,7 +18,7 @@ from typing import Tuple
 # project
 from qtribu.__about__ import __title__, __version__
 from qtribu.logic.custom_datatypes import RssItem
-from qtribu.toolbelt import PlgLogger
+from qtribu.toolbelt import PlgLogger, PlgOptionsManager
 
 # ############################################################################
 # ########## Globals ###############
@@ -103,3 +103,11 @@ class RssMiniReader:
             return None
 
         return self.FEED_ITEMS[0]
+
+    @property
+    def has_new_content(self) -> bool:
+        settings = PlgOptionsManager.get_plg_settings()
+        if self.latest_item.guid != settings.latest_content_guid:
+            return True
+        else:
+            return False

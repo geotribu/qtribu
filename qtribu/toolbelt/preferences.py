@@ -41,6 +41,7 @@ class PlgSettingsStructure(NamedTuple):
     # usage
     browser: int = 1
     notify_push_info: bool = True
+    latest_content_guid: str = None
 
     # network
     network_http_user_agent: str = f"{__title__}/{__version__}"
@@ -79,6 +80,9 @@ class PlgOptionsManager:
             browser=settings.value(key="browser", defaultValue=1, type=int),
             notify_push_info=settings.value(
                 key="notify_push_info", defaultValue=True, type=bool
+            ),
+            latest_content_guid=settings.value(
+                key="latest_content_guid", defaultValue="", type=str
             ),
             rss_source=settings.value(
                 key="rss_source",
@@ -126,6 +130,36 @@ class PlgOptionsManager:
             logger.error(err)
             plg_logger.log(err)
             out_value = None
+
+        settings.endGroup()
+
+        return out_value
+
+    @staticmethod
+    def set_value_from_key(key: str, value):
+        """Load and return plugin settings as a dictionary. \
+        Useful to get user preferences across plugin logic.
+
+        :return: plugin settings value matching key
+        """
+        if not hasattr(PlgSettingsStructure, key):
+            logger.error(
+                "Bad settings key. Must be one of: {}".format(
+                    ",".join(PlgSettingsStructure._fields)
+                )
+            )
+            return False
+
+        settings = QgsSettings()
+        settings.beginGroup(__title__)
+
+        try:
+            settings.setValue(key, value)
+            out_value = True
+        except Exception as err:
+            logger.error(err)
+            plg_logger.log(err)
+            out_value = False
 
         settings.endGroup()
 
