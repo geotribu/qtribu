@@ -110,12 +110,17 @@
     <message>
         <location filename="../../gui/dlg_settings.ui" line="214"/>
         <source>Trouble? Question?</source>
-        <translation>Problème ? Question ?</translation>
+        <translation type="obsolete">Problème ? Question ?</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="233"/>
+        <location filename="../../gui/dlg_settings.ui" line="226"/>
         <source>Report an issue</source>
         <translation>Créer un ticket</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dlg_settings.ui" line="237"/>
+        <source>Help</source>
+        <translation>Aide en ligne</translation>
     </message>
 </context>
 </TS>

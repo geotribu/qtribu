@@ -194,7 +194,7 @@
       <item row="2" column="1">
        <widget class="QLabel" name="lbl_version_saved_value">
         <property name="text">
-         <string notr="true">TextLabel</string>
+         <string notr="true">X.X.x</string>
         </property>
         <property name="textInteractionFlags">
          <set>Qt::NoTextInteraction</set>
@@ -205,13 +205,6 @@
        <widget class="QLabel" name="lbl_version_saved">
         <property name="text">
          <string>Version used to save settings:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="lbl_report">
-        <property name="text">
-         <string>Trouble? Question?</string>
         </property>
        </widget>
       </item>
@@ -235,6 +228,13 @@
         <property name="icon">
          <iconset>
           <normaloff>:/plugins/qtribu/resources/images/bullhorn.svg</normaloff>:/plugins/qtribu/resources/images/bullhorn.svg</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QPushButton" name="btn_help">
+        <property name="text">
+         <string>Help</string>
         </property>
        </widget>
       </item>
