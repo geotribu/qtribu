@@ -45,7 +45,6 @@ class NetworkRequestsManager:
         """Initialization."""
         self.log = PlgLogger().log
         self.ntwk_requester = QgsBlockingNetworkRequest()
-        self.tr = tr
 
     @lru_cache(maxsize=128)
     def build_url(self, url: str) -> QUrl:
@@ -92,7 +91,7 @@ class NetworkRequestsManager:
                 raise ConnectionError(self.ntwk_requester.errorMessage())
 
             self.log(
-                message=self.tr("Request to {} succeeded.".format(url)),
+                message=f"Request to {url} succeeded.",
                 log_level=3,
                 push=0,
             )
@@ -108,9 +107,6 @@ class NetworkRequestsManager:
             return req_reply.content()
 
         except Exception as err:
-            err_msg = self.tr(
-                text="Houston, we've got a problem: {}".format(err),
-                context="NetworkRequestsManager",
-            )
+            err_msg = "Houston, we've got a problem: {}".format(err)
             logger.error(err_msg)
             self.log(message=err_msg, log_level=2, push=1)
