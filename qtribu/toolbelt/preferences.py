@@ -5,23 +5,14 @@
 """
 
 # standard
-import logging
 from typing import NamedTuple
 
 # PyQGIS
 from qgis.core import QgsSettings
 
 # package
+import qtribu.toolbelt.log_handler
 from qtribu.__about__ import __title__, __version__
-
-from .log_handler import PlgLogger
-
-# ############################################################################
-# ########## Globals ###############
-# ##################################
-
-logger = logging.getLogger(__name__)
-plg_logger = PlgLogger()
 
 # ############################################################################
 # ########## Classes ###############
@@ -61,7 +52,9 @@ class PlgSettingsStructure(NamedTuple):
         elif self.browser == 2:
             return "system"
         else:
-            logger.error(f"Invalid browser code: {self.impex_access_mode}")
+            qtribu.toolbelt.log_handler.PlgLogger.log(
+                message=f"Invalid browser code: {self.impex_access_mode}", log_level=1
+            )
             return "qgis"
 
 
@@ -94,6 +87,11 @@ class PlgOptionsManager:
                 defaultValue="https://static.geotribu.fr/feed_rss_created.xml",
                 type=str,
             ),
+            splash_screen_enabled=settings.value(
+                key="splash_screen_enabled",
+                defaultValue=False,
+                type=bool,
+            ),
             # network
             network_http_user_agent=settings.value(
                 key="network_http_user_agent",
@@ -119,10 +117,11 @@ class PlgOptionsManager:
         :return: plugin settings value matching key
         """
         if not hasattr(PlgSettingsStructure, key):
-            logger.error(
-                "Bad settings key. Must be one of: {}".format(
+            qtribu.toolbelt.log_handler.PlgLogger.log(
+                message="Bad settings key. Must be one of: {}".format(
                     ",".join(PlgSettingsStructure._fields)
-                )
+                ),
+                log_level=1,
             )
             return None
 
@@ -132,8 +131,11 @@ class PlgOptionsManager:
         try:
             out_value = settings.value(key=key, defaultValue=default, type=exp_type)
         except Exception as err:
-            logger.error(err)
-            plg_logger.log(err)
+            qtribu.toolbelt.log_handler.PlgLogger.log(
+                message="Error occurred trying to get settings: {}.Trace: {}".format(
+                    key, err
+                )
+            )
             out_value = None
 
         settings.endGroup()
@@ -152,10 +154,11 @@ class PlgOptionsManager:
         :rtype: bool
         """
         if not hasattr(PlgSettingsStructure, key):
-            logger.error(
-                "Bad settings key. Must be one of: {}".format(
+            qtribu.toolbelt.log_handler.PlgLogger.log(
+                message="Bad settings key. Must be one of: {}".format(
                     ",".join(PlgSettingsStructure._fields)
-                )
+                ),
+                log_level=2,
             )
             return False
 
@@ -166,8 +169,11 @@ class PlgOptionsManager:
             settings.setValue(key, value)
             out_value = True
         except Exception as err:
-            logger.error(err)
-            plg_logger.log(err)
+            qtribu.toolbelt.log_handler.PlgLogger.log(
+                message="Error occurred trying to set settings: {}.Trace: {}".format(
+                    key, err
+                )
+            )
             out_value = False
 
         settings.endGroup()
