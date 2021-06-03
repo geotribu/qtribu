@@ -1,4 +1,4 @@
-name: Linter
+name: "✅ Linter"
 
 on:
   push:
@@ -26,11 +26,11 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v2.2.2
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v2.1.6
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('requirements/*.txt') }}

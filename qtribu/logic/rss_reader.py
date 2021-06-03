@@ -16,8 +16,9 @@ from email.utils import parsedate
 from typing import Tuple
 
 # project
+from qtribu.__about__ import __title__, __version__
 from qtribu.logic.custom_datatypes import RssItem
-from qtribu.toolbelt import PlgLogger
+from qtribu.toolbelt import PlgLogger, PlgOptionsManager
 
 # ############################################################################
 # ########## Globals ###############
@@ -31,16 +32,21 @@ logger = logging.getLogger(__name__)
 
 
 class RssMiniReader:
+    """Minimalist RSS feed parser."""
 
-    PATTERN_INCLUDE = ["articles/", "rdp/"]
     FEED_ITEMS: tuple = None
+    HEADERS: dict = {
+        b"Accept": b"application/xml",
+        b"User-Agent": bytes(f"{__title__}/{__version__}", "utf8"),
+    }
+    PATTERN_INCLUDE: list = ["articles/", "rdp/"]
 
     def __init__(self):
-        """Minimalist RSS feed parser."""
+        """Class initialization."""
         self.log = PlgLogger().log
 
     def read_feed(self, in_xml: str) -> Tuple[RssItem]:
-        """Parse eth feed XML as string and store items into an ordered tuple of tuples/
+        """Parse the feed XML as string and store items into an ordered tuple of tuples.
 
         :param in_xml: XML as string. Must be RSS compliant.
         :type in_xml: str
@@ -90,6 +96,11 @@ class RssMiniReader:
 
     @property
     def latest_item(self) -> RssItem:
+        """Returns the latest feed item, based on index 0.
+
+        :return: latest feed item.
+        :rtype: RssItem
+        """
         if not self.FEED_ITEMS:
             logger.warning(
                 "Feed has not been loaded, so it's impossible to "
@@ -98,3 +109,17 @@ class RssMiniReader:
             return None
 
         return self.FEED_ITEMS[0]
+
+    @property
+    def has_new_content(self) -> bool:
+        """Compare the saved item guid (in plugin settings) with feed latest item to \
+        determine if a newer item has been published.
+
+        :return: True is a newer item has been published.
+        :rtype: bool
+        """
+        settings = PlgOptionsManager.get_plg_settings()
+        if self.latest_item.guid != settings.latest_content_guid:
+            return True
+        else:
+            return False
