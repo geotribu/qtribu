@@ -29,5 +29,7 @@ Code documentation <_apidoc/modules>
 development/contribute
 development/environment
 development/documentation
+development/packaging
+development/testing
 development/history
 ```

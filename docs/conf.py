@@ -45,6 +45,7 @@ extensions = [
     "myst_parser",
     # "sphinx_autodoc_typehints",
     "sphinx_copybutton",
+    "sphinxext.opengraph",
     "sphinx_rtd_theme",
 ]
 
@@ -134,7 +135,7 @@ myst_url_schemes = ("http", "https", "mailto")
 
 # OpenGraph
 ogp_image = "https://cdn.geotribu.fr/img/projets-geotribu/plugin_qtribu/qtribu_article_displayed.png"
-ogp_site_name = "QTribu : reste en qontact avec ta la GéoTribu"
+ogp_site_name = "QTribu : reste en qontact avec la GéoTribu"
 ogp_site_url = __about__.__uri_homepage__
 ogp_custom_meta_tags = [
     "<meta name='twitter:card' content='summary_large_image'>",
