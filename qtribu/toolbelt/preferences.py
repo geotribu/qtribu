@@ -33,6 +33,7 @@ class PlgSettingsStructure(NamedTuple):
     browser: int = 1
     notify_push_info: bool = True
     latest_content_guid: str = None
+    splash_screen_enabled: bool = False
 
     # network
     network_http_user_agent: str = f"{__title__}/{__version__}"

@@ -50,7 +50,7 @@ class GeotribuPlugin:
 
         # sub-modules
         self.rss_rdr = RssMiniReader()
-        self.splash_chgr = SplashChanger()
+        self.splash_chgr = SplashChanger(self)
 
     def initGui(self):
         """Set up plugin UI elements."""
