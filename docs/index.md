@@ -1,5 +1,6 @@
 # {{ title }} - Documentation
 
+> **Description :** {{ description }}  
 > **Auteur/ice(s) et contributeur/ice(s) :** {{ author }}  
 > **Version du plugin :** {{ version }}  
 > **Version minimum de QGIS :** {{ qgis_version_min }}  
@@ -28,5 +29,7 @@ Code documentation <_apidoc/modules>
 development/contribute
 development/environment
 development/documentation
+development/packaging
+development/testing
 development/history
 ```

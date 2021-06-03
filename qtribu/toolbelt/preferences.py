@@ -51,6 +51,11 @@ class PlgSettingsStructure(NamedTuple):
 
     @property
     def browser_as_str(self) -> str:
+        """Returns mathcing browser value name from its code.
+
+        :return: browser value name
+        :rtype: str
+        """
         if self.browser == 1:
             return "qgis"
         elif self.browser == 2:
@@ -136,11 +141,15 @@ class PlgOptionsManager:
         return out_value
 
     @staticmethod
-    def set_value_from_key(key: str, value):
-        """Load and return plugin settings as a dictionary. \
-        Useful to get user preferences across plugin logic.
+    def set_value_from_key(key: str, value) -> bool:
+        """Set plugin QSettings value using the key.
 
-        :return: plugin settings value matching key
+        :param key: QSettings key
+        :type key: str
+        :param value: value to set
+        :type value: depending on the settings
+        :return: operation status
+        :rtype: bool
         """
         if not hasattr(PlgSettingsStructure, key):
             logger.error(

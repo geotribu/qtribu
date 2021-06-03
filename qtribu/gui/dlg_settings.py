@@ -17,6 +17,7 @@ from qgis.PyQt.Qt import QUrl
 from qgis.PyQt.QtCore import pyqtSignal
 from qgis.PyQt.QtGui import QDesktopServices, QIcon
 from qgis.PyQt.QtWidgets import QButtonGroup, QHBoxLayout, QWidget
+from qgis.utils import showPluginHelp
 
 # project
 from qtribu.__about__ import DIR_PLUGIN_ROOT, __title__, __uri_tracker__, __version__
@@ -55,6 +56,11 @@ class DlgSettings(QWidget, FORM_CLASS):
         self.opt_browser_group.addButton(self.opt_browser_os, 2)
 
         # customization
+        self.btn_help.setIcon(QIcon(":/images/themes/default/mActionHelpContents.svg"))
+        self.btn_help.pressed.connect(
+            partial(showPluginHelp, filename=f"{DIR_PLUGIN_ROOT}/resources/help/index")
+        )
+
         self.btn_report.setIcon(
             QIcon(":images/themes/default/console/iconSyntaxErrorConsole.svg")
         )
