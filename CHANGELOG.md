@@ -16,15 +16,26 @@ Unreleased
 
 -->
 
-## [0.4.0] - 2021-04-01
+## 0.5.0 - 2021-05-30
+
+- ajout du mécanisme permettant de notifier l'utilisateur si un nouveau contenu a été publié
+- amélioration des paramètres
+
+## 0.4.1 - 2021-04-09
+
+- améliorations diverses :
+    - meilleure gestion des paramètres du plugin
+    - personnalisation des en-têtes pour les appels réseau
+
+## 0.4.0 - 2021-04-01
 
 - fin de la période de tests : publication dans le canal stable
 
-## [0.3.1] - 2021-03-08
+## 0.3.1 - 2021-03-08
 
 - corrige un problème de type lors de la récupération des options enregistrées
 
-## [0.3.0] - 2021-03-06
+## 0.3.0 - 2021-03-06
 
 - préférences : menu réglages, intégration des options à l'interface de QGIS
 - ajout d'une option pour choisir dans quel navigateur internet ouvrir les pages : celui intégré à QGIS ou le navigateur par défaut de l'utilisateur/ice

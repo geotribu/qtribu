@@ -23,25 +23,10 @@ on_rtd = environ.get("READTHEDOCS", None) == "True"
 # -- Project information -----------------------------------------------------
 project = __about__.__title__
 author = __about__.__author__
+description = __about__.__summary__
 copyright = __about__.__copyright__
 version = release = __about__.__version__
 github_doc_root = "{}/tree/master/doc/".format(__about__.__uri__)
-
-myst_substitutions = {
-    "author": author,
-    "date_update": datetime.now().strftime("%d %B %Y"),
-    "qgis_version_max": __about__.__plugin_md__.get("general").get(
-        "qgismaximumversion"
-    ),
-    "qgis_version_min": __about__.__plugin_md__.get("general").get(
-        "qgisminimumversion"
-    ),
-    "repo_url": __about__.__uri__,
-    "title": project,
-    "version": version,
-}
-
-myst_url_schemes = ("http", "https", "mailto")
 
 # -- General configuration ---------------------------------------------------
 
@@ -52,14 +37,15 @@ extensions = [
     # Sphinx included
     "sphinx.ext.autodoc",
     "sphinx.ext.autosectionlabel",
+    "sphinx.ext.extlinks",
     "sphinx.ext.githubpages",
     "sphinx.ext.intersphinx",
-    "sphinx.ext.extlinks",
     "sphinx.ext.viewcode",
     # 3rd party
     "myst_parser",
     # "sphinx_autodoc_typehints",
     "sphinx_copybutton",
+    "sphinxext.opengraph",
     "sphinx_rtd_theme",
 ]
 
@@ -129,8 +115,48 @@ intersphinx_mapping = {
     "qgis": ("https://qgis.org/pyqgis/master/", None),
 }
 
+# MyST Parser
+myst_substitutions = {
+    "author": author,
+    "date_update": datetime.now().strftime("%d %B %Y"),
+    "description": description,
+    "qgis_version_max": __about__.__plugin_md__.get("general").get(
+        "qgismaximumversion"
+    ),
+    "qgis_version_min": __about__.__plugin_md__.get("general").get(
+        "qgisminimumversion"
+    ),
+    "repo_url": __about__.__uri__,
+    "title": project,
+    "version": version,
+}
 
-# -- Options for Sphinx API doc ----------------------------------------------
+myst_url_schemes = ("http", "https", "mailto")
+
+# OpenGraph
+ogp_image = "https://cdn.geotribu.fr/img/projets-geotribu/plugin_qtribu/qtribu_article_displayed.png"
+ogp_site_name = "QTribu : reste en qontact avec la GéoTribu"
+ogp_site_url = __about__.__uri_homepage__
+ogp_custom_meta_tags = [
+    "<meta name='twitter:card' content='summary_large_image'>",
+    f'<meta property="twitter:description" content="{description}" />',
+    f'<meta property="twitter:image" content="{ogp_image}" />',
+    '<meta property="twitter:site" content="@geotribu" />',
+    f'<meta property="twitter:title" content="{project}" />',
+]
+
+
+# Sphinx API doc
+autodoc_mock_imports = [
+    "qgis.core",
+    "qgis.gui",
+    "qgis.PyQt",
+    "qgis.PyQt.QtCore",
+    "qgis.PyQt.QtGui",
+    "qgis.PyQt.QtNetwork",
+    "qgis.PyQt.QtWidgets",
+    "qgis.utils",
+]
 
 # run api doc
 def run_apidoc(_):
