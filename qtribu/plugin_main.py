@@ -168,7 +168,7 @@ class GeotribuPlugin:
     def run(self):
         """Main process.
 
-        :raises Exception: if there is no item in the feed
+        :raises Exception: if something went wrong during request
         """
         try:
             qntwk = NetworkRequestsManager(tr=self.tr)

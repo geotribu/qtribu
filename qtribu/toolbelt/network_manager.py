@@ -48,11 +48,42 @@ class NetworkRequestsManager:
 
     @lru_cache(maxsize=128)
     def build_url(self, url: str) -> QUrl:
+        """Returns the URL using the plugin settings.
+
+        :param url: input URL to complete
+        :type url: str
+
+        :return: Qt URL object with full parameters
+        :rtype: QUrl
+        """
         parsed_url = urlparse(url)
         clean_url = parsed_url._replace(
             query=PlgOptionsManager.get_plg_settings().request_path
         )
         return QUrl(urlunparse(clean_url))
+
+    def build_request(self, url: QUrl = None) -> QNetworkRequest:
+        """Build request object using plugin settings.
+
+        :return: network request object.
+        :rtype: QNetworkRequest
+        """
+        # if URL is not specified, let's use the default one
+        if not url:
+            url = self.build_url()
+
+        # create network object
+        qreq = QNetworkRequest(url=url)
+
+        # headers
+        headers = {
+            b"Accept": bytes(self.plg_settings.http_content_type, "utf8"),
+            b"User-Agent": bytes(self.plg_settings.http_user_agent, "utf8"),
+        }
+        for k, v in headers.items():
+            qreq.setRawHeader(k, v)
+
+        return qreq
 
     def get_from_source(self, headers: dict = None) -> QByteArray:
         """Method to retrieve a RSS feed from a referenced source in preferences. \
@@ -63,6 +94,13 @@ class NetworkRequestsManager:
 
         :return: feed response in bytes
         :rtype: QByteArray
+
+        :example:
+
+        .. code-block:: python
+
+            import json
+            response_as_dict = json.loads(str(response, "UTF8"))
         """
         url = self.build_url(PlgOptionsManager.get_plg_settings().rss_source)
 

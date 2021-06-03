@@ -1,5 +1,6 @@
 # {{ title }} - Documentation
 
+> **Description :** {{ description }}  
 > **Auteur/ice(s) et contributeur/ice(s) :** {{ author }}  
 > **Version du plugin :** {{ version }}  
 > **Version minimum de QGIS :** {{ qgis_version_min }}  
