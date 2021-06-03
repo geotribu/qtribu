@@ -1,4 +1,4 @@
-name: Documentation Builder
+name: "📚 Documentation Builder"
 
 on:
   push:
