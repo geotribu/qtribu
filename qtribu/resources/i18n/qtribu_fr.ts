@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="fr" sourcelanguage="en">
+<!DOCTYPE TS><TS version="2.0" language="fr" sourcelanguage="en">
 <context>
     <name>GeotribuPlugin</name>
     <message>
@@ -27,14 +26,6 @@
         <location filename="../../plugin_main.py" line="155"/>
         <source>New content published:</source>
         <translation>Nouveau contenu publié :</translation>
-    </message>
-</context>
-<context>
-    <name>NetworkRequestsManager</name>
-    <message>
-        <location filename="../../toolbelt/network_manager.py" line="94"/>
-        <source>Request to {} succeeded.</source>
-        <translation type="obsolete">La requête vers {} a réussi.</translation>
     </message>
 </context>
 <context>
@@ -139,11 +130,6 @@
         <location filename="../../gui/dlg_settings.ui" line="207"/>
         <source>Version used to save settings:</source>
         <translation>Version des paramètres :</translation>
-    </message>
-    <message>
-        <location filename="../../gui/dlg_settings.ui" line="214"/>
-        <source>Trouble? Question?</source>
-        <translation type="obsolete">Problème ? Question ?</translation>
     </message>
     <message>
         <location filename="../../gui/dlg_settings.ui" line="226"/>
