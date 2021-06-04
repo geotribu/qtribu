@@ -4,27 +4,27 @@
 <context>
     <name>GeotribuPlugin</name>
     <message>
-        <location filename="../../plugin_main.py" line="188"/>
+        <location filename="../../plugin_main.py" line="194"/>
         <source>Last article from Geotribu</source>
         <translation>Dernier article publié sur Geotribu</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="132"/>
+        <location filename="../../plugin_main.py" line="138"/>
         <source>Newest article</source>
         <translation>Afficher le dernier article</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="72"/>
+        <location filename="../../plugin_main.py" line="73"/>
         <source>Help</source>
         <translation>Aide en ligne</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="81"/>
+        <location filename="../../plugin_main.py" line="82"/>
         <source>Settings</source>
         <translation>Réglages</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="149"/>
+        <location filename="../../plugin_main.py" line="155"/>
         <source>New content published:</source>
         <translation>Nouveau contenu publié :</translation>
     </message>
@@ -34,7 +34,7 @@
     <message>
         <location filename="../../toolbelt/network_manager.py" line="94"/>
         <source>Request to {} succeeded.</source>
-        <translation>La requête vers {} a réussi.</translation>
+        <translation type="obsolete">La requête vers {} a réussi.</translation>
     </message>
 </context>
 <context>
@@ -43,6 +43,39 @@
         <location filename="../../toolbelt/translator.py" line="68"/>
         <source>Your selected locale ({}) is not available. Please consider to contribute with your own translation :). Contact the plugin maintener(s): {}</source>
         <translation></translation>
+    </message>
+</context>
+<context>
+    <name>SplashChanger</name>
+    <message>
+        <location filename="../../logic/splash_changer.py" line="65"/>
+        <source>Splash screen: restore</source>
+        <translation>Splash screen : restaurer</translation>
+    </message>
+    <message>
+        <location filename="../../logic/splash_changer.py" line="69"/>
+        <source>Restore the QGIS default splash screen.</source>
+        <translation>Restaure le splash screen par défaut de QGIS.</translation>
+    </message>
+    <message>
+        <location filename="../../logic/splash_changer.py" line="71"/>
+        <source>Splash screen: apply custom</source>
+        <translation>Splash screen : personnaliser</translation>
+    </message>
+    <message>
+        <location filename="../../logic/splash_changer.py" line="75"/>
+        <source>Apply Geotribu banner as QGIS splash screen</source>
+        <translation>Applique un splash screen personnalisé</translation>
+    </message>
+    <message>
+        <location filename="../../logic/splash_changer.py" line="91"/>
+        <source>Splash screen: QGIS default restored. Please, restart.</source>
+        <translation>Splash screen de QGIS par défaut restauré. Merci de redémarrer.</translation>
+    </message>
+    <message>
+        <location filename="../../logic/splash_changer.py" line="108"/>
+        <source>Splash screen: custom applied. Please, restart.</source>
+        <translation>Splash screen personnalisé appliqué. Merci de redémarrer.</translation>
     </message>
 </context>
 <context>
