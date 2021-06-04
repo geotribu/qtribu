@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "coenraads.bracket-pair-colorizer-2",
+    "davidanson.vscode-markdownlint",
+    "eamodio.gitlens",
+    "github.vscode-pull-request-github",
+    "ms-python.python",
+    "ms-ceintl.vscode-language-pack-fr",
+    "njpwerner.autodocstring",
+    "zhoufeng.pyqt-integration"
+  ]
+}
