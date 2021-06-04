@@ -16,6 +16,14 @@ Unreleased
 
 -->
 
+## 0.6.0 - 2021-06-04
+
+- prise en compte du mode debug
+- activation du module permettant de changer/restaurer le splash screen ([voir l'article dédié](https://static.geotribu.fr/articles/2021/2021-06-17_qgis_personnaliser_splash_screen/))
+- traduction en français et réduction du warning de non traduction. A noter que, contrairement aux bonnes pratiques de git, les fichiers `.qm` (binaires) sont stockés dans le dépôt, jusqu'à ce que [le ticket upstream](https://github.com/opengisch/qgis-plugin-ci/issues/47) soit résolu.
+- documentation : ajout des balises OpenGraph, de pages manquantes et améliorations diverses
+- CI : améliorations diverses (emojis...)
+
 ## 0.5.0 - 2021-05-30
 
 - ajout du mécanisme permettant de notifier l'utilisateur si un nouveau contenu a été publié
