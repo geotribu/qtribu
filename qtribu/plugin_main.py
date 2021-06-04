@@ -90,18 +90,8 @@ class GeotribuPlugin:
             )
         )
 
-        self.action_splash = QAction(
-            QgsApplication.getThemeIcon("propertyicons/symbology.svg"),
-            self.tr("Change splash screen"),
-            self.iface.mainWindow(),
-        )
-        self.action_splash.setToolTip(
-            self.tr(
-                text="Apply Geotribu banner as QGIS splash screen",
-                context="GeotribuPlugin",
-            )
-        )
-        self.action_splash.triggered.connect(self.splash_chgr.check_ini)
+        self.action_splash = self.splash_chgr.menu_action
+        self.action_splash.triggered.connect(self.splash_chgr.switch)
 
         # -- Menu
         self.iface.addPluginToWebMenu(__title__, self.action_run)
