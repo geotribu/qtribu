@@ -1,6 +1,6 @@
 # Changer le splash screen
 
-:::{info}
+:::{note}
 Cette fonctionnalité a été conçue pour illustrer l'article : [Personnaliser l'image au lancement de QGIS](https://static.geotribu.fr/articles/2021/2021-06-17_qgis_personnaliser_splash_screen/)
 :::
 

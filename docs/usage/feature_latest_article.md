@@ -1,6 +1,6 @@
 # Dernier article publié
 
-:::{info}
+:::{note}
 Pré-requis : une connexion internet autorisée sur le [flux RSS de Geotribu](https://static.geotribu.fr/feed_rss_created.xml).
 :::
 
