@@ -4,6 +4,10 @@
 Cette fonctionnalité a été conçue pour illustrer l'article : [Personnaliser l'image au lancement de QGIS](https://static.geotribu.fr/articles/2021/2021-06-17_qgis_personnaliser_splash_screen/)
 :::
 
+## Autoriser la modification de l'interface 
+
+![QTribu menu splash screen authorize](https://cdn.geotribu.fr/img/projets-geotribu/plugin_qtribu/qtribu_menu_splash_screen_authorize.webp "QTribu - Menu autoriser la modification de l'interface")
+
 ## Appliquer le splash screen personnalisé
 
 ![QTribu menu splash screen customize](https://cdn.geotribu.fr/img/projets-geotribu/plugin_qtribu/qtribu_menu_splash_screen_custom.webp "QTribu - Menu personnaliser le splash screen")
