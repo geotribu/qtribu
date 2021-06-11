@@ -16,6 +16,11 @@ Unreleased
 
 -->
 
+## 0.6.1 - 2021-06-11
+
+- change le splash screen
+- ajoute le lien vers l'article sur le splash screen dans la doc
+
 ## 0.6.0 - 2021-06-04
 
 - prise en compte du mode debug
