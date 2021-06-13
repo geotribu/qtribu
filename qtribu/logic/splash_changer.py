@@ -45,9 +45,14 @@ class SplashChanger:
         self.log = PlgLogger().log
         self.parent = parent
 
-        # get folder path, handling different operating systems (especially Windows) 
-        self.plugin_splash_folder = repr(str(Path(DIR_PLUGIN_ROOT / 'resources/images/').resolve()) + sep).replace("'", "")
-        self.log(message=f"DEBUG - Folder to look for splash screen: {self.plugin_splash_folder}", log_level=4)
+        # get folder path, handling different operating systems (especially Windows)
+        self.plugin_splash_folder = repr(
+            str(Path(DIR_PLUGIN_ROOT / "resources/images/").resolve()) + sep
+        ).replace("'", "")
+        self.log(
+            message=f"DEBUG - Folder to look for splash screen: {self.plugin_splash_folder}",
+            log_level=4,
+        )
 
         # configuration files
         profil = Path(QgsApplication.qgisSettingsDirPath())
