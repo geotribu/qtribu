@@ -16,6 +16,10 @@ Unreleased
 
 -->
 
+## 0.6.2 - 2021-06-14
+
+- améliore le mécanisme de changement du splash screen pour gérer les chemins Windows (ou plutôt leur stockage dans un .ini et interprétation par QGIS)
+
 ## 0.6.1 - 2021-06-11
 
 - change le splash screen
