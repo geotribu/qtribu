@@ -11,7 +11,7 @@ from typing import NamedTuple
 from qgis.core import QgsSettings
 
 # package
-import qtribu.toolbelt.log_handler
+import qtribu.toolbelt.log_handler as log_hdlr
 from qtribu.__about__ import __title__, __version__
 
 # ############################################################################
@@ -53,7 +53,7 @@ class PlgSettingsStructure(NamedTuple):
         elif self.browser == 2:
             return "system"
         else:
-            qtribu.toolbelt.log_handler.PlgLogger.log(
+            log_hdlr.PlgLogger.log(
                 message=f"Invalid browser code: {self.impex_access_mode}", log_level=1
             )
             return "qgis"
@@ -118,7 +118,7 @@ class PlgOptionsManager:
         :return: plugin settings value matching key
         """
         if not hasattr(PlgSettingsStructure, key):
-            qtribu.toolbelt.log_handler.PlgLogger.log(
+            log_hdlr.PlgLogger.log(
                 message="Bad settings key. Must be one of: {}".format(
                     ",".join(PlgSettingsStructure._fields)
                 ),
@@ -132,7 +132,7 @@ class PlgOptionsManager:
         try:
             out_value = settings.value(key=key, defaultValue=default, type=exp_type)
         except Exception as err:
-            qtribu.toolbelt.log_handler.PlgLogger.log(
+            log_hdlr.PlgLogger.log(
                 message="Error occurred trying to get settings: {}.Trace: {}".format(
                     key, err
                 )
@@ -155,7 +155,7 @@ class PlgOptionsManager:
         :rtype: bool
         """
         if not hasattr(PlgSettingsStructure, key):
-            qtribu.toolbelt.log_handler.PlgLogger.log(
+            log_hdlr.PlgLogger.log(
                 message="Bad settings key. Must be one of: {}".format(
                     ",".join(PlgSettingsStructure._fields)
                 ),
@@ -170,7 +170,7 @@ class PlgOptionsManager:
             settings.setValue(key, value)
             out_value = True
         except Exception as err:
-            qtribu.toolbelt.log_handler.PlgLogger.log(
+            log_hdlr.PlgLogger.log(
                 message="Error occurred trying to set settings: {}.Trace: {}".format(
                     key, err
                 )

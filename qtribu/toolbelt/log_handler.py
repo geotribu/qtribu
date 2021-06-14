@@ -8,7 +8,7 @@ from qgis.core import QgsMessageLog
 from qgis.utils import iface
 
 # project package
-import qtribu.toolbelt.preferences
+import qtribu.toolbelt.preferences as plg_prefs_hdlr
 from qtribu.__about__ import __title__
 
 # ############################################################################
@@ -53,9 +53,7 @@ class PlgLogger(logging.Handler):
             log(message="Plugin loaded - TEST", log_level=4, push=1)
         """
         # if debug mode, let's ignore INFO, SUCCESS and TEST
-        debug_mode = (
-            qtribu.toolbelt.preferences.PlgOptionsManager.get_plg_settings().debug_mode
-        )
+        debug_mode = plg_prefs_hdlr.PlgOptionsManager.get_plg_settings().debug_mode
         if not debug_mode and (1 < log_level < 3 or not push):
             return
 

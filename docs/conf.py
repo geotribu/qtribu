@@ -21,11 +21,12 @@ from qtribu import __about__
 on_rtd = environ.get("READTHEDOCS", None) == "True"
 
 # -- Project information -----------------------------------------------------
-project = __about__.__title__
 author = __about__.__author__
-description = __about__.__summary__
 copyright = __about__.__copyright__
+description = __about__.__summary__
+project = __about__.__title__
 version = release = __about__.__version__
+
 github_doc_root = "{}/tree/master/doc/".format(__about__.__uri__)
 
 # -- General configuration ---------------------------------------------------
