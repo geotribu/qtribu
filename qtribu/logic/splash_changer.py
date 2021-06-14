@@ -17,7 +17,7 @@ from pathlib import Path
 
 # pyqgis
 from qgis.core import QgsApplication, QgsSettings
-from qgis.PyQt.QtCore import QCoreApplication, QSettings
+from qgis.PyQt.QtCore import QCoreApplication
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction
 
