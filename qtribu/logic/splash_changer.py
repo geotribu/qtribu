@@ -45,7 +45,14 @@ class SplashChanger:
         self.log = PlgLogger().log
         self.parent = parent
 
-        self.plugin_splash = f"{DIR_PLUGIN_ROOT / 'resources/images/'}{sep}"
+        # get folder path, handling different operating systems (especially Windows)
+        self.plugin_splash_folder = repr(
+            str(Path(DIR_PLUGIN_ROOT / "resources/images/").resolve()) + sep
+        ).replace("'", "")
+        self.log(
+            message=f"DEBUG - Folder to look for splash screen: {self.plugin_splash_folder}",
+            log_level=4,
+        )
 
         # configuration files
         profil = Path(QgsApplication.qgisSettingsDirPath())
@@ -145,14 +152,14 @@ class SplashChanger:
                 ini_custom.set(
                     section="Customization",
                     option="splashpath",
-                    value=self.plugin_splash,
+                    value=self.plugin_splash_folder,
                 )
                 with self.cfg_qgis_custom.open("w", encoding="UTF8") as configfile:
                     ini_custom.write(configfile, space_around_delimiters=False)
 
         else:
             ini_custom = ConfigParser()
-            ini_custom["Customization"] = {"splashpath": self.plugin_splash}
+            ini_custom["Customization"] = {"splashpath": self.plugin_splash_folder}
             with self.cfg_qgis_custom.open(mode="w", encoding="UTF8") as configfile:
                 ini_custom.write(configfile, space_around_delimiters=False)
 

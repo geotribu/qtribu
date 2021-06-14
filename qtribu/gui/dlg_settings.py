@@ -19,7 +19,13 @@ from qgis.PyQt.QtGui import QDesktopServices, QIcon
 from qgis.PyQt.QtWidgets import QButtonGroup, QHBoxLayout, QWidget
 
 # project
-from qtribu.__about__ import DIR_PLUGIN_ROOT, __title__, __uri_homepage__, __uri_tracker__, __version__
+from qtribu.__about__ import (
+    DIR_PLUGIN_ROOT,
+    __title__,
+    __uri_homepage__,
+    __uri_tracker__,
+    __version__,
+)
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
 
 # ############################################################################
