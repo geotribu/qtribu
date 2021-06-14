@@ -16,8 +16,8 @@ from os import sep  # required since pathlib strips trailing whitespace
 from pathlib import Path
 
 # pyqgis
-from qgis.core import QgsApplication
-from qgis.PyQt.QtCore import QCoreApplication
+from qgis.core import QgsApplication, QgsSettings
+from qgis.PyQt.QtCore import QCoreApplication, QSettings
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction
 
@@ -121,24 +121,9 @@ class SplashChanger:
 
     def enable_customization(self):
         """Enable UI customization in QGIS for current user."""
-        # read QGIS configuration file
-        ini_base = ConfigParser()
-        ini_base.optionxform = str
-        ini_base.read(self.cfg_qgis_base, encoding="UTF8")
-
-        # check if customization is already enabled
-        if "UI" in ini_base.sections():
-            ini_base.set(
-                section="UI",
-                option=r"Customization\enabled",
-                value="true",
-            )
-            with self.cfg_qgis_base.open("w", encoding="UTF8") as configfile:
-                ini_base.write(configfile, space_around_delimiters=False)
-
-            self.log(message="Customization has been enabled.", log_level=1)
-        else:
-            self.log(message="DEBUG - Customization is already enabled.", log_level=4)
+        qgis_options = QgsSettings()
+        qgis_options.beginGroup("UI/Customization")
+        qgis_options.setValue("enabled", True)
 
     def apply_custom(self):
         """Apply custom splash screen."""
