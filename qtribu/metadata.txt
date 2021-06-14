@@ -20,5 +20,5 @@ qgisMinimumVersion=3.16
 qgisMaximumVersion=3.99
 
 # versionnement
-version=0.6.2
+version=0.6.3
 changelog=

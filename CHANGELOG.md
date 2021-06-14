@@ -16,6 +16,10 @@ Unreleased
 
 -->
 
+## 0.6.3 - 2021-06-14
+
+- utilise les QgsSettings plutôt que l'édition du fichier ini pour activer la personnalisation de l'interface, pour cause d'inconsistance entre les systèmes d'exploitation, en particulier MacOS
+
 ## 0.6.2 - 2021-06-14
 
 - améliore le mécanisme de changement du splash screen pour gérer les chemins Windows (ou plutôt leur stockage dans un .ini et interprétation par QGIS)
