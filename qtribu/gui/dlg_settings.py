@@ -10,7 +10,6 @@ from functools import partial
 from pathlib import Path
 
 # PyQGIS
-from qgis.core import QgsSettings
 from qgis.gui import QgsOptionsPageWidget, QgsOptionsWidgetFactory
 from qgis.PyQt import uic
 from qgis.PyQt.Qt import QUrl
@@ -27,6 +26,7 @@ from qtribu.__about__ import (
     __version__,
 )
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
+from qtribu.toolbelt.preferences import PlgSettingsStructure
 
 # ############################################################################
 # ########## Globals ###############
@@ -74,6 +74,7 @@ class DlgSettings(QWidget, FORM_CLASS):
         )
 
         # load previously saved settings
+        self.plg_settings = PlgOptionsManager()
         self.load_settings()
 
     def closeEvent(self, event):
@@ -87,7 +88,7 @@ class DlgSettings(QWidget, FORM_CLASS):
 
     def load_settings(self) -> dict:
         """Load options from QgsSettings into UI form."""
-        settings = PlgOptionsManager.get_plg_settings()
+        settings = self.plg_settings.get_plg_settings()
 
         # set UI from saved options
         self.opt_browser_group.button(settings.browser).setChecked(True)
@@ -98,20 +99,15 @@ class DlgSettings(QWidget, FORM_CLASS):
 
     def save_settings(self):
         """Save options from UI form into QSettings."""
-        # open settings group
-        settings = QgsSettings()
-        settings.beginGroup(__title__)
+        new_settings = PlgSettingsStructure(
+            browser=self.opt_browser_group.checkedId(),
+            notify_push_info=self.opt_notif_push_msg.isChecked(),
+            debug_mode=self.opt_debug.isChecked(),
+            version=__version__,
+        )
 
-        # save features
-        settings.setValue("browser", self.opt_browser_group.checkedId())
-        settings.setValue("notify_push_info", self.opt_notif_push_msg.isChecked())
-
-        # save miscellaneous
-        settings.setValue("debug_mode", self.opt_debug.isChecked())
-        settings.setValue("version", __version__)
-
-        # close settings group
-        settings.endGroup()
+        # dump new settings into QgsSettings
+        self.plg_settings.save_from_object(new_settings)
 
         if __debug__:
             self.log(
@@ -132,6 +128,9 @@ class PlgOptionsFactory(QgsOptionsWidgetFactory):
 
     def title(self):
         return __title__
+
+    def helpId(self) -> str:
+        return __uri_homepage__
 
 
 class ConfigOptionsPage(QgsOptionsPageWidget):
