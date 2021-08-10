@@ -101,7 +101,8 @@ class PlgOptionsManager:
             ),
             request_path=settings.value(
                 key="request_path",
-                defaultValue=f"utm_source=QGIS&utm_medium={__title__}&utm_campaign=plugin_{__version__}",
+                defaultValue=f"utm_source=QGIS&utm_medium={__title__}"
+                f"&utm_campaign=plugin_{__version__}",
                 type=str,
             ),
         )
