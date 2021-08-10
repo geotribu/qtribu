@@ -132,7 +132,7 @@ myst_substitutions = {
     "version": version,
 }
 
-myst_url_schemes = ("http", "https", "mailto")
+myst_url_schemes = ["http", "https", "mailto"]
 
 # OpenGraph
 ogp_image = "https://cdn.geotribu.fr/img/projets-geotribu/plugin_qtribu/qtribu_article_displayed.png"
