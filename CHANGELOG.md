@@ -16,6 +16,11 @@ Unreleased
 
 -->
 
+## 0.7.0 - 2021-08-10
+
+- ajout d'un bouton dans la notification pour ouvrir directement le dernier contenu
+- simplification de la maintenance du formulaire des préférences
+
 ## 0.6.3 - 2021-06-14
 
 - utilise les QgsSettings plutôt que l'édition du fichier ini pour activer la personnalisation de l'interface, pour cause d'inconsistance entre les systèmes d'exploitation, en particulier MacOS
