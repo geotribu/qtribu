@@ -14,4 +14,4 @@ Everything is done through the continuous deployment:
 
 1. Fillfull the `CHANGELOG.md`
 2. Apply a git tag with the relevant version: `git tag -a 1.3.1 {git commit hash} -m "This version rocks!"`
-3. Push tag to main branch
+3. Push tag to main branch: `git push origin 1.3.1`
