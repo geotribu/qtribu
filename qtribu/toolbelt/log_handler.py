@@ -26,6 +26,7 @@ class PlgLogger(logging.Handler):
         application: str = __title__,
         log_level: int = 0,
         push: bool = False,
+        duration: int = None,
     ):
         """Send messages to QGIS messages windows and to the user as a message bar. \
         Plugin name is used as title. If debug mode is disabled, only warnings (1) and \
@@ -42,6 +43,11 @@ class PlgLogger(logging.Handler):
         :param push: also display the message in the QGIS message bar in addition to \
         the log, defaults to False
         :type push: bool, optional
+        :param duration: duration of the message in seconds. If not set, the \
+        duration is calculated from the log level: `(log_level + 1) * 3`. seconds. \
+        If set to 0, then the message must be manually dismissed by the user. \
+        Defaults to None.
+        :type duration: int, optional
 
         :Example:
 
@@ -55,7 +61,7 @@ class PlgLogger(logging.Handler):
         """
         # if debug mode, let's ignore INFO, SUCCESS and TEST
         debug_mode = plg_prefs_hdlr.PlgOptionsManager.get_plg_settings().debug_mode
-        if not debug_mode and (1 < log_level < 3 or not push):
+        if not debug_mode and not push and (log_level < 1 or log_level > 2):
             return
 
         # ensure message is a string
@@ -76,11 +82,16 @@ class PlgLogger(logging.Handler):
 
         # optionally, display message on QGIS Message bar (above the map canvas)
         if push:
+            # calc duration
+            if not duration:
+                duration = (log_level + 1) * 3
+
+            # send it
             iface.messageBar().pushMessage(
                 title=application,
                 text=message,
                 level=log_level,
-                duration=(log_level + 1) * 3,
+                duration=duration,
             )
 
     def set_logger(self):
