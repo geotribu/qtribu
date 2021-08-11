@@ -71,7 +71,7 @@ class GeotribuPlugin:
         self.action_run.triggered.connect(self.run)
 
         self.action_help = QAction(
-            QIcon(":/images/themes/default/mActionHelpContents.svg"),
+            QIcon(QgsApplication.iconPath("mActionHelpContents.svg")),
             self.tr("Help", context="GeotribuPlugin"),
             self.iface.mainWindow(),
         )

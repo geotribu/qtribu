@@ -61,13 +61,13 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         self.opt_browser_group.addButton(self.opt_browser_os, 2)
 
         # customization
-        self.btn_help.setIcon(QIcon(":/images/themes/default/mActionHelpContents.svg"))
+        self.btn_help.setIcon(QIcon(QgsApplication.iconPath("mActionHelpContents.svg")))
         self.btn_help.pressed.connect(
             partial(QDesktopServices.openUrl, QUrl(__uri_homepage__))
         )
 
         self.btn_report.setIcon(
-            QIcon(":images/themes/default/console/iconSyntaxErrorConsole.svg")
+            QIcon(QgsApplication.iconPath("console/iconSyntaxErrorConsole.svg"))
         )
         self.btn_report.pressed.connect(
             partial(QDesktopServices.openUrl, QUrl(f"{__uri_tracker__}new/choose"))
