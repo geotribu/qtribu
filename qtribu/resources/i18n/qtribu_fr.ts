@@ -6,7 +6,7 @@
     <message>
         <location filename="../../gui/dlg_settings.py" line="121"/>
         <source>Read history has been reset.</source>
-        <translation>L&apos;historique de lecture a été réinitilisé.</translation>
+        <translation>L&apos;historique de lecture a été réinitialisé.</translation>
     </message>
 </context>
 <context>
@@ -153,7 +153,7 @@
     <message>
         <location filename="../../gui/dlg_settings.ui" line="216"/>
         <source>Reset read history</source>
-        <translation type="unfinished">Effacer l&apos;historique</translation>
+        <translation>Effacer l&apos;historique</translation>
     </message>
 </context>
 </TS>
