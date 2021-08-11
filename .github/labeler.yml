@@ -6,4 +6,3 @@ dependencies:
 
 documentation:
   - docs/**/*
-  - .readthedocs.yml
