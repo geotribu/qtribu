@@ -2,14 +2,14 @@ name: "✅ Linter"
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
     paths:
-      - '**.py'
+      - "**.py"
 
   pull_request:
-    branches: [ main ]
+    branches: [main]
     paths:
-      - '**.py'
+      - "**.py"
 
 env:
   PROJECT_FOLDER: "qtribu"
