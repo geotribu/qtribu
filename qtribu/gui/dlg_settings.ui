@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
+    <width>719</width>
     <height>378</height>
    </rect>
   </property>
@@ -37,7 +37,7 @@
      <property name="minimumSize">
       <size>
        <width>50</width>
-       <height>25</height>
+       <height>30</height>
       </size>
      </property>
      <property name="font">
@@ -88,42 +88,39 @@
       <string>Features</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="1" column="0">
-       <widget class="QLabel" name="lbl_browser">
-        <property name="toolTip">
-         <string>Which web browser to use to display articles.</string>
-        </property>
-        <property name="text">
-         <string>Open in web browser:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="2">
-       <widget class="QRadioButton" name="opt_browser_os">
-        <property name="text">
-         <string>System default browser</string>
-        </property>
-       </widget>
-      </item>
       <item row="3" column="0">
        <widget class="QLabel" name="lbl_notification">
+        <property name="minimumSize">
+         <size>
+          <width>175</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>250</width>
+          <height>30</height>
+         </size>
+        </property>
         <property name="text">
          <string>Notify for new content:</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
-       <widget class="QRadioButton" name="opt_browser_qt">
-        <property name="text">
-         <string>Embedded browser</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
       <item row="3" column="1">
        <widget class="QCheckBox" name="opt_notif_push_msg">
+        <property name="minimumSize">
+         <size>
+          <width>275</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>30</height>
+         </size>
+        </property>
         <property name="autoFillBackground">
          <bool>false</bool>
         </property>
@@ -137,6 +134,101 @@
          <bool>false</bool>
         </property>
        </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="lbl_browser">
+        <property name="minimumSize">
+         <size>
+          <width>175</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>250</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Which web browser to use to display articles.</string>
+        </property>
+        <property name="text">
+         <string>Open in web browser:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QRadioButton" name="opt_browser_os">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>System default browser</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QRadioButton" name="opt_browser_qt">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Embedded browser</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="3">
+       <widget class="QPushButton" name="btn_reset_read_history">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Reset read history</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
       </item>
      </layout>
     </widget>
@@ -174,6 +266,18 @@
      <layout class="QGridLayout" name="gridLayout">
       <item row="1" column="0">
        <widget class="QCheckBox" name="opt_debug">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>30</height>
+         </size>
+        </property>
         <property name="toolTip">
          <string>Enable debug mode.</string>
         </property>
@@ -193,6 +297,18 @@
       </item>
       <item row="2" column="1">
        <widget class="QLabel" name="lbl_version_saved_value">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>30</height>
+         </size>
+        </property>
         <property name="text">
          <string notr="true">X.X.x</string>
         </property>
@@ -203,6 +319,18 @@
       </item>
       <item row="2" column="0">
        <widget class="QLabel" name="lbl_version_saved">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>30</height>
+         </size>
+        </property>
         <property name="text">
          <string>Version used to save settings:</string>
         </property>
@@ -233,6 +361,18 @@
       </item>
       <item row="0" column="0">
        <widget class="QPushButton" name="btn_help">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>30</height>
+         </size>
+        </property>
         <property name="text">
          <string>Help</string>
         </property>

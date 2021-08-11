@@ -9,9 +9,11 @@ from functools import partial
 from pathlib import Path
 
 # PyQGIS
+from qgis.core import QgsApplication
 from qgis.gui import QgsOptionsPageWidget, QgsOptionsWidgetFactory
 from qgis.PyQt import uic
 from qgis.PyQt.Qt import QUrl
+from qgis.PyQt.QtCore import QCoreApplication
 from qgis.PyQt.QtGui import QDesktopServices, QIcon
 from qgis.PyQt.QtWidgets import QButtonGroup
 
@@ -71,6 +73,11 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
             partial(QDesktopServices.openUrl, QUrl(f"{__uri_tracker__}new/choose"))
         )
 
+        self.btn_reset_read_history.setIcon(
+            QIcon(QgsApplication.iconPath("/console/iconClearConsole.svg"))
+        )
+        self.btn_reset_read_history.pressed.connect(self.reset_read_history)
+
         # load previously saved settings
         self.load_settings()
 
@@ -104,6 +111,34 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
 
         self.opt_debug.setChecked(settings.debug_mode)
         self.lbl_version_saved_value.setText(settings.version)
+
+    def reset_read_history(self):
+        """Set latest_content_guid to None."""
+        new_settings = PlgSettingsStructure(
+            latest_content_guid=None,
+        )
+
+        # dump new settings into QgsSettings
+        self.plg_settings.save_from_object(new_settings)
+
+        # inform end user
+        self.log(
+            message=self.tr("Read history has been reset."),
+            log_level=3,
+            duration=2,
+            push=True,
+        )
+
+    def tr(self, message: str) -> str:
+        """Get the translation for a string using Qt translation API.
+
+        :param message: string to be translated.
+        :type message: str
+
+        :returns: Translated version of message.
+        :rtype: str
+        """
+        return QCoreApplication.translate(self.__class__.__name__, message)
 
 
 class PlgOptionsFactory(QgsOptionsWidgetFactory):
