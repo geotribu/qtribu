@@ -16,7 +16,7 @@ env:
   PYTHON_VERSION: 3.7
 
 jobs:
-  tests:
+  tests-unit:
     runs-on: ubuntu-latest
 
     steps:
@@ -41,7 +41,41 @@ jobs:
           python -m pip install -U -r requirements/testing.txt
 
       - name: Run Unit tests
-        run: pytest
+        run: pytest tests/unit/
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v2.0.2
+        uses: codecov/codecov-action@v1
+
+  test-qgis:
+    runs-on: ubuntu-20.04
+
+    container:
+      image: qgis/qgis:release-3_16
+      env:
+        DISPLAY: ":99"
+      options: -v ${{ github.workspace }}:/tests_directory
+
+    steps:
+      - name: Get source code
+        uses: actions/checkout@v2
+
+      - name: Print QGIS version
+        run: qgis --version
+
+      - uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements/*.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install Python requirements
+        run: |
+          python3 -m pip install -U pip setuptools wheel
+          python3 -m pip install -U -r requirements/testing.txt
+
+      - name: Run Unit tests
+        run: pytest tests/qgis/
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2
