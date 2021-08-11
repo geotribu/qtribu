@@ -8,7 +8,7 @@ WORKDIR /tmp/plugin
 COPY requirements requirements
 
 RUN python3 -m pip install --no-cache-dir -U pip \
-    && python3 -m pip install --user --no-cache-dir -U setuptools wheel \
-    && python3 -m pip install --user --no-cache-dir -U -r requirements/testing.txt
+    && python3 -m pip install --no-cache-dir -U setuptools wheel \
+    && python3 -m pip install --no-cache-dir -U -r requirements/testing.txt
 
 RUN qgis --version
