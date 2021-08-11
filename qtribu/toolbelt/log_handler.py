@@ -115,7 +115,7 @@ class PlgLogger(logging.Handler):
                     title=application, text=message
                 )
                 widget_button = QPushButton(button_text or "More...")
-                if not button_connect:
+                if button_connect:
                     widget_button.clicked.connect(button_connect)
                 else:
                     mini_dlg = QgsMessageOutput.createMessageOutput()
