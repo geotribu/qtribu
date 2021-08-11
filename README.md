@@ -4,7 +4,10 @@
 [![flake8](https://img.shields.io/badge/linter-flake8-green)](https://flake8.pycqa.org/)
 [![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/Guts/mkdocs-rss-plugin/master.svg)](https://results.pre-commit.ci/latest/github/Guts/mkdocs-rss-plugin/master)
+[![codecov](https://codecov.io/gh/geotribu/qtribu/branch/main/graph/badge.svg?token=7O9PYKS4Q0)](https://codecov.io/gh/geotribu/qtribu)
 
+[![Tester](https://github.com/geotribu/qtribu/actions/workflows/tester.yml/badge.svg)](https://github.com/geotribu/qtribu/actions/workflows/tester.yml)
 [![Documentation Builder](https://github.com/geotribu/qtribu/actions/workflows/docs_builder.yml/badge.svg)](https://geotribu.github.io/qtribu/)
 [![Packager](https://github.com/geotribu/qtribu/actions/workflows/packager.yml/badge.svg)](https://github.com/geotribu/qtribu/actions/workflows/packager.yml)
 [![Releaser](https://github.com/geotribu/qtribu/actions/workflows/release.yml/badge.svg)](https://github.com/geotribu/qtribu/actions/workflows/release.yml)
