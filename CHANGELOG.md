@@ -16,6 +16,12 @@ Unreleased
 
 -->
 
+## 0.8.0 - 2021-08-11
+
+- ajout d'un bouton pour effacer l'historique de consultation
+- correction d'un bug dans la condition permettant d'afficher un bouton dans les notifications push
+- améliorations mineures
+
 ## 0.7.0 - 2021-08-10
 
 - ajout d'un bouton dans la notification pour ouvrir directement le dernier contenu
