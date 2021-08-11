@@ -36,7 +36,7 @@ class PlgTranslator:
     :type qm_search_start_path: Path, optional
     :param tpl_filename: pattern of translations filenames. \
     Defaults to Template(f"{__title__.lower()}_.qm")
-    :type tpl_filename: str, optional
+    :type tpl_filename: Template, optional
     """
 
     AVAILABLE_TRANSLATIONS: tuple = None
@@ -44,7 +44,7 @@ class PlgTranslator:
     def __init__(
         self,
         qm_search_start_path: Path = DIR_PLUGIN_ROOT,
-        tpl_filename: str = Template(f"{__title__.lower()}_$locale.qm"),
+        tpl_filename: Template = Template(f"{__title__.lower()}_$locale.qm"),
     ):
         """Initialize method."""
 
@@ -70,7 +70,7 @@ class PlgTranslator:
                 "Please consider to contribute with your own translation :). "
                 "Contact the plugin maintener(s): {}".format(locale, __email__)
             )
-            self.log(message=str(info_msg), log_level=1, push=1)
+            self.log(message=str(info_msg), log_level=1, push=False)
             logger.info(info_msg)
 
     def get_translator(self) -> QTranslator:

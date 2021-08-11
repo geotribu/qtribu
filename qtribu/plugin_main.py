@@ -7,7 +7,7 @@
 # PyQGIS
 from qgis.core import QgsApplication
 from qgis.gui import QgisInterface
-from qgis.PyQt.Qt import QUrl
+from qgis.PyQt.Qt import QNetworkRequest
 from qgis.PyQt.QtCore import QCoreApplication, Qt
 from qgis.PyQt.QtGui import QDesktopServices, QIcon
 from qgis.PyQt.QtWebKitWidgets import QWebView
@@ -15,12 +15,12 @@ from qgis.PyQt.QtWidgets import QAction, QVBoxLayout, QWidget
 from qgis.utils import showPluginHelp
 
 # project
-from qtribu.__about__ import DIR_PLUGIN_ROOT, __title__
-from qtribu.logic import RssMiniReader
+from qtribu.__about__ import DIR_PLUGIN_ROOT, __title__, __version__
+from qtribu.gui.dlg_settings import PlgOptionsFactory
+from qtribu.logic import RssMiniReader, SplashChanger
 from qtribu.toolbelt import (
     NetworkRequestsManager,
     PlgLogger,
-    PlgOptionsFactory,
     PlgOptionsManager,
     PlgTranslator,
 )
@@ -50,6 +50,7 @@ class GeotribuPlugin:
 
         # sub-modules
         self.rss_rdr = RssMiniReader()
+        self.splash_chgr = SplashChanger(self)
 
     def initGui(self):
         """Set up plugin UI elements."""
@@ -60,7 +61,7 @@ class GeotribuPlugin:
 
         # -- Actions
         self.action_run = QAction(
-            QIcon(str(DIR_PLUGIN_ROOT / "resources/images/logo_geotribu.png")),
+            QIcon(str(DIR_PLUGIN_ROOT / "resources/images/logo_green_no_text.svg")),
             self.tr("Newest article"),
             self.iface.mainWindow(),
         )
@@ -70,7 +71,7 @@ class GeotribuPlugin:
         self.action_run.triggered.connect(self.run)
 
         self.action_help = QAction(
-            QIcon(":/images/themes/default/mActionHelpContents.svg"),
+            QIcon(QgsApplication.iconPath("mActionHelpContents.svg")),
             self.tr("Help", context="GeotribuPlugin"),
             self.iface.mainWindow(),
         )
@@ -89,13 +90,20 @@ class GeotribuPlugin:
             )
         )
 
+        self.action_splash = self.splash_chgr.menu_action
+        self.action_splash.triggered.connect(self.splash_chgr.switch)
+
         # -- Menu
         self.iface.addPluginToWebMenu(__title__, self.action_run)
+        self.iface.addPluginToWebMenu(__title__, self.action_splash)
         self.iface.addPluginToWebMenu(__title__, self.action_settings)
         self.iface.addPluginToWebMenu(__title__, self.action_help)
 
         # -- Toolbar
         self.iface.addToolBarIcon(self.action_run)
+
+        # -- Post UI initialization
+        self.post_ui_init()
 
     def unload(self):
         """Cleans up when plugin is disabled/uninstalled."""
@@ -103,6 +111,7 @@ class GeotribuPlugin:
         self.iface.removePluginWebMenu(__title__, self.action_help)
         self.iface.removePluginWebMenu(__title__, self.action_run)
         self.iface.removePluginWebMenu(__title__, self.action_settings)
+        self.iface.removePluginWebMenu(__title__, self.action_splash)
 
         # -- Clean up toolbar
         self.iface.removeToolBarIcon(self.action_run)
@@ -114,33 +123,85 @@ class GeotribuPlugin:
         del self.action_run
         del self.action_help
 
-    def run(self):
-        """Main process.
+    def post_ui_init(self):
+        """Run after plugin's UI has been initialized.
 
         :raises Exception: if there is no item in the feed
         """
         try:
             qntwk = NetworkRequestsManager(tr=self.tr)
-            self.rss_rdr.read_feed(qntwk.get_from_source())
-
+            self.rss_rdr.read_feed(qntwk.get_from_source(headers=self.rss_rdr.HEADERS))
             if not self.rss_rdr.latest_item:
                 raise Exception("No item found")
 
-            if PlgOptionsManager().get_plg_settings().get("browser") == 1:
+            # change tooltip
+            self.action_run.setToolTip(
+                "{} - {}".format(
+                    self.tr("Newest article"), self.rss_rdr.latest_item.title
+                )
+            )
+
+            # check if a new content has been published
+            if self.rss_rdr.has_new_content:
+                # change action icon
+                self.action_run.setIcon(
+                    QIcon(
+                        str(
+                            DIR_PLUGIN_ROOT / "resources/images/logo_orange_no_text.svg"
+                        )
+                    ),
+                )
+                # notify
+                self.log(
+                    message="{} {}".format(
+                        self.tr("New content published:"),
+                        self.rss_rdr.latest_item.title,
+                    ),
+                    log_level=3,
+                    push=PlgOptionsManager().get_plg_settings().notify_push_info,
+                    duration=3,
+                    button=True,
+                    button_text=self.tr("Newest article"),
+                    button_connect=self.run,
+                )
+
+        except Exception as err:
+            self.log(
+                message=self.tr(
+                    text=f"Michel, we've got a problem: {err}",
+                    context="GeotribuPlugin",
+                ),
+                log_level=2,
+                push=True,
+            )
+
+    def run(self):
+        """Main process.
+
+        :raises Exception: if something went wrong during request
+        """
+        try:
+            qntwk = NetworkRequestsManager(tr=self.tr)
+            if PlgOptionsManager().get_plg_settings().browser == 1:
                 # display web page
                 self.wdg_web = QWidget()
                 vlayout = QVBoxLayout()
                 web = QWebView()
-                last_page = QUrl(self.rss_rdr.latest_item.url)
-                web.load(last_page)
+                req = QNetworkRequest(qntwk.build_url(self.rss_rdr.latest_item.url))
+                req.setHeader(
+                    QNetworkRequest.UserAgentHeader,
+                    bytes(f"{__title__}/{__version__}", "utf8"),
+                )
+                web.load(req)
                 vlayout.addWidget(web)
                 self.wdg_web.setLayout(vlayout)
                 self.wdg_web.setWindowTitle(self.tr("Last article from Geotribu"))
                 self.wdg_web.setWindowModality(Qt.WindowModal)
                 self.wdg_web.show()
-                self.wdg_web.resize(900, 600)
+                self.wdg_web.resize(1000, 600)
+
             else:
-                QDesktopServices.openUrl(QUrl(self.rss_rdr.latest_item.url))
+                QDesktopServices.openUrl(qntwk.build_url(self.rss_rdr.latest_item.url))
 
             self.log(
                 message=self.tr(
@@ -150,10 +211,22 @@ class GeotribuPlugin:
                 log_level=3,
                 push=False,
             )
+
+            # save and restore
+            PlgOptionsManager().set_value_from_key(
+                key="latest_content_guid", value=self.rss_rdr.latest_item.guid
+            )
+            self.action_run.setIcon(
+                QIcon(str(DIR_PLUGIN_ROOT / "resources/images/logo_green_no_text.svg"))
+            )
+            self.action_run.setToolTip(
+                self.tr(text="Newest article", context="GeotribuPlugin")
+            )
+
         except Exception as err:
             self.log(
                 message=self.tr(
-                    text="Houston, we've got a problem: {}".format(err),
+                    text=f"Michel, we've got a problem: {err}",
                     context="GeotribuPlugin",
                 ),
                 log_level=2,

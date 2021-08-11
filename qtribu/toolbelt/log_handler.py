@@ -2,13 +2,18 @@
 
 # standard library
 import logging
+from functools import partial
+from logging.handlers import RotatingFileHandler
+from typing import Callable
 
 # PyQGIS
-from qgis.core import QgsMessageLog
+from qgis.core import QgsMessageLog, QgsMessageOutput
+from qgis.PyQt.QtWidgets import QPushButton
 from qgis.utils import iface
 
 # project package
-from qtribu.__about__ import __title__
+import qtribu.toolbelt.preferences as plg_prefs_hdlr
+from qtribu.__about__ import DIR_PLUGIN_ROOT, __title__, __title_clean__
 
 # ############################################################################
 # ########## Classes ###############
@@ -24,9 +29,15 @@ class PlgLogger(logging.Handler):
         application: str = __title__,
         log_level: int = 0,
         push: bool = False,
+        duration: int = None,
+        # widget
+        button: bool = False,
+        button_text: str = None,
+        button_connect: Callable = None,
     ):
         """Send messages to QGIS messages windows and to the user as a message bar. \
-        Plugin name is used as title.
+        Plugin name is used as title. If debug mode is disabled, only warnings (1) and \
+        errors (2) or with push are sent.
 
         :param message: message to display
         :type message: str
@@ -39,17 +50,41 @@ class PlgLogger(logging.Handler):
         :param push: also display the message in the QGIS message bar in addition to \
         the log, defaults to False
         :type push: bool, optional
+        :param duration: duration of the message in seconds. If not set, the \
+        duration is calculated from the log level: `(log_level + 1) * 3`. seconds. \
+        If set to 0, then the message must be manually dismissed by the user. \
+        Defaults to None.
+        :type duration: int, optional
+        :param button: display a button in the message bar. Defaults to False.
+        :type button: bool, optional
+        :param button_text: text label of the button. Defaults to None.
+        :type button_text: str, optional
+        :param button_connect: function to be called when the button is pressed. \
+        If not set, a simple dialog (QgsMessageOutput) is used to dislay the message. \
+        Defaults to None.
+        :type button_connect: Callable, optional
 
         :Example:
 
         .. code-block:: python
 
-            log(message="Plugin loaded - INFO", log_level=0, push=1)
-            log(message="Plugin loaded - WARNING", log_level=1, push=1)
-            log(message="Plugin loaded - ERROR", log_level=2, push=1)
-            log(message="Plugin loaded - SUCCESS", log_level=3, push=1)
-            log(message="Plugin loaded - TEST", log_level=4, push=1)
+            log(message="Plugin loaded - INFO", log_level=0, push=False)
+            log(message="Plugin loaded - WARNING", log_level=1, push=1, duration=5)
+            log(message="Plugin loaded - ERROR", log_level=2, push=1, duration=0)
+            log(
+                message="Plugin loaded - SUCCESS",
+                log_level=3,
+                push=1,
+                duration=10,
+                button=True
+            )
+            log(message="Plugin loaded - TEST", log_level=4, push=0)
         """
+        # if debug mode, let's ignore INFO, SUCCESS and TEST
+        debug_mode = plg_prefs_hdlr.PlgOptionsManager.get_plg_settings().debug_mode
+        if not debug_mode and not push and (log_level < 1 or log_level > 2):
+            return
+
         # ensure message is a string
         if not isinstance(message, str):
             try:
@@ -68,9 +103,63 @@ class PlgLogger(logging.Handler):
 
         # optionally, display message on QGIS Message bar (above the map canvas)
         if push:
-            iface.messageBar().pushMessage(
-                title=application,
-                text=message,
-                level=log_level,
-                duration=(log_level + 1) * 3,
-            )
+
+            # calc duration
+            if not duration:
+                duration = (log_level + 1) * 3
+
+            # create message with/out a widget
+            if button:
+                # create output message
+                notification = iface.messageBar().createMessage(
+                    title=application, text=message
+                )
+                widget_button = QPushButton(button_text or "More...")
+                if button_connect:
+                    widget_button.clicked.connect(button_connect)
+                else:
+                    mini_dlg = QgsMessageOutput.createMessageOutput()
+                    mini_dlg.setTitle(application)
+                    mini_dlg.setMessage(message, QgsMessageOutput.MessageText)
+                    widget_button.clicked.connect(partial(mini_dlg.showMessage, False))
+
+                notification.layout().addWidget(widget_button)
+                iface.messageBar().pushWidget(
+                    widget=notification, level=log_level, duration=duration
+                )
+
+            else:
+                # send simple message
+                iface.messageBar().pushMessage(
+                    title=application,
+                    text=message,
+                    level=log_level,
+                    duration=duration,
+                )
+
+    def set_logger(self):
+
+        # create logger
+        logger = logging.getLogger(__title_clean__)
+        logging.captureWarnings(True)
+        log_form = logging.Formatter(
+            "%(asctime)s || %(levelname)s "
+            "|| %(module)s - %(lineno)d ||"
+            " %(funcName)s || %(message)s"
+        )
+
+        # if debug, add rotating file
+        debug_mode = plg_prefs_hdlr.PlgOptionsManager.get_plg_settings().debug_mode
+        if debug_mode:
+            log_level = logging.DEBUG
+            logfile_path = DIR_PLUGIN_ROOT / f"log_{__title_clean__}.log"
+            logfile = RotatingFileHandler(logfile_path, "a", 5000000, 1)
+            logfile.setLevel(log_level)
+            logfile.setFormatter(log_form)
+            logger.addHandler(logfile)
+        else:
+            log_level = logging.WARNING
+
+        logger.setLevel(log_level)
+
+        return logger
