@@ -5,23 +5,14 @@
 """
 
 # standard
-import logging
 from typing import NamedTuple
 
 # PyQGIS
 from qgis.core import QgsSettings
 
 # package
+import qtribu.toolbelt.log_handler as log_hdlr
 from qtribu.__about__ import __title__, __version__
-
-from .log_handler import PlgLogger
-
-# ############################################################################
-# ########## Globals ###############
-# ##################################
-
-logger = logging.getLogger(__name__)
-plg_logger = PlgLogger()
 
 # ############################################################################
 # ########## Classes ###############
@@ -42,6 +33,7 @@ class PlgSettingsStructure(NamedTuple):
     browser: int = 1
     notify_push_info: bool = True
     latest_content_guid: str = None
+    splash_screen_enabled: bool = False
 
     # network
     network_http_user_agent: str = f"{__title__}/{__version__}"
@@ -61,7 +53,9 @@ class PlgSettingsStructure(NamedTuple):
         elif self.browser == 2:
             return "system"
         else:
-            logger.error(f"Invalid browser code: {self.impex_access_mode}")
+            log_hdlr.PlgLogger.log(
+                message=f"Invalid browser code: {self.impex_access_mode}", log_level=1
+            )
             return "qgis"
 
 
@@ -94,6 +88,11 @@ class PlgOptionsManager:
                 defaultValue="https://static.geotribu.fr/feed_rss_created.xml",
                 type=str,
             ),
+            splash_screen_enabled=settings.value(
+                key="splash_screen_enabled",
+                defaultValue=False,
+                type=bool,
+            ),
             # network
             network_http_user_agent=settings.value(
                 key="network_http_user_agent",
@@ -102,7 +101,8 @@ class PlgOptionsManager:
             ),
             request_path=settings.value(
                 key="request_path",
-                defaultValue=f"utm_source=QGIS&utm_medium={__title__}&utm_campaign=plugin_{__version__}",
+                defaultValue=f"utm_source=QGIS&utm_medium={__title__}"
+                f"&utm_campaign=plugin_{__version__}",
                 type=str,
             ),
         )
@@ -119,10 +119,11 @@ class PlgOptionsManager:
         :return: plugin settings value matching key
         """
         if not hasattr(PlgSettingsStructure, key):
-            logger.error(
-                "Bad settings key. Must be one of: {}".format(
+            log_hdlr.PlgLogger.log(
+                message="Bad settings key. Must be one of: {}".format(
                     ",".join(PlgSettingsStructure._fields)
-                )
+                ),
+                log_level=1,
             )
             return None
 
@@ -132,30 +133,30 @@ class PlgOptionsManager:
         try:
             out_value = settings.value(key=key, defaultValue=default, type=exp_type)
         except Exception as err:
-            logger.error(err)
-            plg_logger.log(err)
+            log_hdlr.PlgLogger.log(
+                message="Error occurred trying to get settings: {}.Trace: {}".format(
+                    key, err
+                )
+            )
             out_value = None
 
         settings.endGroup()
 
         return out_value
 
-    @staticmethod
-    def set_value_from_key(key: str, value) -> bool:
-        """Set plugin QSettings value using the key.
+    @classmethod
+    def set_value_from_key(cls, key: str, value):
+        """Load and return plugin settings as a dictionary. \
+        Useful to get user preferences across plugin logic.
 
-        :param key: QSettings key
-        :type key: str
-        :param value: value to set
-        :type value: depending on the settings
-        :return: operation status
-        :rtype: bool
+        :return: plugin settings value matching key
         """
         if not hasattr(PlgSettingsStructure, key):
-            logger.error(
-                "Bad settings key. Must be one of: {}".format(
-                    ",".join(PlgSettingsStructure._fields)
-                )
+            log_hdlr.PlgLogger.log(
+                message="Bad settings key: {}. Must be one of: {}".format(
+                    key, ",".join(PlgSettingsStructure._fields)
+                ),
+                log_level=2,
             )
             return False
 
@@ -165,11 +166,32 @@ class PlgOptionsManager:
         try:
             settings.setValue(key, value)
             out_value = True
+            log_hdlr.PlgLogger.log(
+                f"Setting `{key}` saved with value `{value}`", log_level=4
+            )
         except Exception as err:
-            logger.error(err)
-            plg_logger.log(err)
+            log_hdlr.PlgLogger.log(
+                message="Error occurred trying to set settings: {}.Trace: {}".format(
+                    key, err
+                )
+            )
             out_value = False
 
         settings.endGroup()
 
         return out_value
+
+    @classmethod
+    def save_from_object(cls, plugin_settings_obj: PlgSettingsStructure):
+        """Load and return plugin settings as a dictionary. \
+        Useful to get user preferences across plugin logic.
+
+        :return: plugin settings value matching key
+        """
+        settings = QgsSettings()
+        settings.beginGroup(__title__)
+
+        for k, v in plugin_settings_obj._asdict().items():
+            cls.set_value_from_key(k, v)
+
+        settings.endGroup()

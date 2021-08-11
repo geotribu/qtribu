@@ -21,11 +21,12 @@ from qtribu import __about__
 on_rtd = environ.get("READTHEDOCS", None) == "True"
 
 # -- Project information -----------------------------------------------------
-project = __about__.__title__
 author = __about__.__author__
-description = __about__.__summary__
 copyright = __about__.__copyright__
+description = __about__.__summary__
+project = __about__.__title__
 version = release = __about__.__version__
+
 github_doc_root = "{}/tree/master/doc/".format(__about__.__uri__)
 
 # -- General configuration ---------------------------------------------------
@@ -131,7 +132,7 @@ myst_substitutions = {
     "version": version,
 }
 
-myst_url_schemes = ("http", "https", "mailto")
+myst_url_schemes = ["http", "https", "mailto"]
 
 # OpenGraph
 ogp_image = "https://cdn.geotribu.fr/img/projets-geotribu/plugin_qtribu/qtribu_article_displayed.png"

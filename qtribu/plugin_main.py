@@ -17,7 +17,7 @@ from qgis.utils import showPluginHelp
 # project
 from qtribu.__about__ import DIR_PLUGIN_ROOT, __title__, __version__
 from qtribu.gui.dlg_settings import PlgOptionsFactory
-from qtribu.logic import PlgEasterEggs, RssMiniReader
+from qtribu.logic import PlgEasterEggs, RssMiniReader, SplashChanger
 from qtribu.toolbelt import (
     NetworkRequestsManager,
     PlgLogger,
@@ -51,6 +51,7 @@ class GeotribuPlugin:
         # sub-modules
         self.easter_eggs = PlgEasterEggs(self)
         self.rss_rdr = RssMiniReader()
+        self.splash_chgr = SplashChanger(self)
 
     def initGui(self):
         """Set up plugin UI elements."""
@@ -97,9 +98,13 @@ class GeotribuPlugin:
             )
         )
 
+        self.action_splash = self.splash_chgr.menu_action
+        self.action_splash.triggered.connect(self.splash_chgr.switch)
+
         # -- Menu
         self.iface.addPluginToWebMenu(__title__, self.action_run)
         self.iface.addPluginToWebMenu(__title__, self.action_eastereggs)
+        self.iface.addPluginToWebMenu(__title__, self.action_splash)
         self.iface.addPluginToWebMenu(__title__, self.action_settings)
         self.iface.addPluginToWebMenu(__title__, self.action_help)
 
@@ -120,6 +125,7 @@ class GeotribuPlugin:
         self.iface.removePluginWebMenu(__title__, self.action_help)
         self.iface.removePluginWebMenu(__title__, self.action_run)
         self.iface.removePluginWebMenu(__title__, self.action_settings)
+        self.iface.removePluginWebMenu(__title__, self.action_splash)
 
         # -- Clean up toolbar
         self.iface.removeToolBarIcon(self.action_run)
@@ -167,6 +173,10 @@ class GeotribuPlugin:
                     ),
                     log_level=3,
                     push=PlgOptionsManager().get_plg_settings().notify_push_info,
+                    duration=3,
+                    button=True,
+                    button_text=self.tr("Newest article"),
+                    button_connect=self.run,
                 )
 
         except Exception as err:

@@ -17,6 +17,7 @@ maxdepth: 1
 ---
 installation
 usage/feature_latest_article
+usage/splash_changer
 usage/settings
 ```
 

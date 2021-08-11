@@ -13,3 +13,7 @@ Permet de choisir dans quel navigateur ouvrir les contenus :
 
 - soit dans un navigateur intégré à QGIS (basé sur `QWebView`)
 - soit dans le navigateur par défaut du système
+
+## Notification
+
+Activer ou désactiver le message de notification lorsqu'un nouveau contenu a été publié depuis la dernière lecture.
