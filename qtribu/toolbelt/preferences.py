@@ -32,6 +32,7 @@ class PlgSettingsStructure(NamedTuple):
     # usage
     browser: int = 1
     notify_push_info: bool = True
+    notify_push_duration: int = 10
     latest_content_guid: str = None
     splash_screen_enabled: bool = False
 
@@ -79,6 +80,9 @@ class PlgOptionsManager:
             browser=settings.value(key="browser", defaultValue=1, type=int),
             notify_push_info=settings.value(
                 key="notify_push_info", defaultValue=True, type=bool
+            ),
+            notify_push_duration=settings.value(
+                key="notify_push_duration", defaultValue=10, type=int
             ),
             latest_content_guid=settings.value(
                 key="latest_content_guid", defaultValue="", type=str
