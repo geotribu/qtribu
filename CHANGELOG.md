@@ -16,6 +16,11 @@ Unreleased
 
 -->
 
+## 0.9.0 - 2021-08-12
+
+- augmente la durée par défaut de la notification de 3 à 10 secondes
+- permet à l'utilisateur de définir la durée de la notification
+
 ## 0.8.0 - 2021-08-11
 
 - ajout d'un bouton pour effacer l'historique de consultation
