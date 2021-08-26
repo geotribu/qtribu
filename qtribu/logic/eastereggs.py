@@ -110,7 +110,14 @@ class PlgEasterEggs:
             current_project.setTitle("Geotribu Easter Egg")
 
             # metadata
-            bkp_project["metadata"] = current_project.Metadata()
+            try:
+                bkp_project["metadata"] = current_project.Metadata()
+            except AttributeError as err:
+                self.log(
+                    message="Project doesn't exist yet. Trace: {}".format(err),
+                    log_level=4,
+                )
+                bkp_project["metadata"] = None
             gt_md = QgsProjectMetadata()
             gt_md.setAuthor("Geotribu")
             gt_md.setLanguage("FRE")
