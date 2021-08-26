@@ -45,7 +45,7 @@ jobs:
         run: lrelease qtribu/resources/i18n/*.ts
 
       - name: Package the latest version
-        run: qgis-plugin-ci package latest --allow-uncommitted-changes
+        run: qgis-plugin-ci package latest --allow-uncommitted-changes --local-translation
 
       - uses: actions/upload-artifact@v2
         with:

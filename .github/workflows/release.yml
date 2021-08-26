@@ -61,3 +61,4 @@ jobs:
           --github-token ${{ secrets.GITHUB_TOKEN }}
           --allow-uncommitted-changes
           --create-plugin-repo
+          --local-translation
