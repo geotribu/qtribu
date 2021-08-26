@@ -21,6 +21,7 @@ from qgis.PyQt.QtWidgets import QApplication, QLineEdit
 
 # project
 from qtribu.toolbelt import PlgLogger
+from qtribu.toolbelt.preferences import PlgOptionsManager
 
 # ############################################################################
 # ########## Globals ###############
@@ -63,6 +64,7 @@ class PlgEasterEggs:
             )
             self.le_coords.editingFinished.disconnect(self.on_coords_changed)
             self.CONNECTION_ENABLED = False
+            PlgOptionsManager.set_value_from_key(key="easter_eggs_enabled", value=False)
             self.log(message="Easter eggs connection has been disabled.")
         else:
             self.parent.action_eastereggs.setIcon(
@@ -70,6 +72,7 @@ class PlgEasterEggs:
             )
             self.le_coords.editingFinished.connect(self.on_coords_changed)
             self.CONNECTION_ENABLED = True
+            PlgOptionsManager.set_value_from_key(key="easter_eggs_enabled", value=True)
             self.log(message="Easter eggs connection has been enabled.")
 
     def on_coords_changed(self):

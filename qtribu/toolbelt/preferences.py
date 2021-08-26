@@ -35,6 +35,7 @@ class PlgSettingsStructure(NamedTuple):
     notify_push_duration: int = 10
     latest_content_guid: str = None
     splash_screen_enabled: bool = False
+    easter_eggs_enabled: bool = False
 
     # network
     network_http_user_agent: str = f"{__title__}/{__version__}"
@@ -94,6 +95,11 @@ class PlgOptionsManager:
             ),
             splash_screen_enabled=settings.value(
                 key="splash_screen_enabled",
+                defaultValue=False,
+                type=bool,
+            ),
+            easter_eggs_enabled=settings.value(
+                key="easter_eggs_enabled",
                 defaultValue=False,
                 type=bool,
             ),
