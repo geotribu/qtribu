@@ -88,6 +88,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         new_settings = PlgSettingsStructure(
             browser=self.opt_browser_group.checkedId(),
             notify_push_info=self.opt_notif_push_msg.isChecked(),
+            notify_push_duration=self.sbx_notif_duration.value(),
             debug_mode=self.opt_debug.isChecked(),
             version=__version__,
         )
@@ -108,6 +109,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         # set UI from saved options
         self.opt_browser_group.button(settings.browser).setChecked(True)
         self.opt_notif_push_msg.setChecked(settings.notify_push_info)
+        self.sbx_notif_duration.setValue(settings.notify_push_duration)
 
         self.opt_debug.setChecked(settings.debug_mode)
         self.lbl_version_saved_value.setText(settings.version)

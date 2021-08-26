@@ -5,29 +5,26 @@
 
     .. code-block:: bash
         # for whole tests
-        python -m unittest tests.test_plg_metadata
+        python -m unittest tests.test_plg_rss_rdr
         # for specific test
-        python -m unittest tests.test_plg_metadata.TestPluginMetadata.test_version_semver
+        python -m unittest tests.test_plg_rss_rdr.TestRssReader.test_version_semver
 """
 
 # standard library
 import unittest
 
-# 3rd party
-from semver import VersionInfo
-
 # project
-from qtribu import __about__
+from qtribu.logic import RssMiniReader
 
 # ############################################################################
 # ########## Classes #############
 # ################################
 
 
-class TestPluginMetadata(unittest.TestCase):
-    def test_version_semver(self):
-        """Test if version comply with semantic versioning."""
-        self.assertTrue(VersionInfo.isvalid(__about__.__version__))
+class TestRssReader(unittest.TestCase):
+    def test_rss_reader(self):
+        """Test RSS reader basic behavior."""
+        self.rss_rdr = RssMiniReader()
 
 
 # ############################################################################

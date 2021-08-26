@@ -173,7 +173,9 @@ class GeotribuPlugin:
                     ),
                     log_level=3,
                     push=PlgOptionsManager().get_plg_settings().notify_push_info,
-                    duration=3,
+                    duration=PlgOptionsManager()
+                    .get_plg_settings()
+                    .notify_push_duration,
                     button=True,
                     button_text=self.tr("Newest article"),
                     button_connect=self.run,

@@ -4,7 +4,7 @@
 <context>
     <name>ConfigOptionsPage</name>
     <message>
-        <location filename="../../gui/dlg_settings.py" line="121"/>
+        <location filename="../../gui/dlg_settings.py" line="126"/>
         <source>Read history has been reset.</source>
         <translation>L&apos;historique de lecture a été réinitialisé.</translation>
     </message>
@@ -91,69 +91,84 @@
         <translation>Fonctionnalités</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="106"/>
+        <location filename="../../gui/dlg_settings.ui" line="205"/>
         <source>Which web browser to use to display articles.</source>
         <translation>Navigateur web à utiliser pour afficher les articles.</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="109"/>
+        <location filename="../../gui/dlg_settings.ui" line="208"/>
         <source>Open in web browser:</source>
         <translation>Navigateur web :</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="128"/>
+        <location filename="../../gui/dlg_settings.ui" line="186"/>
         <source>System default browser</source>
         <translation>Navigateur du système</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="147"/>
+        <location filename="../../gui/dlg_settings.ui" line="227"/>
         <source>Notify for new content:</source>
         <translation>Notification :</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="166"/>
+        <location filename="../../gui/dlg_settings.ui" line="106"/>
         <source>Embedded browser</source>
         <translation>Navigateur embarqué de QGIS</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="191"/>
+        <location filename="../../gui/dlg_settings.ui" line="249"/>
         <source>Informational push message</source>
         <translation>Activer la notification push</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="248"/>
+        <location filename="../../gui/dlg_settings.ui" line="287"/>
         <source>Miscellaneous</source>
         <translation>Divers</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="269"/>
+        <location filename="../../gui/dlg_settings.ui" line="308"/>
         <source>Enable debug mode.</source>
         <translation>Activer le mode DEBUG.</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="278"/>
+        <location filename="../../gui/dlg_settings.ui" line="317"/>
         <source>Debug mode (degraded performances)</source>
         <translation>Mode DEBUG (performances dégradées)</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="322"/>
+        <location filename="../../gui/dlg_settings.ui" line="339"/>
         <source>Version used to save settings:</source>
         <translation>Version des paramètres :</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="341"/>
+        <location filename="../../gui/dlg_settings.ui" line="399"/>
         <source>Report an issue</source>
         <translation>Créer un ticket</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="364"/>
+        <location filename="../../gui/dlg_settings.ui" line="380"/>
         <source>Help</source>
         <translation>Aide en ligne</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="216"/>
+        <location filename="../../gui/dlg_settings.ui" line="128"/>
         <source>Reset read history</source>
         <translation>Effacer l&apos;historique</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dlg_settings.ui" line="137"/>
+        <source>Duration:</source>
+        <translation>Durée :</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dlg_settings.ui" line="144"/>
+        <source>&apos;0&apos; means unlimited time, waiting a manual close from the end-user.</source>
+        <translation>&apos;0&apos; signifie une durée illimitée, l&apos;utilisateur final devra fermer la notification manuellement.</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dlg_settings.ui" line="156"/>
+        <source> seconds</source>
+        <translation> secondes</translation>
     </message>
 </context>
 </TS>
