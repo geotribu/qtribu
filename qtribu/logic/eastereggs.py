@@ -11,9 +11,6 @@
 # Standard library
 import logging
 
-# 3rd party
-import PyQt5
-
 # PyQGIS
 from qgis.core import QgsApplication, QgsProject, QgsProjectMetadata
 from qgis.PyQt.QtGui import QIcon
@@ -55,7 +52,7 @@ class PlgEasterEggs:
                 break
 
         # dans le widget, on ne garde que la ligne de saisie
-        self.le_coords = wdgt.findChild(PyQt5.QtWidgets.QLineEdit)
+        self.le_coords = wdgt.findChild(QLineEdit)
 
     def switch(self):
         if self.CONNECTION_ENABLED:
