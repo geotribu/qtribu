@@ -14,7 +14,7 @@ import logging
 # PyQGIS
 from qgis.core import QgsApplication, QgsProject, QgsProjectMetadata
 from qgis.PyQt.QtGui import QIcon
-from qgis.PyQt.QtWidgets import QApplication, QLineEdit
+from qgis.PyQt.QtWidgets import QApplication, QLineEdit, QMessageBox
 
 # project
 from qtribu.toolbelt import PlgLogger
@@ -85,10 +85,23 @@ class PlgEasterEggs:
         """Easter egg to mimic the behavior of ArcGIS Pro license subscription."""
         if not self.EGG_TROLL_APPLIED:
             app = QApplication.instance()
-            app.setStyleSheet(".QWidget {color: blue; background-color: yellow;}")
+            app.setStyleSheet(".QWidget {color: green; background-color: blue;}")
             self.log(
-                message="Easter egg found! Let's ask end-user for his QGIS licensesubscription."
+                message="Easter egg found! Let's ask end-user for his QGIS license subscription."
             )
+
+            # message box
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setWindowTitle("QGIS Pro")
+            msg.setInformativeText(
+                "Your account is not licensed for QGIS Pro. "
+                "Please ask your organization administrator to assign you a user type "
+                "that is compatible with QGIS Pro (e.g. Creator) along with an add-on "
+                "QGIS Pro license, or a user type that includes QGIS Pro "
+                "(e.g. GIS Professional)."
+            )
+            msg.exec_()
 
             self.EGG_TROLL_APPLIED = True
         else:
