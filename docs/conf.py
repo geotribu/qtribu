@@ -80,6 +80,9 @@ pygments_style = "sphinx"
 
 html_favicon = "../qtribu/resources/images/logo_geotribu.png"
 html_logo = "../qtribu/resources/images/logo_geotribu.png"
+html_sidebars = {
+    "**": ["globaltoc.html", "relations.html", "sourcelink.html", "searchbox.html"]
+}
 # html_static_path = ["_static"]
 html_theme = "sphinx_rtd_theme"
 html_theme_options = {
