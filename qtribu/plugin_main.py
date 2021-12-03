@@ -17,7 +17,7 @@ from qgis.utils import showPluginHelp
 # project
 from qtribu.__about__ import DIR_PLUGIN_ROOT, __title__, __version__
 from qtribu.gui.dlg_settings import PlgOptionsFactory
-from qtribu.logic import RssMiniReader, SplashChanger
+from qtribu.logic import BasemapsLoader, RssMiniReader, SplashChanger
 from qtribu.toolbelt import (
     NetworkRequestsManager,
     PlgLogger,
@@ -49,6 +49,7 @@ class GeotribuPlugin:
         self.tr = plg_translation_mngr.tr
 
         # sub-modules
+        self.basemaps_loader = BasemapsLoader(self)
         self.rss_rdr = RssMiniReader()
         self.splash_chgr = SplashChanger(self)
 
@@ -69,6 +70,17 @@ class GeotribuPlugin:
             self.tr(text="Newest article", context="GeotribuPlugin")
         )
         self.action_run.triggered.connect(self.run)
+
+        # basemaps
+        self.action_basemaps = QAction(
+            QIcon(QgsApplication.iconPath("mActionAddXyzLayer.svg")),
+            self.tr("Add basemaps"),
+            self.iface.mainWindow(),
+        )
+        self.action_basemaps.setToolTip(
+            self.tr(text="Add basemaps as XYZ connections", context="GeotribuPlugin")
+        )
+        self.action_basemaps.triggered.connect(self.basemaps_loader.action())
 
         self.action_help = QAction(
             QIcon(QgsApplication.iconPath("mActionHelpContents.svg")),
@@ -95,6 +107,7 @@ class GeotribuPlugin:
 
         # -- Menu
         self.iface.addPluginToWebMenu(__title__, self.action_run)
+        self.iface.addPluginToWebMenu(__title__, self.action_basemaps)
         self.iface.addPluginToWebMenu(__title__, self.action_splash)
         self.iface.addPluginToWebMenu(__title__, self.action_settings)
         self.iface.addPluginToWebMenu(__title__, self.action_help)
@@ -110,6 +123,7 @@ class GeotribuPlugin:
         # -- Clean up menu
         self.iface.removePluginWebMenu(__title__, self.action_help)
         self.iface.removePluginWebMenu(__title__, self.action_run)
+        self.iface.removePluginWebMenu(__title__, self.action_basemaps)
         self.iface.removePluginWebMenu(__title__, self.action_settings)
         self.iface.removePluginWebMenu(__title__, self.action_splash)
 
