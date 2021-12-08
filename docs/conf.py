@@ -12,7 +12,7 @@ from os import environ, path
 sys.path.insert(0, path.abspath(".."))  # move into project package
 
 # 3rd party
-import sphinx_rtd_theme  # noqa: F401 theme of Read the Docs
+# import sphinx_rtd_theme  # noqa: F401 theme of Read the Docs
 
 # Package
 from qtribu import __about__
@@ -78,8 +78,8 @@ pygments_style = "sphinx"
 
 # -- Theme
 
-html_favicon = "../qtribu/resources/images/logo_geotribu.png"
-html_logo = "../qtribu/resources/images/logo_geotribu.png"
+html_favicon = str(__about__.__icon_path__)
+html_logo = str(__about__.__icon_path__)
 html_sidebars = {
     "**": ["globaltoc.html", "relations.html", "sourcelink.html", "searchbox.html"]
 }
