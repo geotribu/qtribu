@@ -62,6 +62,7 @@ __plugin_md__ = plugin_metadata_as_dict()
 __author__ = __plugin_md__.get("general").get("author")
 __copyright__ = "2021 - {0}, {1}".format(date.today().year, __author__)
 __email__ = __plugin_md__.get("general").get("email")
+__icon_path__ = DIR_PLUGIN_ROOT.resolve() / __plugin_md__.get("general").get("icon")
 __keywords__ = [
     t.strip() for t in __plugin_md__.get("general").get("repository").split("tags")
 ]
@@ -94,10 +95,11 @@ if __name__ == "__main__":
     plugin_md = plugin_metadata_as_dict()
     assert isinstance(plugin_md, dict)
     assert plugin_md.get("general").get("name") == __title__
-    print("Plugin: " + __title__)
-    print("By: " + __author__)
-    print("Version: " + __version__)
-    print("Description: " + __summary__)
+    print(f"Plugin: {__title__}")
+    print(f"By: {__author__}")
+    print(f"Version: {__version__}")
+    print(f"Description: {__summary__}")
+    print(f"Icon: {__icon_path__}")
     print(
         "For: %s > QGIS > %s"
         % (
