@@ -1,6 +1,8 @@
 {
     "python.pythonPath": ".venv/bin/python",
     // Editor
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs":"active",
     "editor.rulers": [
         88
     ],
