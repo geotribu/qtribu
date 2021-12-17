@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - ".github/workflows/docs_builder.yml"
+      - ".github/workflows/documentation.yml"
       - "docs/**/*"
       - "qtribu/**/*.py"
       - "qtribu/metadata.txt"
