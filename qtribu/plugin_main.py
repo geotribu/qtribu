@@ -103,7 +103,7 @@ class GeotribuPlugin:
         self.iface.addToolBarIcon(self.action_run)
 
         # -- Post UI initialization
-        self.post_ui_init()
+        self.iface.initializationCompleted.connect(self.post_ui_init)
 
     def unload(self):
         """Cleans up when plugin is disabled/uninstalled."""
