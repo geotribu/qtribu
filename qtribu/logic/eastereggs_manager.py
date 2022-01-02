@@ -13,10 +13,13 @@ import logging
 
 # PyQGIS
 from qgis.core import QgsApplication, QgsProject, QgsProjectMetadata
+from qgis.PyQt.QtCore import QCoreApplication
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QApplication, QLineEdit, QMessageBox
+from qgis.utils import iface
 
 # project
+from qtribu.logic.eastereggs.egg_tribu import EggGeotribu
 from qtribu.toolbelt import PlgLogger
 from qtribu.toolbelt.preferences import PlgOptionsManager
 
@@ -35,7 +38,6 @@ logger = logging.getLogger(__name__)
 class PlgEasterEggs:
 
     CONNECTION_ENABLED: bool = False
-    EGG_GEOTRIBU_APPLIED: bool = False
     EGG_TROLL_APPLIED: bool = False
 
     def __init__(self, parent):
@@ -43,8 +45,11 @@ class PlgEasterEggs:
         self.log = PlgLogger().log
         self.parent = parent
 
+        # -- Easter eggs ---------------------------------------------------------------
+        self.eggs: tuple = (EggGeotribu(),)
+
         # on attrape la barre de statut de QGIS
-        qgis_st = parent.iface.mainWindow().statusBar()
+        qgis_st = iface.mainWindow().statusBar()
 
         # on filtre la barre de statut pour ne garder le widget des coordonnées
         for wdgt in qgis_st.children()[1].children():
@@ -72,13 +77,16 @@ class PlgEasterEggs:
             PlgOptionsManager.set_value_from_key(key="easter_eggs_enabled", value=True)
             self.log(message="Easter eggs connection has been enabled.")
 
+            for egg in self.eggs:
+                if egg.APPLIED:
+                    egg.revert()
+
     def on_coords_changed(self):
-        if self.le_coords.text() == "geotribu":
-            self.egg_coords_geotribu()
-        elif self.le_coords.text() in ("arcgis", "qgis pro"):
-            self.egg_coords_arcgis()
-        else:
-            pass
+        for egg in self.eggs:
+            if not egg.APPLIED and self.le_coords.text() in egg.KEYWORDS:
+                self.le_coords.setEchoMode(QLineEdit.EchoMode.PasswordEchoOnEdit)
+                egg.apply()
+                break
 
     # -- Easter eggs -------------------------------------------------------------------
     def egg_coords_arcgis(self):
@@ -107,32 +115,13 @@ class PlgEasterEggs:
         else:
             self.EGG_TROLL_APPLIED = False
 
-    def egg_coords_geotribu(self):
-        """Easter egg just for the fun."""
-        if not self.EGG_GEOTRIBU_APPLIED:
-            self.log(
-                message="Easter egg found! Let's make a little mess just for the fun!"
-            )
-            self.le_coords.setEchoMode(QLineEdit.EchoMode.PasswordEchoOnEdit)
+    def tr(self, message: str) -> str:
+        """Translation method.
 
-            current_project = QgsProject.instance()
-            bkp_project = {"title": current_project.title()}
-            current_project.setTitle("Geotribu Easter Egg")
+        :param message: text to be translated
+        :type message: str
 
-            # metadata
-            try:
-                bkp_project["metadata"] = current_project.Metadata()
-            except AttributeError as err:
-                self.log(
-                    message="Project doesn't exist yet. Trace: {}".format(err),
-                    log_level=4,
-                )
-                bkp_project["metadata"] = None
-            gt_md = QgsProjectMetadata()
-            gt_md.setAuthor("Geotribu")
-            gt_md.setLanguage("FRE")
-            current_project.setMetadata(gt_md)
-
-            self.EGG_GEOTRIBU_APPLIED = True
-        else:
-            self.EGG_GEOTRIBU_APPLIED = False
+        :return: translated text
+        :rtype: str
+        """
+        return QCoreApplication.translate(self.__class__.__name__, message)
