@@ -8,7 +8,7 @@
 [![codecov](https://codecov.io/gh/geotribu/qtribu/branch/main/graph/badge.svg?token=7O9PYKS4Q0)](https://codecov.io/gh/geotribu/qtribu)
 
 [![Tester](https://github.com/geotribu/qtribu/actions/workflows/tester.yml/badge.svg)](https://github.com/geotribu/qtribu/actions/workflows/tester.yml)
-[![Documentation Builder](https://github.com/geotribu/qtribu/actions/workflows/docs_builder.yml/badge.svg)](https://geotribu.github.io/qtribu/)
+[![Documentation Builder](https://github.com/geotribu/qtribu/actions/workflows/documentation.yml/badge.svg)](https://github.com/geotribu/qtribu/actions/workflows/documentation.yml)
 [![Packager](https://github.com/geotribu/qtribu/actions/workflows/packager.yml/badge.svg)](https://github.com/geotribu/qtribu/actions/workflows/packager.yml)
 [![Releaser](https://github.com/geotribu/qtribu/actions/workflows/release.yml/badge.svg)](https://github.com/geotribu/qtribu/actions/workflows/release.yml)
 

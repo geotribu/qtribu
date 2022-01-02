@@ -1,6 +1,5 @@
 {
   "recommendations": [
-    "coenraads.bracket-pair-colorizer-2",
     "davidanson.vscode-markdownlint",
     "eamodio.gitlens",
     "github.vscode-pull-request-github",
