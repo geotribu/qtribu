@@ -7,17 +7,15 @@
 # PyQGIS
 from qgis.core import QgsApplication
 from qgis.gui import QgisInterface
-from qgis.PyQt.Qt import QNetworkRequest
-from qgis.PyQt.QtCore import QCoreApplication, Qt
-from qgis.PyQt.QtGui import QDesktopServices, QIcon
-from qgis.PyQt.QtWebKitWidgets import QWebView
-from qgis.PyQt.QtWidgets import QAction, QVBoxLayout, QWidget
+from qgis.PyQt.QtCore import QCoreApplication
+from qgis.PyQt.QtGui import QIcon
+from qgis.PyQt.QtWidgets import QAction
 from qgis.utils import showPluginHelp
 
 # project
-from qtribu.__about__ import DIR_PLUGIN_ROOT, __title__, __version__
+from qtribu.__about__ import DIR_PLUGIN_ROOT, __title__
 from qtribu.gui.dlg_settings import PlgOptionsFactory
-from qtribu.logic import RssMiniReader, SplashChanger
+from qtribu.logic import RssMiniReader, SplashChanger, WebViewer
 from qtribu.toolbelt import (
     NetworkRequestsManager,
     PlgLogger,
@@ -51,6 +49,7 @@ class GeotribuPlugin:
         # sub-modules
         self.rss_rdr = RssMiniReader()
         self.splash_chgr = SplashChanger(self)
+        self.web_viewer = WebViewer()
 
     def initGui(self):
         """Set up plugin UI elements."""
@@ -178,59 +177,21 @@ class GeotribuPlugin:
             )
 
     def run(self):
-        """Main process.
-
-        :raises Exception: if something went wrong during request
-        """
+        """Main action on plugin icon pressed event."""
         try:
-            qntwk = NetworkRequestsManager(tr=self.tr)
-            if PlgOptionsManager().get_plg_settings().browser == 1:
-                # display web page
-                self.wdg_web = QWidget()
-                vlayout = QVBoxLayout()
-                web = QWebView()
-                req = QNetworkRequest(qntwk.build_url(self.rss_rdr.latest_item.url))
-                req.setHeader(
-                    QNetworkRequest.UserAgentHeader,
-                    bytes(f"{__title__}/{__version__}", "utf8"),
-                )
-                web.load(req)
-                vlayout.addWidget(web)
-                self.wdg_web.setLayout(vlayout)
-                self.wdg_web.setWindowTitle(self.tr("Last article from Geotribu"))
-                self.wdg_web.setWindowModality(Qt.WindowModal)
-                self.wdg_web.show()
-                self.wdg_web.resize(1000, 600)
+            if not self.rss_rdr.latest_item:
+                self.post_ui_init()
 
-            else:
-                QDesktopServices.openUrl(qntwk.build_url(self.rss_rdr.latest_item.url))
-
-            self.log(
-                message=self.tr(
-                    text="Last article from Geotribu loaded and displayed.",
-                    context="GeotribuPlugin",
-                ),
-                log_level=3,
-                push=False,
-            )
-
-            # save and restore
-            PlgOptionsManager().set_value_from_key(
-                key="latest_content_guid", value=self.rss_rdr.latest_item.guid
-            )
+            self.web_viewer.display_web_page(url=self.rss_rdr.latest_item.url)
             self.action_run.setIcon(
                 QIcon(str(DIR_PLUGIN_ROOT / "resources/images/logo_green_no_text.svg"))
             )
             self.action_run.setToolTip(
                 self.tr(text="Newest article", context="GeotribuPlugin")
             )
-
-        except Exception as err:
-            self.log(
-                message=self.tr(
-                    text=f"Michel, we've got a problem: {err}",
-                    context="GeotribuPlugin",
-                ),
-                log_level=2,
-                push=True,
+            # save latest RSS item displayed
+            PlgOptionsManager().set_value_from_key(
+                key="latest_content_guid", value=self.rss_rdr.latest_item.guid
             )
+        except Exception as err:
+            raise err
