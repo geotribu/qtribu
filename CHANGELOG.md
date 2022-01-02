@@ -10,6 +10,8 @@ Unreleased
 
 ### Added
 
+- la requête vers le flux RSS attend désormais que l'application QGIS soit complètement chargée pour ne pas ralentir le lancement, en particulier quand la connexion réseau n'est pas idéale. Jusque-là elle était envoyée à la fin du chargement du plugin.
+
 ### Changed
 
 ### Removed
