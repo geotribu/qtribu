@@ -10,14 +10,16 @@ Unreleased
 
 ### Added
 
-- la requête vers le flux RSS attend désormais que l'application QGIS soit complètement chargée pour ne pas ralentir le lancement, en particulier quand la connexion réseau n'est pas idéale. Jusque-là elle était envoyée à la fin du chargement du plugin.
-- la gestion de l'affichage du dernier contenu a été déportée dans un module dédié (WebViewer).
-
 ### Changed
 
 ### Removed
 
 -->
+
+## 0.10.0 - 2022-01-02
+
+- la requête vers le flux RSS attend désormais que l'application QGIS soit complètement chargée pour ne pas ralentir le lancement, en particulier quand la connexion réseau n'est pas idéale. Jusque-là elle était envoyée à la fin du chargement du plugin.
+- la gestion de l'affichage du dernier contenu a été déportée dans un module dédié (WebViewer).
 
 ## 0.9.0 - 2021-08-12
 
