@@ -8,7 +8,8 @@
     ],
     "editor.wordWrapColumn": 88,
     "files.associations": {
-        "./requirements/*.txt": "pip-requirements"
+        "./requirements/*.txt": "pip-requirements",
+        "metadata.txt": "ini"
     },
     // Formatter
     "python.formatting.provider": "black",
