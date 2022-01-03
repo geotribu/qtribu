@@ -10,6 +10,8 @@ Unreleased
 
 ### Added
 
+- ajoute un lien vers le forum QGIS de GeoRezo
+
 ### Changed
 
 ### Removed
