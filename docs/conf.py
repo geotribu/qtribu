@@ -99,6 +99,16 @@ html_theme_options = {
     "titles_only": False,
 }
 
+# -- EXTENSIONS --------------------------------------------------------
+
+# Configuration for intersphinx (refer to others docs).
+intersphinx_mapping = {
+    "PyQt5": ("https://www.riverbankcomputing.com/static/Docs/PyQt5", None),
+    "python": ("https://docs.python.org/3/", None),
+    "qgis": ("https://qgis.org/pyqgis/master/", None),
+}
+
+# MyST Parser
 myst_enable_extensions = [
     "colon_fence",
     "deflist",
@@ -110,16 +120,7 @@ myst_enable_extensions = [
     "smartquotes",
     "substitution",
 ]
-# -- EXTENSIONS --------------------------------------------------------
 
-# Configuration for intersphinx (refer to others docs).
-intersphinx_mapping = {
-    "PyQt5": ("https://www.riverbankcomputing.com/static/Docs/PyQt5", None),
-    "python": ("https://docs.python.org/3/", None),
-    "qgis": ("https://qgis.org/pyqgis/master/", None),
-}
-
-# MyST Parser
 myst_substitutions = {
     "author": author,
     "date_update": datetime.now().strftime("%d %B %Y"),
