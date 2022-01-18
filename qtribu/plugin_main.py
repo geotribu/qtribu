@@ -4,11 +4,14 @@
     Main plugin module.
 """
 
+# standard
+from functools import partial
+
 # PyQGIS
 from qgis.core import QgsApplication
 from qgis.gui import QgisInterface
-from qgis.PyQt.QtCore import QCoreApplication
-from qgis.PyQt.QtGui import QIcon
+from qgis.PyQt.QtCore import QCoreApplication, QUrl
+from qgis.PyQt.QtGui import QDesktopServices, QIcon
 from qgis.PyQt.QtWidgets import QAction
 from qgis.utils import showPluginHelp
 
@@ -107,6 +110,20 @@ class GeotribuPlugin:
         self.iface.addPluginToWebMenu(__title__, self.action_settings)
         self.iface.addPluginToWebMenu(__title__, self.action_help)
 
+        # -- Help menu
+        self.iface.helpMenu().addSeparator()
+        self.action_georezo = QAction(
+            QIcon(str(DIR_PLUGIN_ROOT / "resources/images/georezo.png")),
+            self.tr("QGIS forum on GeoRezo"),
+        )
+        self.action_georezo.triggered.connect(
+            partial(
+                QDesktopServices.openUrl,
+                QUrl("https://georezo.net/forum/viewforum.php?id=55"),
+            )
+        )
+        self.iface.helpMenu().addAction(self.action_georezo)
+
         # -- Toolbar
         self.iface.addToolBarIcon(self.action_run)
 
@@ -135,6 +152,7 @@ class GeotribuPlugin:
         # remove actions
         del self.action_run
         del self.action_help
+        del self.action_georezo
 
     def post_ui_init(self):
         """Run after plugin's UI has been initialized.

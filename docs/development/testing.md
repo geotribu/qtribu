@@ -27,10 +27,10 @@ python -m pytest tests/unit
 python -m pytest tests/qgis
 
 # run a specific test module using standard unittest
-python -m unittest tests.test_plg_metadata
+python -m unittest tests.unit.test_plg_metadata
 
 # run a specific test function using standard unittest
-python -m unittest tests.test_plg_metadata.TestPluginMetadata.test_version_semver
+python -m unittest tests.unit.test_plg_metadata.TestPluginMetadata.test_version_semver
 ```
 
 ### Using Docker

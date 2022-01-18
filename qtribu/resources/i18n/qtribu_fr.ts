@@ -4,7 +4,7 @@
 <context>
     <name>ConfigOptionsPage</name>
     <message>
-        <location filename="../../gui/dlg_settings.py" line="126"/>
+        <location filename="../../gui/dlg_settings.py" line="127"/>
         <source>Read history has been reset.</source>
         <translation>L&apos;historique de lecture a été réinitialisé.</translation>
     </message>
@@ -12,29 +12,29 @@
 <context>
     <name>GeotribuPlugin</name>
     <message>
-        <location filename="../../plugin_main.py" line="198"/>
-        <source>Last article from Geotribu</source>
-        <translation>Dernier article publié sur Geotribu</translation>
-    </message>
-    <message>
-        <location filename="../../plugin_main.py" line="155"/>
+        <location filename="../../plugin_main.py" line="172"/>
         <source>Newest article</source>
         <translation>Afficher le dernier article</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="73"/>
+        <location filename="../../plugin_main.py" line="75"/>
         <source>Help</source>
         <translation>Aide en ligne</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="82"/>
+        <location filename="../../plugin_main.py" line="84"/>
         <source>Settings</source>
         <translation>Réglages</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="155"/>
+        <location filename="../../plugin_main.py" line="172"/>
         <source>New content published:</source>
         <translation>Nouveau contenu publié :</translation>
+    </message>
+    <message>
+        <location filename="../../plugin_main.py" line="106"/>
+        <source>QGIS forum on GeoRezo</source>
+        <translation>Forum QGIS sur GeoRezo</translation>
     </message>
 </context>
 <context>
