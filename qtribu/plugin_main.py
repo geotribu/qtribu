@@ -16,7 +16,7 @@ from qgis.PyQt.QtWidgets import QAction
 from qgis.utils import showPluginHelp
 
 # project
-from qtribu.__about__ import DIR_PLUGIN_ROOT, __title__
+from qtribu.__about__ import DIR_PLUGIN_ROOT, __icon_path__, __title__
 from qtribu.gui.dlg_settings import PlgOptionsFactory
 from qtribu.logic import RssMiniReader, SplashChanger, WebViewer
 from qtribu.toolbelt import (
@@ -115,6 +115,31 @@ class GeotribuPlugin:
         )
         self.iface.helpMenu().addAction(self.action_georezo)
 
+        self.action_geotribu = QAction(
+            QIcon(str(__icon_path__)),
+            self.tr("Site Geotribu"),
+        )
+        self.action_geotribu.triggered.connect(
+            partial(
+                QDesktopServices.openUrl,
+                QUrl("http://geotribu.fr"),
+            )
+        )
+        self.iface.helpMenu().addAction(self.action_geotribu)
+
+        self.action_osgeofr = QAction(
+            QIcon(str(DIR_PLUGIN_ROOT / "resources/images/osgeo.svg")),
+            self.tr("OSGeo France"),
+        )
+        self.action_osgeofr.triggered.connect(
+            partial(
+                QDesktopServices.openUrl,
+                QUrl("https://www.osgeo.asso.fr/"),
+            )
+        )
+
+        self.iface.pluginHelpMenu().addAction(self.action_osgeofr)
+
         # -- Toolbar
         self.iface.addToolBarIcon(self.action_run)
 
@@ -128,6 +153,10 @@ class GeotribuPlugin:
         self.iface.removePluginWebMenu(__title__, self.action_run)
         self.iface.removePluginWebMenu(__title__, self.action_settings)
         self.iface.removePluginWebMenu(__title__, self.action_splash)
+
+        self.iface.helpMenu().removeAction(self.action_georezo)
+        self.iface.helpMenu().removeAction(self.action_geotribu)
+        self.iface.pluginHelpMenu().removeAction(self.action_osgeofr)
 
         # -- Clean up toolbar
         self.iface.removeToolBarIcon(self.action_run)
