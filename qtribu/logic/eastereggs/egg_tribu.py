@@ -53,9 +53,14 @@ class EggGeotribu(object):
         # QGIS main window
         self.bkp_title = iface.mainWindow().windowTitle()
         # new_title = self.bkp_title.replace("QGIS", "GIStribu")
-        iface.mainWindow().setWindowTitle("HOHOHO")
+        iface.mainWindow().setWindowTitle("GISTribu")
         iface.mainWindow().setWindowIcon(QIcon(str(__icon_path__.resolve())))
         iface.pluginToolBar().setVisible(False)
+
+        # modify menus
+        iface.editMenu().setTitle("Créer")
+        iface.helpMenu().setTitle("Débrouille toi !")
+        iface.helpMenu().setEnabled(False)
 
         # Project
         current_project = QgsProject.instance()
@@ -77,11 +82,12 @@ class EggGeotribu(object):
         self.APPLIED = True
         return True
 
-    def revert(self):
+    def revert(self) -> bool:
         iface.mainWindow().setWindowTitle(self.bkp_title)
         iface.pluginToolBar().setVisible(True)
 
         self.APPLIED = False
+        return False
 
     def tr(self, message: str) -> str:
         """Translation method.
