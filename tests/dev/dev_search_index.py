@@ -124,11 +124,15 @@ class SearchWidget(QWidget):
     # -- Index manipulations -----------------------------------------------------------
     @lru_cache(maxsize=254)
     def is_full_url(self, item_location: str) -> bool:
-        """Return True is it's a full URL or False if it's an anchor."""
-        if "#" in item_location:
-            return False
-        else:
-            return True
+        """Return True is it's a full URL or False if it's an anchor.
+
+        :param item_location: content path
+        :type item_location: str
+
+        :return: [description]
+        :rtype: bool
+        """
+        return "#" not in item_location
 
     @lru_cache(maxsize=254)
     def extract_type(self, item_location: str) -> Union[str, None]:
@@ -191,3 +195,11 @@ if __name__ == "__main__":
     except Exception as exp:
         logging.error(exp)
     sys.exit(app.exec_())
+
+
+# #############################################################################
+# ##### QGIS Console ###############
+# ##################################
+if __name__ == "__console__":
+    combodemo = SearchWidget()
+    combodemo.show()
