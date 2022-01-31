@@ -4,6 +4,7 @@
 # standard
 import json
 import logging
+import webbrowser
 from collections import defaultdict
 from datetime import datetime, timedelta
 from functools import lru_cache
@@ -17,41 +18,79 @@ import requests
 from qgis.PyQt.QtWidgets import (
     QApplication,
     QComboBox,
+    QCompleter,
+    QGridLayout,
     QHBoxLayout,
+    QLabel,
     QLCDNumber,
+    QPushButton,
+    QTableWidget,
+    QTableWidgetItem,
+    QVBoxLayout,
     QWidget,
 )
 
-
 # -- CLASSES ---------------------------------------------------------------------
+
+
 class SearchWidget(QWidget):
 
-    INDEX_REMOTE_URL: str = "https://static.geotribu.fr/search/search_index.json"
+    URL_REMOTE: str = "https://static.geotribu.fr/"
     INDEX_LOCAL_PATH: Path = Path().home() / ".geotribu/geotribu_search_index.json"
 
-    def __init__(self, parent=None):
+    def __init__(
+        self, parent=None, search_index_path: str = "search/search_index.json"
+    ):
+        """Instantiate the search widget.
+
+        :param parent: parent window, defaults to None
+        :type parent: Qt Window, optional
+        :param search_index_path: relative to the URL_REMOTE, defaults to "search/search_index.json"
+        :type search_index_path: str, optional
+        """
         super(SearchWidget, self).__init__(parent)
 
-        layout = QHBoxLayout()
-        self.cbb_tags = QComboBox()
-        self.cbb_years = QComboBox()
-        self.results_count = QLCDNumber()
+        # attributes
+        self.INDEX_REMOTE_URL: str = f"{self.URL_REMOTE}{search_index_path}"
 
-        self.cbb_tags.activated.connect(self.selectionchange)
-        self.cbb_years.activated.connect(self.selectionchange)
-
-        layout.addWidget(self.cbb_tags)
-        layout.addWidget(self.cbb_years)
-        layout.addWidget(self.results_count)
-        self.setLayout(layout)
         self.setWindowTitle("Geotribu search widget")
+
+        # drop-down list for tags
+        self.cbb_tags = QComboBox()
+        self.cbb_tags.activated.connect(self.update_search_form)
+        self.cbb_tags.setEditable(True)
+        self.cbb_tags.completer().setCompletionMode(QCompleter.PopupCompletion)
+        # self.cbb_tags.completer().setCaseSensitivity(Qt.CaseInsensitive)
+        self.cbb_tags.setInsertPolicy(QComboBox.NoInsert)
+
+        # results
+        self.results_count = QLCDNumber()
+        self.tab_results = QTableWidget()
+        self.tab_results.setColumnCount(3)
+        self.tab_results.setHorizontalHeaderLabels(["Title", "Type", "Open"])
+        self.tab_results.horizontalHeader().setStretchLastSection(True)
+        self.tab_results.resizeColumnsToContents()
+        self.tab_results.resizeRowsToContents()
+        self.tab_results.setSortingEnabled(True)
+
+        # layouts
+        lyt_global = QGridLayout()
+        lyt_filters = QHBoxLayout()
+        lyt_results = QVBoxLayout()
+        lyt_filters.addWidget(self.cbb_tags)
+        lyt_filters.addWidget(self.results_count)
+        lyt_global.addLayout(lyt_filters, 0, 0)
+        lyt_results.addWidget(QLabel("Search results:"))
+        lyt_results.addWidget(self.tab_results)
+        lyt_global.addLayout(lyt_results, 1, 0)
+        self.setLayout(lyt_global)
 
         # download and load search index
         self.download_search_index()
         self.search_index: dict = self.load_search_index()
 
         # update search form
-        self.update_search_form()
+        self.reset_search_form()
 
     def download_search_index(self, expiration_hours: int = 168) -> None:
         """Download search index from remote URL only if the local file is older than
@@ -88,22 +127,10 @@ class SearchWidget(QWidget):
         logging.debug(f"Loaded search index from {self.INDEX_LOCAL_PATH}")
         return search_index
 
-    def selectionchange(self):
-        logging.debug(f"Selected tag: {self.cbb_tags.currentText()}")
-        logging.debug(f"Selected year: {self.cbb_years.currentText()}")
-
-    def update_search_form(self):
-        # Save search form
-        search_terms: dict = {
-            "tags": self.cbb_tags.currentText(),
-            "years": self.cbb_years.currentText(),
-        }
-
+    def reset_search_form(self) -> None:
+        """Reset search form."""
         # clear filters list
         self.cbb_tags.clear()
-        self.cbb_years.clear()
-
-        self.dico_contents_by_year: defaultdict = defaultdict(list)
         self.dico_contents_by_tag: defaultdict = defaultdict(list)
 
         for d in self.search_index.get("docs"):
@@ -113,13 +140,56 @@ class SearchWidget(QWidget):
             d_full_url = self.is_full_url(item_location=doc_location)
             if not all([d_type, d_year, d_full_url]):
                 continue
-            self.dico_contents_by_year[str(d_year)].append(d.get("title"))
             for t in d.get("tags"):
-                self.dico_contents_by_tag[t].append(d.get("title"))
-
+                self.dico_contents_by_tag[t].append(
+                    self.search_index.get("docs").index(d)
+                )
         self.cbb_tags.addItems(sorted(list(self.dico_contents_by_tag.keys())))
-        self.cbb_years.addItems(sorted(list(self.dico_contents_by_year.keys())))
-        self.results_count.display(len(self.search_index.get("docs")))
+
+    def update_search_form(self) -> None:
+        """Update search form."""
+        # Save search form
+        search_terms: dict = {
+            "tag": self.cbb_tags.currentText(),
+        }
+
+        logging.debug(f"Search terms: {search_terms}")
+
+        results = self.dico_contents_by_tag.get(search_terms.get("tag"))
+        self.results_count.display(len(results))
+
+        self.tab_results.setRowCount(len(results))
+        for i, r in enumerate(results):
+            d = self.search_index.get("docs")[r]
+
+            # first column: title
+            item_title = QTableWidgetItem(d.get("title"))
+            item_title.setToolTip(d.get("text"))
+            self.tab_results.setItem(i, 0, item_title)
+
+            # second column: type
+            self.tab_results.setItem(
+                i,
+                1,
+                QTableWidgetItem(self.extract_type(item_location=d.get("location"))),
+            )
+
+            # third column: button
+            item_open = QPushButton("Open")
+            item_open.clicked.connect(
+                lambda: self.open_item_url(url_part=d.get("location"))
+            )
+            self.tab_results.setCellWidget(i, 2, item_open)
+
+        self.tab_results.horizontalHeader().setStretchLastSection(True)
+
+    def open_item_url(self, url_part: str):
+        """Open URL using the default web browser.
+
+        :param url_part: part of URL to the item
+        :type url_part: str
+        """
+        webbrowser.open_new_tab(url=f"{self.URL_REMOTE}{url_part}")
 
     # -- Index manipulations -----------------------------------------------------------
     @lru_cache(maxsize=254)
