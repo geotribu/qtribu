@@ -7,7 +7,7 @@ import logging
 import webbrowser
 from collections import defaultdict
 from datetime import datetime, timedelta
-from functools import lru_cache
+from functools import lru_cache, partial
 from pathlib import Path
 from typing import Union
 
@@ -16,6 +16,7 @@ import requests
 
 # PyQGIS
 from qgis.PyQt.QtWidgets import (
+    QAbstractScrollArea,
     QApplication,
     QComboBox,
     QCompleter,
@@ -34,6 +35,7 @@ from qgis.PyQt.QtWidgets import (
 
 
 class SearchWidget(QWidget):
+    """A simple search form with a drop-down list for tags and a table for results."""
 
     URL_REMOTE: str = "https://static.geotribu.fr/"
     INDEX_LOCAL_PATH: Path = Path().home() / ".geotribu/geotribu_search_index.json"
@@ -53,22 +55,27 @@ class SearchWidget(QWidget):
         # attributes
         self.INDEX_REMOTE_URL: str = f"{self.URL_REMOTE}{search_index_path}"
 
-        self.setWindowTitle("Geotribu search widget")
+        # window
+        self.setMinimumSize(500, 300)
+        self.setMaximumWidth(600)
+        self.setWindowTitle("Geotribu - Search widget")
 
         # drop-down list for tags
         self.cbb_tags = QComboBox()
         self.cbb_tags.activated.connect(self.update_search_form)
         self.cbb_tags.setEditable(True)
         self.cbb_tags.completer().setCompletionMode(QCompleter.PopupCompletion)
-        # self.cbb_tags.completer().setCaseSensitivity(Qt.CaseInsensitive)
         self.cbb_tags.setInsertPolicy(QComboBox.NoInsert)
+        self.cbb_tags.setMinimumSize(400, 30)
 
         # results
         self.results_count = QLCDNumber()
+        self.results_count.setSegmentStyle(QLCDNumber.Flat)
+        self.results_count.setMaximumWidth(50)
+
         self.tab_results = QTableWidget()
         self.tab_results.setColumnCount(3)
-        self.tab_results.setHorizontalHeaderLabels(["Title", "Type", "Open"])
-        self.tab_results.horizontalHeader().setStretchLastSection(True)
+        self.tab_results.setHorizontalHeaderLabels(["Open", "Title", "Type"])
         self.tab_results.resizeColumnsToContents()
         self.tab_results.resizeRowsToContents()
         self.tab_results.setSortingEnabled(True)
@@ -83,6 +90,7 @@ class SearchWidget(QWidget):
         lyt_results.addWidget(QLabel("Search results:"))
         lyt_results.addWidget(self.tab_results)
         lyt_global.addLayout(lyt_results, 1, 0)
+        lyt_filters.setSpacing(5)
         self.setLayout(lyt_global)
 
         # download and load search index
@@ -139,7 +147,7 @@ class SearchWidget(QWidget):
             doc_location: str = d.get("location")
             d_type = self.extract_type(item_location=doc_location)
             d_year = self.extract_year(item_location=doc_location, min_year=2020)
-            d_full_url = self.is_full_url(item_location=doc_location)
+            d_full_url = self.is_simple_url(item_location=doc_location)
             if not all([d_type, d_year, d_full_url]):
                 continue
             for t in d.get("tags"):
@@ -147,6 +155,7 @@ class SearchWidget(QWidget):
                     self.search_index.get("docs").index(d)
                 )
         self.cbb_tags.addItems(sorted(list(self.dico_contents_by_tag.keys())))
+        self.table_tunning()
 
     def update_search_form(self) -> None:
         """Update search form."""
@@ -168,10 +177,12 @@ class SearchWidget(QWidget):
         for i, r in enumerate(results):
             d = self.search_index.get("docs")[r]
 
-            # first column: title
-            item_title = QTableWidgetItem(d.get("title"))
-            item_title.setToolTip(d.get("text"))
-            self.tab_results.setItem(i, 0, item_title)
+            # first column: button
+            item_open = QPushButton("Open")
+            item_open.clicked.connect(
+                partial(self.open_item_url, d.get("location"))
+            )
+            self.tab_results.setCellWidget(i, 0, item_open)
 
             # second column: type
             self.tab_results.setItem(
@@ -180,14 +191,12 @@ class SearchWidget(QWidget):
                 QTableWidgetItem(self.extract_type(item_location=d.get("location"))),
             )
 
-            # third column: button
-            item_open = QPushButton("Open")
-            item_open.clicked.connect(
-                lambda: self.open_item_url(url_part=d.get("location"))
-            )
-            self.tab_results.setCellWidget(i, 2, item_open)
+            # third column: title
+            item_title = QTableWidgetItem(d.get("title"))
+            item_title.setToolTip(d.get("text"))
+            self.tab_results.setItem(i, 2, item_title)
 
-        self.tab_results.horizontalHeader().setStretchLastSection(True)
+        self.table_tunning()
 
     def open_item_url(self, url_part: str):
         """Open URL using the default web browser.
@@ -197,15 +206,30 @@ class SearchWidget(QWidget):
         """
         webbrowser.open_new_tab(url=f"{self.URL_REMOTE}{url_part}")
 
+    def table_tunning(self):
+        """Prettify table aspect."""
+        # fit to content
+        self.tab_results.resizeColumnToContents(0)
+        self.tab_results.resizeColumnToContents(1)
+        self.tab_results.resizeColumnToContents(2)
+        self.tab_results.setSizeAdjustPolicy(
+            QAbstractScrollArea.AdjustToContentsOnFirstShow
+        )
+
+        # sorting
+        self.tab_results.verticalHeader().setVisible(False)
+
+        logging.debug("Results table tunned.")
+
     # -- Index manipulations -----------------------------------------------------------
     @lru_cache(maxsize=254)
-    def is_full_url(self, item_location: str) -> bool:
-        """Return True is it's a full URL or False if it's an anchor.
+    def is_simple_url(self, item_location: str) -> bool:
+        """Check if the item location is a full URL or an anchor.
 
         :param item_location: content path
         :type item_location: str
 
-        :return: [description]
+        :return: True is it's a full URL or False if it's an anchor.
         :rtype: bool
         """
         return "#" not in item_location
