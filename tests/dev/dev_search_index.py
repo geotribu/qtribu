@@ -131,6 +131,8 @@ class SearchWidget(QWidget):
         """Reset search form."""
         # clear filters list
         self.cbb_tags.clear()
+        self.cbb_tags.addItem("")
+        # self.cbb_tags.setPlaceholderText("-- Choose a tag or start typing for autocompletion --")    # waiting for Qt >= 5.15.5
         self.dico_contents_by_tag: defaultdict = defaultdict(list)
 
         for d in self.search_index.get("docs"):
@@ -152,8 +154,12 @@ class SearchWidget(QWidget):
         search_terms: dict = {
             "tag": self.cbb_tags.currentText(),
         }
-
         logging.debug(f"Search terms: {search_terms}")
+
+        # check if it's the reset value
+        if search_terms.get("tag") == "":
+            logging.debug("Placeholder selected: no pasa nada.")
+            return
 
         results = self.dico_contents_by_tag.get(search_terms.get("tag"))
         self.results_count.display(len(results))
