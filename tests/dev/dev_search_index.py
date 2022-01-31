@@ -53,7 +53,8 @@ class SearchWidget(QWidget):
         super(SearchWidget, self).__init__(parent)
 
         # attributes
-        self.INDEX_REMOTE_URL: str = f"{self.URL_REMOTE}{search_index_path}"
+        self.search_index_path: str = search_index_path
+        self.INDEX_REMOTE_URL: str = f"{self.URL_REMOTE}{self.search_index_path}"
 
         # window
         self.setMinimumSize(500, 300)
@@ -100,7 +101,7 @@ class SearchWidget(QWidget):
         # update search form
         self.reset_search_form()
 
-    def download_search_index(self, expiration_hours: int = 168) -> None:
+    def download_search_index(self, expiration_hours: int = 168, attempt: int = 0) -> None:
         """Download search index from remote URL only if the local file is older than
         the expiration delta.
 
@@ -117,21 +118,38 @@ class SearchWidget(QWidget):
 
         self.INDEX_LOCAL_PATH.parent.mkdir(parents=True, exist_ok=True)
         with requests.get(url=self.INDEX_REMOTE_URL, stream=True) as req:
+            if req.status_code > 399 and attempt < 1:
+                logging.warning(f"Error {req.status_code} downloading search index. Retrying with JSON file...")
+                if self.search_index_path.endswith(".js"):
+                    self.search_index_path += "on"
+                elif self.search_index_path.endswith("on"):
+                    self.search_index_path = self.search_index_path[:-2]
+                    print(self.search_index_path)
+                else:
+                    logging.error("Could not determine search index file type.")
+                self.INDEX_REMOTE_URL = f"{self.URL_REMOTE}{self.search_index_path}"
+                self.download_search_index(expiration_hours=expiration_hours, attempt=attempt+1)
+            else:
+                req.raise_for_status()
+
+            # dowload file to the local storage
             with self.INDEX_LOCAL_PATH.open(mode="wb") as f:
                 for chunk in req.iter_content(chunk_size=16 * 1024):
                     if chunk:
                         f.write(chunk)
         logging.debug(f"Downloaded search index to {self.INDEX_LOCAL_PATH}")
-        return
+        
 
     def load_search_index(self) -> dict:
         """Load search index from local file.
 
         :return: search index
         :rtype: dict
-        """
+        """        
         with self.INDEX_LOCAL_PATH.open(mode="r", encoding="UTF8") as in_json:
-            search_index = json.load(in_json)
+            data = in_json.read()
+            obj = data[data.find('{') : data.rfind('}')+1]
+            search_index = json.loads(obj)
         logging.debug(f"Loaded search index from {self.INDEX_LOCAL_PATH}")
         return search_index
 
