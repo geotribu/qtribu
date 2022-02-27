@@ -18,7 +18,7 @@ from qgis.utils import showPluginHelp
 # project
 from qtribu.__about__ import DIR_PLUGIN_ROOT, __icon_path__, __title__
 from qtribu.gui.dlg_settings import PlgOptionsFactory
-from qtribu.logic import RssMiniReader, SplashChanger, WebViewer
+from qtribu.logic import PlgEasterEggs, RssMiniReader, SplashChanger, WebViewer
 from qtribu.toolbelt import (
     NetworkRequestsManager,
     PlgLogger,
@@ -50,6 +50,7 @@ class GeotribuPlugin:
         self.tr = plg_translation_mngr.tr
 
         # sub-modules
+        self.easter_eggs = PlgEasterEggs(self)
         self.rss_rdr = RssMiniReader()
         self.splash_chgr = SplashChanger(self)
         self.web_viewer = WebViewer()
@@ -72,6 +73,13 @@ class GeotribuPlugin:
         )
         self.action_run.triggered.connect(self.run)
 
+        self.action_eastereggs = QAction(
+            QIcon(QgsApplication.iconPath("repositoryConnected.svg")),
+            self.tr("Enable/disable easter eggs"),
+            self.iface.mainWindow(),
+        )
+        self.action_eastereggs.triggered.connect(self.easter_eggs.switch)
+
         self.action_help = QAction(
             QIcon(QgsApplication.iconPath("mActionHelpContents.svg")),
             self.tr("Help", context="GeotribuPlugin"),
@@ -82,7 +90,7 @@ class GeotribuPlugin:
         )
 
         self.action_settings = QAction(
-            QgsApplication.getThemeIcon("console/iconSettingsConsole.svg"),
+            QIcon(QgsApplication.iconPath("console/iconSettingsConsole.svg")),
             self.tr("Settings"),
             self.iface.mainWindow(),
         )
@@ -97,6 +105,7 @@ class GeotribuPlugin:
 
         # -- Menu
         self.iface.addPluginToWebMenu(__title__, self.action_run)
+        self.iface.addPluginToWebMenu(__title__, self.action_eastereggs)
         self.iface.addPluginToWebMenu(__title__, self.action_splash)
         self.iface.addPluginToWebMenu(__title__, self.action_settings)
         self.iface.addPluginToWebMenu(__title__, self.action_help)
@@ -148,7 +157,12 @@ class GeotribuPlugin:
 
     def unload(self):
         """Cleans up when plugin is disabled/uninstalled."""
+        # -- Specific clean up
+        if self.easter_eggs.CONNECTION_ENABLED:
+            self.easter_eggs.switch()
+
         # -- Clean up menu
+        self.iface.removePluginWebMenu(__title__, self.action_eastereggs)
         self.iface.removePluginWebMenu(__title__, self.action_help)
         self.iface.removePluginWebMenu(__title__, self.action_run)
         self.iface.removePluginWebMenu(__title__, self.action_settings)
