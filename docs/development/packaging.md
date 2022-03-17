@@ -5,7 +5,10 @@
 This plugin is using the [qgis-plugin-ci](https://github.com/opengisch/qgis-plugin-ci/) tool to perform packaging operations.
 
 ```bash
+# package a specific version
 qgis-plugin-ci package 1.3.1
+# package latest version
+qgis-plugin-ci package latest
 ```
 
 ## Release a version

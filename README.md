@@ -10,7 +10,6 @@
 [![Tester](https://github.com/geotribu/qtribu/actions/workflows/tester.yml/badge.svg)](https://github.com/geotribu/qtribu/actions/workflows/tester.yml)
 [![Documentation Builder](https://github.com/geotribu/qtribu/actions/workflows/documentation.yml/badge.svg)](https://github.com/geotribu/qtribu/actions/workflows/documentation.yml)
 [![Packager](https://github.com/geotribu/qtribu/actions/workflows/packager.yml/badge.svg)](https://github.com/geotribu/qtribu/actions/workflows/packager.yml)
-[![Releaser](https://github.com/geotribu/qtribu/actions/workflows/release.yml/badge.svg)](https://github.com/geotribu/qtribu/actions/workflows/release.yml)
 
 Plugin pour QGIS > 3.16
 
