@@ -2,15 +2,45 @@ name: "📦 Packager"
 
 env:
   PROJECT_FOLDER: "qtribu"
-  PYTHON_VERSION: 3.7
+  PYTHON_VERSION: 3.9
 
 on:
   push:
     branches: [main]
 
 jobs:
-  packaging:
+  translation:
+    name: "💬 i18n compilation"
     runs-on: ubuntu-latest
+
+    steps:
+      - name: Get source code
+        uses: actions/checkout@v2
+
+      - name: Install system requirements
+        run: |
+          sudo apt update
+          sudo apt install qt5-default qttools5-dev-tools
+
+      - name: Update translations
+        run: lupdate -noobsolete -verbose ${{ env.PROJECT_FOLDER }}/resources/i18n/plugin_translation.pro
+
+      - name: Compile translations
+        run: lrelease ${{ env.PROJECT_FOLDER }}/resources/i18n/*.ts
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: translations-build
+          path: ${{ env.PROJECT_FOLDER }}/**/*.qm
+          if-no-files-found: error
+
+  # -- NO TAGS ----------------------------------------------------------------------
+  packaging:
+    name: "📦 Packaging plugin"
+    runs-on: ubuntu-latest
+    needs: [translation]
+
+    if: ${{ !startsWith(github.ref, 'refs/tags/') }}
 
     steps:
       - name: Checkout
@@ -20,6 +50,7 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: ${{ env.PYTHON_VERSION }}
+          cache: "pip"
 
       - uses: actions/cache@v2
         with:
@@ -28,21 +59,20 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
-      - name: Install system requirements
-        run: |
-          sudo apt update
-          sudo apt install qt5-default qttools5-dev-tools
-
       - name: Install project requirements
         run: |
           python -m pip install -U pip setuptools wheel
           python -m pip install -U -r requirements/packaging.txt
 
-      - name: Update translations
-        run: pylupdate5 -noobsolete -verbose ${{ env.PROJECT_FOLDER }}/resources/i18n/plugin_translation.pro
+      - name: Download translations
+        uses: actions/download-artifact@v2
+        with:
+          name: translations-build
 
-      - name: Compile translations
-        run: lrelease qtribu/resources/i18n/*.ts
+      - name: Amend gitignore to include compiled translations and it to tracked files
+        run: |
+          sed -i "s|^*.qm.*| |" .gitignore
+          git add ${{ env.PROJECT_FOLDER }}/resources/
 
       - name: Package the latest version
         run: qgis-plugin-ci package latest --allow-uncommitted-changes
@@ -52,3 +82,69 @@ jobs:
           name: ${{ env.PROJECT_FOLDER }}-latest
           path: ${{ env.PROJECT_FOLDER }}.*.zip
           if-no-files-found: error
+
+  # -- ONLY TAGS ----------------------------------------------------------------------
+  release:
+    name: "🚀 Release on tag"
+    runs-on: ubuntu-latest
+    needs: [translation]
+
+    if: startsWith(github.ref, 'refs/tags/')
+
+    steps:
+      - name: Get tag name as version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Setup Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: "pip"
+
+      - uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements/*.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install project requirements
+        run: |
+          python -m pip install -U pip setuptools wheel
+          python -m pip install -U -r requirements/packaging.txt
+
+      - name: Download translations
+        uses: actions/download-artifact@v2
+        with:
+          name: translations-build
+
+      - name: Amend gitignore to include compiled translations and it to tracked files
+        run: |
+          sed -i "s|^*.qm.*| |" .gitignore
+          git add ${{ env.PROJECT_FOLDER }}/resources/
+
+      - name: Get current changelog for ${VERSION}
+        run: qgis-plugin-ci changelog ${GITHUB_REF/refs\/tags\//} >> release.md
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          body_path: release.md
+
+      - name: Deploy plugin
+        run: >-
+          qgis-plugin-ci
+          release ${GITHUB_REF/refs\/tags\//}
+          --github-token ${{ secrets.GITHUB_TOKEN }}
+          --create-plugin-repo
+          --allow-uncommitted-changes
+          --create-plugin-repo
