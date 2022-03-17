@@ -1,4 +1,4 @@
-name: "📦 Packager"
+name: "📦 Packaging & 🚀 Release"
 
 env:
   PROJECT_FOLDER: "qtribu"
@@ -68,6 +68,9 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: translations-build
+
+      - name: List files
+        run: ls -lR
 
       - name: Amend gitignore to include compiled translations and it to tracked files
         run: |
