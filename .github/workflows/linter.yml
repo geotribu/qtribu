@@ -13,7 +13,7 @@ on:
 
 env:
   PROJECT_FOLDER: "qtribu"
-  PYTHON_VERSION: 3.7
+  PYTHON_VERSION: 3.9
 
 jobs:
   lint-py:
