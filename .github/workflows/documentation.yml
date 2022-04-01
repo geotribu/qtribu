@@ -30,7 +30,7 @@ jobs:
           cache: "pip"
 
       - name: Cache project dependencies (pip)
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.1
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('requirements/*.txt') }}
@@ -38,7 +38,7 @@ jobs:
             ${{ runner.os }}-pip-
 
       - name: Cache Sphinx cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.1
         with:
           path: docs/_build/cache
           key: ${{ runner.os }}-sphinx-${{ hashFiles('docs/**/*') }}
