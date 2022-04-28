@@ -1,9 +1,9 @@
 # Documentation (for devs)
 # -----------------------
 
-myst-parser[linkify]>=0.14,<0.17
+myst-parser[linkify]>=0.14,<0.18
 sphinx-autobuild==2021.3.14
-sphinx-autodoc-typehints>=1.11,<1.13
+sphinx-autodoc-typehints>=1.11,<1.18
 sphinx-copybutton>=0.2,<1
 sphinx-rtd-theme>=1,<2
 sphinxext-opengraph>=0.4,<1

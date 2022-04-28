@@ -1,1 +1,3 @@
 resources.qrc export-ignore
+*.ts export-ignore
+*.pro export-ignore
