@@ -7,6 +7,13 @@ env:
 on:
   push:
     branches: [main]
+    tags:
+      - "*"
+
+  pull_request:
+    branches: [main]
+    paths:
+      - .github/workflows/build_release.yml
 
 jobs:
   translation:
@@ -51,13 +58,7 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: "pip"
-
-      - uses: actions/cache@v3
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements/*.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
+          cache-dependency-path: "requirements/packaging.txt"
 
       - name: Install project requirements
         run: |
@@ -71,12 +72,15 @@ jobs:
           path: ${{ env.PROJECT_FOLDER }}
 
       - name: List files
-        run: ls -lR
+        run: tree ${{ env.PROJECT_FOLDER }}
 
-      - name: Amend gitignore to include compiled translations and it to tracked files
+      - name: Amend gitignore to include compiled translations and add it to tracked files
         run: |
+          # include compiled translations
           sed -i "s|^*.qm.*| |" .gitignore
-          git add ${{ env.PROJECT_FOLDER }}/resources/
+
+          # git add full project
+          git add ${{ env.PROJECT_FOLDER }}/
 
       - name: Package the latest version
         run: qgis-plugin-ci package latest --allow-uncommitted-changes
@@ -108,13 +112,7 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: "pip"
-
-      - uses: actions/cache@v3
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements/*.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
+          cache-dependency-path: "requirements/packaging.txt"
 
       - name: Install project requirements
         run: |
@@ -127,10 +125,13 @@ jobs:
           name: translations-build
           path: ${{ env.PROJECT_FOLDER }}
 
-      - name: Amend gitignore to include compiled translations and it to tracked files
+      - name: Amend gitignore to include compiled translations and add it to tracked files
         run: |
+          # include compiled translations
           sed -i "s|^*.qm.*| |" .gitignore
-          git add ${{ env.PROJECT_FOLDER }}/resources/
+
+          # git add full project
+          git add ${{ env.PROJECT_FOLDER }}/
 
       - name: Get current changelog for ${VERSION}
         run: qgis-plugin-ci changelog ${GITHUB_REF/refs\/tags\//} >> release.md
@@ -149,7 +150,8 @@ jobs:
         run: >-
           qgis-plugin-ci
           release ${GITHUB_REF/refs\/tags\//}
-          --github-token ${{ secrets.GITHUB_TOKEN }}
-          --create-plugin-repo
           --allow-uncommitted-changes
           --create-plugin-repo
+          --github-token ${{ secrets.GITHUB_TOKEN }}
+          --osgeo-username ${{ secrets.OSGEO_USER }}
+          --osgeo-password ${{ secrets.OSGEO_PASSWORD }}
