@@ -18,6 +18,12 @@ Unreleased
 
 -->
 
+## 0.12.0 - 2022-07-12
+
+- mise à jour des dépendances
+- test sur la version 3.22
+- publication sur le dépôt officiel des extensions
+
 ## 0.11.0 - 2022-03-17
 
 - les traductions compilées (fichiers `*.qm`) sont désormais générées et automatiquement intégrées dans la CI - #34
