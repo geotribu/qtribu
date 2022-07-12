@@ -26,8 +26,10 @@ class PlgSettingsStructure(NamedTuple):
     debug_mode: bool = False
     version: str = __version__
 
-    # RSS feed
-    rss_source: str = "https://static.geotribu.fr/feed_rss_created.xml"
+    # remote
+    website_url: str = "https://static.geotribu.fr"
+    cdn_url: str = "https://cdn.geotribu.fr"
+    rss_source: str = f"{website_url}/feed_rss_created.xml"
 
     # usage
     browser: int = 1
@@ -86,6 +88,11 @@ class PlgOptionsManager:
             ),
             latest_content_guid=settings.value(
                 key="latest_content_guid", defaultValue="", type=str
+            ),
+            website_url=settings.value(
+                key="geotribu_url",
+                defaultValue="https://static.geotribu.fr",
+                type=str,
             ),
             rss_source=settings.value(
                 key="rss_source",
