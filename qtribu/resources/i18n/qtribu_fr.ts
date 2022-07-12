@@ -12,7 +12,7 @@
 <context>
     <name>GeotribuPlugin</name>
     <message>
-        <location filename="../../plugin_main.py" line="172"/>
+        <location filename="../../plugin_main.py" line="201"/>
         <source>Newest article</source>
         <translation>Afficher le dernier article</translation>
     </message>
@@ -27,7 +27,7 @@
         <translation>Réglages</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="172"/>
+        <location filename="../../plugin_main.py" line="201"/>
         <source>New content published:</source>
         <translation>Nouveau contenu publié :</translation>
     </message>
@@ -35,6 +35,16 @@
         <location filename="../../plugin_main.py" line="106"/>
         <source>QGIS forum on GeoRezo</source>
         <translation>Forum QGIS sur GeoRezo</translation>
+    </message>
+    <message>
+        <location filename="../../plugin_main.py" line="118"/>
+        <source>Geotribu website</source>
+        <translation>Site Geotribu</translation>
+    </message>
+    <message>
+        <location filename="../../plugin_main.py" line="130"/>
+        <source>OSGeo France</source>
+        <translation>OSGeo FR</translation>
     </message>
 </context>
 <context>
