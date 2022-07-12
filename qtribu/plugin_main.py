@@ -129,7 +129,7 @@ class GeotribuPlugin:
 
         self.action_geotribu = QAction(
             QIcon(str(__icon_path__)),
-            self.tr("Site Geotribu"),
+            self.tr("Geotribu website"),
         )
         self.action_geotribu.triggered.connect(
             partial(

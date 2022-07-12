@@ -21,24 +21,17 @@ jobs:
 
     steps:
       - name: Get source code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: "pip"
-
-      - name: Cache project dependencies (pip)
-        uses: actions/cache@v2
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements/*.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
+          cache-dependency-path: "requirements/documentation.txt"
 
       - name: Cache Sphinx cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: docs/_build/cache
           key: ${{ runner.os }}-sphinx-${{ hashFiles('docs/**/*') }}
