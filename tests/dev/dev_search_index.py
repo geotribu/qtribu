@@ -101,7 +101,9 @@ class SearchWidget(QWidget):
         # update search form
         self.reset_search_form()
 
-    def download_search_index(self, expiration_hours: int = 168, attempt: int = 0) -> None:
+    def download_search_index(
+        self, expiration_hours: int = 168, attempt: int = 0
+    ) -> None:
         """Download search index from remote URL only if the local file is older than
         the expiration delta.
 
@@ -119,7 +121,9 @@ class SearchWidget(QWidget):
         self.INDEX_LOCAL_PATH.parent.mkdir(parents=True, exist_ok=True)
         with requests.get(url=self.INDEX_REMOTE_URL, stream=True) as req:
             if req.status_code > 399 and attempt < 1:
-                logging.warning(f"Error {req.status_code} downloading search index. Retrying with JSON file...")
+                logging.warning(
+                    f"Error {req.status_code} downloading search index. Retrying with JSON file..."
+                )
                 if self.search_index_path.endswith(".js"):
                     self.search_index_path += "on"
                 elif self.search_index_path.endswith("on"):
@@ -128,7 +132,9 @@ class SearchWidget(QWidget):
                 else:
                     logging.error("Could not determine search index file type.")
                 self.INDEX_REMOTE_URL = f"{self.URL_REMOTE}{self.search_index_path}"
-                self.download_search_index(expiration_hours=expiration_hours, attempt=attempt+1)
+                self.download_search_index(
+                    expiration_hours=expiration_hours, attempt=attempt + 1
+                )
             else:
                 req.raise_for_status()
 
@@ -138,17 +144,16 @@ class SearchWidget(QWidget):
                     if chunk:
                         f.write(chunk)
         logging.debug(f"Downloaded search index to {self.INDEX_LOCAL_PATH}")
-        
 
     def load_search_index(self) -> dict:
         """Load search index from local file.
 
         :return: search index
         :rtype: dict
-        """        
+        """
         with self.INDEX_LOCAL_PATH.open(mode="r", encoding="UTF8") as in_json:
             data = in_json.read()
-            obj = data[data.find('{') : data.rfind('}')+1]
+            obj = data[data.find("{") : data.rfind("}") + 1]
             search_index = json.loads(obj)
         logging.debug(f"Loaded search index from {self.INDEX_LOCAL_PATH}")
         return search_index
@@ -197,9 +202,7 @@ class SearchWidget(QWidget):
 
             # first column: button
             item_open = QPushButton("Open")
-            item_open.clicked.connect(
-                partial(self.open_item_url, d.get("location"))
-            )
+            item_open.clicked.connect(partial(self.open_item_url, d.get("location")))
             self.tab_results.setCellWidget(i, 0, item_open)
 
             # second column: type
