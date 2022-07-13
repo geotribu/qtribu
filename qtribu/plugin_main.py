@@ -13,10 +13,9 @@ from qgis.gui import QgisInterface
 from qgis.PyQt.QtCore import QCoreApplication, QUrl
 from qgis.PyQt.QtGui import QDesktopServices, QIcon
 from qgis.PyQt.QtWidgets import QAction
-from qgis.utils import showPluginHelp
 
 # project
-from qtribu.__about__ import DIR_PLUGIN_ROOT, __icon_path__, __title__
+from qtribu.__about__ import DIR_PLUGIN_ROOT, __icon_path__, __title__, __uri_homepage__
 from qtribu.gui.dlg_settings import PlgOptionsFactory
 from qtribu.logic import RssMiniReader, SplashChanger, WebViewer
 from qtribu.toolbelt import (
@@ -78,7 +77,7 @@ class GeotribuPlugin:
             self.iface.mainWindow(),
         )
         self.action_help.triggered.connect(
-            lambda: showPluginHelp(filename="resources/help/index")
+            partial(QDesktopServices.openUrl, QUrl(__uri_homepage__))
         )
 
         self.action_settings = QAction(
