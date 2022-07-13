@@ -40,10 +40,6 @@ class SearchWidget:
         self.CONTENT_IDX_PATH.parent.mkdir(parents=True, exist_ok=True)
         self.CDN_IDX_PATH.parent.mkdir(parents=True, exist_ok=True)
 
-        # download indexes
-        self.download_search_index(index_to_download="content")
-        self.download_search_index(index_to_download="cdn")
-
     def download_search_index(self, index_to_download: str = "content"):
         """Download search index from Geotribu."""
         if index_to_download == "content":
@@ -82,10 +78,12 @@ class SearchWidget:
 
     def load_search_index(self):
         """Load search index from local file."""
-        if not self.INDEX_PATH.exists():
-            self.download_search_index()
+        if not self.CONTENT_IDX_PATH.exists():
+            self.download_search_index(index_to_download="content")
+        if not self.CDN_IDX_PATH.exists():
+            self.download_search_index(index_to_download="cdn")
 
-        with self.INDEX_PATH.open(mode="r", encoding="UTF8") as in_json:
+        with self.CONTENT_IDX_PATH.open(mode="r", encoding="UTF8") as in_json:
             search_index = json.load(in_json)
 
         self.log(search_index.keys())
