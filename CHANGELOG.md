@@ -8,13 +8,9 @@ Unreleased
 
 ## [{version_tag}](https://github.com/geotribu/qtribu/releases/tag/{version_tag}) - YYYY-DD-mm
 
-### Added
-
-- ajoute un lien vers le forum QGIS de GeoRezo
-
-### Changed
-
-### Removed
+- corrige le lien vers l'aide dans le menu #78
+- modernise la gestion des préférences en utilisant une dataclass
+- actualise l'outillage (GitHub Actions, étiquetage automatique, )
 
 -->
 
@@ -27,6 +23,7 @@ Unreleased
 ## 0.11.0 - 2022-03-17
 
 - les traductions compilées (fichiers `*.qm`) sont désormais générées et automatiquement intégrées dans la CI - #34
+- ajoute un lien vers le forum QGIS de GeoRezo
 
 ## 0.10.0 - 2022-01-02
 
@@ -78,8 +75,8 @@ Unreleased
 ## 0.4.1 - 2021-04-09
 
 - améliorations diverses :
-    - meilleure gestion des paramètres du plugin
-    - personnalisation des en-têtes pour les appels réseau
+  - meilleure gestion des paramètres du plugin
+  - personnalisation des en-têtes pour les appels réseau
 
 ## 0.4.0 - 2021-04-01
 
