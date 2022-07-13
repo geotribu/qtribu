@@ -5,7 +5,7 @@
 """
 
 # standard
-from typing import NamedTuple
+from dataclasses import asdict, dataclass, fields
 
 # PyQGIS
 from qgis.core import QgsSettings
@@ -19,7 +19,8 @@ from qtribu.__about__ import __title__, __version__
 # ##################################
 
 
-class PlgSettingsStructure(NamedTuple):
+@dataclass
+class PlgSettingsStructure:
     """Plugin settings structure and defaults values."""
 
     # global
@@ -69,45 +70,66 @@ class PlgOptionsManager:
         :return: plugin settings
         :rtype: PlgSettingsStructure
         """
+        # get dataclass fields definition
+        settings_fields = fields(PlgSettingsStructure)
+
+        # retrieve settings from QGIS/Qt
         settings = QgsSettings()
         settings.beginGroup(__title__)
 
+        # instanciate new settings object
         options = PlgSettingsStructure(
-            # global
-            debug_mode=settings.value(key="debug_mode", defaultValue=False, type=bool),
-            version=settings.value(key="version", defaultValue=__version__, type=str),
-            # usage
-            browser=settings.value(key="browser", defaultValue=1, type=int),
-            notify_push_info=settings.value(
-                key="notify_push_info", defaultValue=True, type=bool
+            # normal
+            settings.value(
+                key=settings_fields[0].name,
+                defaultValue=settings_fields[0].default,
+                type=settings_fields[0].type,
             ),
-            notify_push_duration=settings.value(
-                key="notify_push_duration", defaultValue=10, type=int
+            settings.value(
+                key=settings_fields[1].name,
+                defaultValue=settings_fields[1].default,
+                type=settings_fields[1].type,
             ),
-            latest_content_guid=settings.value(
-                key="latest_content_guid", defaultValue="", type=str
+            # network and authentication
+            settings.value(
+                key=settings_fields[2].name,
+                defaultValue=settings_fields[2].default,
+                type=settings_fields[2].type,
             ),
-            rss_source=settings.value(
-                key="rss_source",
-                defaultValue="https://static.geotribu.fr/feed_rss_created.xml",
-                type=str,
+            settings.value(
+                key=settings_fields[3].name,
+                defaultValue=settings_fields[3].default,
+                type=settings_fields[3].type,
             ),
-            splash_screen_enabled=settings.value(
-                key="splash_screen_enabled",
-                defaultValue=False,
-                type=bool,
+            settings.value(
+                key=settings_fields[4].name,
+                defaultValue=settings_fields[4].default,
+                type=settings_fields[4].type,
             ),
-            # network
-            network_http_user_agent=settings.value(
-                key="network_http_user_agent",
-                defaultValue=f"{__title__}/{__version__}",
-                type=str,
+            settings.value(
+                key=settings_fields[5].name,
+                defaultValue=settings_fields[5].default,
+                type=settings_fields[5].type,
             ),
-            request_path=settings.value(
-                key="request_path",
-                defaultValue=f"utm_source=QGIS&utm_medium={__title__}"
-                f"&utm_campaign=plugin_{__version__}",
-                type=str,
+            settings.value(
+                key=settings_fields[6].name,
+                defaultValue=settings_fields[6].default,
+                type=settings_fields[6].type,
+            ),
+            settings.value(
+                key=settings_fields[7].name,
+                defaultValue=settings_fields[7].default,
+                type=settings_fields[7].type,
+            ),
+            settings.value(
+                key=settings_fields[8].name,
+                defaultValue=settings_fields[8].default,
+                type=settings_fields[8].type,
+            ),
+            settings.value(
+                key=settings_fields[9].name,
+                defaultValue=settings_fields[9].default,
+                type=settings_fields[9].type,
             ),
         )
 
@@ -195,7 +217,7 @@ class PlgOptionsManager:
         settings = QgsSettings()
         settings.beginGroup(__title__)
 
-        for k, v in plugin_settings_obj._asdict().items():
+        for k, v in asdict(plugin_settings_obj).items():
             cls.set_value_from_key(k, v)
 
         settings.endGroup()
