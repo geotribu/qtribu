@@ -8,11 +8,13 @@ Unreleased
 
 ## [{version_tag}](https://github.com/geotribu/qtribu/releases/tag/{version_tag}) - YYYY-DD-mm
 
+-->
+
+## 0.13.0 - 2022-07-18
+
 - corrige le lien vers l'aide dans le menu #78
 - modernise la gestion des préférences en utilisant une dataclass
-- actualise l'outillage (GitHub Actions, étiquetage automatique, )
-
--->
+- actualise l'outillage (GitHub Actions, étiquetage automatique, etc.)
 
 ## 0.12.0 - 2022-07-12
 
