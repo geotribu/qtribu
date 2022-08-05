@@ -6,54 +6,49 @@
     <message>
         <location filename="../../gui/dlg_settings.py" line="127"/>
         <source>Read history has been reset.</source>
-        <translation>L&apos;historique de lecture a été réinitialisé.</translation>
+        <translation>L'historique de lecture a été réinitialisé.</translation>
     </message>
 </context>
 <context>
     <name>GeotribuPlugin</name>
     <message>
-        <location filename="../../plugin_main.py" line="201"/>
+        <location filename="../../plugin_main.py" line="246"/>
         <source>Newest article</source>
         <translation>Afficher le dernier article</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="75"/>
+        <location filename="../../plugin_main.py" line="74"/>
         <source>Help</source>
         <translation>Aide en ligne</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="84"/>
+        <location filename="../../plugin_main.py" line="83"/>
         <source>Settings</source>
         <translation>Réglages</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="201"/>
+        <location filename="../../plugin_main.py" line="200"/>
         <source>New content published:</source>
         <translation>Nouveau contenu publié :</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="106"/>
+        <location filename="../../plugin_main.py" line="105"/>
         <source>QGIS forum on GeoRezo</source>
         <translation>Forum QGIS sur GeoRezo</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="118"/>
+        <location filename="../../plugin_main.py" line="117"/>
         <source>Geotribu website</source>
         <translation>Site Geotribu</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="130"/>
+        <location filename="../../plugin_main.py" line="129"/>
         <source>OSGeo France</source>
         <translation>OSGeo FR</translation>
     </message>
 </context>
 <context>
     <name>PlgTranslator</name>
-    <message>
-        <location filename="../../toolbelt/translator.py" line="68"/>
-        <source>Your selected locale ({}) is not available. Please consider to contribute with your own translation :). Contact the plugin maintener(s): {}</source>
-        <translation></translation>
-    </message>
 </context>
 <context>
     <name>SplashChanger</name>
@@ -163,7 +158,7 @@
     <message>
         <location filename="../../gui/dlg_settings.ui" line="128"/>
         <source>Reset read history</source>
-        <translation>Effacer l&apos;historique</translation>
+        <translation>Effacer l'historique</translation>
     </message>
     <message>
         <location filename="../../gui/dlg_settings.ui" line="137"/>
@@ -173,7 +168,7 @@
     <message>
         <location filename="../../gui/dlg_settings.ui" line="144"/>
         <source>&apos;0&apos; means unlimited time, waiting a manual close from the end-user.</source>
-        <translation>&apos;0&apos; signifie une durée illimitée, l&apos;utilisateur final devra fermer la notification manuellement.</translation>
+        <translation>'0' signifie une durée illimitée, l'utilisateur final devra fermer la notification manuellement.</translation>
     </message>
     <message>
         <location filename="../../gui/dlg_settings.ui" line="156"/>
