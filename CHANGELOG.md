@@ -10,6 +10,10 @@ Unreleased
 
 -->
 
+## 0.14.1 - 2022-08-05
+
+- Hotfix enlève un bout d'ancienne syntaxe de traduction
+
 ## 0.14.0 - 2022-08-05
 
 - corrige le chargement de la traduction après que le module dédié ne fonctionne plus sur QGIS 3.22+
