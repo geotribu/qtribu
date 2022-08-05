@@ -32,7 +32,8 @@ class PlgLogger(logging.Handler):
         duration: int = None,
         # widget
         button: bool = False,
-        button_text: str = None,
+        button_label: str = None,
+        button_more_text: str = None,
         button_connect: Callable = None,
     ):
         """Send messages to QGIS messages windows and to the user as a message bar. \
@@ -55,10 +56,13 @@ class PlgLogger(logging.Handler):
         If set to 0, then the message must be manually dismissed by the user. \
         Defaults to None.
         :type duration: int, optional
-        :param button: display a button in the message bar. Defaults to False.
+        :param button: display a button in the message bar to open a QgsMessageOutput. \
+        Defaults to False.
         :type button: bool, optional
-        :param button_text: text label of the button. Defaults to None.
-        :type button_text: str, optional
+        :param button_label: text label of the button. Defaults to None.
+        :type button_label: str, optional
+        :param button_more_text: text to display within the QgsMessageOutput
+        :type button_more_text: str, optional
         :param button_connect: function to be called when the button is pressed. \
         If not set, a simple dialog (QgsMessageOutput) is used to dislay the message. \
         Defaults to None.
@@ -78,9 +82,18 @@ class PlgLogger(logging.Handler):
                 duration=10,
                 button=True
             )
+            log(
+                message="Plugin loaded",
+                log_level=2,
+                push=1,
+                duration=0
+                button=True,
+                button_label=self.tr("See details"),
+                button_more_text=detailed_error_message
+            )
             log(message="Plugin loaded - TEST", log_level=4, push=0)
         """
-        # if debug mode, let's ignore INFO, SUCCESS and TEST
+        # if not debug mode and not push, let's ignore INFO, SUCCESS and TEST
         debug_mode = plg_prefs_hdlr.PlgOptionsManager.get_plg_settings().debug_mode
         if not debug_mode and not push and (log_level < 1 or log_level > 2):
             return
@@ -105,7 +118,7 @@ class PlgLogger(logging.Handler):
         if push:
 
             # calc duration
-            if not duration:
+            if duration is None:
                 duration = (log_level + 1) * 3
 
             # create message with/out a widget
@@ -114,13 +127,15 @@ class PlgLogger(logging.Handler):
                 notification = iface.messageBar().createMessage(
                     title=application, text=message
                 )
-                widget_button = QPushButton(button_text or "More...")
+                widget_button = QPushButton(button_label or "More...")
                 if button_connect:
                     widget_button.clicked.connect(button_connect)
                 else:
                     mini_dlg = QgsMessageOutput.createMessageOutput()
                     mini_dlg.setTitle(application)
-                    mini_dlg.setMessage(message, QgsMessageOutput.MessageText)
+                    mini_dlg.setMessage(
+                        f"{message}\n{button_more_text}", QgsMessageOutput.MessageText
+                    )
                     widget_button.clicked.connect(partial(mini_dlg.showMessage, False))
 
                 notification.layout().addWidget(widget_button)
