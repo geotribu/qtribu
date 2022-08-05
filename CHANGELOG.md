@@ -10,6 +10,10 @@ Unreleased
 
 -->
 
+## 0.14.2 - 2022-08-05
+
+- Hotfix renomme l'ancien nom d'un paramètre
+
 ## 0.14.1 - 2022-08-05
 
 - Hotfix enlève un bout d'ancienne syntaxe de traduction
