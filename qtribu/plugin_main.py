@@ -214,10 +214,7 @@ class GeotribuPlugin:
 
         except Exception as err:
             self.log(
-                message=self.tr(
-                    text=f"Michel, we've got a problem: {err}",
-                    context="GeotribuPlugin",
-                ),
+                message=self.tr(f"Michel, we've got a problem: {err}"),
                 log_level=2,
                 push=True,
             )
