@@ -208,7 +208,7 @@ class GeotribuPlugin:
                     .get_plg_settings()
                     .notify_push_duration,
                     button=True,
-                    button_text=self.tr("Newest article"),
+                    button_label=self.tr("Newest article"),
                     button_connect=self.run,
                 )
 
