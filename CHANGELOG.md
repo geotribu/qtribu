@@ -10,6 +10,11 @@ Unreleased
 
 -->
 
+## 0.14.0 - 2022-08-05
+
+- corrige le chargement de la traduction après que le module dédié ne fonctionne plus sur QGIS 3.22+
+- améliore le module de log pour permettre de mieux personnaliser le `QgsMessageOutput`
+
 ## 0.13.0 - 2022-07-18
 
 - corrige le lien vers l'aide dans le menu #78

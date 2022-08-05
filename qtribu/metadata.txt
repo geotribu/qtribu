@@ -4,7 +4,7 @@ about=Garde le Qontact avec ta Geotribu !
 category=Web
 description=Geotribu (https://static.geotribu.fr) content right into QGIS.
 icon=resources/images/logo_geotribu.png
-tags=geotribu,blog,rss
+tags=geotribu,blog,rss,splash,community
 
 # credits and contact
 author=Julien Moura (Geotribu)
@@ -20,5 +20,5 @@ qgisMinimumVersion=3.16
 qgisMaximumVersion=3.99
 
 # versionnement
-version=0.13.0
+version=0.14.0
 changelog=
