@@ -6,11 +6,12 @@
 
 # standard
 from functools import partial
+from pathlib import Path
 
 # PyQGIS
-from qgis.core import QgsApplication
+from qgis.core import QgsApplication, QgsSettings
 from qgis.gui import QgisInterface
-from qgis.PyQt.QtCore import QCoreApplication, QUrl
+from qgis.PyQt.QtCore import QCoreApplication, QLocale, QTranslator, QUrl
 from qgis.PyQt.QtGui import QDesktopServices, QIcon
 from qgis.PyQt.QtWidgets import QAction
 
@@ -18,12 +19,7 @@ from qgis.PyQt.QtWidgets import QAction
 from qtribu.__about__ import DIR_PLUGIN_ROOT, __icon_path__, __title__, __uri_homepage__
 from qtribu.gui.dlg_settings import PlgOptionsFactory
 from qtribu.logic import RssMiniReader, SplashChanger, WebViewer
-from qtribu.toolbelt import (
-    NetworkRequestsManager,
-    PlgLogger,
-    PlgOptionsManager,
-    PlgTranslator,
-)
+from qtribu.toolbelt import NetworkRequestsManager, PlgLogger, PlgOptionsManager
 
 # ############################################################################
 # ########## Classes ###############
@@ -41,12 +37,18 @@ class GeotribuPlugin:
         self.iface = iface
         self.log = PlgLogger().log
 
-        # translation
-        plg_translation_mngr = PlgTranslator()
-        translator = plg_translation_mngr.get_translator()
-        if translator:
-            QCoreApplication.installTranslator(translator)
-        self.tr = plg_translation_mngr.tr
+        # initialize the locale
+        self.locale: str = QgsSettings().value("locale/userLocale", QLocale().name())[
+            0:2
+        ]
+        locale_path: Path = (
+            DIR_PLUGIN_ROOT / f"resources/i18n/{__title__.lower()}_{self.locale}.qm"
+        )
+        self.log(message=f"Translation: {self.locale}, {locale_path}", log_level=4)
+        if locale_path.exists():
+            self.translator = QTranslator()
+            self.translator.load(str(locale_path.resolve()))
+            QCoreApplication.installTranslator(self.translator)
 
         # sub-modules
         self.rss_rdr = RssMiniReader()
@@ -66,14 +68,12 @@ class GeotribuPlugin:
             self.tr("Newest article"),
             self.iface.mainWindow(),
         )
-        self.action_run.setToolTip(
-            self.tr(text="Newest article", context="GeotribuPlugin")
-        )
+        self.action_run.setToolTip(self.tr("Newest article"))
         self.action_run.triggered.connect(self.run)
 
         self.action_help = QAction(
             QIcon(QgsApplication.iconPath("mActionHelpContents.svg")),
-            self.tr("Help", context="GeotribuPlugin"),
+            self.tr("Help"),
             self.iface.mainWindow(),
         )
         self.action_help.triggered.connect(
@@ -222,6 +222,17 @@ class GeotribuPlugin:
                 push=True,
             )
 
+    def tr(self, message: str) -> str:
+        """Get the translation for a string using Qt translation API.
+
+        :param message: string to be translated.
+        :type message: str
+
+        :returns: Translated version of message.
+        :rtype: str
+        """
+        return QCoreApplication.translate(self.__class__.__name__, message)
+
     def run(self):
         """Main action on plugin icon pressed event."""
         try:
@@ -232,9 +243,7 @@ class GeotribuPlugin:
             self.action_run.setIcon(
                 QIcon(str(DIR_PLUGIN_ROOT / "resources/images/logo_green_no_text.svg"))
             )
-            self.action_run.setToolTip(
-                self.tr(text="Newest article", context="GeotribuPlugin")
-            )
+            self.action_run.setToolTip(self.tr("Newest article"))
             # save latest RSS item displayed
             PlgOptionsManager().set_value_from_key(
                 key="latest_content_guid", value=self.rss_rdr.latest_item.guid
