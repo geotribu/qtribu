@@ -44,11 +44,13 @@ FORM_CLASS, _ = uic.loadUiType(
 class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
     """Settings form embedded into QGIS 'options' menu."""
 
-    def __init__(self, parent):
+    def __init__(self, parent=None):
         """Constructor."""
         super().__init__(parent)
         self.log = PlgLogger().log
         self.plg_settings = PlgOptionsManager()
+
+        # load UI and set objectName
         self.setupUi(self)
         self.setObjectName("mOptionsPage{}".format(__title__))
 
