@@ -86,16 +86,22 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         """Called to permanently apply the settings shown in the options page (e.g. \
         save them to QgsSettings objects). This is usually called when the options \
         dialog is accepted."""
-        new_settings = PlgSettingsStructure(
-            browser=self.opt_browser_group.checkedId(),
-            notify_push_info=self.opt_notif_push_msg.isChecked(),
-            notify_push_duration=self.sbx_notif_duration.value(),
-            debug_mode=self.opt_debug.isChecked(),
-            version=__version__,
-        )
+        settings = self.plg_settings.get_plg_settings()
+
+        # features
+        settings.browser = self.opt_browser_group.checkedId()
+        settings.notify_push_info = self.opt_notif_push_msg.isChecked()
+        settings.notify_push_duration = self.sbx_notif_duration.value()
+
+        # misc
+        settings.debug_mode = self.opt_debug.isChecked()
+        settings.version = __version__
 
         # dump new settings into QgsSettings
-        self.plg_settings.save_from_object(new_settings)
+        self.plg_settings.save_from_object(settings)
+
+        # sub widgets
+        self.wdg_author.save_settings()
 
         if __debug__:
             self.log(
@@ -112,6 +118,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         self.opt_notif_push_msg.setChecked(settings.notify_push_info)
         self.sbx_notif_duration.setValue(settings.notify_push_duration)
 
+        # misc
         self.opt_debug.setChecked(settings.debug_mode)
         self.lbl_version_saved_value.setText(settings.version)
 
