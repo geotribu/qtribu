@@ -18,7 +18,7 @@ class RdpNewsForm(QDialog):
     def __init__(self, parent=None):
         """QDialog to set user informations.
 
-        :param parent: _description_
+        :param parent: parent widget or application
         :type parent: QWidget
         """
         super().__init__(parent)
