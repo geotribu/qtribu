@@ -1,9 +1,12 @@
 # standard
+from functools import partial
 from pathlib import Path
 
 # PyQGIS
 from qgis.PyQt import uic
+from qgis.PyQt.Qt import QUrl
 from qgis.PyQt.QtCore import Qt
+from qgis.PyQt.QtGui import QDesktopServices
 from qgis.PyQt.QtWidgets import QDialog
 
 # plugin
@@ -30,3 +33,11 @@ class RdpNewsForm(QDialog):
             self.cbb_category.setItemData(
                 rdp_category.order - 1, rdp_category.description, Qt.ToolTipRole
             )
+
+        # connect help button
+        self.btn_box.helpRequested.connect(
+            partial(
+                QDesktopServices.openUrl,
+                QUrl("https://static.geotribu.fr/contribuer/rdp/add_news/"),
+            )
+        )
