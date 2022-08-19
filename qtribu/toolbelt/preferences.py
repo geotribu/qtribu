@@ -43,6 +43,14 @@ class PlgSettingsStructure:
         f"utm_source=QGIS&utm_medium={__title__}&utm_campaign=plugin_{__version__}"
     )
 
+    # authoring
+    author_firstname: str = ""
+    author_lastname: str = ""
+    author_email: str = ""
+    author_github: str = ""
+    author_linkedin: str = ""
+    author_twitter: str = ""
+
     @property
     def browser_as_str(self) -> str:
         """Returns mathcing browser value name from its code.
@@ -130,6 +138,36 @@ class PlgOptionsManager:
                 key=settings_fields[9].name,
                 defaultValue=settings_fields[9].default,
                 type=settings_fields[9].type,
+            ),
+            settings.value(
+                key=settings_fields[10].name,
+                defaultValue=settings_fields[10].default,
+                type=settings_fields[10].type,
+            ),
+            settings.value(
+                key=settings_fields[11].name,
+                defaultValue=settings_fields[11].default,
+                type=settings_fields[11].type,
+            ),
+            settings.value(
+                key=settings_fields[12].name,
+                defaultValue=settings_fields[12].default,
+                type=settings_fields[12].type,
+            ),
+            settings.value(
+                key=settings_fields[13].name,
+                defaultValue=settings_fields[13].default,
+                type=settings_fields[13].type,
+            ),
+            settings.value(
+                key=settings_fields[14].name,
+                defaultValue=settings_fields[14].default,
+                type=settings_fields[14].type,
+            ),
+            settings.value(
+                key=settings_fields[15].name,
+                defaultValue=settings_fields[15].default,
+                type=settings_fields[15].type,
             ),
         )
 
