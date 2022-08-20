@@ -41,10 +41,21 @@ class NetworkRequestsManager:
     :type tr: func
     """
 
-    def __init__(self, tr):
+    def __init__(self):
         """Initialization."""
         self.log = PlgLogger().log
         self.ntwk_requester = QgsBlockingNetworkRequest()
+
+    def tr(self, message: str) -> str:
+        """Get the translation for a string using Qt translation API.
+
+        :param message: string to be translated.
+        :type message: str
+
+        :returns: Translated version of message.
+        :rtype: str
+        """
+        return QCoreApplication.translate(self.__class__.__name__, message)
 
     @lru_cache(maxsize=128)
     def build_url(self, url: str) -> QUrl:

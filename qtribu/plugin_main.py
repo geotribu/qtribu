@@ -189,7 +189,7 @@ class GeotribuPlugin:
         :raises Exception: if there is no item in the feed
         """
         try:
-            qntwk = NetworkRequestsManager(tr=self.tr)
+            qntwk = NetworkRequestsManager()
             self.rss_rdr.read_feed(qntwk.get_from_source(headers=self.rss_rdr.HEADERS))
             if not self.rss_rdr.latest_item:
                 raise Exception("No item found")
