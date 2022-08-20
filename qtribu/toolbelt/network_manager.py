@@ -14,8 +14,8 @@ from functools import lru_cache
 from urllib.parse import urlparse, urlunparse
 
 # PyQGIS
-from qgis.core import QgsBlockingNetworkRequest
-from qgis.PyQt.Qt import QByteArray, QUrl
+from qgis.core import QgsBlockingNetworkRequest, QgsFileDownloader
+from qgis.PyQt.QtCore import QByteArray, QCoreApplication, QEventLoop, QUrl
 from qgis.PyQt.QtNetwork import QNetworkRequest
 
 # project
@@ -148,3 +148,30 @@ class NetworkRequestsManager:
             err_msg = "Houston, we've got a problem: {}".format(err)
             logger.error(err_msg)
             self.log(message=err_msg, log_level=2, push=1)
+
+    def download_file(self, remote_url: str, local_path: str) -> str:
+        """Download a file from a remote web server accessible through HTTP.
+
+        :param remote_url: remote URL
+        :type remote_url: str
+        :param local_path: path to the local file
+        :type local_path: str
+        :return: output path
+        :rtype: str
+        """
+        self.log(
+            message=f"Downloading file from {remote_url} to {local_path}", log_level=4
+        )
+        # download it
+        loop = QEventLoop()
+        file_downloader = QgsFileDownloader(
+            url=QUrl(remote_url), outputFileName=local_path, delayStart=True
+        )
+        file_downloader.downloadExited.connect(loop.quit)
+        file_downloader.startDownload()
+        loop.exec_()
+
+        self.log(
+            message=f"Download of {remote_url} to {local_path} succeedeed", log_level=3
+        )
+        return local_path
