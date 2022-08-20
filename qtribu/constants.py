@@ -17,6 +17,14 @@ class RdpNewsCategory:
     example: str = None
 
 
+@dataclass
+class GeotribuImage:
+    name: str
+    url: str
+    kind: str
+    description: str = None
+
+
 # Objects
 GEORDP_NEWS_CATEGORIES: tuple = (
     RdpNewsCategory(
@@ -68,5 +76,92 @@ GEORDP_NEWS_CATEGORIES: tuple = (
         description="Tout ce qui ne rentre pas dans les autres sections.",
         order=8,
         example="https://static.geotribu.fr/rdp/2021/rdp_2021-03-26/#les-villes-ont-elles-un-corps",
+    ),
+)
+
+GEORDP_NEWS_ICONS: tuple = (
+    GeotribuImage(
+        name="news",
+        url="https://cdn.geotribu.fr/img/internal/icons-rdp-news/news.png",
+        kind="icon",
+        description="icône news générique",
+    ),
+    GeotribuImage(
+        name="world",
+        url="https://cdn.geotribu.fr/img/internal/icons-rdp-news/world.png",
+        kind="icon",
+        description="icône globe générique",
+    ),
+    GeotribuImage(
+        name="absurde",
+        url="https://cdn.geotribu.fr/img/internal/icons-rdp-news/absurde.png",
+        kind="icon",
+        description="icône globe retourné",
+    ),
+    GeotribuImage(
+        name="ancien",
+        url="https://cdn.geotribu.fr/img/internal/icons-rdp-news/ancien.png",
+        kind="icon",
+        description="icône globe ancien",
+    ),
+    GeotribuImage(
+        name="flux",
+        url="https://cdn.geotribu.fr/img/internal/icons-rdp-news/flux.png",
+        kind="icon",
+        description="icône globe flux",
+    ),
+    GeotribuImage(
+        name="genre",
+        url="https://cdn.geotribu.fr/img/internal/icons-rdp-news/genre.png",
+        kind="icon",
+        description="icône globe genre",
+    ),
+    GeotribuImage(
+        name="heatmap",
+        url="https://cdn.geotribu.fr/img/internal/icons-rdp-news/heatmap.png",
+        kind="icon",
+        description="icône globe heatmap",
+    ),
+    GeotribuImage(
+        name="itineraire",
+        url="https://cdn.geotribu.fr/img/internal/icons-rdp-news/itineraire.png",
+        kind="icon",
+        description="icône globe itineraire",
+    ),
+    GeotribuImage(
+        name="mentale",
+        url="https://cdn.geotribu.fr/img/internal/icons-rdp-news/mentale.png",
+        kind="icon",
+        description="icône globe mentale",
+    ),
+    GeotribuImage(
+        name="metro",
+        url="https://cdn.geotribu.fr/img/internal/icons-rdp-news/metro.png",
+        kind="icon",
+        description="icône globe metro",
+    ),
+    GeotribuImage(
+        name="microworld",
+        url="https://cdn.geotribu.fr/img/internal/icons-rdp-news/microworld.png",
+        kind="icon",
+        description="icône globe microworld",
+    ),
+    GeotribuImage(
+        name="night",
+        url="https://cdn.geotribu.fr/img/internal/icons-rdp-news/night.png",
+        kind="icon",
+        description="icône globe night",
+    ),
+    GeotribuImage(
+        name="mystique",
+        url="https://cdn.geotribu.fr/img/internal/icons-rdp-news/mystique.png",
+        kind="icon",
+        description="icône globe mystique",
+    ),
+    GeotribuImage(
+        name="pointillisme",
+        url="https://cdn.geotribu.fr/img/internal/icons-rdp-news/pointillisme.png",
+        kind="icon",
+        description="icône globe pointillisme",
     ),
 )
