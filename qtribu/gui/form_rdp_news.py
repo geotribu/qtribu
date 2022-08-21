@@ -49,23 +49,15 @@ class RdpNewsForm(QDialog):
         self.lne_title.textChanged.connect(self.auto_preview)
 
         # populate combobox of news category
+        self.cbb_category.addItem("", None)
         for rdp_category in GEORDP_NEWS_CATEGORIES:
             self.cbb_category.addItem(rdp_category.name)
             self.cbb_category.setItemData(
                 rdp_category.order - 1, rdp_category.description, Qt.ToolTipRole
             )
 
-        # populate combobox of news icons
-        self.cbb_icon.addItem("", None)
-        for rdp_icon in GEORDP_NEWS_ICONS:
-            if rdp_icon.kind != "icon":
-                continue
-            self.cbb_icon.addItem(rdp_icon.name, rdp_icon)
-            self.cbb_icon.setItemData(
-                GEORDP_NEWS_ICONS.index(rdp_icon) + 1,
-                rdp_icon.description,
-                Qt.ToolTipRole,
-            )
+        # icon combobox
+        self.cbb_icon_populate()
         self.cbb_icon.textActivated.connect(self.cbb_icon_selected)
 
         # connect preview button
@@ -83,22 +75,52 @@ class RdpNewsForm(QDialog):
             )
         )
 
+    def cbb_icon_populate(self) -> None:
+        """Populate combobox of news icons."""
+        # save current index
+        current_item_idx = self.cbb_icon.currentIndex()
+
+        # clear
+        self.cbb_icon.clear()
+
+        # populate
+        self.cbb_icon.addItem("", None)
+        for rdp_icon in GEORDP_NEWS_ICONS:
+            if rdp_icon.kind != "icon":
+                continue
+
+            if rdp_icon.local_path().is_file():
+                self.cbb_icon.addItem(
+                    QIcon(str(rdp_icon.local_path().resolve())), rdp_icon.name, rdp_icon
+                )
+            else:
+                self.cbb_icon.addItem(rdp_icon.name, rdp_icon)
+
+            # icon tooltip
+            self.cbb_icon.setItemData(
+                GEORDP_NEWS_ICONS.index(rdp_icon) + 1,
+                rdp_icon.description,
+                Qt.ToolTipRole,
+            )
+
+        self.cbb_icon.setCurrentIndex(current_item_idx)
+
     def cbb_icon_selected(self) -> None:
         """Download selected icon locally if it doesn't exist already."""
         selected_icon: GeotribuImage = self.cbb_icon.currentData()
         if not selected_icon:
             return
 
-        icon_remote_url = selected_icon.url
-        icon_remote_url_parsed = urlparse(icon_remote_url)
-        icon_local_path = Path(self.LOCAL_CDN_PATH / icon_remote_url_parsed.path[1:])
+        icon_local_path = selected_icon.local_path()
         if not icon_local_path.is_file():
             self.log(message=f"icon not exists: {icon_local_path}", log_level=4)
             icon_local_path.parent.mkdir(parents=True, exist_ok=True)
             self.qntwk.download_file(
-                remote_url=icon_remote_url,
+                remote_url=selected_icon.url,
                 local_path=str(icon_local_path.resolve()),
             )
+            # repopulate combobx to get updated items icons
+            self.cbb_icon_populate()
 
         self.auto_preview()
 

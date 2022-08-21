@@ -6,6 +6,8 @@
 
 # standard
 from dataclasses import dataclass
+from pathlib import Path
+from urllib.parse import urlparse
 
 
 # Classes
@@ -23,6 +25,18 @@ class GeotribuImage:
     url: str
     kind: str
     description: str = None
+
+    def local_path(self, base_path: Path = Path().home() / ".geotribu/cdn/") -> Path:
+        """Get expected local path.
+
+        :param base_path: base path to store images, defaults to Path().home()/".geotribu/cdn/"
+        :type base_path: Path, optional
+
+        :return: local path to the image
+        :rtype: Path
+        """
+        url_parsed = urlparse(self.url)
+        return Path(base_path / url_parsed.path[1:])
 
 
 # Objects
@@ -123,10 +137,10 @@ GEORDP_NEWS_ICONS: tuple = (
         description="icône globe heatmap",
     ),
     GeotribuImage(
-        name="itineraire",
+        name="itinéraire",
         url="https://cdn.geotribu.fr/img/internal/icons-rdp-news/itineraire.png",
         kind="icon",
-        description="icône globe itineraire",
+        description="icône globe itinéraire",
     ),
     GeotribuImage(
         name="mentale",
