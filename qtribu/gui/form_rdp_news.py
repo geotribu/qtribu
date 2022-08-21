@@ -6,11 +6,12 @@ from urllib.parse import urlparse
 # PyQGIS
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import Qt, QUrl
-from qgis.PyQt.QtGui import QDesktopServices
+from qgis.PyQt.QtGui import QDesktopServices, QIcon
 from qgis.PyQt.QtWidgets import QDialog
 
 # plugin
-from qtribu.constants import GEORDP_NEWS_CATEGORIES, GEORDP_NEWS_ICONS
+from qtribu.__about__ import DIR_PLUGIN_ROOT
+from qtribu.constants import GEORDP_NEWS_CATEGORIES, GEORDP_NEWS_ICONS, GeotribuImage
 from qtribu.toolbelt import NetworkRequestsManager, PlgLogger, PlgOptionsManager
 
 
@@ -31,6 +32,9 @@ class RdpNewsForm(QDialog):
         self.log = PlgLogger().log
         self.plg_settings = PlgOptionsManager()
         self.qntwk = NetworkRequestsManager()
+
+        # custom icon
+        self.setWindowIcon(QIcon(str(DIR_PLUGIN_ROOT / "resources/images/news.png")))
 
         # populate combobox of news category
         for rdp_category in GEORDP_NEWS_CATEGORIES:
