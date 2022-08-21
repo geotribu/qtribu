@@ -52,7 +52,7 @@
 <context>
     <name>ConfigOptionsPage</name>
     <message>
-        <location filename="../../gui/dlg_settings.py" line="129"/>
+        <location filename="../../gui/dlg_settings.py" line="135"/>
         <source>Read history has been reset.</source>
         <translation>L&apos;historique de lecture a été réinitialisé.</translation>
     </message>
@@ -60,7 +60,7 @@
 <context>
     <name>GeotribuPlugin</name>
     <message>
-        <location filename="../../plugin_main.py" line="256"/>
+        <location filename="../../plugin_main.py" line="258"/>
         <source>Newest article</source>
         <translation>Afficher le dernier article</translation>
     </message>
@@ -75,7 +75,7 @@
         <translation>Réglages</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="213"/>
+        <location filename="../../plugin_main.py" line="215"/>
         <source>New content published:</source>
         <translation>Nouveau contenu publié :</translation>
     </message>
@@ -100,7 +100,7 @@
         <translation>Proposer une news pour la GeoRDP</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="229"/>
+        <location filename="../../plugin_main.py" line="231"/>
         <source>Michel, we&apos;ve got a problem: {err}</source>
         <translation type="unfinished"></translation>
     </message>
@@ -146,69 +146,100 @@
         <translation>GeoRDP - Formulaire de soumission de news</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.ui" line="34"/>
+        <location filename="../../gui/form_rdp_news.ui" line="37"/>
         <source>The news</source>
         <translation>Votre news</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.ui" line="50"/>
+        <location filename="../../gui/form_rdp_news.ui" line="53"/>
         <source>The title must be concise and avoid some special characters, especially at the end</source>
         <translation>Le titre doit être concis et éviter certains caractères spéciaux, notamment à la fin</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.ui" line="53"/>
+        <location filename="../../gui/form_rdp_news.ui" line="56"/>
         <source>Title:</source>
         <translation>Titre :</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.ui" line="63"/>
+        <location filename="../../gui/form_rdp_news.ui" line="66"/>
         <source>Icon:</source>
         <translation>Icône :</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.ui" line="84"/>
+        <location filename="../../gui/form_rdp_news.ui" line="202"/>
         <source>Category:</source>
         <translation>Catégorie :</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.ui" line="94"/>
+        <location filename="../../gui/form_rdp_news.ui" line="80"/>
         <source>Keywords:</source>
         <translation>Mots-clés :</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.ui" line="115"/>
+        <location filename="../../gui/form_rdp_news.ui" line="101"/>
         <source>Body:</source>
         <translation>Corps de la news :</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.ui" line="151"/>
+        <location filename="../../gui/form_rdp_news.ui" line="228"/>
         <source>Publication</source>
         <translation>Transparence et publication</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.ui" line="164"/>
+        <location filename="../../gui/form_rdp_news.ui" line="241"/>
         <source>License:</source>
         <translation>Licence :</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.ui" line="171"/>
+        <location filename="../../gui/form_rdp_news.ui" line="248"/>
         <source>I accept that my contribution is published under the CC BY-NC-SA 4.0</source>
         <translation>J&apos;accepte que ma contribution soit publiée en CC BY-NC-SA 4.0</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.ui" line="188"/>
+        <location filename="../../gui/form_rdp_news.ui" line="265"/>
         <source>Comment:</source>
         <translation>Commentaire libre :</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.ui" line="195"/>
+        <location filename="../../gui/form_rdp_news.ui" line="272"/>
         <source>Transparency:</source>
         <translation>Transparence :</translation>
     </message>
     <message>
         <location filename="../../gui/form_rdp_news.ui" line="202"/>
         <source>I&apos;m not related to thepublished content. If not, I give some details in the comment area.</source>
-        <translation>Je ne fais pas d&apos;autopromotion. Si c&apos;est le cas, je donne des détails en commentaire.</translation>
+        <translation type="obsolete">Je ne fais pas d&apos;autopromotion. Si c&apos;est le cas, je donne des détails en commentaire.</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_rdp_news.ui" line="108"/>
+        <source>Preview</source>
+        <translation>Prévisualiser</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_rdp_news.ui" line="175"/>
+        <source>Enable auto generation of preview every time the input text changes.</source>
+        <translation>Activer la prévisualisation brute à la volée.</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_rdp_news.ui" line="178"/>
+        <source>Auto-preview</source>
+        <translation type="unfinished">Rendu automatique</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_rdp_news.ui" line="185"/>
+        <source>Minimal preview. Be careful, this render is not contractual with the final render on Geotribu website.</source>
+        <translation>Prévisualisation brute. Attention, ce rendu n&apos;est pas contractuel et très différent du rendu final sur le site Geotribu.</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_rdp_news.ui" line="188"/>
+        <source>Raw preview:</source>
+        <translation>Rendu brut :</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_rdp_news.ui" line="279"/>
+        <source>I&apos;m not related to the published content. If not, I give some details in the comment area.</source>
+        <translation>Ceci n&apos;est pas une autopromotion, une publicité ou un simple copié/collé d&apos;un CP etc.
+Si c&apos;est le cas, ne pas cocher et donner des précisions en commentaire.</translation>
     </message>
 </context>
 <context>
