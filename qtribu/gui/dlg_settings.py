@@ -92,6 +92,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         settings.browser = self.opt_browser_group.checkedId()
         settings.notify_push_info = self.opt_notif_push_msg.isChecked()
         settings.notify_push_duration = self.sbx_notif_duration.value()
+        settings.license_global_accept = self.chb_license_global_accept.isChecked()
 
         # misc
         settings.debug_mode = self.opt_debug.isChecked()
@@ -117,6 +118,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         self.opt_browser_group.button(settings.browser).setChecked(True)
         self.opt_notif_push_msg.setChecked(settings.notify_push_info)
         self.sbx_notif_duration.setValue(settings.notify_push_duration)
+        self.chb_license_global_accept.setChecked(settings.license_global_accept)
 
         # misc
         self.opt_debug.setChecked(settings.debug_mode)

@@ -67,6 +67,13 @@ class RdpNewsForm(QDialog):
         self.btn_preview.clicked.connect(self.generate_preview)
         self.txt_preview.setStyleSheet("background-color:transparent;")
 
+        # publication
+        self.chb_license.setChecked(
+            self.plg_settings.get_value_from_key(
+                key="license_global_accept", exp_type=bool
+            )
+        )
+
         # connect help button
         self.btn_box.helpRequested.connect(
             partial(

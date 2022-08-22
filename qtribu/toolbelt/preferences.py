@@ -36,6 +36,7 @@ class PlgSettingsStructure:
     notify_push_duration: int = 10
     latest_content_guid: str = None
     splash_screen_enabled: bool = False
+    license_global_accept: bool = False
 
     # network
     network_http_user_agent: str = f"{__title__}/{__version__}"
@@ -169,6 +170,11 @@ class PlgOptionsManager:
                 defaultValue=settings_fields[15].default,
                 type=settings_fields[15].type,
             ),
+            settings.value(
+                key=settings_fields[16].name,
+                defaultValue=settings_fields[16].default,
+                type=settings_fields[16].type,
+            ),
         )
 
         settings.endGroup()
@@ -196,6 +202,7 @@ class PlgOptionsManager:
 
         try:
             out_value = settings.value(key=key, defaultValue=default, type=exp_type)
+            print(out_value)
         except Exception as err:
             log_hdlr.PlgLogger.log(
                 message="Error occurred trying to get settings: {}.Trace: {}".format(

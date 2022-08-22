@@ -52,7 +52,7 @@
 <context>
     <name>ConfigOptionsPage</name>
     <message>
-        <location filename="../../gui/dlg_settings.py" line="135"/>
+        <location filename="../../gui/dlg_settings.py" line="137"/>
         <source>Read history has been reset.</source>
         <translation>L&apos;historique de lecture a été réinitialisé.</translation>
     </message>
@@ -108,66 +108,66 @@
 <context>
     <name>RdpNewsForm</name>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="172"/>
+        <location filename="../../gui/form_rdp_news.py" line="182"/>
         <source>- A category is required.
 </source>
         <translation>- Une catégorie est requise.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="177"/>
+        <location filename="../../gui/form_rdp_news.py" line="187"/>
         <source>- A title is required, with at least 3 characters.
 </source>
         <translation>- Un titre est requis, avec 3 caractères minimum.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="184"/>
+        <location filename="../../gui/form_rdp_news.py" line="194"/>
         <source>- News is not long enougth (25 characters at least).
 </source>
         <translation>- Le contenu de la news n&apos;est pas assez long (25 caractères minimum).
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="191"/>
+        <location filename="../../gui/form_rdp_news.py" line="201"/>
         <source>- License must be accepted.
 </source>
         <translation>- La licence doit être acceptée.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="196"/>
+        <location filename="../../gui/form_rdp_news.py" line="206"/>
         <source>- For attribution purpose, author&apos;s firstname is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, le prénom de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="203"/>
+        <location filename="../../gui/form_rdp_news.py" line="213"/>
         <source>- For attribution purpose, author&apos;s lastname is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, le nom de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="210"/>
+        <location filename="../../gui/form_rdp_news.py" line="220"/>
         <source>- For attribution purpose, author&apos;s email is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, l&apos;email de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="216"/>
+        <location filename="../../gui/form_rdp_news.py" line="226"/>
         <source>Some of required fields are incorrectly filled.</source>
         <translation>Certains champs requis ne sont pas correctement renseignés.</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="216"/>
+        <location filename="../../gui/form_rdp_news.py" line="226"/>
         <source>See details...</source>
         <translation>Voir les détails...</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="216"/>
+        <location filename="../../gui/form_rdp_news.py" line="226"/>
         <source>Fields in bold must be filled. Missing fields:
 </source>
         <translation>Les champs dont le nom est en gras sont requis. Champs incorrects :
@@ -324,84 +324,89 @@ Si c&apos;est le cas, ne pas cocher et donner des précisions en commentaire.</t
         <translation>Fonctionnalités</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="205"/>
+        <location filename="../../gui/dlg_settings.ui" line="106"/>
         <source>Which web browser to use to display articles.</source>
         <translation>Navigateur web à utiliser pour afficher les articles.</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="208"/>
+        <location filename="../../gui/dlg_settings.ui" line="109"/>
         <source>Open in web browser:</source>
         <translation>Navigateur web :</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="186"/>
+        <location filename="../../gui/dlg_settings.ui" line="194"/>
         <source>System default browser</source>
         <translation>Navigateur du système</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="227"/>
+        <location filename="../../gui/dlg_settings.ui" line="128"/>
         <source>Notify for new content:</source>
         <translation>Notification :</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="106"/>
+        <location filename="../../gui/dlg_settings.ui" line="213"/>
         <source>Embedded browser</source>
         <translation>Navigateur embarqué de QGIS</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="249"/>
+        <location filename="../../gui/dlg_settings.ui" line="169"/>
         <source>Informational push message</source>
         <translation>Activer la notification push</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="290"/>
+        <location filename="../../gui/dlg_settings.ui" line="297"/>
         <source>Miscellaneous</source>
         <translation>Divers</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="311"/>
+        <location filename="../../gui/dlg_settings.ui" line="318"/>
         <source>Enable debug mode.</source>
         <translation>Activer le mode DEBUG.</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="320"/>
+        <location filename="../../gui/dlg_settings.ui" line="327"/>
         <source>Debug mode (degraded performances)</source>
         <translation>Mode DEBUG (performances dégradées)</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="342"/>
+        <location filename="../../gui/dlg_settings.ui" line="349"/>
         <source>Version used to save settings:</source>
         <translation>Version des paramètres :</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="402"/>
+        <location filename="../../gui/dlg_settings.ui" line="409"/>
         <source>Report an issue</source>
         <translation>Créer un ticket</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="383"/>
+        <location filename="../../gui/dlg_settings.ui" line="390"/>
         <source>Help</source>
         <translation>Aide en ligne</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="128"/>
+        <location filename="../../gui/dlg_settings.ui" line="147"/>
         <source>Reset read history</source>
         <translation>Effacer l&apos;historique</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="137"/>
+        <location filename="../../gui/dlg_settings.ui" line="225"/>
         <source>Duration:</source>
         <translation>Durée :</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="144"/>
+        <location filename="../../gui/dlg_settings.ui" line="232"/>
         <source>&apos;0&apos; means unlimited time, waiting a manual close from the end-user.</source>
         <translation>&apos;0&apos; signifie une durée illimitée, l&apos;utilisateur final devra fermer la notification manuellement.</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="156"/>
+        <location filename="../../gui/dlg_settings.ui" line="244"/>
         <source> seconds</source>
         <translation> secondes</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dlg_settings.ui" line="262"/>
+        <source>Accept publication license globally</source>
+        <translation>Accepter une fois pour toutes la licence de publication</translation>
     </message>
 </context>
 </TS>
