@@ -102,7 +102,76 @@
     <message>
         <location filename="../../plugin_main.py" line="231"/>
         <source>Michel, we&apos;ve got a problem: {err}</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>RdpNewsForm</name>
+    <message>
+        <location filename="../../gui/form_rdp_news.py" line="172"/>
+        <source>- A category is required.
+</source>
+        <translation>- Une catégorie est requise.
+</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_rdp_news.py" line="177"/>
+        <source>- A title is required, with at least 3 characters.
+</source>
+        <translation>- Un titre est requis, avec 3 caractères minimum.
+</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_rdp_news.py" line="184"/>
+        <source>- News is not long enougth (25 characters at least).
+</source>
+        <translation>- Le contenu de la news n&apos;est pas assez long (25 caractères minimum).
+</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_rdp_news.py" line="191"/>
+        <source>- License must be accepted.
+</source>
+        <translation>- La licence doit être acceptée.
+</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_rdp_news.py" line="196"/>
+        <source>- For attribution purpose, author&apos;s firstname is required.
+</source>
+        <translation>- Pour les besoins d&apos;attribution, le prénom de l&apos;auteur/e est requis.
+</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_rdp_news.py" line="203"/>
+        <source>- For attribution purpose, author&apos;s lastname is required.
+</source>
+        <translation>- Pour les besoins d&apos;attribution, le nom de l&apos;auteur/e est requis.
+</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_rdp_news.py" line="210"/>
+        <source>- For attribution purpose, author&apos;s email is required.
+</source>
+        <translation>- Pour les besoins d&apos;attribution, l&apos;email de l&apos;auteur/e est requis.
+</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_rdp_news.py" line="216"/>
+        <source>Some of required fields are incorrectly filled.</source>
+        <translation>Certains champs requis ne sont pas correctement renseignés.</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_rdp_news.py" line="216"/>
+        <source>See details...</source>
+        <translation>Voir les détails...</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_rdp_news.py" line="216"/>
+        <source>Fields in bold must be filled. Missing fields:
+</source>
+        <translation>Les champs dont le nom est en gras sont requis. Champs incorrects :
+</translation>
     </message>
 </context>
 <context>
@@ -223,7 +292,7 @@
     <message>
         <location filename="../../gui/form_rdp_news.ui" line="178"/>
         <source>Auto-preview</source>
-        <translation type="unfinished">Rendu automatique</translation>
+        <translation>Rendu automatique</translation>
     </message>
     <message>
         <location filename="../../gui/form_rdp_news.ui" line="185"/>
