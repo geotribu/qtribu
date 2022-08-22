@@ -51,7 +51,7 @@ class RdpNewsForm(QDialog):
         # populate combobox of news category
         self.cbb_category.addItem("", None)
         for rdp_category in GEORDP_NEWS_CATEGORIES:
-            self.cbb_category.addItem(rdp_category.name)
+            self.cbb_category.addItem(rdp_category.name, rdp_category)
             self.cbb_category.setItemData(
                 rdp_category.order - 1, rdp_category.description, Qt.ToolTipRole
             )
@@ -103,6 +103,7 @@ class RdpNewsForm(QDialog):
                 Qt.ToolTipRole,
             )
 
+        # restore current index
         self.cbb_icon.setCurrentIndex(current_item_idx)
 
     def cbb_icon_selected(self) -> None:
@@ -113,7 +114,9 @@ class RdpNewsForm(QDialog):
 
         icon_local_path = selected_icon.local_path()
         if not icon_local_path.is_file():
-            self.log(message=f"icon not exists: {icon_local_path}", log_level=4)
+            self.log(
+                message=f"Icon doesn't exist locally: {icon_local_path}", log_level=4
+            )
             icon_local_path.parent.mkdir(parents=True, exist_ok=True)
             self.qntwk.download_file(
                 remote_url=selected_icon.url,
@@ -152,3 +155,79 @@ class RdpNewsForm(QDialog):
         # show it
         self.txt_preview.clear()
         self.txt_preview.setMarkdown(md_txt)
+
+    def accept(self) -> bool:
+        """Auto-connected to the OK button (within the button box), i.e. the `accepted`
+        signal. Check if required form fields are correctly filled.
+
+        :return: False if some check fails. True and emit accepted() signal if everything is ok.
+        :rtype: bool
+        """
+        invalid_fields = []
+        error_message = ""
+
+        # check category
+        if not self.cbb_category.currentData():
+            invalid_fields.append(self.cbb_category)
+            error_message += self.tr("- A category is required.\n")
+
+        # check title
+        if len(self.lne_title.text()) < 3:
+            invalid_fields.append(self.lne_title)
+            error_message += self.tr(
+                "- A title is required, with at least 3 characters.\n"
+            )
+
+        # check body
+        if len(self.txt_body.toPlainText()) < 25:
+            invalid_fields.append(self.txt_body)
+            error_message += self.tr(
+                "- News is not long enougth (25 characters at least).\n"
+            )
+
+        # check license
+        if not self.chb_license.isChecked():
+            invalid_fields.append(self.chb_license)
+            error_message += self.tr("- License must be accepted.\n")
+
+        # check author firstname
+        if len(self.wdg_author.lne_firstname.text()) < 2:
+            invalid_fields.append(self.wdg_author.lne_firstname)
+            error_message += self.tr(
+                "- For attribution purpose, author's firstname is required.\n"
+            )
+
+        # check author lastname
+        if len(self.wdg_author.lne_lastname.text()) < 2:
+            invalid_fields.append(self.wdg_author.lne_lastname)
+            error_message += self.tr(
+                "- For attribution purpose, author's lastname is required.\n"
+            )
+
+        # check author email
+        if len(self.wdg_author.lne_email.text()) < 5:
+            invalid_fields.append(self.wdg_author.lne_email)
+            error_message += self.tr(
+                "- For attribution purpose, author's email is required.\n"
+            )
+
+        # inform
+        if len(invalid_fields):
+            self.log(
+                message=self.tr("Some of required fields are incorrectly filled."),
+                push=True,
+                log_level=2,
+                duration=20,
+                button=True,
+                button_label=self.tr("See details..."),
+                button_more_text=self.tr(
+                    "Fields in bold must be filled. Missing fields:\n"
+                )
+                + error_message,
+            )
+            for wdg in invalid_fields:
+                wdg.setStyleSheet("border: 1px solid red;")
+            return False
+        else:
+            super().accept()
+            return True
