@@ -36,12 +36,21 @@ class PlgSettingsStructure:
     notify_push_duration: int = 10
     latest_content_guid: str = None
     splash_screen_enabled: bool = False
+    license_global_accept: bool = False
 
     # network
     network_http_user_agent: str = f"{__title__}/{__version__}"
     request_path: str = (
         f"utm_source=QGIS&utm_medium={__title__}&utm_campaign=plugin_{__version__}"
     )
+
+    # authoring
+    author_firstname: str = ""
+    author_lastname: str = ""
+    author_email: str = ""
+    author_github: str = ""
+    author_linkedin: str = ""
+    author_twitter: str = ""
 
     @property
     def browser_as_str(self) -> str:
@@ -131,6 +140,41 @@ class PlgOptionsManager:
                 defaultValue=settings_fields[9].default,
                 type=settings_fields[9].type,
             ),
+            settings.value(
+                key=settings_fields[10].name,
+                defaultValue=settings_fields[10].default,
+                type=settings_fields[10].type,
+            ),
+            settings.value(
+                key=settings_fields[11].name,
+                defaultValue=settings_fields[11].default,
+                type=settings_fields[11].type,
+            ),
+            settings.value(
+                key=settings_fields[12].name,
+                defaultValue=settings_fields[12].default,
+                type=settings_fields[12].type,
+            ),
+            settings.value(
+                key=settings_fields[13].name,
+                defaultValue=settings_fields[13].default,
+                type=settings_fields[13].type,
+            ),
+            settings.value(
+                key=settings_fields[14].name,
+                defaultValue=settings_fields[14].default,
+                type=settings_fields[14].type,
+            ),
+            settings.value(
+                key=settings_fields[15].name,
+                defaultValue=settings_fields[15].default,
+                type=settings_fields[15].type,
+            ),
+            settings.value(
+                key=settings_fields[16].name,
+                defaultValue=settings_fields[16].default,
+                type=settings_fields[16].type,
+            ),
         )
 
         settings.endGroup()
@@ -158,6 +202,7 @@ class PlgOptionsManager:
 
         try:
             out_value = settings.value(key=key, defaultValue=default, type=exp_type)
+            print(out_value)
         except Exception as err:
             log_hdlr.PlgLogger.log(
                 message="Error occurred trying to get settings: {}.Trace: {}".format(

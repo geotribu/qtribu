@@ -49,7 +49,7 @@ class WebViewer:
         :rtype: Tuple[RssItem]
         """
         try:
-            qntwk = NetworkRequestsManager(tr=self.tr)
+            qntwk = NetworkRequestsManager()
             if PlgOptionsManager().get_plg_settings().browser == 1:
                 # display web page
                 self.wdg_web = QWidget()

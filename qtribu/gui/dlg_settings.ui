@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>719</width>
-    <height>378</height>
+    <width>697</width>
+    <height>437</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -88,25 +88,44 @@
       <string>Features</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="1" column="1">
-       <widget class="QRadioButton" name="opt_browser_qt">
+      <item row="1" column="0">
+       <widget class="QLabel" name="lbl_browser">
         <property name="minimumSize">
          <size>
-          <width>0</width>
+          <width>175</width>
           <height>25</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>16777215</width>
+          <width>250</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Which web browser to use to display articles.</string>
+        </property>
+        <property name="text">
+         <string>Open in web browser:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="lbl_notification">
+        <property name="minimumSize">
+         <size>
+          <width>175</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>250</width>
           <height>30</height>
          </size>
         </property>
         <property name="text">
-         <string>Embedded browser</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
+         <string>Notify for new content:</string>
         </property>
        </widget>
       </item>
@@ -126,6 +145,75 @@
         </property>
         <property name="text">
          <string>Reset read history</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QCheckBox" name="opt_notif_push_msg">
+        <property name="minimumSize">
+         <size>
+          <width>275</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Informational push message</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+        <property name="tristate">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QRadioButton" name="opt_browser_os">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>System default browser</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QRadioButton" name="opt_browser_qt">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Embedded browser</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -168,96 +256,18 @@
         </item>
        </layout>
       </item>
-      <item row="1" column="3">
-       <widget class="QRadioButton" name="opt_browser_os">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>25</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>30</height>
-         </size>
-        </property>
+      <item row="5" column="0" colspan="4">
+       <widget class="QCheckBox" name="chb_license_global_accept">
         <property name="text">
-         <string>System default browser</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="lbl_browser">
-        <property name="minimumSize">
-         <size>
-          <width>175</width>
-          <height>25</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>250</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="toolTip">
-         <string>Which web browser to use to display articles.</string>
-        </property>
-        <property name="text">
-         <string>Open in web browser:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="lbl_notification">
-        <property name="minimumSize">
-         <size>
-          <width>175</width>
-          <height>25</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>250</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Notify for new content:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QCheckBox" name="opt_notif_push_msg">
-        <property name="minimumSize">
-         <size>
-          <width>275</width>
-          <height>25</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="autoFillBackground">
-         <bool>false</bool>
-        </property>
-        <property name="text">
-         <string>Informational push message</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-        <property name="tristate">
-         <bool>false</bool>
+         <string>Accept publication license globally</string>
         </property>
        </widget>
       </item>
      </layout>
     </widget>
+   </item>
+   <item>
+    <widget class="AuthoringWidget" name="wdg_author" native="true"/>
    </item>
    <item>
     <spacer name="verticalSpacer_2">
@@ -425,6 +435,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>AuthoringWidget</class>
+   <extends>QWidget</extends>
+   <header>qtribu.gui.wdg_authoring</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
