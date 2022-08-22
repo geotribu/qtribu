@@ -10,6 +10,10 @@ Unreleased
 
 -->
 
+## 0.15.0-beta1 - 2022-08-22
+
+- Add form to create a news for GeoRDP #84
+
 ## 0.14.2 - 2022-08-05
 
 - Hotfix renomme l'ancien nom d'un paramètre
