@@ -135,10 +135,14 @@ class PlgOptionsManager:
 
     @classmethod
     def set_value_from_key(cls, key: str, value):
-        """Load and return plugin settings as a dictionary. \
-        Useful to get user preferences across plugin logic.
+        """Set plugin QgsSettings value using the key.
 
-        :return: plugin settings value matching key
+        :param key: QSettings key
+        :type key: str
+        :param value: value to set
+        :type value: depending on the settings
+
+        :return: plugin settings value or False if failed
         """
         if not hasattr(PlgSettingsStructure, key):
             log_hdlr.PlgLogger.log(
