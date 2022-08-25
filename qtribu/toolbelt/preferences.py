@@ -86,96 +86,15 @@ class PlgOptionsManager:
         settings = QgsSettings()
         settings.beginGroup(__title__)
 
+        # map settings values to preferences object
+        li_settings_values = []
+        for i in settings_fields:
+            li_settings_values.append(
+                settings.value(key=i.name, defaultValue=i.default, type=i.type)
+            )
+
         # instanciate new settings object
-        options = PlgSettingsStructure(
-            # normal
-            settings.value(
-                key=settings_fields[0].name,
-                defaultValue=settings_fields[0].default,
-                type=settings_fields[0].type,
-            ),
-            settings.value(
-                key=settings_fields[1].name,
-                defaultValue=settings_fields[1].default,
-                type=settings_fields[1].type,
-            ),
-            # network and authentication
-            settings.value(
-                key=settings_fields[2].name,
-                defaultValue=settings_fields[2].default,
-                type=settings_fields[2].type,
-            ),
-            settings.value(
-                key=settings_fields[3].name,
-                defaultValue=settings_fields[3].default,
-                type=settings_fields[3].type,
-            ),
-            settings.value(
-                key=settings_fields[4].name,
-                defaultValue=settings_fields[4].default,
-                type=settings_fields[4].type,
-            ),
-            settings.value(
-                key=settings_fields[5].name,
-                defaultValue=settings_fields[5].default,
-                type=settings_fields[5].type,
-            ),
-            settings.value(
-                key=settings_fields[6].name,
-                defaultValue=settings_fields[6].default,
-                type=settings_fields[6].type,
-            ),
-            settings.value(
-                key=settings_fields[7].name,
-                defaultValue=settings_fields[7].default,
-                type=settings_fields[7].type,
-            ),
-            settings.value(
-                key=settings_fields[8].name,
-                defaultValue=settings_fields[8].default,
-                type=settings_fields[8].type,
-            ),
-            settings.value(
-                key=settings_fields[9].name,
-                defaultValue=settings_fields[9].default,
-                type=settings_fields[9].type,
-            ),
-            settings.value(
-                key=settings_fields[10].name,
-                defaultValue=settings_fields[10].default,
-                type=settings_fields[10].type,
-            ),
-            settings.value(
-                key=settings_fields[11].name,
-                defaultValue=settings_fields[11].default,
-                type=settings_fields[11].type,
-            ),
-            settings.value(
-                key=settings_fields[12].name,
-                defaultValue=settings_fields[12].default,
-                type=settings_fields[12].type,
-            ),
-            settings.value(
-                key=settings_fields[13].name,
-                defaultValue=settings_fields[13].default,
-                type=settings_fields[13].type,
-            ),
-            settings.value(
-                key=settings_fields[14].name,
-                defaultValue=settings_fields[14].default,
-                type=settings_fields[14].type,
-            ),
-            settings.value(
-                key=settings_fields[15].name,
-                defaultValue=settings_fields[15].default,
-                type=settings_fields[15].type,
-            ),
-            settings.value(
-                key=settings_fields[16].name,
-                defaultValue=settings_fields[16].default,
-                type=settings_fields[16].type,
-            ),
-        )
+        options = PlgSettingsStructure(*li_settings_values)
 
         settings.endGroup()
 
