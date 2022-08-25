@@ -19,6 +19,7 @@ from qgis.PyQt.QtWidgets import QButtonGroup
 # project
 from qtribu.__about__ import (
     DIR_PLUGIN_ROOT,
+    __icon_path__,
     __title__,
     __uri_homepage__,
     __uri_tracker__,
@@ -149,7 +150,7 @@ class PlgOptionsFactory(QgsOptionsWidgetFactory):
         super().__init__()
 
     def icon(self) -> QIcon:
-        return QIcon(str(DIR_PLUGIN_ROOT / "resources/images/logo_geotribu.png"))
+        return QIcon(str(__icon_path__))
 
     def createWidget(self, parent) -> ConfigOptionsPage:
         return ConfigOptionsPage(parent)
