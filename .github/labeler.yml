@@ -10,5 +10,5 @@ documentation:
   - requirements/documentation.txt
 
 UI:
-  - qgis_resource_sharing/**/*.ui
-  - qgis_resource_sharing/gui/**/*
+  - qtribu/**/*.ui
+  - qtribu/gui/**/*
