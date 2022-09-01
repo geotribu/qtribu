@@ -80,6 +80,9 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         )
         self.btn_reset_read_history.pressed.connect(self.reset_read_history)
 
+        self.btn_reset.setIcon(QIcon(QgsApplication.iconPath("mActionUndo.svg")))
+        self.btn_reset.pressed.connect(self.reset_settings)
+
         # load previously saved settings
         self.load_settings()
 
@@ -141,6 +144,16 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
             duration=2,
             push=True,
         )
+
+    def reset_settings(self):
+        """Reset settings to default values (set in preferences.py module)."""
+        default_settings = PlgSettingsStructure()
+
+        # dump default settings into QgsSettings
+        self.plg_settings.save_from_object(default_settings)
+
+        # update the form
+        self.load_settings()
 
 
 class PlgOptionsFactory(QgsOptionsWidgetFactory):
