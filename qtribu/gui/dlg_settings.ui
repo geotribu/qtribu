@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>697</width>
-    <height>437</height>
+    <height>468</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -300,6 +300,28 @@
       <bool>false</bool>
      </property>
      <layout class="QGridLayout" name="gridLayout">
+      <item row="2" column="1">
+       <widget class="QLabel" name="lbl_version_saved_value">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="text">
+         <string notr="true">X.X.x</string>
+        </property>
+        <property name="textInteractionFlags">
+         <set>Qt::NoTextInteraction</set>
+        </property>
+       </widget>
+      </item>
       <item row="1" column="0">
        <widget class="QCheckBox" name="opt_debug">
         <property name="minimumSize">
@@ -350,8 +372,8 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
-       <widget class="QLabel" name="lbl_version_saved_value">
+      <item row="0" column="1">
+       <widget class="QPushButton" name="btn_report">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -365,10 +387,11 @@
          </size>
         </property>
         <property name="text">
-         <string notr="true">X.X.x</string>
+         <string>Report an issue</string>
         </property>
-        <property name="textInteractionFlags">
-         <set>Qt::NoTextInteraction</set>
+        <property name="icon">
+         <iconset>
+          <normaloff>:/plugins/qtribu/resources/images/bullhorn.svg</normaloff>:/plugins/qtribu/resources/images/bullhorn.svg</iconset>
         </property>
        </widget>
       </item>
@@ -391,26 +414,31 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QPushButton" name="btn_report">
+      <item row="3" column="0" colspan="2">
+       <widget class="QPushButton" name="btn_reset">
         <property name="minimumSize">
          <size>
-          <width>0</width>
+          <width>200</width>
           <height>25</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>16777215</width>
+          <width>1000</width>
           <height>30</height>
          </size>
         </property>
-        <property name="text">
-         <string>Report an issue</string>
+        <property name="autoFillBackground">
+         <bool>true</bool>
         </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>:/plugins/qtribu/resources/images/bullhorn.svg</normaloff>:/plugins/qtribu/resources/images/bullhorn.svg</iconset>
+        <property name="text">
+         <string>Reset to factory defaults</string>
+        </property>
+        <property name="autoDefault">
+         <bool>false</bool>
+        </property>
+        <property name="flat">
+         <bool>false</bool>
         </property>
        </widget>
       </item>

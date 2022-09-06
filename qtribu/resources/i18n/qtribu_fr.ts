@@ -52,7 +52,7 @@
 <context>
     <name>ConfigOptionsPage</name>
     <message>
-        <location filename="../../gui/dlg_settings.py" line="137"/>
+        <location filename="../../gui/dlg_settings.py" line="141"/>
         <source>Read history has been reset.</source>
         <translation>L&apos;historique de lecture a été réinitialisé.</translation>
     </message>
@@ -108,66 +108,66 @@
 <context>
     <name>RdpNewsForm</name>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="182"/>
+        <location filename="../../gui/form_rdp_news.py" line="179"/>
         <source>- A category is required.
 </source>
         <translation>- Une catégorie est requise.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="187"/>
+        <location filename="../../gui/form_rdp_news.py" line="184"/>
         <source>- A title is required, with at least 3 characters.
 </source>
         <translation>- Un titre est requis, avec 3 caractères minimum.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="194"/>
+        <location filename="../../gui/form_rdp_news.py" line="191"/>
         <source>- News is not long enougth (25 characters at least).
 </source>
         <translation>- Le contenu de la news n&apos;est pas assez long (25 caractères minimum).
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="201"/>
+        <location filename="../../gui/form_rdp_news.py" line="198"/>
         <source>- License must be accepted.
 </source>
         <translation>- La licence doit être acceptée.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="206"/>
+        <location filename="../../gui/form_rdp_news.py" line="203"/>
         <source>- For attribution purpose, author&apos;s firstname is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, le prénom de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="213"/>
+        <location filename="../../gui/form_rdp_news.py" line="210"/>
         <source>- For attribution purpose, author&apos;s lastname is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, le nom de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="220"/>
+        <location filename="../../gui/form_rdp_news.py" line="217"/>
         <source>- For attribution purpose, author&apos;s email is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, l&apos;email de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="226"/>
+        <location filename="../../gui/form_rdp_news.py" line="223"/>
         <source>Some of required fields are incorrectly filled.</source>
         <translation>Certains champs requis ne sont pas correctement renseignés.</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="226"/>
+        <location filename="../../gui/form_rdp_news.py" line="223"/>
         <source>See details...</source>
         <translation>Voir les détails...</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="226"/>
+        <location filename="../../gui/form_rdp_news.py" line="223"/>
         <source>Fields in bold must be filled. Missing fields:
 </source>
         <translation>Les champs dont le nom est en gras sont requis. Champs incorrects :
@@ -359,27 +359,27 @@ Si c&apos;est le cas, ne pas cocher et donner des précisions en commentaire.</t
         <translation>Divers</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="318"/>
+        <location filename="../../gui/dlg_settings.ui" line="340"/>
         <source>Enable debug mode.</source>
         <translation>Activer le mode DEBUG.</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="327"/>
+        <location filename="../../gui/dlg_settings.ui" line="349"/>
         <source>Debug mode (degraded performances)</source>
         <translation>Mode DEBUG (performances dégradées)</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="349"/>
+        <location filename="../../gui/dlg_settings.ui" line="371"/>
         <source>Version used to save settings:</source>
         <translation>Version des paramètres :</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="409"/>
+        <location filename="../../gui/dlg_settings.ui" line="390"/>
         <source>Report an issue</source>
         <translation>Créer un ticket</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="390"/>
+        <location filename="../../gui/dlg_settings.ui" line="413"/>
         <source>Help</source>
         <translation>Aide en ligne</translation>
     </message>
@@ -407,6 +407,11 @@ Si c&apos;est le cas, ne pas cocher et donner des précisions en commentaire.</t
         <location filename="../../gui/dlg_settings.ui" line="262"/>
         <source>Accept publication license globally</source>
         <translation>Accepter une fois pour toutes la licence de publication</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dlg_settings.ui" line="435"/>
+        <source>Reset to factory defaults</source>
+        <translation>Réinitialise les paramètres à leur valeur par défaut</translation>
     </message>
 </context>
 </TS>
