@@ -140,7 +140,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           fail_on_unmatched_files: true
-          files: release.md
+          bodyFile: release.md
           generate_release_notes: true
 
       - name: Deploy plugin
