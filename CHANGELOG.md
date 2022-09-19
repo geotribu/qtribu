@@ -10,6 +10,11 @@ Unreleased
 
 -->
 
+## 0.15.0-beta2 - 2022-09-06
+
+- CI/CD: fix release workflow
+- add reset button to settings
+
 ## 0.15.0-beta1 - 2022-08-22
 
 - Add form to create a news for GeoRDP #84
