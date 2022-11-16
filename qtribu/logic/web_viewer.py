@@ -20,7 +20,7 @@ try:
     from qgis.PyQt.QtWebKitWidgets import QWebView
 except:
     QCoreApplication.setAttribute(Qt.AA_ShareOpenGLContexts)
-    from PyQt5.QtWebEngineWidgets import QWebEngineView as QWebView
+    from PyQt.QtWebEngineWidgets import QWebEngineView as QWebView
 
 from qgis.PyQt.QtWidgets import QVBoxLayout, QWidget
 
