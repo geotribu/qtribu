@@ -163,6 +163,7 @@ autodoc_mock_imports = [
     "qgis.utils",
 ]
 
+
 # run api doc
 def run_apidoc(_):
     from sphinx.ext.apidoc import main

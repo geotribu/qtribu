@@ -116,7 +116,6 @@ class PlgLogger(logging.Handler):
 
         # optionally, display message on QGIS Message bar (above the map canvas)
         if push:
-
             # calc duration
             if duration is None:
                 duration = (log_level + 1) * 3
@@ -153,7 +152,6 @@ class PlgLogger(logging.Handler):
                 )
 
     def set_logger(self):
-
         # create logger
         logger = logging.getLogger(__title_clean__)
         logging.captureWarnings(True)
