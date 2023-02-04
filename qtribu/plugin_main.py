@@ -18,6 +18,7 @@ from qgis.PyQt.QtWidgets import QAction
 # project
 from qtribu.__about__ import DIR_PLUGIN_ROOT, __icon_path__, __title__, __uri_homepage__
 from qtribu.gui.dlg_settings import PlgOptionsFactory
+from qtribu.gui.form_rdp_news import RdpNewsForm
 from qtribu.logic import RssMiniReader, SearchWidget, SplashChanger, WebViewer
 from qtribu.toolbelt import (
     NetworkRequestsManager,
@@ -25,10 +26,6 @@ from qtribu.toolbelt import (
     PlgOptionsManager,
     PlgTranslator,
 )
-from qtribu.gui.form_rdp_news import RdpNewsForm
-from qtribu.logic import RssMiniReader, SplashChanger, WebViewer
-from qtribu.toolbelt import NetworkRequestsManager, PlgLogger, PlgOptionsManager
-
 
 # ############################################################################
 # ########## Classes ###############
