@@ -2,7 +2,13 @@ ci-cd:
   - .github/**/*
 
 dependencies:
-  - any: ["requirements.txt", "requirements/*.txt"]
+  - requirements/*.txt
+  - requirements.txt
 
 documentation:
   - docs/**/*
+  - requirements/documentation.txt
+
+UI:
+  - qtribu/**/*.ui
+  - qtribu/gui/**/*

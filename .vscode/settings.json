@@ -1,8 +1,11 @@
 {
-    "python.pythonPath": ".venv/bin/python",
     // Editor
     "editor.bracketPairColorization.enabled": true,
-    "editor.guides.bracketPairs":"active",
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    },
+    "editor.formatOnSave": true,
+    "editor.guides.bracketPairs": "active",
     "editor.rulers": [
         88
     ],
@@ -14,7 +17,7 @@
     // Formatter
     "python.formatting.provider": "black",
     "python.formatting.blackArgs": [
-        "--target-version=py38"
+        "--target-version=py39"
     ],
     // Linter
     "python.linting.enabled": true,

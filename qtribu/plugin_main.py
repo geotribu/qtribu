@@ -6,17 +6,17 @@
 
 # standard
 from functools import partial
+from pathlib import Path
 
 # PyQGIS
-from qgis.core import QgsApplication
+from qgis.core import QgsApplication, QgsSettings
 from qgis.gui import QgisInterface
-from qgis.PyQt.QtCore import QCoreApplication, QUrl
+from qgis.PyQt.QtCore import QCoreApplication, QLocale, QTranslator, QUrl
 from qgis.PyQt.QtGui import QDesktopServices, QIcon
 from qgis.PyQt.QtWidgets import QAction
-from qgis.utils import showPluginHelp
 
 # project
-from qtribu.__about__ import DIR_PLUGIN_ROOT, __icon_path__, __title__
+from qtribu.__about__ import DIR_PLUGIN_ROOT, __icon_path__, __title__, __uri_homepage__
 from qtribu.gui.dlg_settings import PlgOptionsFactory
 from qtribu.logic import RssMiniReader, SearchWidget, SplashChanger, WebViewer
 from qtribu.toolbelt import (
@@ -25,6 +25,10 @@ from qtribu.toolbelt import (
     PlgOptionsManager,
     PlgTranslator,
 )
+from qtribu.gui.form_rdp_news import RdpNewsForm
+from qtribu.logic import RssMiniReader, SplashChanger, WebViewer
+from qtribu.toolbelt import NetworkRequestsManager, PlgLogger, PlgOptionsManager
+
 
 # ############################################################################
 # ########## Classes ###############
@@ -42,12 +46,18 @@ class GeotribuPlugin:
         self.iface = iface
         self.log = PlgLogger().log
 
-        # translation
-        plg_translation_mngr = PlgTranslator()
-        translator = plg_translation_mngr.get_translator()
-        if translator:
-            QCoreApplication.installTranslator(translator)
-        self.tr = plg_translation_mngr.tr
+        # initialize the locale
+        self.locale: str = QgsSettings().value("locale/userLocale", QLocale().name())[
+            0:2
+        ]
+        locale_path: Path = (
+            DIR_PLUGIN_ROOT / f"resources/i18n/{__title__.lower()}_{self.locale}.qm"
+        )
+        self.log(message=f"Translation: {self.locale}, {locale_path}", log_level=4)
+        if locale_path.exists():
+            self.translator = QTranslator()
+            self.translator.load(str(locale_path.resolve()))
+            QCoreApplication.installTranslator(self.translator)
 
         # sub-modules
         self.rss_rdr = RssMiniReader()
@@ -62,15 +72,16 @@ class GeotribuPlugin:
         self.options_factory = PlgOptionsFactory()
         self.iface.registerOptionsWidgetFactory(self.options_factory)
 
+        # -- Forms
+        self.form_rdp_news = None
+
         # -- Actions
         self.action_run = QAction(
             QIcon(str(DIR_PLUGIN_ROOT / "resources/images/logo_green_no_text.svg")),
             self.tr("Newest article"),
             self.iface.mainWindow(),
         )
-        self.action_run.setToolTip(
-            self.tr(text="Newest article", context="GeotribuPlugin")
-        )
+        self.action_run.setToolTip(self.tr("Newest article"))
         self.action_run.triggered.connect(self.run)
 
         self.action_search = QAction(
@@ -83,13 +94,20 @@ class GeotribuPlugin:
         )
         self.action_search.triggered.connect(self.search_run)
 
+        self.action_rdp_news = QAction(
+            QIcon(QgsApplication.iconPath("mActionHighlightFeature.svg")),
+            self.tr("Propose a news to the next GeoRDP"),
+            self.iface.mainWindow(),
+        )
+        self.action_rdp_news.triggered.connect(self.open_form_rdp_news)
+
         self.action_help = QAction(
             QIcon(QgsApplication.iconPath("mActionHelpContents.svg")),
-            self.tr("Help", context="GeotribuPlugin"),
+            self.tr("Help"),
             self.iface.mainWindow(),
         )
         self.action_help.triggered.connect(
-            lambda: showPluginHelp(filename="resources/help/index")
+            partial(QDesktopServices.openUrl, QUrl(__uri_homepage__))
         )
 
         self.action_settings = QAction(
@@ -109,6 +127,7 @@ class GeotribuPlugin:
         # -- Menu
         self.iface.addPluginToWebMenu(__title__, self.action_run)
         self.iface.addPluginToWebMenu(__title__, self.action_search)
+        self.iface.addPluginToWebMenu(__title__, self.action_rdp_news)
         self.iface.addPluginToWebMenu(__title__, self.action_splash)
         self.iface.addPluginToWebMenu(__title__, self.action_settings)
         self.iface.addPluginToWebMenu(__title__, self.action_help)
@@ -154,6 +173,7 @@ class GeotribuPlugin:
 
         # -- Toolbar
         self.iface.addToolBarIcon(self.action_run)
+        self.iface.addToolBarIcon(self.action_rdp_news)
 
         # -- Post UI initialization
         self.iface.initializationCompleted.connect(self.post_ui_init)
@@ -162,6 +182,7 @@ class GeotribuPlugin:
         """Cleans up when plugin is disabled/uninstalled."""
         # -- Clean up menu
         self.iface.removePluginWebMenu(__title__, self.action_help)
+        self.iface.removePluginWebMenu(__title__, self.action_rdp_news)
         self.iface.removePluginWebMenu(__title__, self.action_run)
         self.iface.removePluginWebMenu(__title__, self.action_search)
         self.iface.removePluginWebMenu(__title__, self.action_settings)
@@ -173,6 +194,7 @@ class GeotribuPlugin:
 
         # -- Clean up toolbar
         self.iface.removeToolBarIcon(self.action_run)
+        self.iface.removeToolBarIcon(self.action_rdp_news)
 
         # -- Clean up preferences panel in QGIS settings
         self.iface.unregisterOptionsWidgetFactory(self.options_factory)
@@ -188,7 +210,7 @@ class GeotribuPlugin:
         :raises Exception: if there is no item in the feed
         """
         try:
-            qntwk = NetworkRequestsManager(tr=self.tr)
+            qntwk = NetworkRequestsManager()
             self.rss_rdr.read_feed(qntwk.get_from_source(headers=self.rss_rdr.HEADERS))
             if not self.rss_rdr.latest_item:
                 raise Exception("No item found")
@@ -222,19 +244,27 @@ class GeotribuPlugin:
                     .get_plg_settings()
                     .notify_push_duration,
                     button=True,
-                    button_text=self.tr("Newest article"),
+                    button_label=self.tr("Newest article"),
                     button_connect=self.run,
                 )
 
         except Exception as err:
             self.log(
-                message=self.tr(
-                    text=f"Michel, we've got a problem: {err}",
-                    context="GeotribuPlugin",
-                ),
+                message=self.tr(f"Michel, we've got a problem: {err}"),
                 log_level=2,
                 push=True,
             )
+
+    def tr(self, message: str) -> str:
+        """Get the translation for a string using Qt translation API.
+
+        :param message: string to be translated.
+        :type message: str
+
+        :returns: Translated version of message.
+        :rtype: str
+        """
+        return QCoreApplication.translate(self.__class__.__name__, message)
 
     def run(self):
         """Main action on plugin icon pressed event."""
@@ -246,9 +276,7 @@ class GeotribuPlugin:
             self.action_run.setIcon(
                 QIcon(str(DIR_PLUGIN_ROOT / "resources/images/logo_green_no_text.svg"))
             )
-            self.action_run.setToolTip(
-                self.tr(text="Newest article", context="GeotribuPlugin")
-            )
+            self.action_run.setToolTip(self.tr("Newest article"))
             # save latest RSS item displayed
             PlgOptionsManager().set_value_from_key(
                 key="latest_content_guid", value=self.rss_rdr.latest_item.guid
@@ -260,3 +288,25 @@ class GeotribuPlugin:
         """Display search widget"""
         self.log("Search widget called", log_level=3)
         self.search_widget.load_search_index()
+
+    def open_form_rdp_news(self) -> None:
+        """Open the form to create a GeoRDP news."""
+        if not self.form_rdp_news:
+            self.form_rdp_news = RdpNewsForm()
+            self.form_rdp_news.setModal(True)
+            self.form_rdp_news.finished.connect(self._post_form_rdp_news)
+        self.form_rdp_news.show()
+
+    def _post_form_rdp_news(self, dialog_result: int) -> None:
+        """Perform actions after the GeoRDP news form has been closed.
+
+        :param dialog_result: dialog's result code. Accepted (1) or Rejected (0)
+        :type dialog_result: int
+        """
+        if self.form_rdp_news:
+            # if accept button, save user inputs
+            if dialog_result == 1:
+                self.form_rdp_news.wdg_author.save_settings()
+            # clean up
+            self.form_rdp_news.deleteLater()
+            self.form_rdp_news = None

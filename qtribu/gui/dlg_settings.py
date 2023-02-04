@@ -13,13 +13,13 @@ from qgis.core import QgsApplication
 from qgis.gui import QgsOptionsPageWidget, QgsOptionsWidgetFactory
 from qgis.PyQt import uic
 from qgis.PyQt.Qt import QUrl
-from qgis.PyQt.QtCore import QCoreApplication
 from qgis.PyQt.QtGui import QDesktopServices, QIcon
 from qgis.PyQt.QtWidgets import QButtonGroup
 
 # project
 from qtribu.__about__ import (
     DIR_PLUGIN_ROOT,
+    __icon_path__,
     __title__,
     __uri_homepage__,
     __uri_tracker__,
@@ -44,11 +44,13 @@ FORM_CLASS, _ = uic.loadUiType(
 class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
     """Settings form embedded into QGIS 'options' menu."""
 
-    def __init__(self, parent):
+    def __init__(self, parent=None):
         """Constructor."""
         super().__init__(parent)
         self.log = PlgLogger().log
         self.plg_settings = PlgOptionsManager()
+
+        # load UI and set objectName
         self.setupUi(self)
         self.setObjectName("mOptionsPage{}".format(__title__))
 
@@ -78,6 +80,9 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         )
         self.btn_reset_read_history.pressed.connect(self.reset_read_history)
 
+        self.btn_reset.setIcon(QIcon(QgsApplication.iconPath("mActionUndo.svg")))
+        self.btn_reset.pressed.connect(self.reset_settings)
+
         # load previously saved settings
         self.load_settings()
 
@@ -85,16 +90,23 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         """Called to permanently apply the settings shown in the options page (e.g. \
         save them to QgsSettings objects). This is usually called when the options \
         dialog is accepted."""
-        new_settings = PlgSettingsStructure(
-            browser=self.opt_browser_group.checkedId(),
-            notify_push_info=self.opt_notif_push_msg.isChecked(),
-            notify_push_duration=self.sbx_notif_duration.value(),
-            debug_mode=self.opt_debug.isChecked(),
-            version=__version__,
-        )
+        settings = self.plg_settings.get_plg_settings()
+
+        # features
+        settings.browser = self.opt_browser_group.checkedId()
+        settings.notify_push_info = self.opt_notif_push_msg.isChecked()
+        settings.notify_push_duration = self.sbx_notif_duration.value()
+        settings.license_global_accept = self.chb_license_global_accept.isChecked()
+
+        # misc
+        settings.debug_mode = self.opt_debug.isChecked()
+        settings.version = __version__
 
         # dump new settings into QgsSettings
-        self.plg_settings.save_from_object(new_settings)
+        self.plg_settings.save_from_object(settings)
+
+        # sub widgets
+        self.wdg_author.save_settings()
 
         if __debug__:
             self.log(
@@ -110,7 +122,9 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         self.opt_browser_group.button(settings.browser).setChecked(True)
         self.opt_notif_push_msg.setChecked(settings.notify_push_info)
         self.sbx_notif_duration.setValue(settings.notify_push_duration)
+        self.chb_license_global_accept.setChecked(settings.license_global_accept)
 
+        # misc
         self.opt_debug.setChecked(settings.debug_mode)
         self.lbl_version_saved_value.setText(settings.version)
 
@@ -131,16 +145,15 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
             push=True,
         )
 
-    def tr(self, message: str) -> str:
-        """Get the translation for a string using Qt translation API.
+    def reset_settings(self):
+        """Reset settings to default values (set in preferences.py module)."""
+        default_settings = PlgSettingsStructure()
 
-        :param message: string to be translated.
-        :type message: str
+        # dump default settings into QgsSettings
+        self.plg_settings.save_from_object(default_settings)
 
-        :returns: Translated version of message.
-        :rtype: str
-        """
-        return QCoreApplication.translate(self.__class__.__name__, message)
+        # update the form
+        self.load_settings()
 
 
 class PlgOptionsFactory(QgsOptionsWidgetFactory):
@@ -150,7 +163,7 @@ class PlgOptionsFactory(QgsOptionsWidgetFactory):
         super().__init__()
 
     def icon(self) -> QIcon:
-        return QIcon(str(DIR_PLUGIN_ROOT / "resources/images/logo_geotribu.png"))
+        return QIcon(str(__icon_path__))
 
     def createWidget(self, parent) -> ConfigOptionsPage:
         return ConfigOptionsPage(parent)

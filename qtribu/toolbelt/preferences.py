@@ -5,7 +5,7 @@
 """
 
 # standard
-from typing import NamedTuple
+from dataclasses import asdict, dataclass, fields
 
 # PyQGIS
 from qgis.core import QgsSettings
@@ -19,7 +19,8 @@ from qtribu.__about__ import __title__, __version__
 # ##################################
 
 
-class PlgSettingsStructure(NamedTuple):
+@dataclass
+class PlgSettingsStructure:
     """Plugin settings structure and defaults values."""
 
     # global
@@ -37,12 +38,21 @@ class PlgSettingsStructure(NamedTuple):
     notify_push_duration: int = 10
     latest_content_guid: str = None
     splash_screen_enabled: bool = False
+    license_global_accept: bool = False
 
     # network
     network_http_user_agent: str = f"{__title__}/{__version__}"
     request_path: str = (
         f"utm_source=QGIS&utm_medium={__title__}&utm_campaign=plugin_{__version__}"
     )
+
+    # authoring
+    author_firstname: str = ""
+    author_lastname: str = ""
+    author_email: str = ""
+    author_github: str = ""
+    author_linkedin: str = ""
+    author_twitter: str = ""
 
     @property
     def browser_as_str(self) -> str:
@@ -71,52 +81,22 @@ class PlgOptionsManager:
         :return: plugin settings
         :rtype: PlgSettingsStructure
         """
+        # get dataclass fields definition
+        settings_fields = fields(PlgSettingsStructure)
+
+        # retrieve settings from QGIS/Qt
         settings = QgsSettings()
         settings.beginGroup(__title__)
 
-        options = PlgSettingsStructure(
-            # global
-            debug_mode=settings.value(key="debug_mode", defaultValue=False, type=bool),
-            version=settings.value(key="version", defaultValue=__version__, type=str),
-            # usage
-            browser=settings.value(key="browser", defaultValue=1, type=int),
-            notify_push_info=settings.value(
-                key="notify_push_info", defaultValue=True, type=bool
-            ),
-            notify_push_duration=settings.value(
-                key="notify_push_duration", defaultValue=10, type=int
-            ),
-            latest_content_guid=settings.value(
-                key="latest_content_guid", defaultValue="", type=str
-            ),
-            website_url=settings.value(
-                key="geotribu_url",
-                defaultValue="https://static.geotribu.fr",
-                type=str,
-            ),
-            rss_source=settings.value(
-                key="rss_source",
-                defaultValue="https://static.geotribu.fr/feed_rss_created.xml",
-                type=str,
-            ),
-            splash_screen_enabled=settings.value(
-                key="splash_screen_enabled",
-                defaultValue=False,
-                type=bool,
-            ),
-            # network
-            network_http_user_agent=settings.value(
-                key="network_http_user_agent",
-                defaultValue=f"{__title__}/{__version__}",
-                type=str,
-            ),
-            request_path=settings.value(
-                key="request_path",
-                defaultValue=f"utm_source=QGIS&utm_medium={__title__}"
-                f"&utm_campaign=plugin_{__version__}",
-                type=str,
-            ),
-        )
+        # map settings values to preferences object
+        li_settings_values = []
+        for i in settings_fields:
+            li_settings_values.append(
+                settings.value(key=i.name, defaultValue=i.default, type=i.type)
+            )
+
+        # instanciate new settings object
+        options = PlgSettingsStructure(*li_settings_values)
 
         settings.endGroup()
 
@@ -157,10 +137,14 @@ class PlgOptionsManager:
 
     @classmethod
     def set_value_from_key(cls, key: str, value):
-        """Load and return plugin settings as a dictionary. \
-        Useful to get user preferences across plugin logic.
+        """Set plugin QgsSettings value using the key.
 
-        :return: plugin settings value matching key
+        :param key: QSettings key
+        :type key: str
+        :param value: value to set
+        :type value: depending on the settings
+
+        :return: plugin settings value or False if failed
         """
         if not hasattr(PlgSettingsStructure, key):
             log_hdlr.PlgLogger.log(
@@ -202,7 +186,7 @@ class PlgOptionsManager:
         settings = QgsSettings()
         settings.beginGroup(__title__)
 
-        for k, v in plugin_settings_obj._asdict().items():
+        for k, v in asdict(plugin_settings_obj).items():
             cls.set_value_from_key(k, v)
 
         settings.endGroup()

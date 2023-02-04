@@ -8,19 +8,46 @@ Unreleased
 
 ## [{version_tag}](https://github.com/geotribu/qtribu/releases/tag/{version_tag}) - YYYY-DD-mm
 
-### Added
-
-- ajoute un lien vers le forum QGIS de GeoRezo
-
-### Changed
-
-### Removed
-
 -->
+
+## 0.15.0-beta2 - 2022-09-06
+
+- CI/CD: fix release workflow
+- add reset button to settings
+
+## 0.15.0-beta1 - 2022-08-22
+
+- Add form to create a news for GeoRDP #84
+
+## 0.14.2 - 2022-08-05
+
+- Hotfix renomme l'ancien nom d'un paramètre
+
+## 0.14.1 - 2022-08-05
+
+- Hotfix enlève un bout d'ancienne syntaxe de traduction
+
+## 0.14.0 - 2022-08-05
+
+- corrige le chargement de la traduction après que le module dédié ne fonctionne plus sur QGIS 3.22+
+- améliore le module de log pour permettre de mieux personnaliser le `QgsMessageOutput`
+
+## 0.13.0 - 2022-07-18
+
+- corrige le lien vers l'aide dans le menu #78
+- modernise la gestion des préférences en utilisant une dataclass
+- actualise l'outillage (GitHub Actions, étiquetage automatique, etc.)
+
+## 0.12.0 - 2022-07-12
+
+- mise à jour des dépendances
+- test sur la version 3.22
+- publication sur le dépôt officiel des extensions
 
 ## 0.11.0 - 2022-03-17
 
 - les traductions compilées (fichiers `*.qm`) sont désormais générées et automatiquement intégrées dans la CI - #34
+- ajoute un lien vers le forum QGIS de GeoRezo
 
 ## 0.10.0 - 2022-01-02
 
@@ -72,8 +99,8 @@ Unreleased
 ## 0.4.1 - 2021-04-09
 
 - améliorations diverses :
-    - meilleure gestion des paramètres du plugin
-    - personnalisation des en-têtes pour les appels réseau
+  - meilleure gestion des paramètres du plugin
+  - personnalisation des en-têtes pour les appels réseau
 
 ## 0.4.0 - 2021-04-01
 
