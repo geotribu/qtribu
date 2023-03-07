@@ -42,7 +42,7 @@ jobs:
         uses: codecov/codecov-action@v3
 
   test-qgis:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     container:
       image: qgis/qgis:release-3_22
