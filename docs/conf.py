@@ -27,7 +27,7 @@ description = __about__.__summary__
 project = __about__.__title__
 version = release = __about__.__version__
 
-github_doc_root = "{}/tree/master/doc/".format(__about__.__uri__)
+github_doc_root = f"{__about__.__uri__}/tree/master/doc/"
 
 # -- General configuration ---------------------------------------------------
 

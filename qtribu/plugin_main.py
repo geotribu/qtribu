@@ -98,7 +98,7 @@ class GeotribuPlugin:
         )
         self.action_settings.triggered.connect(
             lambda: self.iface.showOptionsDialog(
-                currentPage="mOptionsPage{}".format(__title__)
+                currentPage=f"mOptionsPage{__title__}"
             )
         )
 

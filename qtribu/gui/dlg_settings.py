@@ -18,7 +18,6 @@ from qgis.PyQt.QtWidgets import QButtonGroup
 
 # project
 from qtribu.__about__ import (
-    DIR_PLUGIN_ROOT,
     __icon_path__,
     __title__,
     __uri_homepage__,
@@ -33,7 +32,7 @@ from qtribu.toolbelt.preferences import PlgSettingsStructure
 # ##################################
 
 FORM_CLASS, _ = uic.loadUiType(
-    Path(__file__).parent / "{}.ui".format(Path(__file__).stem)
+    Path(__file__).parent / f"{Path(__file__).stem}.ui"
 )
 
 # ############################################################################
@@ -52,7 +51,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
 
         # load UI and set objectName
         self.setupUi(self)
-        self.setObjectName("mOptionsPage{}".format(__title__))
+        self.setObjectName(f"mOptionsPage{__title__}")
 
         # header
         self.lbl_title.setText(f"{__title__} - Version {__version__}")

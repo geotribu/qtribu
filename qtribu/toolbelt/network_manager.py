@@ -156,7 +156,7 @@ class NetworkRequestsManager:
             return req_reply.content()
 
         except Exception as err:
-            err_msg = "Houston, we've got a problem: {}".format(err)
+            err_msg = f"Houston, we've got a problem: {err}"
             logger.error(err_msg)
             self.log(message=err_msg, log_level=2, push=1)
 

@@ -36,7 +36,7 @@ class RdpNewsForm(QDialog):
         :type parent: QWidget
         """
         super().__init__(parent)
-        uic.loadUi(Path(__file__).parent / "{}.ui".format(Path(__file__).stem), self)
+        uic.loadUi(Path(__file__).parent / f"{Path(__file__).stem}.ui", self)
 
         self.log = PlgLogger().log
         self.plg_settings = PlgOptionsManager()

@@ -13,7 +13,6 @@
 import logging
 import xml.etree.ElementTree as ET
 from email.utils import parsedate
-from typing import Tuple
 
 # project
 from qtribu.__about__ import __title__, __version__
@@ -45,7 +44,7 @@ class RssMiniReader:
         """Class initialization."""
         self.log = PlgLogger().log
 
-    def read_feed(self, in_xml: str) -> Tuple[RssItem]:
+    def read_feed(self, in_xml: str) -> tuple[RssItem]:
         """Parse the feed XML as string and store items into an ordered tuple of tuples.
 
         :param in_xml: XML as string. Must be RSS compliant.
