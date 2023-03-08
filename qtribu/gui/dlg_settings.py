@@ -31,9 +31,7 @@ from qtribu.toolbelt.preferences import PlgSettingsStructure
 # ########## Globals ###############
 # ##################################
 
-FORM_CLASS, _ = uic.loadUiType(
-    Path(__file__).parent / f"{Path(__file__).stem}.ui"
-)
+FORM_CLASS, _ = uic.loadUiType(Path(__file__).parent / f"{Path(__file__).stem}.ui")
 
 # ############################################################################
 # ########## Classes ###############

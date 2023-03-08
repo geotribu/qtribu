@@ -97,9 +97,7 @@ class GeotribuPlugin:
             self.iface.mainWindow(),
         )
         self.action_settings.triggered.connect(
-            lambda: self.iface.showOptionsDialog(
-                currentPage=f"mOptionsPage{__title__}"
-            )
+            lambda: self.iface.showOptionsDialog(currentPage=f"mOptionsPage{__title__}")
         )
 
         self.action_splash = self.splash_chgr.menu_action
