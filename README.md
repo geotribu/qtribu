@@ -11,7 +11,7 @@
 [![Documentation Builder](https://github.com/geotribu/qtribu/actions/workflows/documentation.yml/badge.svg)](https://github.com/geotribu/qtribu/actions/workflows/documentation.yml)
 [![Packager](https://github.com/geotribu/qtribu/actions/workflows/packager.yml/badge.svg)](https://github.com/geotribu/qtribu/actions/workflows/packager.yml)
 
-Plugin pour QGIS > 3.16
+Plugin pour QGIS > 3.28
 
 Inutile au travail donc forcément indispensable.
 

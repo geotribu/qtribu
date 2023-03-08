@@ -5,11 +5,13 @@ on:
     branches: [main]
     paths:
       - "**.py"
+      - .github/workflows/tester.yml
 
   pull_request:
     branches: [main]
     paths:
       - "**.py"
+      - .github/workflows/tester.yml
 
 env:
   PROJECT_FOLDER: "qtribu"
@@ -45,7 +47,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: qgis/qgis:release-3_22
+      image: qgis/qgis:release-3_28
       env:
         CI: true
         DISPLAY: ":1"
