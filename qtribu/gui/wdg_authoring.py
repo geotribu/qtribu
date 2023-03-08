@@ -20,7 +20,7 @@ class AuthoringWidget(QWidget):
         super().__init__(parent)
         self.log = PlgLogger().log
         self.plg_settings = PlgOptionsManager()
-        uic.loadUi(Path(__file__).parent / "{}.ui".format(Path(__file__).stem), self)
+        uic.loadUi(Path(__file__).parent / f"{Path(__file__).stem}.ui", self)
 
         # check inputs
         self.lne_email.setValidator(QVAL_EMAIL)
