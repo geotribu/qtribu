@@ -5,11 +5,13 @@ on:
     branches: [main]
     paths:
       - "**.py"
+      - .github/workflows/tester.yml
 
   pull_request:
     branches: [main]
     paths:
       - "**.py"
+      - .github/workflows/tester.yml
 
 env:
   PROJECT_FOLDER: "qtribu"
