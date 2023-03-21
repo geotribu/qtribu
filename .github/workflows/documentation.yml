@@ -26,9 +26,9 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ env.PYTHON_VERSION }}
           cache: "pip"
           cache-dependency-path: "requirements/documentation.txt"
+          python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Cache Sphinx cache
         uses: actions/cache@v3
