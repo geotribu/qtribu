@@ -84,7 +84,7 @@ class RssMiniReader:
                 )
             except Exception as err:
                 err_msg = "Feed item (index = {}) triggers an error. Trace: {}".format(
-                    items.index(item), err
+                    feed_items.index(item), err
                 )
                 logger.error(err_msg)
                 self.log(message=err_msg, log_level=2)
