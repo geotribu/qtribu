@@ -1,18 +1,9 @@
 # standard
-from pathlib import Path
 
 # PyQGIS
 from qgis.core import QgsApplication
-from qgis.gui import QgsCollapsibleGroupBox, QgsPixmapLabel
-from qgis.PyQt.QtCore import Qt
-from qgis.PyQt.QtWidgets import (
-    QDialog,
-    QGridLayout,
-    QLabel,
-    QPushButton,
-    QStyle,
-    QWidget,
-)
+from qgis.gui import QgsCollapsibleGroupBox
+from qgis.PyQt.QtWidgets import QDialog, QGridLayout, QStyle, QWidget
 
 # plugin
 from qtribu.toolbelt import PlgLogger
@@ -62,7 +53,7 @@ class IconsWall(QDialog):
     def show_qt_standard_icons(self):
         self.grp_standard_icons = QgsCollapsibleGroupBox(self)
 
-        icons = sorted([attr for attr in dir(QStyle) if attr.startswith("SP_")])
+        sorted([attr for attr in dir(QStyle) if attr.startswith("SP_")])
 
         # for attr in dir(QStyle):
         #     if not attr.startswith("SP"):

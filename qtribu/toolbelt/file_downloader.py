@@ -5,7 +5,6 @@
 """
 
 # Standard library
-import logging
 
 # PyQGIS
 from qgis.core import QgsFileDownloader
