@@ -18,6 +18,7 @@ from qgis.PyQt.QtWidgets import QAction
 # project
 from qtribu.__about__ import DIR_PLUGIN_ROOT, __icon_path__, __title__, __uri_homepage__
 from qtribu.gui.dlg_settings import PlgOptionsFactory
+from qtribu.gui.dlg_wall_embedded_icons import IconsWall
 from qtribu.gui.form_rdp_news import RdpNewsForm
 from qtribu.logic import RssMiniReader, SplashChanger, WebViewer
 from qtribu.toolbelt import NetworkRequestsManager, PlgLogger, PlgOptionsManager
@@ -65,6 +66,7 @@ class GeotribuPlugin:
 
         # -- Forms
         self.form_rdp_news = None
+        self.pyqgis_icons_wall = None
 
         # -- Actions
         self.action_run = QAction(
@@ -81,6 +83,13 @@ class GeotribuPlugin:
             self.iface.mainWindow(),
         )
         self.action_rdp_news.triggered.connect(self.open_form_rdp_news)
+
+        self.action_show_icon_wall = QAction(
+            QIcon(QgsApplication.iconPath("mActionShowAllLayers.svg")),
+            self.tr("Show PyQGIS icons wall"),
+            self.iface.mainWindow(),
+        )
+        self.action_show_icon_wall.triggered.connect(self.open_pyqgis_icons_wall)
 
         self.action_help = QAction(
             QIcon(QgsApplication.iconPath("mActionHelpContents.svg")),
@@ -108,6 +117,7 @@ class GeotribuPlugin:
         # -- Menu
         self.iface.addPluginToWebMenu(__title__, self.action_run)
         self.iface.addPluginToWebMenu(__title__, self.action_rdp_news)
+        self.iface.addPluginToWebMenu(__title__, self.action_show_icon_wall)
         self.iface.addPluginToWebMenu(__title__, self.action_splash)
         self.iface.addPluginToWebMenu(__title__, self.action_settings)
         self.iface.addPluginToWebMenu(__title__, self.action_help)
@@ -154,6 +164,7 @@ class GeotribuPlugin:
         # -- Toolbar
         self.iface.addToolBarIcon(self.action_run)
         self.iface.addToolBarIcon(self.action_rdp_news)
+        self.iface.addToolBarIcon(self.action_show_icon_wall)
 
         # -- Post UI initialization
         self.iface.initializationCompleted.connect(self.post_ui_init)
@@ -163,6 +174,7 @@ class GeotribuPlugin:
         # -- Clean up menu
         self.iface.removePluginWebMenu(__title__, self.action_help)
         self.iface.removePluginWebMenu(__title__, self.action_rdp_news)
+        self.iface.removePluginWebMenu(__title__, self.action_show_icon_wall)
         self.iface.removePluginWebMenu(__title__, self.action_run)
         self.iface.removePluginWebMenu(__title__, self.action_settings)
         self.iface.removePluginWebMenu(__title__, self.action_splash)
@@ -174,6 +186,7 @@ class GeotribuPlugin:
         # -- Clean up toolbar
         self.iface.removeToolBarIcon(self.action_run)
         self.iface.removeToolBarIcon(self.action_rdp_news)
+        self.iface.removeToolBarIcon(self.action_show_icon_wall)
 
         # -- Clean up preferences panel in QGIS settings
         self.iface.unregisterOptionsWidgetFactory(self.options_factory)
@@ -270,6 +283,13 @@ class GeotribuPlugin:
             self.form_rdp_news.setModal(True)
             self.form_rdp_news.finished.connect(self._post_form_rdp_news)
         self.form_rdp_news.show()
+
+    def open_pyqgis_icons_wall(self) -> None:
+        """Open the icons wall."""
+        if not self.pyqgis_icons_wall:
+            self.pyqgis_icons_wall = IconsWall()
+            self.pyqgis_icons_wall.setModal(False)
+        self.pyqgis_icons_wall.show()
 
     def _post_form_rdp_news(self, dialog_result: int) -> None:
         """Perform actions after the GeoRDP news form has been closed.
