@@ -133,14 +133,10 @@ jobs:
           # git add full project
           git add ${{ env.PROJECT_FOLDER }}/
 
-      - name: Get current changelog for ${VERSION}
-        run: qgis-plugin-ci changelog ${GITHUB_REF/refs\/tags\//} >> release.md
-
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
           fail_on_unmatched_files: true
-          bodyFile: release.md
           generate_release_notes: true
 
       - name: Deploy plugin
