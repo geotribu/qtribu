@@ -19,8 +19,13 @@ from qgis.PyQt.QtWidgets import QAction
 from qtribu.__about__ import DIR_PLUGIN_ROOT, __icon_path__, __title__, __uri_homepage__
 from qtribu.gui.dlg_settings import PlgOptionsFactory
 from qtribu.gui.form_rdp_news import RdpNewsForm
-from qtribu.logic import RssMiniReader, SplashChanger, WebViewer
-from qtribu.toolbelt import NetworkRequestsManager, PlgLogger, PlgOptionsManager
+from qtribu.logic import RssMiniReader, SearchWidget, SplashChanger, WebViewer
+from qtribu.toolbelt import (
+    NetworkRequestsManager,
+    PlgLogger,
+    PlgOptionsManager,
+    PlgTranslator,
+)
 
 # ############################################################################
 # ########## Classes ###############
@@ -53,6 +58,7 @@ class GeotribuPlugin:
 
         # sub-modules
         self.rss_rdr = RssMiniReader()
+        self.search_widget = SearchWidget()
         self.splash_chgr = SplashChanger(self)
         self.web_viewer = WebViewer()
 
@@ -74,6 +80,16 @@ class GeotribuPlugin:
         )
         self.action_run.setToolTip(self.tr("Newest article"))
         self.action_run.triggered.connect(self.run)
+
+        self.action_search = QAction(
+            QIcon(QgsApplication.iconPath("search.svg")),
+            self.tr("Search", context="GeotribuPlugin"),
+            self.iface.mainWindow(),
+        )
+        self.action_search.setToolTip(
+            self.tr(text="Search within contents", context="GeotribuPlugin")
+        )
+        self.action_search.triggered.connect(self.search_run)
 
         self.action_rdp_news = QAction(
             QIcon(QgsApplication.iconPath("mActionHighlightFeature.svg")),
@@ -105,6 +121,7 @@ class GeotribuPlugin:
 
         # -- Menu
         self.iface.addPluginToWebMenu(__title__, self.action_run)
+        self.iface.addPluginToWebMenu(__title__, self.action_search)
         self.iface.addPluginToWebMenu(__title__, self.action_rdp_news)
         self.iface.addPluginToWebMenu(__title__, self.action_splash)
         self.iface.addPluginToWebMenu(__title__, self.action_settings)
@@ -162,6 +179,7 @@ class GeotribuPlugin:
         self.iface.removePluginWebMenu(__title__, self.action_help)
         self.iface.removePluginWebMenu(__title__, self.action_rdp_news)
         self.iface.removePluginWebMenu(__title__, self.action_run)
+        self.iface.removePluginWebMenu(__title__, self.action_search)
         self.iface.removePluginWebMenu(__title__, self.action_settings)
         self.iface.removePluginWebMenu(__title__, self.action_splash)
 
@@ -260,6 +278,11 @@ class GeotribuPlugin:
             )
         except Exception as err:
             raise err
+
+    def search_run(self):
+        """Display search widget"""
+        self.log("Search widget called", log_level=3)
+        self.search_widget.load_search_index()
 
     def open_form_rdp_news(self) -> None:
         """Open the form to create a GeoRDP news."""

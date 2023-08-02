@@ -27,8 +27,10 @@ class PlgSettingsStructure:
     debug_mode: bool = False
     version: str = __version__
 
-    # RSS feed
-    rss_source: str = "https://static.geotribu.fr/feed_rss_created.xml"
+    # remote
+    website_url: str = "https://static.geotribu.fr"
+    cdn_url: str = "https://cdn.geotribu.fr"
+    rss_source: str = f"{website_url}/feed_rss_created.xml"
 
     # usage
     browser: int = 1
