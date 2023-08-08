@@ -28,7 +28,7 @@ class PlgSettingsStructure:
     version: str = __version__
 
     # RSS feed
-    rss_source: str = "https://static.geotribu.fr/feed_rss_created.xml"
+    rss_source: str = "https://geotribu.fr/feed_rss_created.xml"
 
     # usage
     browser: int = 1

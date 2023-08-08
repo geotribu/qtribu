@@ -58,7 +58,7 @@ GEORDP_NEWS_CATEGORIES: tuple = (
         name="Représentation cartographique",
         description="Dataviz, cartographies, art...",
         order=3,
-        example="https://static.geotribu.fr/rdp/2021/rdp_2021-06-18/#francepixel-bati",
+        example="https://geotribu.fr/rdp/2021/rdp_2021-06-18/#francepixel-bati",
     ),
     RdpNewsCategory(
         name="OpenStreetMap",
@@ -76,20 +76,20 @@ GEORDP_NEWS_CATEGORIES: tuple = (
         name="Open Data",
         description="Tout ce qui a trait aux données ouvertes.",
         order=6,
-        example="https://static.geotribu.fr/rdp/2020/rdp_2020-12-11/#open-data",
+        example="https://geotribu.fr/rdp/2020/rdp_2020-12-11/#open-data",
     ),
     RdpNewsCategory(
         name="Geo-event",
         description="Evénements, salons, conférences...",
         order=7,
         example="SAGEO, GéoDataDays, CartoMob, "
-        "https://static.geotribu.fr/rdp/2020/rdp_2020-12-11/#rencontres-des-utilisateurs-francophones-de-qgis)...",
+        "https://geotribu.fr/rdp/2020/rdp_2020-12-11/#rencontres-des-utilisateurs-francophones-de-qgis)...",
     ),
     RdpNewsCategory(
         name="Divers",
         description="Tout ce qui ne rentre pas dans les autres sections.",
         order=8,
-        example="https://static.geotribu.fr/rdp/2021/rdp_2021-03-26/#les-villes-ont-elles-un-corps",
+        example="https://geotribu.fr/rdp/2021/rdp_2021-03-26/#les-villes-ont-elles-un-corps",
     ),
 )
 
