@@ -1,15 +1,14 @@
-
 from email.utils import parsedate, parsedate_tz, parsedate_to_datetime
 from urllib.request import urlopen
 import xml.etree.ElementTree as ET
 
 PATTERN_INCLUDE = ["articles/", "rdp/"]
 
-tree = ET.parse(urlopen("https://static.geotribu.fr/feed_rss_created.xml"))
+tree = ET.parse(urlopen("https://geotribu.fr/feed_rss_created.xml"))
 root = tree.getroot()
 
 print(root)
-articles = root.findall('channel/item')
+articles = root.findall("channel/item")
 print(len(articles))
 
 for art in articles:

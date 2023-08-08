@@ -11,9 +11,7 @@ rss_rdr = RssMiniReader()
 
 qntwk_req = QgsBlockingNetworkRequest()
 req_status = qntwk_req.get(
-    request=QNetworkRequest(
-        QUrl("https://static.geotribu.fr/feed_rss_created.xml")
-    ),
+    request=QNetworkRequest(QUrl("https://geotribu.fr/feed_rss_created.xml")),
     forceRefresh=False,
 )
 
@@ -30,9 +28,9 @@ if req_status != QgsBlockingNetworkRequest.NoError:
 req_reply = qntwk_req.reply()
 print(type(req_reply.content()))
 print(req_reply.rawHeaderList())
-print(req_reply.rawHeader(b'Content-Type'))
-print(req_reply.rawHeader(b'last-modified'))
-print(req_reply.rawHeader(b'Content-type') == 'application/xml')
+print(req_reply.rawHeader(b"Content-Type"))
+print(req_reply.rawHeader(b"last-modified"))
+print(req_reply.rawHeader(b"Content-type") == "application/xml")
 print(isinstance(req_reply.content(), QByteArray))
 # print(req_reply.content())
 

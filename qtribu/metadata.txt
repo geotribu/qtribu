@@ -2,7 +2,7 @@
 name=QTribu
 about=Garde le Qontact avec ta Geotribu !
 category=Web
-description=Geotribu (https://static.geotribu.fr) content right into QGIS.
+description=Geotribu (https://geotribu.fr) content right into QGIS.
 icon=resources/images/logo_geotribu.png
 tags=geotribu,blog,rss,splash,community
 

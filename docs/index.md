@@ -40,5 +40,5 @@ development/history
 ---
 caption: Ressources
 ---
-Article de présentation <https://static.geotribu.fr/articles/2021/2021-04-01_qtribu_plugin_qgis_geotribu/>
+Article de présentation <https://geotribu.fr/articles/2021/2021-04-01_qtribu_plugin_qgis_geotribu/>
 ```

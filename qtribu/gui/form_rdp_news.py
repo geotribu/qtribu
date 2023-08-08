@@ -78,7 +78,7 @@ class RdpNewsForm(QDialog):
         self.btn_box.helpRequested.connect(
             partial(
                 QDesktopServices.openUrl,
-                QUrl("https://static.geotribu.fr/contribuer/rdp/add_news/"),
+                QUrl("https://contribuer.geotribu.fr/rdp/add_news/"),
             )
         )
 
