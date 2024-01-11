@@ -6,6 +6,7 @@
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/Guts/mkdocs-rss-plugin/master.svg)](https://results.pre-commit.ci/latest/github/Guts/mkdocs-rss-plugin/master)
 [![codecov](https://codecov.io/gh/geotribu/qtribu/branch/main/graph/badge.svg?token=7O9PYKS4Q0)](https://codecov.io/gh/geotribu/qtribu)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=geotribu_qtribu&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=geotribu_qtribu)
 
 [![Tester](https://github.com/geotribu/qtribu/actions/workflows/tester.yml/badge.svg)](https://github.com/geotribu/qtribu/actions/workflows/tester.yml)
 [![Documentation Builder](https://github.com/geotribu/qtribu/actions/workflows/documentation.yml/badge.svg)](https://github.com/geotribu/qtribu/actions/workflows/documentation.yml)
