@@ -1,14 +1,18 @@
 ci-cd:
-  - any-glob-to-any-file: .github/**
+  - changed-files:
+      - any-glob-to-any-file: .github/**
 
 dependencies:
-  - any-glob-to-any-file: requirements/*.txt
-  - requirements.txt
+  - changed-files:
+      - any-glob-to-any-file:
+          - requirements/*.txt
+          - requirements.txt
 
 documentation:
   - changed-files:
-      - any-glob-to-any-file: docs/**
-      - requirements/documentation.txt
+      - any-glob-to-any-file:
+          - docs/**
+          - requirements/documentation.txt
 
 enhancement:
   - head-branch: ["^feature", "feature", "^improve", "improve"]
@@ -18,11 +22,15 @@ packaging:
 
 tooling:
   - head-branch: ["^tooling", "tooling"]
-  - codecov.yml
-  - .pre-commit-config.yaml
-  - sonar-project.properties
+  - changed-files:
+      - any-glob-to-any-file:
+          - codecov.yml
+          - .pre-commit-config.yaml
+          - sonar-project.properties
 
 UI:
   - head-branch: ["^ui", "ui"]
-  - any-glob-to-any-file: qtribu/**/*.ui
-  - any-glob-to-any-file: qtribu/gui/**
+  - changed-files:
+      - any-glob-to-any-file:
+          - qtribu/**/*.ui
+          - qtribu/gui/**
