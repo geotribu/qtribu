@@ -2,16 +2,20 @@ name: "🎳 Tester"
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
     paths:
       - "**.py"
       - .github/workflows/tester.yml
+      - requirements/testing.txt
 
   pull_request:
-    branches: [main]
+    branches:
+      - main
     paths:
       - "**.py"
       - .github/workflows/tester.yml
+      - requirements/testing.txt
 
 env:
   PROJECT_FOLDER: "qtribu"
@@ -54,6 +58,7 @@ jobs:
         MUTE_LOGS: true
         NO_MODALS: 1
         PYTHONPATH: "/usr/share/qgis/python/plugins:/usr/share/qgis/python:."
+        QT_QPA_PLATFORM: "offscreen"
         WITH_PYTHON_PEP: false
       options: -v /tmp/.X11-unix:/tmp/.X11-unix -v ${{ github.workspace }}:/tests_directory
 
@@ -64,12 +69,11 @@ jobs:
       - name: Print QGIS version
         run: qgis --version
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-          cache: "pip"
-          cache-dependency-path: "requirements/testing.txt"
+      - name: Print Python version
+        run: python3 --version
+
+      - name: Setup plugin
+        run: qgis_setup.sh qtribu
 
       - name: Install Python requirements
         run: |
