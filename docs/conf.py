@@ -48,6 +48,7 @@ extensions = [
     "sphinx_copybutton",
     "sphinxext.opengraph",
     "sphinx_rtd_theme",
+    "sphinx_sitemap",
 ]
 
 # The suffix(es) of source filenames.
@@ -78,6 +79,8 @@ pygments_style = "sphinx"
 
 # -- Theme
 
+# final URL
+html_baseurl = __about__.__uri_homepage__
 html_favicon = str(__about__.__icon_path__)
 html_logo = str(__about__.__icon_path__)
 html_sidebars = {
