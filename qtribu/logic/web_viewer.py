@@ -15,7 +15,13 @@ import logging
 # PyQGIS
 from qgis.PyQt.QtCore import QCoreApplication, Qt
 from qgis.PyQt.QtGui import QDesktopServices
-from qgis.PyQt.QtWebKitWidgets import QWebView
+
+try:
+    from qgis.PyQt.QtWebKitWidgets import QWebView
+except:
+    QCoreApplication.setAttribute(Qt.AA_ShareOpenGLContexts)
+    from PyQt.QtWebEngineWidgets import QWebEngineView as QWebView
+
 from qgis.PyQt.QtWidgets import QVBoxLayout, QWidget
 
 # project
