@@ -229,6 +229,20 @@ class GeotribuPlugin:
                 log_level=2,
                 push=True,
             )
+            return
+
+        # insert latest item within news feed
+        try:
+            self.rss_rdr.add_latest_item_to_news_feed()
+        except Exception as err:
+            self.log(
+                message=self.tr(
+                    f"Unable to insert latest item within QGIS news feed. Trace: {err}"
+                ),
+                log_level=2,
+                push=True,
+            )
+            return
 
     def tr(self, message: str) -> str:
         """Get the translation for a string using Qt translation API.
