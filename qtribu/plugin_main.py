@@ -112,6 +112,17 @@ class GeotribuPlugin:
 
         # -- Help menu
         self.iface.helpMenu().addSeparator()
+        self.action_geotribu = QAction(
+            QIcon(str(__icon_path__)),
+            self.tr("Geotribu website"),
+        )
+        self.action_geotribu.triggered.connect(
+            partial(
+                QDesktopServices.openUrl,
+                QUrl("https://geotribu.fr"),
+            )
+        )
+
         self.action_georezo = QAction(
             QIcon(str(DIR_PLUGIN_ROOT / "resources/images/georezo.png")),
             self.tr("QGIS forum on GeoRezo"),
@@ -122,20 +133,6 @@ class GeotribuPlugin:
                 QUrl("https://georezo.net/forum/viewforum.php?id=55"),
             )
         )
-        self.iface.helpMenu().addAction(self.action_georezo)
-
-        self.action_geotribu = QAction(
-            QIcon(str(__icon_path__)),
-            self.tr("Geotribu website"),
-        )
-        self.action_geotribu.triggered.connect(
-            partial(
-                QDesktopServices.openUrl,
-                QUrl("http://geotribu.fr"),
-            )
-        )
-        self.iface.helpMenu().addAction(self.action_geotribu)
-
         self.action_osgeofr = QAction(
             QIcon(str(DIR_PLUGIN_ROOT / "resources/images/osgeo.svg")),
             self.tr("OSGeo France"),
@@ -143,11 +140,12 @@ class GeotribuPlugin:
         self.action_osgeofr.triggered.connect(
             partial(
                 QDesktopServices.openUrl,
-                QUrl("https://www.osgeo.asso.fr/"),
+                QUrl("https://www.osgeo.fr/"),
             )
         )
-
-        self.iface.pluginHelpMenu().addAction(self.action_osgeofr)
+        self.iface.helpMenu().addAction(self.action_georezo)
+        self.iface.helpMenu().addAction(self.action_geotribu)
+        self.iface.helpMenu().addAction(self.action_osgeofr)
 
         # -- Toolbar
         self.iface.addToolBarIcon(self.action_run)
