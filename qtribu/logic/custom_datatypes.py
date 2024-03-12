@@ -9,6 +9,7 @@ RssItem = namedtuple(
     field_names=[
         "abstract",
         "author",
+        "categories",
         "date_pub",
         "guid",
         "image_length",
