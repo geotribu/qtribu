@@ -52,7 +52,7 @@
 <context>
     <name>ConfigOptionsPage</name>
     <message>
-        <location filename="../../gui/dlg_settings.py" line="141"/>
+        <location filename="../../gui/dlg_settings.py" line="140"/>
         <source>Read history has been reset.</source>
         <translation>L&apos;historique de lecture a été réinitialisé.</translation>
     </message>
@@ -60,7 +60,7 @@
 <context>
     <name>GeotribuPlugin</name>
     <message>
-        <location filename="../../plugin_main.py" line="258"/>
+        <location filename="../../plugin_main.py" line="268"/>
         <source>Newest article</source>
         <translation>Afficher le dernier article</translation>
     </message>
@@ -75,22 +75,22 @@
         <translation>Réglages</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="215"/>
+        <location filename="../../plugin_main.py" line="211"/>
         <source>New content published:</source>
         <translation>Nouveau contenu publié :</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="117"/>
+        <location filename="../../plugin_main.py" line="126"/>
         <source>QGIS forum on GeoRezo</source>
         <translation>Forum QGIS sur GeoRezo</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="129"/>
+        <location filename="../../plugin_main.py" line="115"/>
         <source>Geotribu website</source>
         <translation>Site Geotribu</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="141"/>
+        <location filename="../../plugin_main.py" line="136"/>
         <source>OSGeo France</source>
         <translation>OSGeo FR</translation>
     </message>
@@ -100,9 +100,14 @@
         <translation>Proposer une news pour la GeoRDP</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="231"/>
+        <location filename="../../plugin_main.py" line="227"/>
         <source>Michel, we&apos;ve got a problem: {err}</source>
         <translation></translation>
+    </message>
+    <message>
+        <location filename="../../plugin_main.py" line="238"/>
+        <source>Unable to insert latest item within QGIS news feed. Trace: {err}</source>
+        <translation>Impossible d&apos;insérer le dernier contenu publié dans le fil d&apos;actualité de QGIS. Trace : {err}</translation>
     </message>
 </context>
 <context>
@@ -172,6 +177,19 @@
 </source>
         <translation>Les champs dont le nom est en gras sont requis. Champs incorrects :
 </translation>
+    </message>
+</context>
+<context>
+    <name>RssMiniReader</name>
+    <message>
+        <location filename="../../logic/rss_reader.py" line="169"/>
+        <source>Author(s): </source>
+        <translation>Auteurs/ices : </translation>
+    </message>
+    <message>
+        <location filename="../../logic/rss_reader.py" line="169"/>
+        <source>Keywords: </source>
+        <translation>Mots-clés : </translation>
     </message>
 </context>
 <context>
@@ -324,94 +342,104 @@ Si c&apos;est le cas, ne pas cocher et donner des précisions en commentaire.</t
         <translation>Fonctionnalités</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="106"/>
+        <location filename="../../gui/dlg_settings.ui" line="203"/>
         <source>Which web browser to use to display articles.</source>
         <translation>Navigateur web à utiliser pour afficher les articles.</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="109"/>
+        <location filename="../../gui/dlg_settings.ui" line="206"/>
         <source>Open in web browser:</source>
         <translation>Navigateur web :</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="194"/>
+        <location filename="../../gui/dlg_settings.ui" line="225"/>
         <source>System default browser</source>
         <translation>Navigateur du système</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="128"/>
+        <location filename="../../gui/dlg_settings.ui" line="106"/>
         <source>Notify for new content:</source>
         <translation>Notification :</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="213"/>
+        <location filename="../../gui/dlg_settings.ui" line="125"/>
         <source>Embedded browser</source>
         <translation>Navigateur embarqué de QGIS</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="169"/>
+        <location filename="../../gui/dlg_settings.ui" line="178"/>
         <source>Informational push message</source>
         <translation>Activer la notification push</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="297"/>
+        <location filename="../../gui/dlg_settings.ui" line="331"/>
         <source>Miscellaneous</source>
         <translation>Divers</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="340"/>
+        <location filename="../../gui/dlg_settings.ui" line="352"/>
         <source>Enable debug mode.</source>
         <translation>Activer le mode DEBUG.</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="349"/>
+        <location filename="../../gui/dlg_settings.ui" line="361"/>
         <source>Debug mode (degraded performances)</source>
         <translation>Mode DEBUG (performances dégradées)</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="371"/>
+        <location filename="../../gui/dlg_settings.ui" line="405"/>
         <source>Version used to save settings:</source>
         <translation>Version des paramètres :</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="390"/>
+        <location filename="../../gui/dlg_settings.ui" line="424"/>
         <source>Report an issue</source>
         <translation>Créer un ticket</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="413"/>
+        <location filename="../../gui/dlg_settings.ui" line="447"/>
         <source>Help</source>
         <translation>Aide en ligne</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="147"/>
+        <location filename="../../gui/dlg_settings.ui" line="257"/>
         <source>Reset read history</source>
         <translation>Effacer l&apos;historique</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="225"/>
+        <location filename="../../gui/dlg_settings.ui" line="266"/>
         <source>Duration:</source>
         <translation>Durée :</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="232"/>
+        <location filename="../../gui/dlg_settings.ui" line="273"/>
         <source>&apos;0&apos; means unlimited time, waiting a manual close from the end-user.</source>
         <translation>&apos;0&apos; signifie une durée illimitée, l&apos;utilisateur final devra fermer la notification manuellement.</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="244"/>
+        <location filename="../../gui/dlg_settings.ui" line="285"/>
         <source> seconds</source>
         <translation> secondes</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="262"/>
+        <location filename="../../gui/dlg_settings.ui" line="238"/>
         <source>Accept publication license globally</source>
         <translation>Accepter une fois pour toutes la licence de publication</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="435"/>
+        <location filename="../../gui/dlg_settings.ui" line="469"/>
         <source>Reset to factory defaults</source>
         <translation>Réinitialise les paramètres à leur valeur par défaut</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dlg_settings.ui" line="147"/>
+        <source>The only &apos;Show QGIS news feed on welcome page&apos; must be checked in General Settings</source>
+        <translation>Les options &quot;Afficher le fil d&apos;actualités QGIS sur la page d&apos;accueil&quot; et &quot;Ouverture de projet et démarrage = la page d&apos;accueil&quot; doivent être activées dans les préférences générales de QGIS</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dlg_settings.ui" line="150"/>
+        <source>Insert latest item in QGIS news feed</source>
+        <translation>Insérer le dernier contenu publié sur Geotribu dans le fil d&apos;actualités</translation>
     </message>
 </context>
 </TS>
