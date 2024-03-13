@@ -15,9 +15,8 @@ import xml.etree.ElementTree as ET
 from email.utils import parsedate
 from typing import Optional
 
-from qgis.core import QgsSettings
-
 # QGIS
+from qgis.core import Qgis, QgsSettings
 from qgis.PyQt.QtCore import QCoreApplication
 
 # project
