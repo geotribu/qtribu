@@ -136,3 +136,6 @@ dmypy.json
 
 *.qm
 *.zip
+
+# jb stuff
+.idea
