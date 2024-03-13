@@ -239,7 +239,7 @@ class GeotribuPlugin:
                 message=self.tr(
                     f"Unable to insert latest item within QGIS news feed. Trace: {err}"
                 ),
-                log_level=2,
+                log_level=Qgis.Critical,
                 push=True,
             )
             return
