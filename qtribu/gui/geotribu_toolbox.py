@@ -2,8 +2,7 @@ from pathlib import Path
 
 from PyQt5.QtCore import QModelIndex, Qt, QUrl
 from PyQt5.QtGui import QDesktopServices, QStandardItem, QStandardItemModel
-from PyQt5.QtWidgets import QAction, QListView, QMenu, QMessageBox
-
+from PyQt5.QtWidgets import QListView
 from qgis.gui import QgsDockWidget
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QWidget
@@ -14,7 +13,6 @@ from qtribu.toolbelt import NetworkRequestsManager, PlgLogger, PlgOptionsManager
 
 
 class GeotribuToolbox(QgsDockWidget):
-
     def __init__(self, parent: QWidget = None):
         """
         QgsDockWidget for geotribu toolbox
@@ -33,7 +31,9 @@ class GeotribuToolbox(QgsDockWidget):
         self.articles_tree_view.setModel(self.articles_model)
         self.articles_tree_view.doubleClicked.connect(self.on_article_double_clicked)
         self.articles_tree_view.setContextMenuPolicy(Qt.CustomContextMenu)
-        self.articles_tree_view.customContextMenuRequested.connect(self.on_open_article_context_menu)
+        self.articles_tree_view.customContextMenuRequested.connect(
+            self.on_open_article_context_menu
+        )
 
         # RDP lists and treeviews
         self.rdp_list_view = QListView()
@@ -41,7 +41,9 @@ class GeotribuToolbox(QgsDockWidget):
         self.rdp_tree_view.setModel(self.rdp_model)
         self.rdp_tree_view.doubleClicked.connect(self.on_article_double_clicked)
         self.rdp_tree_view.setContextMenuPolicy(Qt.CustomContextMenu)
-        self.rdp_tree_view.customContextMenuRequested.connect(self.on_open_article_context_menu)
+        self.rdp_tree_view.customContextMenuRequested.connect(
+            self.on_open_article_context_menu
+        )
 
         # buttons actions
         self.form_rdp_news = None
