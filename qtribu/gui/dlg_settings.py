@@ -93,6 +93,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         settings.browser = self.opt_browser_group.checkedId()
         settings.notify_push_info = self.opt_notif_push_msg.isChecked()
         settings.notify_push_duration = self.sbx_notif_duration.value()
+        settings.integration_qgis_news_feed = self.chb_integration_news_feed.isChecked()
         settings.license_global_accept = self.chb_license_global_accept.isChecked()
 
         # misc
@@ -119,6 +120,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         self.opt_browser_group.button(settings.browser).setChecked(True)
         self.opt_notif_push_msg.setChecked(settings.notify_push_info)
         self.sbx_notif_duration.setValue(settings.notify_push_duration)
+        self.chb_integration_news_feed.setChecked(settings.integration_qgis_news_feed)
         self.chb_license_global_accept.setChecked(settings.license_global_accept)
 
         # misc
@@ -128,7 +130,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
     def reset_read_history(self):
         """Set latest_content_guid to None."""
         new_settings = PlgSettingsStructure(
-            latest_content_guid=None,
+            latest_content_guid="",
         )
 
         # dump new settings into QgsSettings

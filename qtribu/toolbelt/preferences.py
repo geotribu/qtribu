@@ -34,9 +34,10 @@ class PlgSettingsStructure:
     browser: int = 1
     notify_push_info: bool = True
     notify_push_duration: int = 10
-    latest_content_guid: str = None
+    latest_content_guid: str = ""
     splash_screen_enabled: bool = False
     license_global_accept: bool = False
+    integration_qgis_news_feed: bool = True
 
     # network
     network_http_user_agent: str = f"{__title__}/{__version__}"

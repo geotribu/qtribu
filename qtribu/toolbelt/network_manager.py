@@ -11,6 +11,7 @@
 # Standard library
 import logging
 from functools import lru_cache
+from typing import Optional
 from urllib.parse import urlparse, urlunparse
 
 # PyQGIS
@@ -58,7 +59,7 @@ class NetworkRequestsManager:
         return QCoreApplication.translate(self.__class__.__name__, message)
 
     @lru_cache(maxsize=128)
-    def build_url(self, url: str) -> QUrl:
+    def add_utm_to_url(self, url: str) -> str:
         """Returns the URL using the plugin settings.
 
         :param url: input URL to complete
@@ -71,9 +72,21 @@ class NetworkRequestsManager:
         clean_url = parsed_url._replace(
             query=PlgOptionsManager.get_plg_settings().request_path
         )
-        return QUrl(urlunparse(clean_url))
+        return urlunparse(clean_url)
 
-    def build_request(self, url: QUrl = None) -> QNetworkRequest:
+    @lru_cache(maxsize=128)
+    def build_url(self, url: str) -> QUrl:
+        """Returns the URL using the plugin settings.
+
+        :param url: input URL to complete
+        :type url: str
+
+        :return: Qt URL object with full parameters
+        :rtype: QUrl
+        """
+        return QUrl(self.add_utm_to_url(url))
+
+    def build_request(self, url: Optional[QUrl] = None) -> QNetworkRequest:
         """Build request object using plugin settings.
 
         :return: network request object.
