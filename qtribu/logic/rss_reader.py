@@ -192,7 +192,7 @@ class RssMiniReader:
         self.log(
             message=f"Latest Geotribu content inserted in QGIS news feed: "
             f"{latest_geotribu_article.title}",
-            log_level=0,
+            log_level=Qgis.Info,
         )
 
         return True
