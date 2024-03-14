@@ -13,7 +13,7 @@
 import logging
 import xml.etree.ElementTree as ET
 from email.utils import parsedate
-from typing import Optional, List
+from typing import List, Optional
 
 # QGIS
 from qgis.core import Qgis, QgsSettings
