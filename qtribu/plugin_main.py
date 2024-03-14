@@ -17,6 +17,7 @@ from qgis.PyQt.QtWidgets import QAction
 
 # project
 from qtribu.__about__ import DIR_PLUGIN_ROOT, __icon_path__, __title__, __uri_homepage__
+from qtribu.gui.dlg_contents import GeotribuContentsDialog
 from qtribu.gui.dlg_settings import PlgOptionsFactory
 from qtribu.gui.form_rdp_news import RdpNewsForm
 from qtribu.logic import RssMiniReader, SplashChanger, WebViewer
@@ -65,6 +66,7 @@ class GeotribuPlugin:
 
         # -- Forms
         self.form_rdp_news = None
+        self.form_contents = None
 
         # -- Actions
         self.action_run = QAction(
@@ -74,6 +76,14 @@ class GeotribuPlugin:
         )
         self.action_run.setToolTip(self.tr("Newest article"))
         self.action_run.triggered.connect(self.run)
+
+        self.action_contents = QAction(
+            QIcon(str(DIR_PLUGIN_ROOT / "resources/images/logo_orange_no_text.svg")),
+            self.tr("Contents"),
+            self.iface.mainWindow(),
+        )
+        self.action_contents.setToolTip(self.tr("Contents"))
+        self.action_contents.triggered.connect(self.contents)
 
         self.action_rdp_news = QAction(
             QIcon(QgsApplication.iconPath("mActionHighlightFeature.svg")),
@@ -105,6 +115,7 @@ class GeotribuPlugin:
 
         # -- Menu
         self.iface.addPluginToWebMenu(__title__, self.action_run)
+        self.iface.addPluginToWebMenu(__title__, self.action_contents)
         self.iface.addPluginToWebMenu(__title__, self.action_rdp_news)
         self.iface.addPluginToWebMenu(__title__, self.action_splash)
         self.iface.addPluginToWebMenu(__title__, self.action_settings)
@@ -149,6 +160,7 @@ class GeotribuPlugin:
 
         # -- Toolbar
         self.iface.addToolBarIcon(self.action_run)
+        self.iface.addToolBarIcon(self.action_contents)
         self.iface.addToolBarIcon(self.action_rdp_news)
 
         # -- Post UI initialization
@@ -160,6 +172,7 @@ class GeotribuPlugin:
         self.iface.removePluginWebMenu(__title__, self.action_help)
         self.iface.removePluginWebMenu(__title__, self.action_rdp_news)
         self.iface.removePluginWebMenu(__title__, self.action_run)
+        self.iface.removePluginWebMenu(__title__, self.action_contents)
         self.iface.removePluginWebMenu(__title__, self.action_settings)
         self.iface.removePluginWebMenu(__title__, self.action_splash)
 
@@ -169,6 +182,7 @@ class GeotribuPlugin:
 
         # -- Clean up toolbar
         self.iface.removeToolBarIcon(self.action_run)
+        self.iface.removeToolBarIcon(self.action_contents)
         self.iface.removeToolBarIcon(self.action_rdp_news)
 
         # -- Clean up preferences panel in QGIS settings
@@ -272,6 +286,13 @@ class GeotribuPlugin:
             )
         except Exception as err:
             raise err
+
+    def contents(self):
+        """Action to open contents dialog"""
+        if not self.form_contents:
+            self.form_contents = GeotribuContentsDialog()
+            self.form_contents.setModal(True)
+        self.form_contents.show()
 
     def open_form_rdp_news(self) -> None:
         """Open the form to create a GeoRDP news."""
