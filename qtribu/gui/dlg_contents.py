@@ -105,8 +105,9 @@ class GeotribuContentsDialog(QDialog):
     def on_search_text_changed(self) -> None:
         # do nothing if text is too small
         current = self.search_line_edit.text()
-        if current != "":
+        if current == "":
             self.refresh_list(expand_all=True)
+            return
         if len(current) < 3:
             return
         self.refresh_list()

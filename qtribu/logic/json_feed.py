@@ -57,6 +57,9 @@ class JsonFeedClient:
     @staticmethod
     def _matches(query: str, item: RssItem) -> bool:
         """Moteur de recherche du turfu"""
+        words = query.split(" ")
+        if len(words) > 1:
+            return all([JsonFeedClient._matches(w, item) for w in words])
         return (
             query.upper() in item.abstract.upper()
             or query.upper() in ",".join(item.author).upper()
