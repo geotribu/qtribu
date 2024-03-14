@@ -29,6 +29,7 @@ class PlgSettingsStructure:
 
     # RSS feed
     rss_source: str = "https://geotribu.fr/feed_rss_created.xml"
+    json_feed_source: str = "https://geotribu.fr/feed_json_created.json"
 
     # usage
     browser: int = 1
