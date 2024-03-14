@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import List, Dict
+from typing import Dict, List
 
 from PyQt5.QtCore import QModelIndex, Qt, QUrl
 from PyQt5.QtGui import QDesktopServices, QIcon, QStandardItem, QStandardItemModel

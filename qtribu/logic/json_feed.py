@@ -1,12 +1,12 @@
 from datetime import datetime
-from typing import List, Any, Dict, Optional
-
-from qtribu.__about__ import __title__, __version__
-from qtribu.logic import RssItem
-from qtribu.toolbelt import PlgOptionsManager, PlgLogger
+from typing import Any, Dict, List, Optional
 
 import requests
 from requests import Response
+
+from qtribu.__about__ import __title__, __version__
+from qtribu.logic import RssItem
+from qtribu.toolbelt import PlgLogger, PlgOptionsManager
 
 HEADERS: dict = {
     b"Accept": b"application/json",
