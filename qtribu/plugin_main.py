@@ -46,11 +46,24 @@ class GeotribuPlugin:
         locale_path: Path = (
             DIR_PLUGIN_ROOT / f"resources/i18n/{__title__.lower()}_{self.locale}.qm"
         )
-        self.log(message=f"Translation: {self.locale}, {locale_path}", log_level=4)
+        self.log(
+            message=f"Translation: {self.locale}, {locale_path} "
+            f"(exists={locale_path.exists()})",
+            log_level=4,
+        )
         if locale_path.exists():
             self.translator = QTranslator()
             self.translator.load(str(locale_path.resolve()))
             QCoreApplication.installTranslator(self.translator)
+            self.log(
+                message=f"Translation loaded from file: {self.locale}, {locale_path}",
+                log_level=4,
+            )
+        else:
+            self.log(
+                message=f"Translation file does not exist: {self.locale}, {locale_path}",
+                log_level=1,
+            )
 
         # sub-modules
         self.rss_rdr = RssMiniReader()
