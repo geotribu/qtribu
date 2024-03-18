@@ -285,13 +285,17 @@ class GeotribuPlugin:
                 key="latest_content_guid", value=self.rss_rdr.latest_item.guid
             )
         except Exception as err:
+            self.log(
+                message=self.tr(f"Michel, we've got a problem: {err}"),
+                log_level=2,
+                push=True,
+            )
             raise err
 
     def contents(self):
         """Action to open contents dialog"""
         if not self.form_contents:
             self.form_contents = GeotribuContentsDialog()
-            self.form_contents.setModal(True)
         self.form_contents.show()
 
     def open_form_rdp_news(self) -> None:

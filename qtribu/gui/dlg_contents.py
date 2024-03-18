@@ -1,15 +1,20 @@
 from pathlib import Path
 from typing import Dict, List
 
-from PyQt5.QtCore import QModelIndex, Qt, QUrl
-from PyQt5.QtGui import QDesktopServices, QIcon, QStandardItem, QStandardItemModel
-from PyQt5.QtWidgets import QListView, QMessageBox
 from qgis.PyQt import uic
-from qgis.PyQt.QtWidgets import QDialog, QWidget
+from qgis.PyQt.QtCore import QModelIndex, Qt, QUrl
+from qgis.PyQt.QtGui import (
+    QCursor,
+    QDesktopServices,
+    QIcon,
+    QStandardItem,
+    QStandardItemModel,
+)
+from qgis.PyQt.QtWidgets import QAction, QDialog, QListView, QMenu, QWidget
 
 from qtribu.__about__ import DIR_PLUGIN_ROOT
 from qtribu.gui.form_rdp_news import RdpNewsForm
-from qtribu.logic import RssItem
+from qtribu.logic import RssItem, WebViewer
 from qtribu.logic.json_feed import JsonFeedClient
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
 
@@ -28,6 +33,7 @@ class GeotribuContentsDialog(QDialog):
         self.log = PlgLogger().log
         self.plg_settings = PlgOptionsManager()
         self.json_feed_client = JsonFeedClient()
+        self.web_viewer = WebViewer()
         uic.loadUi(Path(__file__).parent / f"{Path(__file__).stem}.ui", self)
 
         # buttons actions
@@ -55,6 +61,10 @@ class GeotribuContentsDialog(QDialog):
     @staticmethod
     def _open_url_in_browser(url: str) -> None:
         QDesktopServices.openUrl(QUrl(url))
+
+    def _open_url_in_webviewer(self, url: str, window_title: str) -> None:
+        self.web_viewer.display_web_page(url)
+        self.web_viewer.set_window_title(window_title)
 
     def submit_article(self) -> None:
         self._open_url_in_browser(
@@ -145,7 +155,7 @@ class GeotribuContentsDialog(QDialog):
             return
         year = list(self.contents)[index.parent().row()]
         content = self.contents[year][index.row()]
-        self._open_url_in_browser(content.url)
+        self._open_url_in_webviewer(content.url, content.title)
 
     def on_open_content_context_menu(self) -> None:
         selected_index = next(i for i in self.contents_tree_view.selectedIndexes())
@@ -154,9 +164,21 @@ class GeotribuContentsDialog(QDialog):
             return
         year = list(self.contents)[selected_index.parent().row()]
         content = self.contents[year][selected_index.row()]
-        QMessageBox.warning(
-            self,
-            self.tr("Right clic"),
-            self.tr(f"You just right-clicked on content '{content.title}'"),
+
+        content_menu = QMenu("Content menu", self)
+
+        # open in browser action
+        open_browser_action = QAction(self.tr("Open in browser"), self)
+        open_browser_action.triggered.connect(
+            lambda checked: self._open_url_in_browser(content.url)
         )
-        # TODO: add actions when right-clic on an article item: open in browser, open in QWeb, open GitHub PR, contact author...
+        content_menu.addAction(open_browser_action)
+
+        # open in webviewer action
+        open_webviewer_action = QAction(self.tr("Open in webviewer"), self)
+        open_webviewer_action.triggered.connect(
+            lambda checked: self._open_url_in_webviewer(content.url, content.title)
+        )
+        content_menu.addAction(open_webviewer_action)
+
+        content_menu.exec(QCursor.pos())
