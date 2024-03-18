@@ -85,6 +85,9 @@ class WebViewer:
                 push=True,
             )
 
+    def set_window_title(self, title: str) -> None:
+        self.wdg_web.setWindowTitle(title)
+
     def tr(self, message: str) -> str:
         """Translation method.
 
