@@ -88,6 +88,73 @@
       <string>Features</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
+      <item row="3" column="1">
+       <widget class="QCheckBox" name="opt_notif_push_msg">
+        <property name="minimumSize">
+         <size>
+          <width>275</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Informational push message</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+        <property name="tristate">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="3">
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QLabel" name="lbl_notif_duration">
+          <property name="text">
+           <string>Duration:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="sbx_notif_duration">
+          <property name="toolTip">
+           <string>'0' means unlimited time, waiting a manual close from the end-user.</string>
+          </property>
+          <property name="wrapping">
+           <bool>false</bool>
+          </property>
+          <property name="buttonSymbols">
+           <enum>QAbstractSpinBox::PlusMinus</enum>
+          </property>
+          <property name="specialValueText">
+           <string/>
+          </property>
+          <property name="suffix">
+           <string> seconds</string>
+          </property>
+          <property name="prefix">
+           <string/>
+          </property>
+          <property name="maximum">
+           <number>30</number>
+          </property>
+          <property name="value">
+           <number>10</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
       <item row="3" column="0">
        <widget class="QLabel" name="lbl_notification">
         <property name="minimumSize">
@@ -104,6 +171,47 @@
         </property>
         <property name="text">
          <string>Notify for new content:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="lbl_browser">
+        <property name="minimumSize">
+         <size>
+          <width>175</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>250</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Which web browser to use to display articles.</string>
+        </property>
+        <property name="text">
+         <string>Open in web browser:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QRadioButton" name="opt_browser_os">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>System default browser</string>
         </property>
        </widget>
       </item>
@@ -157,89 +265,7 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
-       <widget class="QCheckBox" name="opt_notif_push_msg">
-        <property name="minimumSize">
-         <size>
-          <width>275</width>
-          <height>25</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="autoFillBackground">
-         <bool>false</bool>
-        </property>
-        <property name="text">
-         <string>Informational push message</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-        <property name="tristate">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="lbl_browser">
-        <property name="minimumSize">
-         <size>
-          <width>175</width>
-          <height>25</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>250</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="toolTip">
-         <string>Which web browser to use to display articles.</string>
-        </property>
-        <property name="text">
-         <string>Open in web browser:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="3">
-       <widget class="QRadioButton" name="opt_browser_os">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>25</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>System default browser</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="1">
-       <widget class="QCheckBox" name="chb_license_global_accept">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>25</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Accept publication license globally</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
+      <item row="4" column="0">
        <widget class="QPushButton" name="btn_reset_read_history">
         <property name="minimumSize">
          <size>
@@ -258,44 +284,18 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="3">
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
-         <widget class="QLabel" name="lbl_notif_duration">
-          <property name="text">
-           <string>Duration:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QSpinBox" name="sbx_notif_duration">
-          <property name="toolTip">
-           <string>'0' means unlimited time, waiting a manual close from the end-user.</string>
-          </property>
-          <property name="wrapping">
-           <bool>false</bool>
-          </property>
-          <property name="buttonSymbols">
-           <enum>QAbstractSpinBox::PlusMinus</enum>
-          </property>
-          <property name="specialValueText">
-           <string/>
-          </property>
-          <property name="suffix">
-           <string> seconds</string>
-          </property>
-          <property name="prefix">
-           <string/>
-          </property>
-          <property name="maximum">
-           <number>30</number>
-          </property>
-          <property name="value">
-           <number>10</number>
-          </property>
-         </widget>
-        </item>
-       </layout>
+      <item row="6" column="0">
+       <widget class="QCheckBox" name="chb_license_global_accept">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Accept publication license globally</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>

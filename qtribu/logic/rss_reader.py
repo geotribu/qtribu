@@ -147,6 +147,7 @@ class RssMiniReader:
         # news-feed\items\httpsfeedqgisorg\entries\items\65\link=https://www.osgeo.org/foundation-news/eu-cyber-resilience-act/
         # news-feed\items\httpsfeedqgisorg\entries\items\65\sticky=false
 
+        # check if integration is enabled or disabled
         plg_settings = PlgOptionsManager.get_plg_settings()
         if not plg_settings.integration_qgis_news_feed:
             self.log(
@@ -155,37 +156,50 @@ class RssMiniReader:
             )
             return False
 
+        # open a QgsSettings session
         qsettings = QgsSettings()
-
-        # get latest QGIS item id
-        latest_geotribu_article = self.latest_item
-        item_id = 99
-
-        qsettings.setValue(
-            key=f"news-feed/items/httpsfeedqgisorg/entries/items/{item_id}/title",
-            value=f"[Geotribu] {latest_geotribu_article.title}",
+        qsettings.beginGroup(
+            prefix="news-feed/items/httpsfeedqgisorg/entries/items/",
             section=QgsSettings.App,
         )
+
+        # get latest QGIS item id
+        latest_qgis_news_feed_id = max(
+            [
+                key.split("/")[0]
+                for key in qsettings.allKeys()
+                if "title" in key
+                and not qsettings.value(key=key).startswith("[Geotribu]")
+            ]
+        )
+
+        # dérive l'ID pour la news Geotribu
+        geotribu_item_id = int(latest_qgis_news_feed_id) + 100
+        latest_geotribu_article = self.latest_item
+
+        # add it
         qsettings.setValue(
-            key=f"news-feed/items/httpsfeedqgisorg/entries/items/{item_id}/content",
+            key=f"{geotribu_item_id}/title",
+            value=f"[Geotribu] {latest_geotribu_article.title}",
+        )
+        qsettings.setValue(
+            key=f"{geotribu_item_id}/content",
             value=f"<p>{latest_geotribu_article.abstract}</p><p>"
             + self.tr("Author(s): ")
             + f"{', '.join(latest_geotribu_article.author)}</p><p><small>"
             + self.tr("Keywords: ")
             + f"{', '.join(latest_geotribu_article.categories)}</small></p>",
-            section=QgsSettings.App,
         )
         qsettings.setValue(
-            key=f"news-feed/items/httpsfeedqgisorg/entries/items/{item_id}/image-url",
+            key=f"{geotribu_item_id}/image-url",
             value=latest_geotribu_article.image_url,
-            section=QgsSettings.App,
         )
         qsettings.setValue(
-            key=f"news-feed/items/httpsfeedqgisorg/entries/items/{item_id}/link",
+            key=f"{geotribu_item_id}/link",
             value=latest_geotribu_article.url,
-            section=QgsSettings.App,
         )
 
+        qsettings.endGroup()
         qsettings.sync()
 
         self.log(
