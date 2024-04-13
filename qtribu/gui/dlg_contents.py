@@ -70,6 +70,20 @@ class GeotribuContentsDialog(QDialog):
             self.form_rdp_news.finished.connect(self._post_form_rdp_news)
         self.form_rdp_news.show()
 
+    def _post_form_rdp_news(self, dialog_result: int) -> None:
+        """Perform actions after the GeoRDP news form has been closed.
+
+        :param dialog_result: dialog's result code. Accepted (1) or Rejected (0)
+        :type dialog_result: int
+        """
+        if self.form_rdp_news:
+            # if accept button, save user inputs
+            if dialog_result == 1:
+                self.form_rdp_news.wdg_author.save_settings()
+            # clean up
+            self.form_rdp_news.deleteLater()
+            self.form_rdp_news = None
+
     def donate(self) -> None:
         open_url_in_browser("https://geotribu.fr/team/sponsoring/")
 
