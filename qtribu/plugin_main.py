@@ -112,7 +112,7 @@ class GeotribuPlugin:
             self.iface.mainWindow(),
         )
         self.action_help.triggered.connect(
-            partial(open_url_in_browser(__uri_homepage__))
+            partial(open_url_in_browser, __uri_homepage__)
         )
 
         self.action_settings = QAction(
@@ -143,7 +143,8 @@ class GeotribuPlugin:
         )
         self.action_geotribu.triggered.connect(
             partial(
-                open_url_in_browser("https://geotribu.fr"),
+                open_url_in_browser,
+                "https://geotribu.fr",
             )
         )
 
@@ -153,7 +154,8 @@ class GeotribuPlugin:
         )
         self.action_georezo.triggered.connect(
             partial(
-                open_url_in_browser("https://georezo.net/forum/viewforum.php?id=55"),
+                open_url_in_browser,
+                "https://georezo.net/forum/viewforum.php?id=55",
             )
         )
         self.action_osgeofr = QAction(
@@ -162,7 +164,8 @@ class GeotribuPlugin:
         )
         self.action_osgeofr.triggered.connect(
             partial(
-                open_url_in_browser("https://www.osgeo.fr/"),
+                open_url_in_browser,
+                "https://www.osgeo.fr/",
             )
         )
         self.iface.helpMenu().addAction(self.action_georezo)

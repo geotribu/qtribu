@@ -71,7 +71,7 @@ class GeotribuContentsDialog(QDialog):
         self.form_rdp_news.show()
 
     def donate(self) -> None:
-        self._open_url_in_browser("https://fr.tipeee.com/geotribu")
+        open_url_in_browser("https://geotribu.fr/team/sponsoring/")
 
     def refresh_list(self, expand_all: bool = False) -> None:
         # fetch last RSS items using JSONFeed

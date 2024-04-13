@@ -78,7 +78,8 @@ class RdpNewsForm(QDialog):
         # connect help button
         self.btn_box.helpRequested.connect(
             partial(
-                open_url_in_browser("https://contribuer.geotribu.fr/rdp/add_news/"),
+                open_url_in_browser,
+                "https://contribuer.geotribu.fr/rdp/add_news/",
             )
         )
 
