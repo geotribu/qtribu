@@ -14,7 +14,8 @@ import logging
 
 # PyQGIS
 from qgis.PyQt.QtCore import QCoreApplication, Qt
-from qgis.PyQt.QtGui import QDesktopServices
+
+from qtribu.toolbelt.commons import open_url_in_browser
 
 try:
     from qgis.PyQt.QtWebKitWidgets import QWebView
@@ -71,7 +72,7 @@ class WebViewer:
                 self.wdg_web.resize(1000, 600)
 
             else:
-                QDesktopServices.openUrl(qntwk.build_url(url))
+                open_url_in_browser(qntwk.build_url(url))
 
             self.log(
                 message=self.tr("Last article from Geotribu loaded and displayed."),

@@ -11,8 +11,8 @@ from pathlib import Path
 # PyQGIS
 from qgis.core import Qgis, QgsApplication, QgsSettings
 from qgis.gui import QgisInterface
-from qgis.PyQt.QtCore import QCoreApplication, QLocale, QTranslator, QUrl
-from qgis.PyQt.QtGui import QDesktopServices, QIcon
+from qgis.PyQt.QtCore import QCoreApplication, QLocale, QTranslator
+from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction
 
 # project
@@ -22,6 +22,7 @@ from qtribu.gui.dlg_settings import PlgOptionsFactory
 from qtribu.gui.form_rdp_news import RdpNewsForm
 from qtribu.logic import RssMiniReader, SplashChanger, WebViewer
 from qtribu.toolbelt import NetworkRequestsManager, PlgLogger, PlgOptionsManager
+from qtribu.toolbelt.commons import open_url_in_browser
 
 # ############################################################################
 # ########## Classes ###############
@@ -111,7 +112,7 @@ class GeotribuPlugin:
             self.iface.mainWindow(),
         )
         self.action_help.triggered.connect(
-            partial(QDesktopServices.openUrl, QUrl(__uri_homepage__))
+            partial(open_url_in_browser(__uri_homepage__))
         )
 
         self.action_settings = QAction(
@@ -142,8 +143,7 @@ class GeotribuPlugin:
         )
         self.action_geotribu.triggered.connect(
             partial(
-                QDesktopServices.openUrl,
-                QUrl("https://geotribu.fr"),
+                open_url_in_browser("https://geotribu.fr"),
             )
         )
 
@@ -153,8 +153,7 @@ class GeotribuPlugin:
         )
         self.action_georezo.triggered.connect(
             partial(
-                QDesktopServices.openUrl,
-                QUrl("https://georezo.net/forum/viewforum.php?id=55"),
+                open_url_in_browser("https://georezo.net/forum/viewforum.php?id=55"),
             )
         )
         self.action_osgeofr = QAction(
@@ -163,8 +162,7 @@ class GeotribuPlugin:
         )
         self.action_osgeofr.triggered.connect(
             partial(
-                QDesktopServices.openUrl,
-                QUrl("https://www.osgeo.fr/"),
+                open_url_in_browser("https://www.osgeo.fr/"),
             )
         )
         self.iface.helpMenu().addAction(self.action_georezo)

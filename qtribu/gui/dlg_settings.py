@@ -12,8 +12,7 @@ from pathlib import Path
 from qgis.core import QgsApplication
 from qgis.gui import QgsOptionsPageWidget, QgsOptionsWidgetFactory
 from qgis.PyQt import uic
-from qgis.PyQt.Qt import QUrl
-from qgis.PyQt.QtGui import QDesktopServices, QIcon
+from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QButtonGroup
 
 # project
@@ -25,6 +24,7 @@ from qtribu.__about__ import (
     __version__,
 )
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
+from qtribu.toolbelt.commons import open_url_in_browser
 from qtribu.toolbelt.preferences import PlgSettingsStructure
 
 # ############################################################################
@@ -61,15 +61,13 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
 
         # customization
         self.btn_help.setIcon(QIcon(QgsApplication.iconPath("mActionHelpContents.svg")))
-        self.btn_help.pressed.connect(
-            partial(QDesktopServices.openUrl, QUrl(__uri_homepage__))
-        )
+        self.btn_help.pressed.connect(partial(open_url_in_browser(__uri_homepage__)))
 
         self.btn_report.setIcon(
             QIcon(QgsApplication.iconPath("console/iconSyntaxErrorConsole.svg"))
         )
         self.btn_report.pressed.connect(
-            partial(QDesktopServices.openUrl, QUrl(f"{__uri_tracker__}new/choose"))
+            partial(open_url_in_browser(f"{__uri_tracker__}new/choose"))
         )
 
         self.btn_reset_read_history.setIcon(

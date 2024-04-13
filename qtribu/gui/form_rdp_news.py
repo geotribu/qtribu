@@ -14,14 +14,15 @@ from urllib.parse import urlparse
 # PyQGIS
 from qgis.core import QgsApplication
 from qgis.PyQt import uic
-from qgis.PyQt.QtCore import Qt, QUrl
-from qgis.PyQt.QtGui import QDesktopServices, QIcon
+from qgis.PyQt.QtCore import Qt
+from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QDialog
 
 # plugin
 from qtribu.__about__ import DIR_PLUGIN_ROOT
 from qtribu.constants import GEORDP_NEWS_CATEGORIES, GEORDP_NEWS_ICONS, GeotribuImage
 from qtribu.toolbelt import NetworkRequestsManager, PlgLogger, PlgOptionsManager
+from qtribu.toolbelt.commons import open_url_in_browser
 
 
 class RdpNewsForm(QDialog):
@@ -77,8 +78,7 @@ class RdpNewsForm(QDialog):
         # connect help button
         self.btn_box.helpRequested.connect(
             partial(
-                QDesktopServices.openUrl,
-                QUrl("https://contribuer.geotribu.fr/rdp/add_news/"),
+                open_url_in_browser("https://contribuer.geotribu.fr/rdp/add_news/"),
             )
         )
 

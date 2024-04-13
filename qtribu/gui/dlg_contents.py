@@ -2,14 +2,8 @@ from pathlib import Path
 from typing import Dict, List
 
 from qgis.PyQt import uic
-from qgis.PyQt.QtCore import QModelIndex, Qt, QUrl
-from qgis.PyQt.QtGui import (
-    QCursor,
-    QDesktopServices,
-    QIcon,
-    QStandardItem,
-    QStandardItemModel,
-)
+from qgis.PyQt.QtCore import QModelIndex, Qt
+from qgis.PyQt.QtGui import QCursor, QIcon, QStandardItem, QStandardItemModel
 from qgis.PyQt.QtWidgets import QAction, QDialog, QListView, QMenu, QWidget
 
 from qtribu.__about__ import DIR_PLUGIN_ROOT
@@ -17,6 +11,7 @@ from qtribu.gui.form_rdp_news import RdpNewsForm
 from qtribu.logic import RssItem, WebViewer
 from qtribu.logic.json_feed import JsonFeedClient
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
+from qtribu.toolbelt.commons import open_url_in_browser
 
 
 class GeotribuContentsDialog(QDialog):
@@ -58,16 +53,12 @@ class GeotribuContentsDialog(QDialog):
 
         self.refresh_list(expand_all=True)
 
-    @staticmethod
-    def _open_url_in_browser(url: str) -> None:
-        QDesktopServices.openUrl(QUrl(url))
-
     def _open_url_in_webviewer(self, url: str, window_title: str) -> None:
         self.web_viewer.display_web_page(url)
         self.web_viewer.set_window_title(window_title)
 
     def submit_article(self) -> None:
-        self._open_url_in_browser(
+        open_url_in_browser(
             "https://github.com/geotribu/website/issues/new?labels=contribution+externe%2Carticle%2Ctriage&projects=&template=ARTICLE.yml"
         )
 
