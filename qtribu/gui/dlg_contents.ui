@@ -183,6 +183,12 @@
         </item>
         <item>
          <widget class="QTreeWidget" name="contents_tree_widget">
+          <property name="itemsExpandable">
+           <bool>true</bool>
+          </property>
+          <property name="sortingEnabled">
+           <bool>true</bool>
+          </property>
           <property name="columnCount">
            <number>4</number>
           </property>
@@ -191,6 +197,9 @@
           </attribute>
           <attribute name="headerCascadingSectionResizes">
            <bool>true</bool>
+          </attribute>
+          <attribute name="headerMinimumSectionSize">
+           <number>64</number>
           </attribute>
           <attribute name="headerShowSortIndicator" stdset="0">
            <bool>true</bool>

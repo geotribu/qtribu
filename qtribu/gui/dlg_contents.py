@@ -2,6 +2,7 @@ from functools import partial
 from pathlib import Path
 from typing import Callable, Dict, List
 
+from qgis.core import QgsApplication
 from qgis.PyQt import QtCore, QtWidgets, uic
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QDialog, QTreeWidgetItem, QWidget
@@ -30,14 +31,29 @@ class GeotribuContentsDialog(QDialog):
         self.json_feed_client = JsonFeedClient()
         self.web_viewer = WebViewer()
         uic.loadUi(Path(__file__).parent / f"{Path(__file__).stem}.ui", self)
+        self.setWindowIcon(
+            QIcon(str(DIR_PLUGIN_ROOT / "resources/images/logo_green_no_text.svg"))
+        )
 
         # buttons actions
         self.form_rdp_news = None
         self.submit_article_button.clicked.connect(self.submit_article)
+        self.submit_article_button.setIcon(
+            QgsApplication.getThemeIcon("mActionEditTable.svg")
+        )
         self.submit_news_button.clicked.connect(self.submit_news)
+        self.submit_news_button.setIcon(
+            QgsApplication.getThemeIcon("mActionAllEdits.svg")
+        )
         self.donate_button.clicked.connect(self.donate)
+        self.donate_button.setIcon(
+            QgsApplication.getThemeIcon("mActionAddAllToOverview.svg")
+        )
         self.refresh_list_button.clicked.connect(
             partial(self.refresh_list, lambda: self.search_line_edit.text())
+        )
+        self.refresh_list_button.setIcon(
+            QgsApplication.getThemeIcon("mActionHistory.svg")
         )
 
         # search actions
