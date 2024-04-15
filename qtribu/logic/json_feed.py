@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Any, Dict, List, Optional
+from typing import Any, List, Optional
 
 import requests
 from requests import Response
@@ -27,7 +27,7 @@ class JsonFeedClient:
         self.log = PlgLogger().log
         self.url = url
 
-    def fetch(self, query: str = "") -> List[RssItem]:
+    def fetch(self, query: str = "") -> list[RssItem]:
         if not self.items or (
             self.last_fetch_date
             and (datetime.now() - self.last_fetch_date).total_seconds()
@@ -39,8 +39,14 @@ class JsonFeedClient:
             self.last_fetch_date = datetime.now()
         return [i for i in self.items if self._matches(query, i)]
 
+    def categories(self) -> list[str]:
+        tags = []
+        for content in self.fetch():
+            tags.extend([c.lower() for c in content.categories])
+        return sorted(set(tags))
+
     @staticmethod
-    def _map_item(item: Dict[str, Any]) -> RssItem:
+    def _map_item(item: dict[str, Any]) -> RssItem:
         return RssItem(
             abstract=item.get("content_html"),
             author=[i["name"] for i in item.get("authors")],

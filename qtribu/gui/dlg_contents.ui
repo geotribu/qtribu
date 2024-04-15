@@ -169,40 +169,52 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QLabel" name="categories_label">
+            <property name="text">
+             <string>Filter by category :</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="categories_combobox"/>
+          </item>
          </layout>
         </item>
         <item>
-         <widget class="QTreeView" name="contents_tree_view">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="sizeIncrement">
-           <size>
-            <width>0</width>
-            <height>2</height>
-           </size>
-          </property>
-          <property name="baseSize">
-           <size>
-            <width>0</width>
-            <height>2</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string/>
-          </property>
-          <property name="headerHidden">
-           <bool>true</bool>
+         <widget class="QTreeWidget" name="contents_tree_widget">
+          <property name="columnCount">
+           <number>4</number>
           </property>
           <attribute name="headerVisible">
-           <bool>false</bool>
+           <bool>true</bool>
           </attribute>
           <attribute name="headerCascadingSectionResizes">
-           <bool>false</bool>
+           <bool>true</bool>
           </attribute>
+          <attribute name="headerShowSortIndicator" stdset="0">
+           <bool>true</bool>
+          </attribute>
+          <column>
+           <property name="text">
+            <string notr="true">1</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string notr="true">2</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string notr="true">3</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string notr="true">4</string>
+           </property>
+          </column>
          </widget>
         </item>
        </layout>
@@ -223,7 +235,6 @@
  <tabstops>
   <tabstop>contents_groupbox</tabstop>
   <tabstop>submit_news_button</tabstop>
-  <tabstop>contents_tree_view</tabstop>
  </tabstops>
  <resources/>
  <connections/>

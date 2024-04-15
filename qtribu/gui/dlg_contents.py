@@ -1,10 +1,10 @@
+from functools import partial
 from pathlib import Path
-from typing import Dict, List
+from typing import Callable, Dict, List
 
-from qgis.PyQt import uic
-from qgis.PyQt.QtCore import QModelIndex, Qt
-from qgis.PyQt.QtGui import QCursor, QIcon, QStandardItem, QStandardItemModel
-from qgis.PyQt.QtWidgets import QAction, QDialog, QListView, QMenu, QWidget
+from qgis.PyQt import QtCore, QtWidgets, uic
+from qgis.PyQt.QtGui import QIcon
+from qgis.PyQt.QtWidgets import QDialog, QTreeWidgetItem, QWidget
 
 from qtribu.__about__ import DIR_PLUGIN_ROOT
 from qtribu.gui.form_rdp_news import RdpNewsForm
@@ -36,33 +36,45 @@ class GeotribuContentsDialog(QDialog):
         self.submit_article_button.clicked.connect(self.submit_article)
         self.submit_news_button.clicked.connect(self.submit_news)
         self.donate_button.clicked.connect(self.donate)
-        self.refresh_list_button.clicked.connect(self.refresh_list)
+        self.refresh_list_button.clicked.connect(
+            partial(self.refresh_list, lambda: self.search_line_edit.text())
+        )
 
         # search actions
         self.search_line_edit.textChanged.connect(self.on_search_text_changed)
 
-        # articles lists and treeviews
-        self.contents_list_view = QListView()
-        self.contents_model = QStandardItemModel(self.contents_list_view)
-        self.contents_tree_view.setModel(self.contents_model)
-        self.contents_tree_view.doubleClicked.connect(self.on_content_double_clicked)
-        self.contents_tree_view.setContextMenuPolicy(Qt.CustomContextMenu)
-        self.contents_tree_view.customContextMenuRequested.connect(
-            self.on_open_content_context_menu
-        )
+        # categories combobox
+        for cat in self.json_feed_client.categories():
+            self.categories_combobox.addItem(cat)
+        self.categories_combobox.currentTextChanged.connect(self.on_category_changed)
 
-        self.refresh_list(expand_all=True)
+        # treet widget initialization
+        self.contents_tree_widget.setHeaderLabels(
+            ["Date", "Title", "Author(s)", "Categories"]
+        )
+        self.contents_tree_widget.itemClicked.connect(self.on_tree_view_item_click)
+
+        self.refresh_list(lambda: self.search_line_edit.text())
+        self.contents_tree_widget.expandAll()
 
     def _open_url_in_webviewer(self, url: str, window_title: str) -> None:
         self.web_viewer.display_web_page(url)
         self.web_viewer.set_window_title(window_title)
 
     def submit_article(self) -> None:
+        """
+        Submit article action
+        Usually launched when clicking on button
+        """
         open_url_in_browser(
             "https://github.com/geotribu/website/issues/new?labels=contribution+externe%2Carticle%2Ctriage&projects=&template=ARTICLE.yml"
         )
 
     def submit_news(self) -> None:
+        """
+        Submit RDP news action
+        Usually launched when clicking on button
+        """
         self.log("Opening form to submit a news")
         if not self.form_rdp_news:
             self.form_rdp_news = RdpNewsForm()
@@ -85,105 +97,76 @@ class GeotribuContentsDialog(QDialog):
             self.form_rdp_news = None
 
     def donate(self) -> None:
+        """
+        Donate action
+        Usually launched when clicking on button
+        """
         open_url_in_browser("https://geotribu.fr/team/sponsoring/")
 
-    def refresh_list(self, expand_all: bool = False) -> None:
+    def refresh_list(self, query_action: Callable[[], str]) -> None:
         # fetch last RSS items using JSONFeed
-        rss_contents = self.json_feed_client.fetch(query=self.search_line_edit.text())
+        rss_contents = self.json_feed_client.fetch(query=query_action())
         years = sorted(set([c.date_pub.year for c in rss_contents]), reverse=True)
         self.contents = {
             y: [c for c in rss_contents if c.date_pub.year == y] for y in years
         }
-        # save expanded item states
-        expanded = [
-            expand_all
-            or self.contents_tree_view.isExpanded(self.contents_model.index(i, 0))
-            for i in range(len(years))
-        ]
 
         # clean treeview items
-        self.contents_model.clear()
+        self.contents_tree_widget.clear()
 
-        # populate treeview
+        # populate treewidget
+        items = []
         for i, year in enumerate(years):
             # create root item for year
-            year_item = self._build_root_item(year)
-            self.contents_model.invisibleRootItem().appendRow(year_item)
+            item = QTreeWidgetItem([str(year)])
             # create contents items
             for content in self.contents[year]:
-                content_item = self._build_item_from_content(content)
-                year_item.setChild(year_item.rowCount(), 0, content_item)
-            self.contents_tree_view.setExpanded(
-                self.contents_model.index(i, 0), expanded[i]
-            )
+                child = self._build_tree_widget_item_from_content(content)
+                item.addChild(child)
+            items.append(item)
+        self.contents_tree_widget.insertTopLevelItems(0, items)
+        self.contents_tree_widget.expandAll()
+
+    @QtCore.pyqtSlot(QtWidgets.QTreeWidgetItem, int)
+    def on_tree_view_item_click(self, item: QTreeWidgetItem, column: int):
+        print(item, column, item.text(column))
 
     def on_search_text_changed(self) -> None:
+        """
+        Method called when search box is changed
+        Should get search
+        """
         # do nothing if text is too small
         current = self.search_line_edit.text()
         if current == "":
-            self.refresh_list(expand_all=True)
+            self.refresh_list(lambda: current)
             return
         if len(current) < 3:
             return
-        self.refresh_list()
+        self.refresh_list(lambda: current)
+
+    def on_category_changed(self, value: str) -> None:
+        self.refresh_list(lambda: value)
 
     @staticmethod
-    def _build_root_item(year: int) -> QStandardItem:
-        item = QStandardItem(str(year))
-        item.setEditable(False)
-        font = item.font()
-        font.setBold(True)
-        item.setFont(font)
-        return item
-
-    @staticmethod
-    def _build_item_from_content(content: RssItem) -> QStandardItem:
+    def _build_tree_widget_item_from_content(content: RssItem) -> QTreeWidgetItem:
+        """
+        Builds a QTreeWidgetItem from a RSS content
+        """
+        item = QTreeWidgetItem(
+            [
+                content.date_pub.strftime("%d %B"),
+                content.title,
+                ",".join(content.author),
+                ",".join(content.categories),
+            ]
+        )
+        item.setToolTip(1, content.abstract)
         icon_file = (
             "logo_orange_no_text"
             if "Revue de presse" in content.title
             else "logo_green_no_text"
         )
         icon = QIcon(str(DIR_PLUGIN_ROOT / f"resources/images/{icon_file}.svg"))
-        text = "{date_pub} - {title} ({authors}) - {tags}".format(
-            date_pub=content.date_pub.strftime("%d.%m"),
-            title=content.title,
-            authors=",".join(content.author),
-            tags=",".join(content.categories),
-        )
-        item = QStandardItem(icon, text)
-        item.setEditable(False)
+        item.setIcon(1, icon)
         return item
-
-    def on_content_double_clicked(self, index: QModelIndex) -> None:
-        # if parent year item has been double clicked
-        if index.parent().row() < 0:
-            return
-        year = list(self.contents)[index.parent().row()]
-        content = self.contents[year][index.row()]
-        self._open_url_in_webviewer(content.url, content.title)
-
-    def on_open_content_context_menu(self) -> None:
-        selected_index = next(i for i in self.contents_tree_view.selectedIndexes())
-        # if parent year item has been selected
-        if selected_index.parent().row() < 0:
-            return
-        year = list(self.contents)[selected_index.parent().row()]
-        content = self.contents[year][selected_index.row()]
-
-        content_menu = QMenu("Content menu", self)
-
-        # open in browser action
-        open_browser_action = QAction(self.tr("Open in browser"), self)
-        open_browser_action.triggered.connect(
-            lambda checked: self._open_url_in_browser(content.url)
-        )
-        content_menu.addAction(open_browser_action)
-
-        # open in webviewer action
-        open_webviewer_action = QAction(self.tr("Open in webviewer"), self)
-        open_webviewer_action.triggered.connect(
-            lambda checked: self._open_url_in_webviewer(content.url, content.title)
-        )
-        content_menu.addAction(open_webviewer_action)
-
-        content_menu.exec(QCursor.pos())
