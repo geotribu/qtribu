@@ -17,6 +17,10 @@ FETCH_UPDATE_INTERVAL_SECONDS = 7200
 
 
 class JsonFeedClient:
+    """
+    Class representing a Geotribu's JSON feed client
+    """
+
     items: Optional[List[RssItem]] = None
     last_fetch_date: Optional[datetime] = None
 
@@ -28,6 +32,14 @@ class JsonFeedClient:
         self.url = url
 
     def fetch(self, query: str = "") -> list[RssItem]:
+        """
+        Fetch RSS feed items using JSON Feed
+
+        :param query: filter to look for items matching this query
+        :type query: str
+
+        :return: list of RssItem objects matching the query filter
+        """
         if not self.items or (
             self.last_fetch_date
             and (datetime.now() - self.last_fetch_date).total_seconds()
@@ -40,6 +52,11 @@ class JsonFeedClient:
         return [i for i in self.items if self._matches(query, i)]
 
     def categories(self) -> list[str]:
+        """
+        Get a list of all categories available in the RSS feed
+
+        :return: list of categories available in the RSS feed
+        """
         tags = []
         for content in self.fetch():
             tags.extend([c.lower() for c in content.categories])
@@ -47,6 +64,14 @@ class JsonFeedClient:
 
     @staticmethod
     def _map_item(item: dict[str, Any]) -> RssItem:
+        """
+        Map raw JSON object coming from JSON feed to an RssItem object
+
+        :param item: raw JSON object
+        :type item: dict[str, Any]
+
+        :return: RssItem
+        """
         return RssItem(
             abstract=item.get("content_html"),
             author=[i["name"] for i in item.get("authors")],
@@ -62,7 +87,16 @@ class JsonFeedClient:
 
     @staticmethod
     def _matches(query: str, item: RssItem) -> bool:
-        """Moteur de recherche du turfu"""
+        """
+        Check if item matches given query
+
+        :param query: filter to look for items matching this query
+        :type query: str
+        :param item: RssItem to check
+        :type item: RssItem
+
+        :return: True if item matches given query, False if not
+        """
         words = query.split(" ")
         if len(words) > 1:
             return all([JsonFeedClient._matches(w, item) for w in words])

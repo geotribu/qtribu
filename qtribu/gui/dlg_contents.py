@@ -104,6 +104,12 @@ class GeotribuContentsDialog(QDialog):
         open_url_in_browser("https://geotribu.fr/team/sponsoring/")
 
     def refresh_list(self, query_action: Callable[[], str]) -> None:
+        """
+        Refresh content list as well as treewidget that list all contents
+
+        :param query_action: action to call for potentially filtering contents
+        :type query_action: Callable[[], str]
+        """
         # fetch last RSS items using JSONFeed
         rss_contents = self.json_feed_client.fetch(query=query_action())
         years = sorted(set([c.date_pub.year for c in rss_contents]), reverse=True)
@@ -129,6 +135,15 @@ class GeotribuContentsDialog(QDialog):
 
     @QtCore.pyqtSlot(QtWidgets.QTreeWidgetItem, int)
     def on_tree_view_item_click(self, item: QTreeWidgetItem, column: int):
+        """
+        Method called when a content item is clicked
+
+        :param item: item that is clicked by user
+        :type item: QTreeWidgetItem
+        :param column: column that is clicked by user
+        :type column: int
+        """
+        # TODO
         print(item, column, item.text(column))
 
     def on_search_text_changed(self) -> None:
@@ -151,7 +166,10 @@ class GeotribuContentsDialog(QDialog):
     @staticmethod
     def _build_tree_widget_item_from_content(content: RssItem) -> QTreeWidgetItem:
         """
-        Builds a QTreeWidgetItem from a RSS content
+        Builds a QTreeWidgetItem from a RSS content item
+
+        :param content: content to generate item for
+        :type content: RssItem
         """
         item = QTreeWidgetItem(
             [
