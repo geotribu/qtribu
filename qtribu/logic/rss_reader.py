@@ -159,7 +159,53 @@ class RssMiniReader:
 
         # get latest QGIS item id
         latest_geotribu_article = self.latest_item
-        item_id = 99
+
+        # find existing geotribu feed id
+        feed_keys = [
+            k
+            for k in qsettings.allKeys()
+            if k.startswith("app/news-feed/items/httpsfeedqgisorg/entries/items")
+        ]
+        geotribu_feed_id = None
+        for fk in feed_keys:
+            if fk.endswith("title") and qsettings.value(fk).startswith("[Geotribu]"):
+                geotribu_feed_id = int(fk.split("/")[-2])
+
+        # check if last content has changed from already present feed
+        if (
+            geotribu_feed_id
+            and qsettings.value(
+                key=f"news-feed/items/httpsfeedqgisorg/entries/items/{geotribu_feed_id}/link",
+                section=QgsSettings.App,
+            )
+            == latest_geotribu_article.url
+        ):
+            # same content that existing feed
+            return False
+
+        # at this point we can consider that there is a new content/article and that the feed id must be updated
+        # read keys and extract news id by incrementing
+        feed_ids = set([int(k.split("/")[-2]) for k in feed_keys])
+        item_id = max(feed_ids) + 1
+
+        # remove keys related to old geotribu feed
+        if geotribu_feed_id:
+            qsettings.remove(
+                key=f"news-feed/items/httpsfeedqgisorg/entries/items/{geotribu_feed_id}/title",
+                section=QgsSettings.App,
+            )
+            qsettings.remove(
+                key=f"news-feed/items/httpsfeedqgisorg/entries/items/{geotribu_feed_id}/content",
+                section=QgsSettings.App,
+            )
+            qsettings.remove(
+                key=f"news-feed/items/httpsfeedqgisorg/entries/items/{geotribu_feed_id}/image-url",
+                section=QgsSettings.App,
+            )
+            qsettings.remove(
+                key=f"news-feed/items/httpsfeedqgisorg/entries/items/{geotribu_feed_id}/link",
+                section=QgsSettings.App,
+            )
 
         qsettings.setValue(
             key=f"news-feed/items/httpsfeedqgisorg/entries/items/{item_id}/title",
