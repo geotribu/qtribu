@@ -87,11 +87,12 @@ class GeotribuPlugin:
             self.tr("Newest article"),
             self.iface.mainWindow(),
         )
+
         self.action_run.setToolTip(self.tr("Newest article"))
         self.action_run.triggered.connect(self.run)
 
         self.action_contents = QAction(
-            QIcon(str(DIR_PLUGIN_ROOT / "resources/images/logo_orange_no_text.svg")),
+            QgsApplication.getThemeIcon("mActionOpenTableVisible.svg"),
             self.tr("Contents"),
             self.iface.mainWindow(),
         )
