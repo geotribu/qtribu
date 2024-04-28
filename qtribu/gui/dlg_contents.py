@@ -14,6 +14,8 @@ from qtribu.logic.json_feed import JsonFeedClient
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
 from qtribu.toolbelt.commons import open_url_in_browser
 
+MARKER_VALUE = "---"
+
 
 class GeotribuContentsDialog(QDialog):
     contents: Dict[int, List[RssItem]] = {}
@@ -49,29 +51,25 @@ class GeotribuContentsDialog(QDialog):
         self.donate_button.setIcon(
             QgsApplication.getThemeIcon("mActionAddAllToOverview.svg")
         )
-        self.refresh_list_button.clicked.connect(
-            partial(self.refresh_list, lambda: self.search_line_edit.text())
-        )
-        self.refresh_list_button.setIcon(
-            QgsApplication.getThemeIcon("mActionHistory.svg")
-        )
 
         # search actions
         self.search_line_edit.textChanged.connect(self.on_search_text_changed)
 
         # authors combobox
+        self.authors_combobox.addItem(MARKER_VALUE)
         for author in self.json_feed_client.authors():
             self.authors_combobox.addItem(author)
         self.authors_combobox.currentTextChanged.connect(self.on_author_changed)
 
         # categories combobox
+        self.categories_combobox.addItem(MARKER_VALUE)
         for cat in self.json_feed_client.categories():
             self.categories_combobox.addItem(cat)
         self.categories_combobox.currentTextChanged.connect(self.on_category_changed)
 
-        # treet widget initialization
+        # tree widget initialization
         self.contents_tree_widget.setHeaderLabels(
-            ["Date", "Title", "Author(s)", "Categories"]
+            [self.tr("Date"), self.tr("Title"), self.tr("Author(s)"), self.tr("Categories")]
         )
         self.contents_tree_widget.itemClicked.connect(self.on_tree_view_item_click)
 
@@ -164,8 +162,9 @@ class GeotribuContentsDialog(QDialog):
         :param column: column that is clicked by user
         :type column: int
         """
-        # TODO
-        print(item, column, item.text(column))
+        # open URL of content (in column at index 4 which is not displayed)
+        url, title = item.text(4), item.text(1)
+        self._open_url_in_webviewer(url, title)
 
     def on_search_text_changed(self) -> None:
         """
@@ -182,9 +181,29 @@ class GeotribuContentsDialog(QDialog):
         self.refresh_list(lambda: current)
 
     def on_author_changed(self, value: str) -> None:
+        """
+        Function triggered when author combobox is changed
+
+        :param value: text value of the selected author
+        :type value: str
+        """
+        self.search_line_edit.setText("")
+        if value == MARKER_VALUE:
+            self.refresh_list(lambda: self.search_line_edit.text())
+            return
         self.refresh_list(lambda: value)
 
     def on_category_changed(self, value: str) -> None:
+        """
+        Function triggered when category/tag combobox is changed
+
+        :param value: text value of the selected category
+        :type value: str
+        """
+        self.search_line_edit.setText("")
+        if value == MARKER_VALUE:
+            self.refresh_list(lambda: self.search_line_edit.text())
+            return
         self.refresh_list(lambda: value)
 
     @staticmethod
@@ -201,6 +220,7 @@ class GeotribuContentsDialog(QDialog):
                 content.title,
                 ",".join(content.author),
                 ",".join(content.categories),
+                content.url
             ]
         )
         for i in range(4):
