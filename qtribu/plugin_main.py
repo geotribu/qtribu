@@ -92,7 +92,7 @@ class GeotribuPlugin:
         self.action_run.triggered.connect(self.run)
 
         self.action_contents = QAction(
-            QgsApplication.getThemeIcon("mActionConditionalFormatting.svg"),
+            QIcon(str(DIR_PLUGIN_ROOT / "resources/images/logo_orange_no_text.svg")),
             self.tr("Contents"),
             self.iface.mainWindow(),
         )
