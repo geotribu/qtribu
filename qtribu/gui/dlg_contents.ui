@@ -170,6 +170,16 @@
            </widget>
           </item>
           <item>
+           <widget class="QLabel" name="authors_label">
+            <property name="text">
+             <string>Filter by author :</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="authors_combobox"/>
+          </item>
+          <item>
            <widget class="QLabel" name="categories_label">
             <property name="text">
              <string>Filter by category :</string>

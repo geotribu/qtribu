@@ -51,6 +51,18 @@ class JsonFeedClient:
             self.last_fetch_date = datetime.now()
         return [i for i in self.items if self._matches(query, i)]
 
+    def authors(self) -> list[str]:
+        """
+        Get a list of authors available in the RSS feed
+
+        :return: list of authors
+        """
+        authors = []
+        for content in self.fetch():
+            for ca in content.author:
+                authors.append(" ".join([a.title() for a in ca.split(" ")]))
+        return sorted(set(authors))
+
     def categories(self) -> list[str]:
         """
         Get a list of all categories available in the RSS feed

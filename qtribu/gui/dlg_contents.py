@@ -59,6 +59,11 @@ class GeotribuContentsDialog(QDialog):
         # search actions
         self.search_line_edit.textChanged.connect(self.on_search_text_changed)
 
+        # authors combobox
+        for author in self.json_feed_client.authors():
+            self.authors_combobox.addItem(author)
+        self.authors_combobox.currentTextChanged.connect(self.on_author_changed)
+
         # categories combobox
         for cat in self.json_feed_client.categories():
             self.categories_combobox.addItem(cat)
@@ -175,6 +180,9 @@ class GeotribuContentsDialog(QDialog):
         if len(current) < 3:
             return
         self.refresh_list(lambda: current)
+
+    def on_author_changed(self, value: str) -> None:
+        self.refresh_list(lambda: value)
 
     def on_category_changed(self, value: str) -> None:
         self.refresh_list(lambda: value)
