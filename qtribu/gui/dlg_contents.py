@@ -49,7 +49,7 @@ class GeotribuContentsDialog(QDialog):
         )
         self.donate_button.clicked.connect(self.donate)
         self.donate_button.setIcon(
-            QgsApplication.getThemeIcon("mActionAddAllToOverview.svg")
+            QgsApplication.getThemeIcon("mIconCertificateTrusted.svg")
         )
 
         # search actions
