@@ -1,12 +1,13 @@
 from pathlib import Path
 from typing import Callable, Dict, List
 
+from qgis.core import QgsApplication
 from qgis.PyQt import QtCore, QtWidgets, uic
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QDialog, QTreeWidgetItem, QWidget
-from qgis.core import QgsApplication
 
 from qtribu.__about__ import DIR_PLUGIN_ROOT
+from qtribu.gui.form_article import ArticleForm
 from qtribu.gui.form_rdp_news import RdpNewsForm
 from qtribu.logic import RssItem
 from qtribu.logic.json_feed import JsonFeedClient
@@ -36,6 +37,7 @@ class GeotribuContentsDialog(QDialog):
         )
 
         # buttons actions
+        self.form_article = None
         self.form_rdp_news = None
         self.submit_article_button.clicked.connect(self.submit_article)
         self.submit_article_button.setIcon(
@@ -67,7 +69,12 @@ class GeotribuContentsDialog(QDialog):
 
         # tree widget initialization
         self.contents_tree_widget.setHeaderLabels(
-            [self.tr("Date"), self.tr("Title"), self.tr("Author(s)"), self.tr("Categories")]
+            [
+                self.tr("Date"),
+                self.tr("Title"),
+                self.tr("Author(s)"),
+                self.tr("Categories"),
+            ]
         )
         self.contents_tree_widget.itemClicked.connect(self.on_tree_view_item_click)
 
@@ -79,9 +86,26 @@ class GeotribuContentsDialog(QDialog):
         Submit article action
         Usually launched when clicking on button
         """
-        open_url_in_browser(
-            "https://github.com/geotribu/website/issues/new?labels=contribution+externe%2Carticle%2Ctriage&projects=&template=ARTICLE.yml"
-        )
+        self.log("Opening form to submit an article")
+        if not self.form_article:
+            self.form_article = ArticleForm()
+            self.form_article.setModal(True)
+            self.form_article.finished.connect(self._post_form_article)
+        self.form_article.show()
+
+    def _post_form_article(self, dialog_result: int) -> None:
+        """Perform actions after the article form has been closed.
+
+        :param dialog_result: dialog's result code. Accepted (1) or Rejected (0)
+        :type dialog_result: int
+        """
+        if self.form_article:
+            # if accept button, save user inputs
+            if dialog_result == 1:
+                self.form_article.wdg_author.save_settings()
+            # clean up
+            self.form_article.deleteLater()
+            self.form_article = None
 
     def submit_news(self) -> None:
         """
@@ -214,7 +238,7 @@ class GeotribuContentsDialog(QDialog):
                 content.title,
                 ",".join(content.author),
                 ",".join(content.categories),
-                content.url
+                content.url,
             ]
         )
         for i in range(4):
