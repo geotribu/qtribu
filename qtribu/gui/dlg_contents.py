@@ -1,18 +1,17 @@
-from functools import partial
 from pathlib import Path
 from typing import Callable, Dict, List
 
-from qgis.core import QgsApplication
 from qgis.PyQt import QtCore, QtWidgets, uic
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QDialog, QTreeWidgetItem, QWidget
+from qgis.core import QgsApplication
 
 from qtribu.__about__ import DIR_PLUGIN_ROOT
 from qtribu.gui.form_rdp_news import RdpNewsForm
-from qtribu.logic import RssItem, WebViewer
+from qtribu.logic import RssItem
 from qtribu.logic.json_feed import JsonFeedClient
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
-from qtribu.toolbelt.commons import open_url_in_browser
+from qtribu.toolbelt.commons import open_url_in_browser, open_url_in_webviewer
 
 MARKER_VALUE = "---"
 
@@ -31,7 +30,6 @@ class GeotribuContentsDialog(QDialog):
         self.log = PlgLogger().log
         self.plg_settings = PlgOptionsManager()
         self.json_feed_client = JsonFeedClient()
-        self.web_viewer = WebViewer()
         uic.loadUi(Path(__file__).parent / f"{Path(__file__).stem}.ui", self)
         self.setWindowIcon(
             QIcon(str(DIR_PLUGIN_ROOT / "resources/images/logo_green_no_text.svg"))
@@ -75,10 +73,6 @@ class GeotribuContentsDialog(QDialog):
 
         self.refresh_list(lambda: self.search_line_edit.text())
         self.contents_tree_widget.expandAll()
-
-    def _open_url_in_webviewer(self, url: str, window_title: str) -> None:
-        self.web_viewer.display_web_page(url)
-        self.web_viewer.set_window_title(window_title)
 
     def submit_article(self) -> None:
         """
@@ -164,7 +158,7 @@ class GeotribuContentsDialog(QDialog):
         """
         # open URL of content (in column at index 4 which is not displayed)
         url, title = item.text(4), item.text(1)
-        self._open_url_in_webviewer(url, title)
+        open_url_in_webviewer(url, title)
 
     def on_search_text_changed(self) -> None:
         """

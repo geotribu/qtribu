@@ -22,7 +22,8 @@ from qtribu.gui.dlg_settings import PlgOptionsFactory
 from qtribu.gui.form_rdp_news import RdpNewsForm
 from qtribu.logic import RssMiniReader, SplashChanger, WebViewer
 from qtribu.toolbelt import NetworkRequestsManager, PlgLogger, PlgOptionsManager
-from qtribu.toolbelt.commons import open_url_in_browser
+from qtribu.toolbelt.commons import open_url_in_browser, open_url_in_webviewer
+
 
 # ############################################################################
 # ########## Classes ###############
@@ -69,7 +70,6 @@ class GeotribuPlugin:
         # sub-modules
         self.rss_rdr = RssMiniReader()
         self.splash_chgr = SplashChanger(self)
-        self.web_viewer = WebViewer()
 
     def initGui(self):
         """Set up plugin UI elements."""
@@ -289,7 +289,7 @@ class GeotribuPlugin:
             if not self.rss_rdr.latest_item:
                 self.post_ui_init()
 
-            self.web_viewer.display_web_page(url=self.rss_rdr.latest_item.url)
+            open_url_in_webviewer(self.rss_rdr.latest_item.url, self.rss_rdr.latest_item.title)
             self.action_run.setIcon(
                 QIcon(str(DIR_PLUGIN_ROOT / "resources/images/logo_green_no_text.svg"))
             )
