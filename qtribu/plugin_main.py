@@ -20,10 +20,9 @@ from qtribu.__about__ import DIR_PLUGIN_ROOT, __icon_path__, __title__, __uri_ho
 from qtribu.gui.dlg_contents import GeotribuContentsDialog
 from qtribu.gui.dlg_settings import PlgOptionsFactory
 from qtribu.gui.form_rdp_news import RdpNewsForm
-from qtribu.logic import RssMiniReader, SplashChanger, WebViewer
+from qtribu.logic import RssMiniReader, SplashChanger
 from qtribu.toolbelt import NetworkRequestsManager, PlgLogger, PlgOptionsManager
 from qtribu.toolbelt.commons import open_url_in_browser, open_url_in_webviewer
-
 
 # ############################################################################
 # ########## Classes ###############
@@ -289,7 +288,9 @@ class GeotribuPlugin:
             if not self.rss_rdr.latest_item:
                 self.post_ui_init()
 
-            open_url_in_webviewer(self.rss_rdr.latest_item.url, self.rss_rdr.latest_item.title)
+            open_url_in_webviewer(
+                self.rss_rdr.latest_item.url, self.rss_rdr.latest_item.title
+            )
             self.action_run.setIcon(
                 QIcon(str(DIR_PLUGIN_ROOT / "resources/images/logo_green_no_text.svg"))
             )
