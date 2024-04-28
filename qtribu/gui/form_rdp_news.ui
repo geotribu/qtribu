@@ -14,7 +14,7 @@
    <string>GeoRDP - News Form</string>
   </property>
   <property name="windowOpacity">
-   <double>0.900000000000000</double>
+   <double>0.98</double>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
