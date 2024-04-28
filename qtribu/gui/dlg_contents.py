@@ -1,4 +1,3 @@
-from functools import partial
 from pathlib import Path
 from typing import Callable, Dict, List
 
@@ -69,7 +68,12 @@ class GeotribuContentsDialog(QDialog):
 
         # tree widget initialization
         self.contents_tree_widget.setHeaderLabels(
-            [self.tr("Date"), self.tr("Title"), self.tr("Author(s)"), self.tr("Categories")]
+            [
+                self.tr("Date"),
+                self.tr("Title"),
+                self.tr("Author(s)"),
+                self.tr("Categories"),
+            ]
         )
         self.contents_tree_widget.itemClicked.connect(self.on_tree_view_item_click)
 
@@ -220,7 +224,7 @@ class GeotribuContentsDialog(QDialog):
                 content.title,
                 ",".join(content.author),
                 ",".join(content.categories),
-                content.url
+                content.url,
             ]
         )
         for i in range(4):
