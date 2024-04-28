@@ -195,7 +195,8 @@ class GeotribuContentsDialog(QDialog):
                 ",".join(content.categories),
             ]
         )
-        item.setToolTip(1, content.abstract)
+        for i in range(4):
+            item.setToolTip(i, content.abstract)
         icon_file = (
             "logo_orange_no_text"
             if "Revue de presse" in content.title
