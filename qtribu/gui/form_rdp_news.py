@@ -222,6 +222,7 @@ class RdpNewsForm(QDialog):
         # inform
         if len(invalid_fields):
             self.log(
+                parent_location=self,
                 message=self.tr("Some of required fields are incorrectly filled."),
                 push=True,
                 log_level=2,
