@@ -53,6 +53,7 @@ class PlgSettingsStructure:
     author_github: str = ""
     author_linkedin: str = ""
     author_twitter: str = ""
+    author_mastodon: str = ""
 
     @property
     def browser_as_str(self) -> str:

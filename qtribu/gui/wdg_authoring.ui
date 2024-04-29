@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>350</width>
-    <height>225</height>
+    <width>505</width>
+    <height>255</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -42,6 +42,9 @@
      </property>
      <property name="flat">
       <bool>true</bool>
+     </property>
+     <property name="syncGroup">
+      <string notr="true"/>
      </property>
      <layout class="QFormLayout" name="formLayout">
       <item row="0" column="0">
@@ -131,6 +134,9 @@
       </item>
       <item row="3" column="1">
        <widget class="QLineEdit" name="lne_github_account">
+        <property name="inputMethodHints">
+         <set>Qt::ImhUrlCharactersOnly</set>
+        </property>
         <property name="placeholderText">
          <string notr="true">https://github.com/geotribu</string>
         </property>
@@ -139,7 +145,7 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="0">
+      <item row="5" column="0">
        <widget class="QLabel" name="lbl_linked_account">
         <property name="toolTip">
          <string>Used during broadcasting to credit author.</string>
@@ -149,7 +155,7 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="1">
+      <item row="5" column="1">
        <widget class="QLineEdit" name="lne_linkedin_account">
         <property name="placeholderText">
          <string notr="true">https://www.linkedin.com/in/pierredupont/</string>
@@ -159,7 +165,7 @@
         </property>
        </widget>
       </item>
-      <item row="5" column="0">
+      <item row="6" column="0">
        <widget class="QLabel" name="lbl_twitter_account">
         <property name="toolTip">
          <string>Used during broadcasting to credit author.</string>
@@ -169,10 +175,30 @@
         </property>
        </widget>
       </item>
-      <item row="5" column="1">
+      <item row="6" column="1">
        <widget class="QLineEdit" name="lne_twitter_account">
         <property name="placeholderText">
          <string notr="true">https://twitter.com/geotribu</string>
+        </property>
+        <property name="clearButtonEnabled">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="lbl_mastodon_account">
+        <property name="text">
+         <string>Mastodon account:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="lne_mastodon_account">
+        <property name="inputMethodHints">
+         <set>Qt::ImhUrlCharactersOnly</set>
+        </property>
+        <property name="placeholderText">
+         <string notr="true">https://mapstodon.space/@geotribu</string>
         </property>
         <property name="clearButtonEnabled">
          <bool>true</bool>
