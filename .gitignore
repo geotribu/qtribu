@@ -137,3 +137,6 @@ dmypy.json
 qtribu/gui/*.db
 *.qm
 *.zip
+
+# jb stuff
+.idea

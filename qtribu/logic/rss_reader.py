@@ -13,7 +13,7 @@
 import logging
 import xml.etree.ElementTree as ET
 from email.utils import parsedate
-from typing import Optional
+from typing import List, Optional
 
 # QGIS
 from qgis.core import Qgis, QgsSettings
@@ -117,6 +117,23 @@ class RssMiniReader:
 
         return self.FEED_ITEMS[0]
 
+    def latest_items(self, count: int = 36) -> List[RssItem]:
+        """Returns the latest feed items.
+        :param count: number of items to fetch
+        :type count: int
+        :return: latest feed items
+        :rtype: List[RssItem]
+        """
+        if count <= 0:
+            raise ValueError("Number of RSS items to get must be > 0")
+        if not self.FEED_ITEMS:
+            logger.warning(
+                "Feed has not been loaded, so it's impossible to "
+                "return the latest item."
+            )
+            return []
+        return self.FEED_ITEMS[:count]
+
     @property
     def has_new_content(self) -> bool:
         """Compare the saved item guid (in plugin settings) with feed latest item to \
@@ -206,3 +223,17 @@ class RssMiniReader:
         :rtype: str
         """
         return QCoreApplication.translate(self.__class__.__name__, message)
+
+
+class RssArticlesMiniReader(RssMiniReader):
+    PATTERN_INCLUDE: list = ["articles/"]
+
+    def __init__(self):
+        super().__init__()
+
+
+class RssRdpMiniReader(RssMiniReader):
+    PATTERN_INCLUDE: list = ["rdp/"]
+
+    def __init__(self):
+        super().__init__()
