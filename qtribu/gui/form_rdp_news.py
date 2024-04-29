@@ -80,7 +80,6 @@ class RdpNewsForm(QDialog):
         )
 
         # connect standard buttons
-        self.btn_box: QDialogButtonBox = self.btn_box
         self.btn_box.helpRequested.connect(
             partial(
                 open_url_in_browser,
