@@ -167,10 +167,7 @@ class NetworkRequestsManager:
             )
 
             req_reply = self.ntwk_requester.reply()
-            if (
-                not req_reply.rawHeader(b"Content-Type")
-                == response_expected_content_type
-            ):
+            if req_reply.rawHeader(b"Content-Type") != response_expected_content_type:
                 raise TypeError(
                     f"Response mime-type is '{req_reply.rawHeader(b'Content-type')}' "
                     f"not '{response_expected_content_type}' as required.".format()
