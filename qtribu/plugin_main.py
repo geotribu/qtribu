@@ -214,7 +214,12 @@ class GeotribuPlugin:
         """
         try:
             qntwk = NetworkRequestsManager()
-            self.rss_rdr.read_feed(qntwk.get_from_source(headers=self.rss_rdr.HEADERS))
+            rss_feed_content = qntwk.get_from_source(
+                headers=self.rss_rdr.HEADERS,
+                response_expected_content_type="application/xml",
+            )
+
+            self.rss_rdr.read_feed(rss_feed_content)
             if not self.rss_rdr.latest_item:
                 raise Exception("No item found")
 

@@ -109,7 +109,12 @@ class NetworkRequestsManager:
 
         return qreq
 
-    def get_from_source(self, headers: dict = None) -> QByteArray:
+    def get_from_source(
+        self,
+        url: Optional[str] = None,
+        headers: Optional[dict] = None,
+        response_expected_content_type: str = "application/xml",
+    ) -> Optional[QByteArray]:
         """Method to retrieve a RSS feed from a referenced source in preferences. \
         Use cache.
 
@@ -126,7 +131,10 @@ class NetworkRequestsManager:
             import json
             response_as_dict = json.loads(str(response, "UTF8"))
         """
-        url = self.build_url(PlgOptionsManager.get_plg_settings().rss_source)
+        if not url:
+            url = self.build_url(PlgOptionsManager.get_plg_settings().rss_source)
+        else:
+            url = self.build_url(url)
 
         try:
             # prepare request
@@ -155,15 +163,17 @@ class NetworkRequestsManager:
             self.log(
                 message=f"Request to {url} succeeded.",
                 log_level=3,
-                push=0,
+                push=False,
             )
 
             req_reply = self.ntwk_requester.reply()
-            if not req_reply.rawHeader(b"Content-Type") == "application/xml":
+            if (
+                not req_reply.rawHeader(b"Content-Type")
+                == response_expected_content_type
+            ):
                 raise TypeError(
-                    "Response mime-type is '{}' not 'application/xml' as required.".format(
-                        req_reply.rawHeader(b"Content-type")
-                    )
+                    f"Response mime-type is '{req_reply.rawHeader(b'Content-type')}' "
+                    f"not '{response_expected_content_type}' as required.".format()
                 )
 
             return req_reply.content()
@@ -171,7 +181,7 @@ class NetworkRequestsManager:
         except Exception as err:
             err_msg = f"Houston, we've got a problem: {err}"
             logger.error(err_msg)
-            self.log(message=err_msg, log_level=2, push=1)
+            self.log(message=err_msg, log_level=2, push=True)
 
     def download_file(self, remote_url: str, local_path: str) -> str:
         """Download a file from a remote web server accessible through HTTP.

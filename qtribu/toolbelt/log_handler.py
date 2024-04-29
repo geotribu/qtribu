@@ -128,10 +128,8 @@ class PlgLogger(logging.Handler):
             # QGIS or custom dialog
             if parent_location and isinstance(parent_location, QWidget):
                 msg_bar = parent_location.findChild(QgsMessageBar)
-                print(msg_bar)
 
             if not msg_bar:
-                print("use QGIS message bar as fallback")
                 msg_bar = iface.messageBar()
 
             # calc duration

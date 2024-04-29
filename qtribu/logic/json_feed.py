@@ -1,13 +1,27 @@
+#! python3  # noqa: E265
+
+"""
+    JSON Feed wrapper.
+"""
+
+# ############################################################################
+# ########## Imports ###############
+# ##################################
+
+
+import json
 from datetime import datetime
 from typing import Any, List, Optional
 
-import requests
-from requests import Response
+# 3rd party
+from qgis.PyQt.QtCore import QByteArray
 
+# plugin
 from qtribu.__about__ import __title__, __version__
 from qtribu.logic import RssItem
-from qtribu.toolbelt import PlgLogger, PlgOptionsManager
+from qtribu.toolbelt import NetworkRequestsManager, PlgLogger, PlgOptionsManager
 
+# -- GLOBALS --
 HEADERS: dict = {
     b"Accept": b"application/json",
     b"User-Agent": bytes(f"{__title__}/{__version__}", "utf8"),
@@ -16,9 +30,12 @@ HEADERS: dict = {
 FETCH_UPDATE_INTERVAL_SECONDS = 7200
 
 
+## -- CLASSES --
+
+
 class JsonFeedClient:
     """
-    Class representing a Geotribu's JSON feed client
+    Class representing a client for JSON feed built with Mkdocs website with RSS plugin.
     """
 
     items: Optional[List[RssItem]] = None
@@ -27,35 +44,48 @@ class JsonFeedClient:
     def __init__(
         self, url: str = PlgOptionsManager.get_plg_settings().json_feed_source
     ):
-        """Class initialization."""
+        """Class initialization.
+
+        :param url: JSON Feed URL, defaults to PlgOptionsManager.get_plg_settings().json_feed_source
+        :type url: str, optional
+        """
         self.log = PlgLogger().log
         self.url = url
+        self.qntwk = NetworkRequestsManager()
 
     def fetch(self, query: str = "") -> list[RssItem]:
-        """
-        Fetch RSS feed items using JSON Feed
+        """Fetch RSS feed items using JSON Feed
 
-        :param query: filter to look for items matching this query
-        :type query: str
+        :param query: filter to look for items matching this query, defaults to ""
+        :type query: str, optional
 
         :return: list of RssItem objects matching the query filter
+        :rtype: list[RssItem]
         """
         if not self.items or (
             self.last_fetch_date
             and (datetime.now() - self.last_fetch_date).total_seconds()
             > FETCH_UPDATE_INTERVAL_SECONDS
         ):
-            r: Response = requests.get(self.url, headers=HEADERS)
-            r.raise_for_status()
-            self.items = [self._map_item(i) for i in r.json()["items"]]
+
+            response: QByteArray = self.qntwk.get_from_source(
+                headers=HEADERS,
+                url=self.url,
+                response_expected_content_type="application/json; charset=utf-8",
+            )
+
+            self.items = [
+                self._map_item(i) for i in json.loads(str(response, "UTF8"))["items"]
+            ]
             self.last_fetch_date = datetime.now()
+
         return [i for i in self.items if self._matches(query, i)]
 
     def authors(self) -> list[str]:
-        """
-        Get a list of authors available in the RSS feed
+        """Get a list of authors available in the RSS feed
 
         :return: list of authors
+        :rtype: list[str]
         """
         authors = []
         for content in self.fetch():
@@ -64,10 +94,10 @@ class JsonFeedClient:
         return sorted(set(authors))
 
     def categories(self) -> list[str]:
-        """
-        Get a list of all categories available in the RSS feed
+        """Get a list of all categories available in the RSS feed.
 
         :return: list of categories available in the RSS feed
+        :rtype: list[str]
         """
         tags = []
         for content in self.fetch():
@@ -76,8 +106,7 @@ class JsonFeedClient:
 
     @staticmethod
     def _map_item(item: dict[str, Any]) -> RssItem:
-        """
-        Map raw JSON object coming from JSON feed to an RssItem object
+        """Map raw JSON object coming from JSON feed to an RssItem object.
 
         :param item: raw JSON object
         :type item: dict[str, Any]
@@ -99,8 +128,7 @@ class JsonFeedClient:
 
     @staticmethod
     def _matches(query: str, item: RssItem) -> bool:
-        """
-        Check if item matches given query
+        """Check if item matches given query.
 
         :param query: filter to look for items matching this query
         :type query: str
