@@ -272,9 +272,21 @@ class RdpNewsForm(QDialog):
         self.log(message=f"Opening issue form: {completed_url}", log_level=4)
         url_opened = open_url_in_browser(url=completed_url)
         if url_opened:
-            self.log(message="URL opened!", push=True, duration=2, log_level=0)
+            self.log(
+                message=self.tr("Issue form URL opened in default system web browser."),
+                log_level=4,
+            )
+            super().accept()
+            return True
         else:
-            self.log(message="URL NOT OPENEDED :(", push=True, duration=4, log_level=2)
-
-        super().accept()
-        return True
+            self.log(
+                parent_location=self,
+                message=self.tr(
+                    "Opening issue form URL in default system web browser failed. "
+                    "Check if there is any special characters in form fields and try again."
+                ),
+                push=True,
+                duration=10,
+                log_level=2,
+            )
+            return False
