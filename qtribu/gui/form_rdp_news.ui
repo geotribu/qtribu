@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>763</width>
+    <width>891</width>
     <height>1156</height>
    </rect>
   </property>
@@ -267,14 +267,14 @@ p, li { white-space: pre-wrap; }
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="lbl_transparency">
         <property name="text">
          <string>Transparency:</string>
         </property>
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QCheckBox" name="checkBox">
+       <widget class="QCheckBox" name="chb_transparency">
         <property name="text">
          <string>I'm not related to the published content. If not, I give some details in the comment area.</string>
         </property>
@@ -321,12 +321,9 @@ p, li { white-space: pre-wrap; }
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Help|QDialogButtonBox::Ok|QDialogButtonBox::Open|QDialogButtonBox::Save</set>
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Help|QDialogButtonBox::Ok</set>
      </property>
     </widget>
-   </item>
-   <item row="8" column="1">
-    <widget class="AuthoringWidget" name="wdg_author" native="true"/>
    </item>
    <item row="11" column="1">
     <spacer name="verticalSpacer_2">
