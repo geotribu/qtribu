@@ -16,7 +16,7 @@ from qgis.core import QgsApplication
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import Qt
 from qgis.PyQt.QtGui import QIcon
-from qgis.PyQt.QtWidgets import QDialog
+from qgis.PyQt.QtWidgets import QDialog, QDialogButtonBox
 
 # plugin
 from qtribu.__about__ import DIR_PLUGIN_ROOT
@@ -75,13 +75,19 @@ class RdpNewsForm(QDialog):
             )
         )
 
-        # connect help button
+        # connect standard buttons
+        self.btn_box: QDialogButtonBox = self.btn_box
         self.btn_box.helpRequested.connect(
             partial(
                 open_url_in_browser,
                 "https://contribuer.geotribu.fr/rdp/add_news/",
             )
         )
+        self.btn_box.button(QDialogButtonBox.Open).setText(self.tr("Load draft"))
+        self.btn_box.button(QDialogButtonBox.Open).clicked.connect(self.on_btn_open)
+        self.btn_box.button(QDialogButtonBox.Save).setText(self.tr("Save draft"))
+        self.btn_box.button(QDialogButtonBox.Ok).setText(self.tr("Submit"))
+        self.btn_box.button(QDialogButtonBox.Ok).setDefault(True)
 
     def cbb_icon_populate(self) -> None:
         """Populate combobox of news icons."""
@@ -164,11 +170,20 @@ class RdpNewsForm(QDialog):
         self.txt_preview.clear()
         self.txt_preview.setMarkdown(md_txt)
 
-    def accept(self) -> bool:
-        """Auto-connected to the OK button (within the button box), i.e. the `accepted`
-        signal. Check if required form fields are correctly filled.
+    def on_btn_open(self):
 
-        :return: False if some check fails. True and emit accepted() signal if everything is ok.
+        self.log("piouou")
+
+    def on_btn_save(self):
+
+        self.log("piouou")
+
+    def on_btn_submit(self) -> bool:
+        """Check if required form fields are correctly filled and submit to Github issue
+        form.
+
+        :return: False if some check fails. True and emit accepted() signal if
+            everything is ok.
         :rtype: bool
         """
         invalid_fields = []

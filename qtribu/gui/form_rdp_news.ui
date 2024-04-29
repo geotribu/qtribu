@@ -14,7 +14,7 @@
    <string>GeoRDP - News Form</string>
   </property>
   <property name="windowOpacity">
-   <double>0.98</double>
+   <double>0.980000000000000</double>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
@@ -299,6 +299,9 @@ p, li { white-space: pre-wrap; }
      </property>
     </widget>
    </item>
+   <item row="8" column="1">
+    <widget class="AuthoringWidget" name="wdg_author" native="true"/>
+   </item>
    <item row="9" column="1">
     <spacer name="verticalSpacer">
      <property name="orientation">
@@ -318,7 +321,7 @@ p, li { white-space: pre-wrap; }
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Help|QDialogButtonBox::Ok</set>
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Help|QDialogButtonBox::Ok|QDialogButtonBox::Open|QDialogButtonBox::Save</set>
      </property>
     </widget>
    </item>
@@ -385,22 +388,6 @@ p, li { white-space: pre-wrap; }
  </customwidgets>
  <resources/>
  <connections>
-  <connection>
-   <sender>btn_box</sender>
-   <signal>accepted()</signal>
-   <receiver>dlg_form_rdp_news</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>157</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>btn_box</sender>
    <signal>rejected()</signal>
