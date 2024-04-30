@@ -18,6 +18,7 @@ from qtribu.__about__ import DIR_PLUGIN_ROOT
 
 ICON_ARTICLE = QIcon(str(DIR_PLUGIN_ROOT.joinpath("resources/images/article.svg")))
 ICON_GEORDP = QIcon(str(DIR_PLUGIN_ROOT.joinpath("resources/images/geordp.svg")))
+LOCAL_CDN_PATH: Path = Path().home() / ".geotribu/cdn/"
 
 
 # Classes

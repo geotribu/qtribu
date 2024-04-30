@@ -4,7 +4,7 @@
 <context>
     <name>ArticleForm</name>
     <message>
-        <location filename="../../gui/form_article.py" line="129"/>
+        <location filename="../../gui/form_article.py" line="75"/>
         <source>- A title is required, with at least 3 characters.
 </source>
         <translation>- Un titre est requis, avec 3 caractères minimum.
@@ -14,60 +14,82 @@
         <location filename="../../gui/form_article.py" line="136"/>
         <source>- Description is not long enough (25 characters at least).
 </source>
-        <translation>- La description doit faire au moins 25 caractères.
+        <translation type="obsolete">- La description doit faire au moins 25 caractères.
 </translation>
     </message>
     <message>
         <location filename="../../gui/form_article.py" line="141"/>
         <source>- Description is too long (160 characters maximum).
 </source>
-        <translation>-La description doit faire 160 caractères maximum.
+        <translation type="obsolete">-La description doit faire 160 caractères maximum.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="148"/>
+        <location filename="../../gui/form_article.py" line="89"/>
         <source>- License must be accepted.
 </source>
         <translation>- La licence doit être acceptée.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="153"/>
+        <location filename="../../gui/form_article.py" line="94"/>
         <source>- For attribution purpose, author&apos;s firstname is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, le prénom de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="160"/>
+        <location filename="../../gui/form_article.py" line="101"/>
         <source>- For attribution purpose, author&apos;s lastname is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, le nom de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="167"/>
+        <location filename="../../gui/form_article.py" line="108"/>
         <source>- For attribution purpose, author&apos;s email is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, l&apos;email de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="173"/>
+        <location filename="../../gui/form_article.py" line="114"/>
         <source>Some of required fields are incorrectly filled.</source>
         <translation>Certains champs requis ne sont pas correctement renseignés.</translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="173"/>
+        <location filename="../../gui/form_article.py" line="114"/>
         <source>See details...</source>
         <translation>Voir les détails...</translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="173"/>
+        <location filename="../../gui/form_article.py" line="114"/>
         <source>Fields in bold must be filled. Missing fields:
 </source>
         <translation>Les champs dont le nom est en gras sont requis. Champs incorrects :
 </translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_article.py" line="66"/>
+        <source>Submit</source>
+        <translation>Envoyer</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_article.py" line="82"/>
+        <source>- The description is not long enough (10 characters at least).
+</source>
+        <translation>- La description doit faire au moins 10 caractères.
+</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_article.py" line="164"/>
+        <source>Issue form URL opened in default system web browser.</source>
+        <translation>Le formulaire prérempli a été ouvert dans le navigateur web par défaut du système.</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_article.py" line="171"/>
+        <source>Opening issue form URL in default system web browser failed. Check if there is any special characters in form fields and try again.</source>
+        <translation>L&apos;ouverture de l&apos;URL par le navigateur par défaut du système a échoué. Vérifier qu&apos;il n&apos;y a pas de caractère trop spécial dans les champs renseignés et réessayer.</translation>
     </message>
 </context>
 <context>
@@ -225,90 +247,83 @@
 <context>
     <name>RdpNewsForm</name>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="181"/>
+        <location filename="../../gui/form_rdp_news.py" line="186"/>
         <source>- A category is required.
 </source>
         <translation>- Une catégorie est requise.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="186"/>
+        <location filename="../../gui/form_rdp_news.py" line="191"/>
         <source>- A title is required, with at least 3 characters.
 </source>
         <translation>- Un titre est requis, avec 3 caractères minimum.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="191"/>
-        <source>- News is not long enougth (25 characters at least).
-</source>
-        <translation type="obsolete">- Le contenu de la news n&apos;est pas assez long (25 caractères minimum).
-</translation>
-    </message>
-    <message>
-        <location filename="../../gui/form_rdp_news.py" line="200"/>
+        <location filename="../../gui/form_rdp_news.py" line="205"/>
         <source>- License must be accepted.
 </source>
         <translation>- La licence doit être acceptée.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="205"/>
+        <location filename="../../gui/form_rdp_news.py" line="210"/>
         <source>- For attribution purpose, author&apos;s firstname is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, le prénom de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="212"/>
+        <location filename="../../gui/form_rdp_news.py" line="217"/>
         <source>- For attribution purpose, author&apos;s lastname is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, le nom de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="219"/>
+        <location filename="../../gui/form_rdp_news.py" line="224"/>
         <source>- For attribution purpose, author&apos;s email is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, l&apos;email de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="225"/>
+        <location filename="../../gui/form_rdp_news.py" line="230"/>
         <source>Some of required fields are incorrectly filled.</source>
         <translation>Certains champs requis ne sont pas correctement renseignés.</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="225"/>
+        <location filename="../../gui/form_rdp_news.py" line="230"/>
         <source>See details...</source>
         <translation>Voir les détails...</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="225"/>
+        <location filename="../../gui/form_rdp_news.py" line="230"/>
         <source>Fields in bold must be filled. Missing fields:
 </source>
         <translation>Les champs dont le nom est en gras sont requis. Champs incorrects :
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="91"/>
+        <location filename="../../gui/form_rdp_news.py" line="96"/>
         <source>Submit</source>
         <translation>Envoyer</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="193"/>
+        <location filename="../../gui/form_rdp_news.py" line="198"/>
         <source>- News is not long enough (25 characters at least).
 </source>
         <translation>- Le contenu de la news doit faire au moins 25 caractères.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="275"/>
+        <location filename="../../gui/form_rdp_news.py" line="280"/>
         <source>Issue form URL opened in default system web browser.</source>
         <translation>Le formulaire prérempli a été ouvert dans le navigateur web par défaut du système.</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="282"/>
+        <location filename="../../gui/form_rdp_news.py" line="287"/>
         <source>Opening issue form URL in default system web browser failed. Check if there is any special characters in form fields and try again.</source>
         <translation>L&apos;ouverture de l&apos;URL par le navigateur par défaut du système a échoué. Vérifier qu&apos;il n&apos;y a pas de caractère trop spécial dans les champs renseignés et réessayer.</translation>
     </message>
@@ -400,7 +415,7 @@
         <translation>Icône :</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.ui" line="202"/>
+        <location filename="../../gui/form_rdp_news.ui" line="211"/>
         <source>Category:</source>
         <translation>Catégorie :</translation>
     </message>
@@ -412,30 +427,30 @@
     <message>
         <location filename="../../gui/form_rdp_news.ui" line="101"/>
         <source>Body:</source>
-        <translation>Corps de la news :</translation>
+        <translation type="obsolete">Corps de la news :</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.ui" line="228"/>
+        <location filename="../../gui/form_rdp_news.ui" line="237"/>
         <source>Publication</source>
         <translation>Transparence et publication</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.ui" line="241"/>
+        <location filename="../../gui/form_rdp_news.ui" line="250"/>
         <source>License:</source>
         <translation>Licence :</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.ui" line="248"/>
+        <location filename="../../gui/form_rdp_news.ui" line="257"/>
         <source>I accept that my contribution is published under the CC BY-NC-SA 4.0</source>
         <translation>J&apos;accepte que ma contribution soit publiée en CC BY-NC-SA 4.0</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.ui" line="265"/>
+        <location filename="../../gui/form_rdp_news.ui" line="274"/>
         <source>Comment:</source>
         <translation>Commentaire libre :</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.ui" line="272"/>
+        <location filename="../../gui/form_rdp_news.ui" line="281"/>
         <source>Transparency:</source>
         <translation>Transparence :</translation>
     </message>
@@ -445,40 +460,51 @@
         <translation type="obsolete">Je ne fais pas d&apos;autopromotion. Si c&apos;est le cas, je donne des détails en commentaire.</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.ui" line="108"/>
+        <location filename="../../gui/form_rdp_news.ui" line="117"/>
         <source>Preview</source>
         <translation>Prévisualiser</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.ui" line="175"/>
+        <location filename="../../gui/form_rdp_news.ui" line="184"/>
         <source>Enable auto generation of preview every time the input text changes.</source>
         <translation>Activer la prévisualisation brute à la volée.</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.ui" line="178"/>
+        <location filename="../../gui/form_rdp_news.ui" line="187"/>
         <source>Auto-preview</source>
         <translation>Rendu automatique</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.ui" line="185"/>
+        <location filename="../../gui/form_rdp_news.ui" line="194"/>
         <source>Minimal preview. Be careful, this render is not contractual with the final render on Geotribu website.</source>
         <translation>Prévisualisation brute. Attention, ce rendu n&apos;est pas contractuel et très différent du rendu final sur le site Geotribu.</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.ui" line="188"/>
+        <location filename="../../gui/form_rdp_news.ui" line="197"/>
         <source>Raw preview:</source>
         <translation>Rendu brut :</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.ui" line="279"/>
+        <location filename="../../gui/form_rdp_news.ui" line="288"/>
         <source>I&apos;m not related to the published content. If not, I give some details in the comment area.</source>
         <translation>Ceci n&apos;est pas une autopromotion, une publicité ou un simple copié/collé d&apos;un CP etc.
 Si c&apos;est le cas, ne pas cocher et donner des précisions en commentaire.</translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.ui" line="101"/>
+        <location filename="../../gui/form_article.ui" line="93"/>
         <source>Description:</source>
-        <translation>Contenu de la news :</translation>
+        <translation>Description du projet d&apos;article ou contenu complet au format Markdown :</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_rdp_news.ui" line="107"/>
+        <source>Body using Markdown syntax:</source>
+        <translation>Corps du texte au format Markdown :</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_article.ui" line="180"/>
+        <source>I&apos;m sure that the content fit with editing rules. If not, I give some details in the comment area.</source>
+        <translation>Ceci n&apos;est pas une publicité ou un simple copié/collé d&apos;un CP etc.
+Si c&apos;est le cas, ne pas cocher et donner des précisions en commentaire.</translation>
     </message>
 </context>
 <context>
