@@ -1,5 +1,11 @@
+#! python3  # noqa: E265
+
+"""
+QDialog to browse Geotribu contents.
+"""
+
 from pathlib import Path
-from typing import Callable, Dict, List
+from typing import Callable, Dict, List, Optional
 
 from qgis.core import QgsApplication
 from qgis.PyQt import QtCore, QtWidgets, uic
@@ -14,13 +20,19 @@ from qtribu.logic.json_feed import JsonFeedClient
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
 from qtribu.toolbelt.commons import open_url_in_browser, open_url_in_webviewer
 
+# -- GLOBALS --
+
+ICON_ARTICLE = QIcon(str(DIR_PLUGIN_ROOT.joinpath("resources/images/article.svg")))
+ICON_GEORDP = QIcon(str(DIR_PLUGIN_ROOT.joinpath("resources/images/geordp.svg")))
 MARKER_VALUE = "---"
+
+# -- CLASSES --
 
 
 class GeotribuContentsDialog(QDialog):
     contents: Dict[int, List[RssItem]] = {}
 
-    def __init__(self, parent: QWidget = None):
+    def __init__(self, parent: Optional[QWidget] = None):
         """
         QDialog for geotribu contents
 
@@ -39,47 +51,46 @@ class GeotribuContentsDialog(QDialog):
         # buttons actions
         self.form_article = None
         self.form_rdp_news = None
-        self.submit_article_button.clicked.connect(self.submit_article)
-        self.submit_article_button.setIcon(
+        self.btn_submit_article.clicked.connect(self.submit_article)
+        self.btn_submit_article.setIcon(
             QgsApplication.getThemeIcon("mActionEditTable.svg")
         )
-        self.submit_news_button.clicked.connect(self.submit_news)
-        self.submit_news_button.setIcon(
-            QgsApplication.getThemeIcon("mActionAllEdits.svg")
-        )
-        self.donate_button.clicked.connect(self.donate)
-        self.donate_button.setIcon(
+        self.btn_submit_news.clicked.connect(self.submit_news)
+        self.btn_submit_news.setIcon(QgsApplication.getThemeIcon("mActionAllEdits.svg"))
+        self.btn_donate.clicked.connect(self.donate)
+        self.btn_donate.setIcon(
             QgsApplication.getThemeIcon("mIconCertificateTrusted.svg")
         )
 
         # search actions
-        self.search_line_edit.textChanged.connect(self.on_search_text_changed)
+        self.lne_search.textChanged.connect(self.on_search_text_changed)
 
         # authors combobox
-        self.authors_combobox.addItem(MARKER_VALUE)
+        self.cbb_authors.addItem(MARKER_VALUE)
         for author in self.json_feed_client.authors():
-            self.authors_combobox.addItem(author)
-        self.authors_combobox.currentTextChanged.connect(self.on_author_changed)
+            self.cbb_authors.addItem(author)
+        self.cbb_authors.currentTextChanged.connect(self.on_author_changed)
 
         # categories combobox
-        self.categories_combobox.addItem(MARKER_VALUE)
+        self.cbb_tags.addItem(MARKER_VALUE)
         for cat in self.json_feed_client.categories():
-            self.categories_combobox.addItem(cat)
-        self.categories_combobox.currentTextChanged.connect(self.on_category_changed)
+            if cat not in ("article", "revue de presse"):
+                self.cbb_tags.addItem(cat)
+        self.cbb_tags.currentTextChanged.connect(self.on_category_changed)
 
         # tree widget initialization
-        self.contents_tree_widget.setHeaderLabels(
+        self.tree_contents.setHeaderLabels(
             [
                 self.tr("Date"),
                 self.tr("Title"),
                 self.tr("Author(s)"),
-                self.tr("Categories"),
+                self.tr("Tags"),
             ]
         )
-        self.contents_tree_widget.itemClicked.connect(self.on_tree_view_item_click)
+        self.tree_contents.itemClicked.connect(self.on_tree_view_item_click)
 
-        self.refresh_list(lambda: self.search_line_edit.text())
-        self.contents_tree_widget.expandAll()
+        self.refresh_list(lambda: self.lne_search.text())
+        self.tree_contents.expandAll()
 
     def submit_article(self) -> None:
         """
@@ -155,7 +166,7 @@ class GeotribuContentsDialog(QDialog):
         }
 
         # clean treeview items
-        self.contents_tree_widget.clear()
+        self.tree_contents.clear()
 
         # populate treewidget
         items = []
@@ -167,8 +178,16 @@ class GeotribuContentsDialog(QDialog):
                 child = self._build_tree_widget_item_from_content(content)
                 item.addChild(child)
             items.append(item)
-        self.contents_tree_widget.insertTopLevelItems(0, items)
-        self.contents_tree_widget.expandAll()
+        self.tree_contents.insertTopLevelItems(0, items)
+        self.tree_contents.expandAll()
+        self.tableTunning()
+
+    def tableTunning(self):
+        """Prettify table aspect"""
+        # fit to content
+        self.tree_contents.resizeColumnToContents(0)
+        self.tree_contents.resizeColumnToContents(1)
+        self.tree_contents.resizeColumnToContents(2)
 
     @QtCore.pyqtSlot(QtWidgets.QTreeWidgetItem, int)
     def on_tree_view_item_click(self, item: QTreeWidgetItem, column: int):
@@ -190,7 +209,7 @@ class GeotribuContentsDialog(QDialog):
         Should get search
         """
         # do nothing if text is too small
-        current = self.search_line_edit.text()
+        current = self.lne_search.text()
         if current == "":
             self.refresh_list(lambda: current)
             return
@@ -205,9 +224,9 @@ class GeotribuContentsDialog(QDialog):
         :param value: text value of the selected author
         :type value: str
         """
-        self.search_line_edit.setText("")
+        self.lne_search.setText("")
         if value == MARKER_VALUE:
-            self.refresh_list(lambda: self.search_line_edit.text())
+            self.refresh_list(lambda: self.lne_search.text())
             return
         self.refresh_list(lambda: value)
 
@@ -218,9 +237,9 @@ class GeotribuContentsDialog(QDialog):
         :param value: text value of the selected category
         :type value: str
         """
-        self.search_line_edit.setText("")
+        self.lne_search.setText("")
         if value == MARKER_VALUE:
-            self.refresh_list(lambda: self.search_line_edit.text())
+            self.refresh_list(lambda: self.lne_search.text())
             return
         self.refresh_list(lambda: value)
 
@@ -232,22 +251,22 @@ class GeotribuContentsDialog(QDialog):
         :param content: content to generate item for
         :type content: RssItem
         """
+        tags = ", ".join(
+            [t for t in content.categories if t not in ("article", "revue de presse")]
+        )
+
         item = QTreeWidgetItem(
             [
                 content.date_pub.strftime("%d %B"),
                 content.title,
-                ",".join(content.author),
-                ",".join(content.categories),
+                ", ".join(content.author),
+                tags,
                 content.url,
             ]
         )
         for i in range(4):
             item.setToolTip(i, content.abstract)
-        icon_file = (
-            "logo_orange_no_text"
-            if "Revue de presse" in content.title
-            else "logo_green_no_text"
-        )
-        icon = QIcon(str(DIR_PLUGIN_ROOT / f"resources/images/{icon_file}.svg"))
-        item.setIcon(1, icon)
+        icon_file = ICON_GEORDP if "Revue de presse" in content.title else ICON_ARTICLE
+
+        item.setIcon(1, icon_file)
         return item

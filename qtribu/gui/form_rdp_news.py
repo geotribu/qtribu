@@ -9,7 +9,7 @@ https://github.com/baudren/NoteOrganiser/blob/devel/noteorganiser/syntax.py
 # standard
 from functools import partial
 from pathlib import Path
-from typing import Union
+from typing import Optional, Union
 from urllib.parse import urlparse
 
 # PyQGIS
@@ -17,7 +17,7 @@ from qgis.core import QgsApplication
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import Qt
 from qgis.PyQt.QtGui import QIcon
-from qgis.PyQt.QtWidgets import QDialog, QDialogButtonBox
+from qgis.PyQt.QtWidgets import QDialog, QDialogButtonBox, QWidget
 
 # plugin
 from qtribu.__about__ import DIR_PLUGIN_ROOT, __title__, __version__
@@ -34,7 +34,7 @@ class RdpNewsForm(QDialog):
         "https://github.com/geotribu/website/issues/new?template=RDP_NEWS.yml"
     )
 
-    def __init__(self, parent=None):
+    def __init__(self, parent: Optional[QWidget] = None):
         """Constructor.
 
         :param parent: parent widget or application
