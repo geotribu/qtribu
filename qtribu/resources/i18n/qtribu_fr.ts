@@ -134,22 +134,22 @@
 <context>
     <name>GeotribuContentsDialog</name>
     <message>
-        <location filename="../../gui/dlg_contents.py" line="82"/>
+        <location filename="../../gui/dlg_contents.py" line="80"/>
         <source>Date</source>
         <translation>Date de publication</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_contents.py" line="82"/>
+        <location filename="../../gui/dlg_contents.py" line="80"/>
         <source>Title</source>
         <translation>Titre</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_contents.py" line="82"/>
+        <location filename="../../gui/dlg_contents.py" line="80"/>
         <source>Author(s)</source>
         <translation>Auteur(ices)</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_contents.py" line="82"/>
+        <location filename="../../gui/dlg_contents.py" line="80"/>
         <source>Tags</source>
         <translation>Mots-clés</translation>
     </message>
@@ -157,59 +157,64 @@
 <context>
     <name>GeotribuPlugin</name>
     <message>
-        <location filename="../../plugin_main.py" line="303"/>
+        <location filename="../../plugin_main.py" line="317"/>
         <source>Newest article</source>
         <translation>Afficher le dernier article</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="109"/>
+        <location filename="../../plugin_main.py" line="122"/>
         <source>Help</source>
         <translation>Aide en ligne</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="118"/>
+        <location filename="../../plugin_main.py" line="131"/>
         <source>Settings</source>
         <translation>Réglages</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="244"/>
+        <location filename="../../plugin_main.py" line="258"/>
         <source>New content published:</source>
         <translation>Nouveau contenu publié :</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="151"/>
+        <location filename="../../plugin_main.py" line="165"/>
         <source>QGIS forum on GeoRezo</source>
         <translation>Forum QGIS sur GeoRezo</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="140"/>
+        <location filename="../../plugin_main.py" line="154"/>
         <source>Geotribu website</source>
         <translation>Site Geotribu</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="161"/>
+        <location filename="../../plugin_main.py" line="175"/>
         <source>OSGeo France</source>
         <translation>OSGeo FR</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="102"/>
+        <location filename="../../plugin_main.py" line="108"/>
         <source>Propose a news to the next GeoRDP</source>
         <translation>Proposer une news pour la GeoRDP</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="309"/>
+        <location filename="../../plugin_main.py" line="323"/>
         <source>Michel, we&apos;ve got a problem: {err}</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="271"/>
+        <location filename="../../plugin_main.py" line="285"/>
         <source>Unable to insert latest item within QGIS news feed. Trace: {err}</source>
         <translation>Impossible d&apos;insérer le dernier contenu publié dans le fil d&apos;actualité de QGIS. Trace : {err}</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="99"/>
-        <source>Contents</source>
+        <location filename="../../plugin_main.py" line="105"/>
+        <source>Browse latest contents</source>
         <translation>Rechercher dans les contenus</translation>
+    </message>
+    <message>
+        <location filename="../../plugin_main.py" line="115"/>
+        <source>Submit an article</source>
+        <translation>Proposer un article</translation>
     </message>
 </context>
 <context>

@@ -17,8 +17,10 @@ from qgis.PyQt.QtWidgets import QAction
 
 # project
 from qtribu.__about__ import DIR_PLUGIN_ROOT, __icon_path__, __title__, __uri_homepage__
+from qtribu.constants import ICON_ARTICLE, ICON_GEORDP
 from qtribu.gui.dlg_contents import GeotribuContentsDialog
 from qtribu.gui.dlg_settings import PlgOptionsFactory
+from qtribu.gui.form_article import ArticleForm
 from qtribu.gui.form_rdp_news import RdpNewsForm
 from qtribu.logic import RssMiniReader, SplashChanger
 from qtribu.toolbelt import NetworkRequestsManager, PlgLogger, PlgOptionsManager
@@ -77,9 +79,13 @@ class GeotribuPlugin:
         self.options_factory = PlgOptionsFactory()
         self.iface.registerOptionsWidgetFactory(self.options_factory)
 
+        # toolbar
+        self.toolbar = self.iface.addToolBar("ToolbarGeotribu")
+
         # -- Forms
-        self.form_rdp_news = None
+        self.form_article = None
         self.form_contents = None
+        self.form_rdp_news = None
 
         # -- Actions
         self.action_run = QAction(
@@ -93,18 +99,25 @@ class GeotribuPlugin:
 
         self.action_contents = QAction(
             QgsApplication.getThemeIcon("mActionOpenTableVisible.svg"),
-            self.tr("Contents"),
+            self.tr("Browse latest contents"),
             self.iface.mainWindow(),
         )
-        self.action_contents.setToolTip(self.tr("Contents"))
+        self.action_contents.setToolTip(self.tr("Browse latest contents"))
         self.action_contents.triggered.connect(self.contents)
 
-        self.action_rdp_news = QAction(
-            QIcon(QgsApplication.iconPath("mActionHighlightFeature.svg")),
+        self.action_form_rdp_news = QAction(
+            ICON_GEORDP,
             self.tr("Propose a news to the next GeoRDP"),
             self.iface.mainWindow(),
         )
-        self.action_rdp_news.triggered.connect(self.open_form_rdp_news)
+        self.action_form_rdp_news.triggered.connect(self.open_form_rdp_news)
+
+        self.action_form_article = QAction(
+            ICON_ARTICLE,
+            self.tr("Submit an article"),
+            self.iface.mainWindow(),
+        )
+        self.action_form_article.triggered.connect(self.open_form_article)
 
         self.action_help = QAction(
             QIcon(QgsApplication.iconPath("mActionHelpContents.svg")),
@@ -130,7 +143,8 @@ class GeotribuPlugin:
         # -- Menu
         self.iface.addPluginToWebMenu(__title__, self.action_run)
         self.iface.addPluginToWebMenu(__title__, self.action_contents)
-        self.iface.addPluginToWebMenu(__title__, self.action_rdp_news)
+        self.iface.addPluginToWebMenu(__title__, self.action_form_rdp_news)
+        self.iface.addPluginToWebMenu(__title__, self.action_form_article)
         self.iface.addPluginToWebMenu(__title__, self.action_splash)
         self.iface.addPluginToWebMenu(__title__, self.action_settings)
         self.iface.addPluginToWebMenu(__title__, self.action_help)
@@ -173,9 +187,10 @@ class GeotribuPlugin:
         self.iface.helpMenu().addAction(self.action_osgeofr)
 
         # -- Toolbar
-        self.iface.addToolBarIcon(self.action_run)
-        self.iface.addToolBarIcon(self.action_contents)
-        self.iface.addToolBarIcon(self.action_rdp_news)
+        self.toolbar.addAction(self.action_run)
+        self.toolbar.addAction(self.action_contents)
+        self.toolbar.addAction(self.action_form_rdp_news)
+        self.toolbar.addAction(self.action_form_article)
 
         # -- Post UI initialization
         self.iface.initializationCompleted.connect(self.post_ui_init)
@@ -184,7 +199,8 @@ class GeotribuPlugin:
         """Cleans up when plugin is disabled/uninstalled."""
         # -- Clean up menu
         self.iface.removePluginWebMenu(__title__, self.action_help)
-        self.iface.removePluginWebMenu(__title__, self.action_rdp_news)
+        self.iface.removePluginWebMenu(__title__, self.action_form_article)
+        self.iface.removePluginWebMenu(__title__, self.action_form_rdp_news)
         self.iface.removePluginWebMenu(__title__, self.action_run)
         self.iface.removePluginWebMenu(__title__, self.action_contents)
         self.iface.removePluginWebMenu(__title__, self.action_settings)
@@ -195,9 +211,7 @@ class GeotribuPlugin:
         self.iface.pluginHelpMenu().removeAction(self.action_osgeofr)
 
         # -- Clean up toolbar
-        self.iface.removeToolBarIcon(self.action_run)
-        self.iface.removeToolBarIcon(self.action_contents)
-        self.iface.removeToolBarIcon(self.action_rdp_news)
+        del self.toolbar
 
         # -- Clean up preferences panel in QGIS settings
         self.iface.unregisterOptionsWidgetFactory(self.options_factory)
@@ -318,6 +332,28 @@ class GeotribuPlugin:
         if not self.form_contents:
             self.form_contents = GeotribuContentsDialog()
         self.form_contents.show()
+
+    def open_form_article(self) -> None:
+        """Open the form to create a GeoRDP news."""
+        if not self.form_article:
+            self.form_article = ArticleForm()
+            self.form_article.setModal(True)
+            self.form_article.finished.connect(self._post_form_article)
+        self.form_article.show()
+
+    def _post_form_article(self, dialog_result: int) -> None:
+        """Perform actions after the GeoRDP news form has been closed.
+
+        :param dialog_result: dialog's result code. Accepted (1) or Rejected (0)
+        :type dialog_result: int
+        """
+        if self.form_article:
+            # if accept button, save user inputs
+            if dialog_result == 1:
+                self.form_article.wdg_author.save_settings()
+            # clean up
+            self.form_article.deleteLater()
+            self.form_article = None
 
     def open_form_rdp_news(self) -> None:
         """Open the form to create a GeoRDP news."""

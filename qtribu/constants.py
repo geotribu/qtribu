@@ -10,6 +10,15 @@ from pathlib import Path
 from typing import Optional
 from urllib.parse import urlparse
 
+# 3rd party
+from qgis.PyQt.QtGui import QIcon
+
+# plugin
+from qtribu.__about__ import DIR_PLUGIN_ROOT
+
+ICON_ARTICLE = QIcon(str(DIR_PLUGIN_ROOT.joinpath("resources/images/article.svg")))
+ICON_GEORDP = QIcon(str(DIR_PLUGIN_ROOT.joinpath("resources/images/geordp.svg")))
+
 
 # Classes
 @dataclass

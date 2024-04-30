@@ -13,6 +13,7 @@ from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QDialog, QTreeWidgetItem, QWidget
 
 from qtribu.__about__ import DIR_PLUGIN_ROOT
+from qtribu.constants import ICON_ARTICLE, ICON_GEORDP
 from qtribu.gui.form_article import ArticleForm
 from qtribu.gui.form_rdp_news import RdpNewsForm
 from qtribu.logic import RssItem
@@ -21,9 +22,6 @@ from qtribu.toolbelt import PlgLogger, PlgOptionsManager
 from qtribu.toolbelt.commons import open_url_in_browser, open_url_in_webviewer
 
 # -- GLOBALS --
-
-ICON_ARTICLE = QIcon(str(DIR_PLUGIN_ROOT.joinpath("resources/images/article.svg")))
-ICON_GEORDP = QIcon(str(DIR_PLUGIN_ROOT.joinpath("resources/images/geordp.svg")))
 MARKER_VALUE = "---"
 
 # -- CLASSES --
