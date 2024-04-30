@@ -28,4 +28,5 @@ def open_url_in_webviewer(url: str, window_title: str) -> None:
     :type window_title: str
     """
     web_viewer.display_web_page(url)
-    web_viewer.set_window_title(window_title)
+    if web_viewer.wdg_web:
+        web_viewer.set_window_title(window_title)
