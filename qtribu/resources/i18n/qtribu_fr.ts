@@ -208,7 +208,7 @@
     </message>
     <message>
         <location filename="../../plugin_main.py" line="105"/>
-        <source>Contents</source>
+        <source>Browse latest contents</source>
         <translation>Rechercher dans les contenus</translation>
     </message>
     <message>

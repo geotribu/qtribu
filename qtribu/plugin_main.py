@@ -99,10 +99,10 @@ class GeotribuPlugin:
 
         self.action_contents = QAction(
             QgsApplication.getThemeIcon("mActionOpenTableVisible.svg"),
-            self.tr("Contents"),
+            self.tr("Browse latest contents"),
             self.iface.mainWindow(),
         )
-        self.action_contents.setToolTip(self.tr("Contents"))
+        self.action_contents.setToolTip(self.tr("Browse latest contents"))
         self.action_contents.triggered.connect(self.contents)
 
         self.action_form_rdp_news = QAction(
