@@ -84,7 +84,7 @@ class GeotribuContentsDialog(QDialog):
                 self.tr("Date"),
                 self.tr("Title"),
                 self.tr("Author(s)"),
-                self.tr("Categories"),
+                self.tr("Tags"),
             ]
         )
         self.tree_contents.itemClicked.connect(self.on_tree_view_item_click)
