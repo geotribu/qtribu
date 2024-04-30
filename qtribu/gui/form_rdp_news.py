@@ -9,6 +9,7 @@ https://github.com/baudren/NoteOrganiser/blob/devel/noteorganiser/syntax.py
 # standard
 from functools import partial
 from pathlib import Path
+from typing import Union
 from urllib.parse import urlparse
 
 # PyQGIS
@@ -16,10 +17,10 @@ from qgis.core import QgsApplication
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import Qt
 from qgis.PyQt.QtGui import QIcon
-from qgis.PyQt.QtWidgets import QDialog
+from qgis.PyQt.QtWidgets import QDialog, QDialogButtonBox
 
 # plugin
-from qtribu.__about__ import DIR_PLUGIN_ROOT
+from qtribu.__about__ import DIR_PLUGIN_ROOT, __title__, __version__
 from qtribu.constants import GEORDP_NEWS_CATEGORIES, GEORDP_NEWS_ICONS, GeotribuImage
 from qtribu.toolbelt import NetworkRequestsManager, PlgLogger, PlgOptionsManager
 from qtribu.toolbelt.commons import open_url_in_browser
@@ -29,6 +30,9 @@ class RdpNewsForm(QDialog):
     """QDialog form to submit a news to a next GeoRDP."""
 
     LOCAL_CDN_PATH: Path = Path().home() / ".geotribu/cdn/"
+    ISSUE_FORM_BASE_URL: str = (
+        "https://github.com/geotribu/website/issues/new?template=RDP_NEWS.yml"
+    )
 
     def __init__(self, parent=None):
         """Constructor.
@@ -75,13 +79,16 @@ class RdpNewsForm(QDialog):
             )
         )
 
-        # connect help button
+        # connect standard buttons
         self.btn_box.helpRequested.connect(
             partial(
                 open_url_in_browser,
                 "https://contribuer.geotribu.fr/rdp/add_news/",
             )
         )
+        self.btn_box.button(QDialogButtonBox.Ok).clicked.connect(self.on_btn_submit)
+        self.btn_box.button(QDialogButtonBox.Ok).setDefault(True)
+        self.btn_box.button(QDialogButtonBox.Ok).setText(self.tr("Submit"))
 
     def cbb_icon_populate(self) -> None:
         """Populate combobox of news icons."""
@@ -164,13 +171,7 @@ class RdpNewsForm(QDialog):
         self.txt_preview.clear()
         self.txt_preview.setMarkdown(md_txt)
 
-    def accept(self) -> bool:
-        """Auto-connected to the OK button (within the button box), i.e. the `accepted`
-        signal. Check if required form fields are correctly filled.
-
-        :return: False if some check fails. True and emit accepted() signal if everything is ok.
-        :rtype: bool
-        """
+    def check_required_fields(self) -> bool:
         invalid_fields = []
         error_message = ""
 
@@ -237,6 +238,55 @@ class RdpNewsForm(QDialog):
             for wdg in invalid_fields:
                 wdg.setStyleSheet("border: 1px solid red;")
             return False
-        else:
+
+        return True
+
+    def on_btn_submit(self) -> Union[bool, str, None]:
+        """Check if required form fields are correctly filled and submit to Github issue
+        form.
+
+        :return: False if some check fails. True and emit accepted() signal if
+            everything is ok.
+        :rtype: bool
+        """
+        if not self.check_required_fields():
+            return False
+
+        completed_url = (
+            f"{self.ISSUE_FORM_BASE_URL}"
+            f"&in_author_name={self.wdg_author.lne_firstname.text()} "
+            f"{self.wdg_author.lne_lastname.text()}"
+            f"&in_author_mail={self.wdg_author.lne_email.text()}"
+            f"&in_author_linkedin={self.wdg_author.lne_linkedin_account.text()}"
+            f"&in_author_mastodon={self.wdg_author.lne_mastodon_account.text()}"
+            f"&in_author_twitter={self.wdg_author.lne_twitter_account.text()}"
+            f"&in_author_license=true"
+            f"&cb_author_content_relationship={self.chb_transparency.isChecked()}"
+            f"&dr_news_category={self.cbb_category.currentText()}"
+            f"&in_news_title={self.lne_title.text()}"
+            f"&in_news_icon={self.cbb_icon.currentText()}"
+            f"&tx_news_content={self.txt_body.toPlainText()}"
+            f"&tx_misc_comment={self.txt_comment.toPlainText()}"
+            f"&title=[GeoRDP] {self.lne_title.text()} - {__title__} {__version__}"
+        )
+        self.log(message=f"Opening issue form: {completed_url}", log_level=4)
+        url_opened = open_url_in_browser(url=completed_url)
+        if url_opened:
+            self.log(
+                message=self.tr("Issue form URL opened in default system web browser."),
+                log_level=4,
+            )
             super().accept()
             return True
+        else:
+            self.log(
+                parent_location=self,
+                message=self.tr(
+                    "Opening issue form URL in default system web browser failed. "
+                    "Check if there is any special characters in form fields and try again."
+                ),
+                push=True,
+                duration=10,
+                log_level=2,
+            )
+            return False
