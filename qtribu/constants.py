@@ -7,6 +7,7 @@
 # standard
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Optional
 from urllib.parse import urlparse
 
 
@@ -16,7 +17,7 @@ class RdpNewsCategory:
     name: str
     description: str
     order: int
-    example: str = None
+    example: Optional[str] = None
 
 
 @dataclass
@@ -24,7 +25,7 @@ class GeotribuImage:
     name: str
     url: str
     kind: str
-    description: str = None
+    description: Optional[str] = None
 
     def local_path(self, base_path: Path = Path().home() / ".geotribu/cdn/") -> Path:
         """Get expected local path.
