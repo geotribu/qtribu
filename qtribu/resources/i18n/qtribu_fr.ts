@@ -2,6 +2,75 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="fr" sourcelanguage="en">
 <context>
+    <name>ArticleForm</name>
+    <message>
+        <location filename="../../gui/form_article.py" line="129"/>
+        <source>- A title is required, with at least 3 characters.
+</source>
+        <translation>- Un titre est requis, avec 3 caractères minimum.
+</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_article.py" line="136"/>
+        <source>- Description is not long enough (25 characters at least).
+</source>
+        <translation>- La description doit faire au moins 25 caractères.
+</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_article.py" line="141"/>
+        <source>- Description is too long (160 characters maximum).
+</source>
+        <translation>-La description doit faire 160 caractères maximum.
+</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_article.py" line="148"/>
+        <source>- License must be accepted.
+</source>
+        <translation>- La licence doit être acceptée.
+</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_article.py" line="153"/>
+        <source>- For attribution purpose, author&apos;s firstname is required.
+</source>
+        <translation>- Pour les besoins d&apos;attribution, le prénom de l&apos;auteur/e est requis.
+</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_article.py" line="160"/>
+        <source>- For attribution purpose, author&apos;s lastname is required.
+</source>
+        <translation>- Pour les besoins d&apos;attribution, le nom de l&apos;auteur/e est requis.
+</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_article.py" line="167"/>
+        <source>- For attribution purpose, author&apos;s email is required.
+</source>
+        <translation>- Pour les besoins d&apos;attribution, l&apos;email de l&apos;auteur/e est requis.
+</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_article.py" line="173"/>
+        <source>Some of required fields are incorrectly filled.</source>
+        <translation>Certains champs requis ne sont pas correctement renseignés.</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_article.py" line="173"/>
+        <source>See details...</source>
+        <translation>Voir les détails...</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_article.py" line="173"/>
+        <source>Fields in bold must be filled. Missing fields:
+</source>
+        <translation>Les champs dont le nom est en gras sont requis. Champs incorrects :
+</translation>
+    </message>
+</context>
+<context>
     <name>AuthorInformationsWidget</name>
     <message>
         <location filename="../../gui/wdg_authoring.ui" line="41"/>
@@ -9,118 +78,151 @@
         <translation>Informations d&apos;attribution</translation>
     </message>
     <message>
-        <location filename="../../gui/wdg_authoring.ui" line="56"/>
+        <location filename="../../gui/wdg_authoring.ui" line="59"/>
         <source>Firstname:</source>
         <translation>Prénom :</translation>
     </message>
     <message>
-        <location filename="../../gui/wdg_authoring.ui" line="79"/>
+        <location filename="../../gui/wdg_authoring.ui" line="82"/>
         <source>Lastname:</source>
         <translation>Nom :</translation>
     </message>
     <message>
-        <location filename="../../gui/wdg_authoring.ui" line="105"/>
+        <location filename="../../gui/wdg_authoring.ui" line="108"/>
         <source>Email:</source>
         <translation>Email :</translation>
     </message>
     <message>
-        <location filename="../../gui/wdg_authoring.ui" line="125"/>
+        <location filename="../../gui/wdg_authoring.ui" line="128"/>
         <source>Used to credit the commit author.</source>
         <translation>Utilisé pour attribuer le commit à l&apos;auteur/e.</translation>
     </message>
     <message>
-        <location filename="../../gui/wdg_authoring.ui" line="128"/>
+        <location filename="../../gui/wdg_authoring.ui" line="131"/>
         <source>GitHub account:</source>
         <translation>GitHub :</translation>
     </message>
     <message>
-        <location filename="../../gui/wdg_authoring.ui" line="165"/>
+        <location filename="../../gui/wdg_authoring.ui" line="171"/>
         <source>Used during broadcasting to credit author.</source>
         <translation>Utilisé pour créditer l&apos;auteur/e au moment de la diffusion.</translation>
     </message>
     <message>
-        <location filename="../../gui/wdg_authoring.ui" line="148"/>
+        <location filename="../../gui/wdg_authoring.ui" line="154"/>
         <source>LinkedIn account:</source>
         <translation>LinkedIn :</translation>
     </message>
     <message>
-        <location filename="../../gui/wdg_authoring.ui" line="168"/>
+        <location filename="../../gui/wdg_authoring.ui" line="174"/>
         <source>Twitter account:</source>
         <translation>Twitter :</translation>
+    </message>
+    <message>
+        <location filename="../../gui/wdg_authoring.ui" line="191"/>
+        <source>Mastodon account:</source>
+        <translation>Compte Mastodon :</translation>
     </message>
 </context>
 <context>
     <name>ConfigOptionsPage</name>
     <message>
-        <location filename="../../gui/dlg_settings.py" line="140"/>
+        <location filename="../../gui/dlg_settings.py" line="138"/>
         <source>Read history has been reset.</source>
         <translation>L&apos;historique de lecture a été réinitialisé.</translation>
     </message>
 </context>
 <context>
+    <name>GeotribuContentsDialog</name>
+    <message>
+        <location filename="../../gui/dlg_contents.py" line="82"/>
+        <source>Date</source>
+        <translation>Date de publication</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dlg_contents.py" line="82"/>
+        <source>Title</source>
+        <translation>Titre</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dlg_contents.py" line="82"/>
+        <source>Author(s)</source>
+        <translation>Auteur(ices)</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dlg_contents.py" line="82"/>
+        <source>Tags</source>
+        <translation>Mots-clés</translation>
+    </message>
+</context>
+<context>
     <name>GeotribuPlugin</name>
     <message>
-        <location filename="../../plugin_main.py" line="268"/>
+        <location filename="../../plugin_main.py" line="303"/>
         <source>Newest article</source>
         <translation>Afficher le dernier article</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="85"/>
+        <location filename="../../plugin_main.py" line="109"/>
         <source>Help</source>
         <translation>Aide en ligne</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="94"/>
+        <location filename="../../plugin_main.py" line="118"/>
         <source>Settings</source>
         <translation>Réglages</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="211"/>
+        <location filename="../../plugin_main.py" line="244"/>
         <source>New content published:</source>
         <translation>Nouveau contenu publié :</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="126"/>
+        <location filename="../../plugin_main.py" line="151"/>
         <source>QGIS forum on GeoRezo</source>
         <translation>Forum QGIS sur GeoRezo</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="115"/>
+        <location filename="../../plugin_main.py" line="140"/>
         <source>Geotribu website</source>
         <translation>Site Geotribu</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="136"/>
+        <location filename="../../plugin_main.py" line="161"/>
         <source>OSGeo France</source>
         <translation>OSGeo FR</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="78"/>
+        <location filename="../../plugin_main.py" line="102"/>
         <source>Propose a news to the next GeoRDP</source>
         <translation>Proposer une news pour la GeoRDP</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="227"/>
+        <location filename="../../plugin_main.py" line="309"/>
         <source>Michel, we&apos;ve got a problem: {err}</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="238"/>
+        <location filename="../../plugin_main.py" line="271"/>
         <source>Unable to insert latest item within QGIS news feed. Trace: {err}</source>
         <translation>Impossible d&apos;insérer le dernier contenu publié dans le fil d&apos;actualité de QGIS. Trace : {err}</translation>
+    </message>
+    <message>
+        <location filename="../../plugin_main.py" line="99"/>
+        <source>Contents</source>
+        <translation>Rechercher dans les contenus</translation>
     </message>
 </context>
 <context>
     <name>RdpNewsForm</name>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="179"/>
+        <location filename="../../gui/form_rdp_news.py" line="181"/>
         <source>- A category is required.
 </source>
         <translation>- Une catégorie est requise.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="184"/>
+        <location filename="../../gui/form_rdp_news.py" line="186"/>
         <source>- A title is required, with at least 3 characters.
 </source>
         <translation>- Un titre est requis, avec 3 caractères minimum.
@@ -130,64 +232,86 @@
         <location filename="../../gui/form_rdp_news.py" line="191"/>
         <source>- News is not long enougth (25 characters at least).
 </source>
-        <translation>- Le contenu de la news n&apos;est pas assez long (25 caractères minimum).
+        <translation type="obsolete">- Le contenu de la news n&apos;est pas assez long (25 caractères minimum).
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="198"/>
+        <location filename="../../gui/form_rdp_news.py" line="200"/>
         <source>- License must be accepted.
 </source>
         <translation>- La licence doit être acceptée.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="203"/>
+        <location filename="../../gui/form_rdp_news.py" line="205"/>
         <source>- For attribution purpose, author&apos;s firstname is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, le prénom de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="210"/>
+        <location filename="../../gui/form_rdp_news.py" line="212"/>
         <source>- For attribution purpose, author&apos;s lastname is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, le nom de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="217"/>
+        <location filename="../../gui/form_rdp_news.py" line="219"/>
         <source>- For attribution purpose, author&apos;s email is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, l&apos;email de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="223"/>
+        <location filename="../../gui/form_rdp_news.py" line="225"/>
         <source>Some of required fields are incorrectly filled.</source>
         <translation>Certains champs requis ne sont pas correctement renseignés.</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="223"/>
+        <location filename="../../gui/form_rdp_news.py" line="225"/>
         <source>See details...</source>
         <translation>Voir les détails...</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="223"/>
+        <location filename="../../gui/form_rdp_news.py" line="225"/>
         <source>Fields in bold must be filled. Missing fields:
 </source>
         <translation>Les champs dont le nom est en gras sont requis. Champs incorrects :
 </translation>
     </message>
+    <message>
+        <location filename="../../gui/form_rdp_news.py" line="91"/>
+        <source>Submit</source>
+        <translation>Envoyer</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_rdp_news.py" line="193"/>
+        <source>- News is not long enough (25 characters at least).
+</source>
+        <translation>- Le contenu de la news doit faire au moins 25 caractères.
+</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_rdp_news.py" line="275"/>
+        <source>Issue form URL opened in default system web browser.</source>
+        <translation>Le formulaire prérempli a été ouvert dans le navigateur web par défaut du système.</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_rdp_news.py" line="282"/>
+        <source>Opening issue form URL in default system web browser failed. Check if there is any special characters in form fields and try again.</source>
+        <translation>L&apos;ouverture de l&apos;URL par le navigateur par défaut du système a échoué. Vérifier qu&apos;il n&apos;y a pas de caractère trop spécial dans les champs renseignés et réessayer.</translation>
+    </message>
 </context>
 <context>
     <name>RssMiniReader</name>
     <message>
-        <location filename="../../logic/rss_reader.py" line="169"/>
+        <location filename="../../logic/rss_reader.py" line="186"/>
         <source>Author(s): </source>
         <translation>Auteurs/ices : </translation>
     </message>
     <message>
-        <location filename="../../logic/rss_reader.py" line="169"/>
+        <location filename="../../logic/rss_reader.py" line="186"/>
         <source>Keywords: </source>
         <translation>Mots-clés : </translation>
     </message>
@@ -223,6 +347,19 @@
         <location filename="../../logic/splash_changer.py" line="115"/>
         <source>Splash screen: custom applied. Please, restart.</source>
         <translation>Splash screen personnalisé appliqué. Merci de redémarrer.</translation>
+    </message>
+</context>
+<context>
+    <name>WebViewer</name>
+    <message>
+        <location filename="../../logic/web_viewer.py" line="70"/>
+        <source>Last article from Geotribu</source>
+        <translation>Dernier article sur Geotribu</translation>
+    </message>
+    <message>
+        <location filename="../../logic/web_viewer.py" line="78"/>
+        <source>Last article from Geotribu loaded and displayed.</source>
+        <translation>Le dernier article de Geotribu a été chargé et affiché.</translation>
     </message>
 </context>
 <context>
@@ -327,6 +464,11 @@
         <source>I&apos;m not related to the published content. If not, I give some details in the comment area.</source>
         <translation>Ceci n&apos;est pas une autopromotion, une publicité ou un simple copié/collé d&apos;un CP etc.
 Si c&apos;est le cas, ne pas cocher et donner des précisions en commentaire.</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_article.ui" line="101"/>
+        <source>Description:</source>
+        <translation>Contenu de la news :</translation>
     </message>
 </context>
 <context>
@@ -440,6 +582,54 @@ Si c&apos;est le cas, ne pas cocher et donner des précisions en commentaire.</t
         <location filename="../../gui/dlg_settings.ui" line="150"/>
         <source>Insert latest item in QGIS news feed</source>
         <translation>Insérer le dernier contenu publié sur Geotribu dans le fil d&apos;actualités</translation>
+    </message>
+</context>
+<context>
+    <name>geotribu_toolbox</name>
+    <message>
+        <location filename="../../gui/dlg_contents.ui" line="20"/>
+        <source>Latest Geotribu contents</source>
+        <translation>Rechercher dans les derniers contenus de Geotribu</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dlg_contents.ui" line="69"/>
+        <source>Submit News</source>
+        <translation>Proposer une news</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dlg_contents.ui" line="85"/>
+        <source>Submit Article</source>
+        <translation>Proposer un article</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dlg_contents.ui" line="101"/>
+        <source>Donate</source>
+        <translation>Soutenir le projet</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dlg_contents.ui" line="113"/>
+        <source>Contents search</source>
+        <translation>Rechercher dans les contenus</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dlg_contents.ui" line="130"/>
+        <source>Search:</source>
+        <translation>Terme :</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dlg_contents.ui" line="152"/>
+        <source>Start typing a search term</source>
+        <translation>Entrer un terme de recherche</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dlg_contents.ui" line="162"/>
+        <source>Filter by author:</source>
+        <translation>Filtrer par auteur/ice :</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dlg_contents.ui" line="172"/>
+        <source>Filter by tags:</source>
+        <translation>Filtrer par mot-clé :</translation>
     </message>
 </context>
 </TS>
