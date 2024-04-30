@@ -139,7 +139,7 @@ class ArticleForm(QDialog):
         if len(self.txt_description.toPlainText()) > 160:
             invalid_fields.append(self.txt_description)
             error_message += self.tr(
-                "- Description is too long (160 characters at least).\n"
+                "- Description is too long (160 characters maximum).\n"
             )
 
         # check license
