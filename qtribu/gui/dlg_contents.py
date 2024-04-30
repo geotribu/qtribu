@@ -14,6 +14,10 @@ from qtribu.logic.json_feed import JsonFeedClient
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
 from qtribu.toolbelt.commons import open_url_in_browser, open_url_in_webviewer
 
+# -- GLOBALS --
+
+ICON_ARTICLE = QIcon(str(DIR_PLUGIN_ROOT.joinpath("resources/images/article.svg")))
+ICON_GEORDP = QIcon(str(DIR_PLUGIN_ROOT.joinpath("resources/images/geordp.svg")))
 MARKER_VALUE = "---"
 
 
@@ -243,11 +247,7 @@ class GeotribuContentsDialog(QDialog):
         )
         for i in range(4):
             item.setToolTip(i, content.abstract)
-        icon_file = (
-            "logo_orange_no_text"
-            if "Revue de presse" in content.title
-            else "logo_green_no_text"
-        )
-        icon = QIcon(str(DIR_PLUGIN_ROOT / f"resources/images/{icon_file}.svg"))
-        item.setIcon(1, icon)
+        icon_file = ICON_GEORDP if "Revue de presse" in content.title else ICON_ARTICLE
+
+        item.setIcon(1, icon_file)
         return item
