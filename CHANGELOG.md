@@ -10,6 +10,68 @@ Unreleased
 
 -->
 
+## 0.17.0 - 2024-05-01
+
+### Features and enhancements 🎉
+
+* Fenêtre contenus Geotribu by @gounux in <https://github.com/geotribu/qtribu/pull/157>
+* feature(logs): permet de personnaliser la fenêtre dans laquelle afficher le message de log by @Guts in <https://github.com/geotribu/qtribu/pull/161>
+* ui(forms): add message bars to forms by @Guts in <https://github.com/geotribu/qtribu/pull/162>
+* feature(authoring): ajoute le compte Mastodon by @Guts in <https://github.com/geotribu/qtribu/pull/164>
+* Refactorisation : utilise le Network Requests Manager de QGIS à la place de requests by @Guts in <https://github.com/geotribu/qtribu/pull/165>
+* feature(forms): connecte le formulaires de soumission de news by @Guts in <https://github.com/geotribu/qtribu/pull/163>
+* UI: amélioration générale du navigateur de contenus by @Guts in <https://github.com/geotribu/qtribu/pull/167>
+* UI : MAJ des traductions by @Guts in <https://github.com/geotribu/qtribu/pull/168>
+* UI : ajoute une toolbar dédiée au plugin by @Guts in <https://github.com/geotribu/qtribu/pull/169>
+* feature(forms): connecte le formulaire d'article au formulaire GitHub by @Guts in <https://github.com/geotribu/qtribu/pull/170>
+* UI: changer couleur des logos article et geordp by @gounux in <https://github.com/geotribu/qtribu/pull/171>
+
+### Other Changes
+
+* fix(webviewer): setWindowsTitle was failing when default browser is s… by @Guts in <https://github.com/geotribu/qtribu/pull/166>
+
+### New Contributors
+
+* @gounux made their first contribution in <https://github.com/geotribu/qtribu/pull/157>
+
+----
+
+## 0.16.0 - 2024-03-13
+
+### Bugs fixes 🐛
+
+* ci: fix i18n compilation by @Guts in <https://github.com/geotribu/qtribu/pull/156>
+
+### Features and enhancements 🎉
+
+* QtWebKitWidgets is no longer available by @kikislater in <https://github.com/geotribu/qtribu/pull/99>
+* ui: regroupe les liens vers les sites FR de référence dans le menu Aide de QGIS by @Guts in <https://github.com/geotribu/qtribu/pull/153>
+* Fonctionnalité : intègre le dernier contenu publié dans le fil d'actualité de QGIS by @Guts in <https://github.com/geotribu/qtribu/pull/154>
+* ui: MAJ les traductions by @Guts in <https://github.com/geotribu/qtribu/pull/155>
+
+### Tooling 🔧
+
+* docs: use modern GitHub Actions based workflow by @Guts in <https://github.com/geotribu/qtribu/pull/146>
+* ci: upgrade autolabeler to v5 by @Guts in <https://github.com/geotribu/qtribu/pull/149>
+* ci: fix qgis tests by @Guts in <https://github.com/geotribu/qtribu/pull/150>
+
+### Documentation 📖
+
+* docs: add sitemap by @Guts in <https://github.com/geotribu/qtribu/pull/147>
+
+### Other Changes
+
+* Outillage: MAJ les dépendances de dév, la config VS Code et les git hooks by @Guts in <https://github.com/geotribu/qtribu/pull/144>
+* packaging: pin minimal version of qgis-plugin-ci by @Guts in <https://github.com/geotribu/qtribu/pull/145>
+* tooling: add SonarCloud config and badge by @Guts in <https://github.com/geotribu/qtribu/pull/148>
+* test: replace semver by packaging by @Guts in <https://github.com/geotribu/qtribu/pull/151>
+
+### New Contributors
+
+* @kikislater made their first contribution in <https://github.com/geotribu/qtribu/pull/99>
+
+----
+
 ## 0.15.0 - 2023-08-08
 
 ### Features and enhancements 🎉
