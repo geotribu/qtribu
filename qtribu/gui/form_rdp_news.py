@@ -77,6 +77,8 @@ class RdpNewsForm(QDialog):
         self.btn_preview.clicked.connect(self.generate_preview)
         self.txt_preview.setStyleSheet("background-color:transparent;")
 
+        self.txt_body.textChanged.connect(self.auto_preview)
+
         # publication
         self.chb_license.setChecked(
             self.plg_settings.get_value_from_key(
