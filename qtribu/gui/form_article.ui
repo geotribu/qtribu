@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>801</width>
-    <height>810</height>
+    <width>589</width>
+    <height>813</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>GeoRDP - News Form</string>
+   <string>Article - Proposal form</string>
   </property>
   <property name="windowOpacity">
    <double>0.980000000000000</double>
@@ -26,6 +26,9 @@
    <bool>true</bool>
   </property>
   <layout class="QFormLayout" name="formLayout_2">
+   <item row="0" column="1">
+    <widget class="QgsMessageBar" name="msg_bar" native="true"/>
+   </item>
    <item row="4" column="0" colspan="2">
     <widget class="QGroupBox" name="grp_news">
      <property name="font">
@@ -34,7 +37,7 @@
       </font>
      </property>
      <property name="title">
-      <string>The news</string>
+      <string>The article</string>
      </property>
      <property name="flat">
       <bool>false</bool>
@@ -269,8 +272,18 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="1">
-    <widget class="QgsMessageBar" name="msg_bar" native="true"/>
+   <item row="11" column="1">
+    <spacer name="verticalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>
