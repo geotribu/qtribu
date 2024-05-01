@@ -6,15 +6,9 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>505</width>
-    <height>255</height>
-   </rect>
-  </property>
-  <property name="minimumSize">
-   <size>
     <width>350</width>
     <height>225</height>
-   </size>
+   </rect>
   </property>
   <property name="windowTitle">
    <string>Authoring information</string>
