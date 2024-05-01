@@ -161,7 +161,7 @@ class ArticleForm(QDialog):
             f"&in_art_date={self.dte_proposed_date.date().toString('dd/MM/yyyy')}"
             f"&tx_art_content={self.txt_description.toPlainText()}"
             f"&tx_misc_comment={self.txt_comment.toPlainText()} "
-            f"\n---\n\n{__title__} {__version__}"
+            "\n---\n\n" + self.tr("Prefilled with ") + f"{__title__} {__version__}"
             f"&title=[Proposition] {self.lne_title.text()} - {__title__} {__version__}"
         )
         self.log(message=f"Opening issue form: {completed_url}", log_level=4)

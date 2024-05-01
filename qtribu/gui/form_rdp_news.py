@@ -75,7 +75,9 @@ class RdpNewsForm(QDialog):
             QIcon(QgsApplication.iconPath("mActionShowAllLayersGray.svg"))
         )
         self.btn_preview.clicked.connect(self.generate_preview)
-        self.txt_preview.setStyleSheet("background-color:transparent;")
+        self.txt_preview.setStyleSheet("background-color: #DCDCDC;")
+
+        self.txt_body.textChanged.connect(self.auto_preview)
 
         # publication
         self.chb_license.setChecked(
@@ -270,7 +272,7 @@ class RdpNewsForm(QDialog):
             f"&in_news_icon={self.cbb_icon.currentText()}"
             f"&tx_news_content={self.txt_body.toPlainText()}"
             f"&tx_misc_comment={self.txt_comment.toPlainText()} "
-            f"\n---\n\n{__title__} {__version__}"
+            "\n---\n\n" + self.tr("Prefilled with ") + f"{__title__} {__version__}"
             f"&title=[GeoRDP] {self.lne_title.text()} - {__title__} {__version__}"
         )
         self.log(message=f"Opening issue form: {completed_url}", log_level=4)
