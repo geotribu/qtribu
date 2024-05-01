@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>763</width>
+    <width>801</width>
     <height>810</height>
    </rect>
   </property>
@@ -61,35 +61,77 @@
        <widget class="QLineEdit" name="lne_title"/>
       </item>
       <item row="2" column="0">
-       <widget class="QLabel" name="lbl_icon">
+       <widget class="QLabel" name="lbl_proposed_date">
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="text">
-         <string>Icon:</string>
+         <string>Planned publication date:</string>
         </property>
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QComboBox" name="cbb_icon">
-        <property name="editable">
+       <widget class="QDateEdit" name="dte_proposed_date">
+        <property name="wrapping">
+         <bool>false</bool>
+        </property>
+        <property name="buttonSymbols">
+         <enum>QAbstractSpinBox::PlusMinus</enum>
+        </property>
+        <property name="accelerated">
          <bool>true</bool>
+        </property>
+        <property name="showGroupSeparator" stdset="0">
+         <bool>true</bool>
+        </property>
+        <property name="maximumDate">
+         <date>
+          <year>2030</year>
+          <month>12</month>
+          <day>31</day>
+         </date>
+        </property>
+        <property name="minimumDate">
+         <date>
+          <year>2024</year>
+          <month>5</month>
+          <day>30</day>
+         </date>
+        </property>
+        <property name="calendarPopup">
+         <bool>true</bool>
+        </property>
+        <property name="timeSpec">
+         <enum>Qt::TimeZone</enum>
         </property>
        </widget>
       </item>
-      <item row="5" column="0">
+      <item row="3" column="0">
        <widget class="QLabel" name="lbl_keywords">
         <property name="text">
          <string>Keywords:</string>
         </property>
        </widget>
       </item>
-      <item row="5" column="1">
+      <item row="3" column="1">
        <widget class="QComboBox" name="cbb_tags">
         <property name="editable">
          <bool>true</bool>
         </property>
        </widget>
       </item>
-      <item row="6" column="0">
+      <item row="4" column="0">
        <widget class="QLabel" name="lbl_description">
+        <property name="maximumSize">
+         <size>
+          <width>150</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="font">
          <font>
           <pointsize>11</pointsize>
@@ -100,9 +142,12 @@
         <property name="text">
          <string>Description:</string>
         </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
-      <item row="6" column="1">
+      <item row="4" column="1">
        <widget class="QTextEdit" name="txt_description">
         <property name="cursor" stdset="0">
          <cursorShape>IBeamCursor</cursorShape>
@@ -148,16 +193,6 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QCheckBox" name="chb_license">
-        <property name="text">
-         <string>I accept that my contribution is published under the CC BY-NC-SA 4.0</string>
-        </property>
-        <property name="tristate">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
       <item row="2" column="1">
        <widget class="QPlainTextEdit" name="txt_comment">
         <property name="maximumBlockCount">
@@ -173,18 +208,21 @@
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="lbl_transparency">
         <property name="text">
          <string>Transparency:</string>
         </property>
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QCheckBox" name="checkBox">
+       <widget class="QCheckBox" name="chb_transparency">
         <property name="text">
-         <string>I'm not related to the published content. If not, I give some details in the comment area.</string>
+         <string>I'm sure that the content fit with editing rules. If not, I give some details in the comment area.</string>
         </property>
        </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="cbb_license"/>
       </item>
      </layout>
     </widget>
@@ -252,22 +290,6 @@
  </customwidgets>
  <resources/>
  <connections>
-  <connection>
-   <sender>btn_box</sender>
-   <signal>accepted()</signal>
-   <receiver>dlg_form_rdp_news</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>157</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>btn_box</sender>
    <signal>rejected()</signal>
