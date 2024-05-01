@@ -216,6 +216,11 @@
         <source>Submit an article</source>
         <translation>Proposer un article</translation>
     </message>
+    <message>
+        <location filename="../../plugin_main.py" line="83"/>
+        <source>Geotribu toolbar</source>
+        <translation>Barre d&apos;outils du plugin Geotribu</translation>
+    </message>
 </context>
 <context>
     <name>RdpNewsForm</name>

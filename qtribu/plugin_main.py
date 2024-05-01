@@ -80,7 +80,7 @@ class GeotribuPlugin:
         self.iface.registerOptionsWidgetFactory(self.options_factory)
 
         # toolbar
-        self.toolbar = self.iface.addToolBar("ToolbarGeotribu")
+        self.toolbar = self.iface.addToolBar(self.tr("Geotribu toolbar"))
 
         # -- Forms
         self.form_article = None
