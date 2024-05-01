@@ -20,8 +20,13 @@ from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QDialog, QDialogButtonBox, QWidget
 
 # plugin
-from qtribu.__about__ import DIR_PLUGIN_ROOT, __title__, __version__
-from qtribu.constants import GEORDP_NEWS_CATEGORIES, GEORDP_NEWS_ICONS, GeotribuImage
+from qtribu.__about__ import __title__, __version__
+from qtribu.constants import (
+    GEORDP_NEWS_CATEGORIES,
+    GEORDP_NEWS_ICONS,
+    ICON_GEORDP,
+    GeotribuImage,
+)
 from qtribu.toolbelt import NetworkRequestsManager, PlgLogger, PlgOptionsManager
 from qtribu.toolbelt.commons import open_url_in_browser
 
@@ -29,7 +34,6 @@ from qtribu.toolbelt.commons import open_url_in_browser
 class RdpNewsForm(QDialog):
     """QDialog form to submit a news to a next GeoRDP."""
 
-    LOCAL_CDN_PATH: Path = Path().home() / ".geotribu/cdn/"
     ISSUE_FORM_BASE_URL: str = (
         "https://github.com/geotribu/website/issues/new?template=RDP_NEWS.yml"
     )
@@ -48,7 +52,7 @@ class RdpNewsForm(QDialog):
         self.qntwk = NetworkRequestsManager()
 
         # custom icon
-        self.setWindowIcon(QIcon(str(DIR_PLUGIN_ROOT / "resources/images/news.png")))
+        self.setWindowIcon(ICON_GEORDP)
 
         # title
         self.lne_title.textChanged.connect(self.auto_preview)
@@ -266,7 +270,8 @@ class RdpNewsForm(QDialog):
             f"&in_news_title={self.lne_title.text()}"
             f"&in_news_icon={self.cbb_icon.currentText()}"
             f"&tx_news_content={self.txt_body.toPlainText()}"
-            f"&tx_misc_comment={self.txt_comment.toPlainText()}"
+            f"&tx_misc_comment={self.txt_comment.toPlainText()} "
+            f"\n---\n\n{__title__} {__version__}"
             f"&title=[GeoRDP] {self.lne_title.text()} - {__title__} {__version__}"
         )
         self.log(message=f"Opening issue form: {completed_url}", log_level=4)
