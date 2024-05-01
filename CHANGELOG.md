@@ -10,6 +10,19 @@ Unreleased
 
 -->
 
+## 0.17.1 - 2024-05-01
+
+### Bugs fixes 🐛
+
+* fix(form-rdp): LOCAL_CDN_PATH was unreachable by @Guts in <https://github.com/geotribu/qtribu/pull/172>
+* UI : corrige les étiquettes copiées/collées du formulaire RDP dans le formulaire article by @Guts in <https://github.com/geotribu/qtribu/pull/174>
+* UI : corrige l'autopreview by @Guts in <https://github.com/geotribu/qtribu/pull/176>
+
+### Features and enhancements 🎉
+
+* ui(authoring): supprime la taille minimum pour améliorer l'intégration du widget authoring by @Guts in <https://github.com/geotribu/qtribu/pull/173>
+* UI : améliore le redimensionnement automatique des formulaires de soumission by @Guts in <https://github.com/geotribu/qtribu/pull/175>
+
 ## 0.17.0 - 2024-05-01
 
 ### Features and enhancements 🎉
