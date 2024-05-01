@@ -25,6 +25,7 @@ from qtribu.constants import (
     GEORDP_NEWS_CATEGORIES,
     GEORDP_NEWS_ICONS,
     ICON_GEORDP,
+    LOCAL_CDN_PATH,
     GeotribuImage,
 )
 from qtribu.toolbelt import NetworkRequestsManager, PlgLogger, PlgOptionsManager
@@ -162,9 +163,7 @@ class RdpNewsForm(QDialog):
         selected_icon: GeotribuImage = self.cbb_icon.currentData()
         if selected_icon:
             icon_remote_url_parsed = urlparse(selected_icon.url)
-            icon_local_path = Path(
-                self.LOCAL_CDN_PATH / icon_remote_url_parsed.path[1:]
-            )
+            icon_local_path = Path(LOCAL_CDN_PATH / icon_remote_url_parsed.path[1:])
             md_txt += f"\n![selected_icon.description]({icon_local_path})\n"
         else:
             md_txt += "\n"
