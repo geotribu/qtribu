@@ -20,7 +20,7 @@ class AuthoringWidget(QWidget):
         super().__init__(parent)
         self.log = PlgLogger().log
         self.plg_settings = PlgOptionsManager()
-        uic.loadUi(Path(__file__).parent / "{}.ui".format(Path(__file__).stem), self)
+        uic.loadUi(Path(__file__).parent / f"{Path(__file__).stem}.ui", self)
 
         # check inputs
         self.lne_email.setValidator(QVAL_EMAIL)
@@ -42,6 +42,7 @@ class AuthoringWidget(QWidget):
         self.lne_github_account.setText(settings.author_github)
         self.lne_linkedin_account.setText(settings.author_linkedin)
         self.lne_twitter_account.setText(settings.author_twitter)
+        self.lne_mastodon_account.setText(settings.author_mastodon)
 
     def save_settings(self) -> None:
         """Save form text into QgsSettings."""
@@ -55,6 +56,7 @@ class AuthoringWidget(QWidget):
         settings.author_github = self.lne_github_account.text()
         settings.author_linkedin = self.lne_linkedin_account.text()
         settings.author_twitter = self.lne_twitter_account.text()
+        settings.author_mastodon = self.lne_mastodon_account.text()
 
         # save it
         self.plg_settings.save_from_object(settings)

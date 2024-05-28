@@ -2,12 +2,14 @@ name: "✅ Linter"
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
     paths:
       - "**.py"
 
   pull_request:
-    branches: [main]
+    branches:
+      - main
     paths:
       - "**.py"
 
@@ -19,23 +21,18 @@ jobs:
   lint-py:
     name: Python 🐍
 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: Get source code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
+          cache: "pip"
+          cache-dependency-path: "requirements/development.txt"
           python-version: ${{ env.PYTHON_VERSION }}
-
-      - uses: actions/cache@v3
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements/*.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
 
       - name: Install project requirements
         run: |

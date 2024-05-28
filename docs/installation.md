@@ -1,18 +1,21 @@
 # Installation
 
-:::{note}
-Compte-tenu du périmètre fonctionnel particulier de ce plugin et pour ne pas ajouter du bruit supplémentaire au dépôt officiel des extensions de QGIS, QTribu est uniquement disponible en ajoutant un dépôt personnalisé.
-:::
+## Depuis le projet Github
 
-Dans QGIS :
+En plus d'être publié dans le dépôt officiel de plugins de QGIS, QTribu est également disponible via son propre dépôt personnalisé. Dans QGIS :
 
 1. Menu `Extensions` > `Installer/Gérer des extensions`
 2. Onglet `Paramètres`
 3. Sous la liste des dépôts, cliquer sur `Ajouter...` et renseigner :
-    * Nom : QTribu
+    * Nom :
+
+        ```txt
+        Dépôt personnalisé du plugin QTribu
+        ```
+
     * URL :  
 
-    ```
+    ```html
     https://github.com/geotribu/qtribu/releases/latest/download/plugins.xml
     ```
 

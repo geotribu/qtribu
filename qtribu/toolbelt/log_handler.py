@@ -4,11 +4,12 @@
 import logging
 from functools import partial
 from logging.handlers import RotatingFileHandler
-from typing import Callable
+from typing import Callable, Optional
 
 # PyQGIS
 from qgis.core import QgsMessageLog, QgsMessageOutput
-from qgis.PyQt.QtWidgets import QPushButton
+from qgis.gui import QgsMessageBar
+from qgis.PyQt.QtWidgets import QPushButton, QWidget
 from qgis.utils import iface
 
 # project package
@@ -29,12 +30,14 @@ class PlgLogger(logging.Handler):
         application: str = __title__,
         log_level: int = 0,
         push: bool = False,
-        duration: int = None,
+        duration: Optional[int] = None,
         # widget
         button: bool = False,
-        button_label: str = None,
-        button_more_text: str = None,
-        button_connect: Callable = None,
+        button_label: Optional[str] = None,
+        button_more_text: Optional[str] = None,
+        button_connect: Optional[Callable] = None,
+        # parent
+        parent_location: Optional[QWidget] = None,
     ):
         """Send messages to QGIS messages windows and to the user as a message bar. \
         Plugin name is used as title. If debug mode is disabled, only warnings (1) and \
@@ -56,8 +59,7 @@ class PlgLogger(logging.Handler):
         If set to 0, then the message must be manually dismissed by the user. \
         Defaults to None.
         :type duration: int, optional
-        :param button: display a button in the message bar to open a QgsMessageOutput. \
-        Defaults to False.
+        :param button: display a button in the message bar. Defaults to False.
         :type button: bool, optional
         :param button_label: text label of the button. Defaults to None.
         :type button_label: str, optional
@@ -67,6 +69,11 @@ class PlgLogger(logging.Handler):
         If not set, a simple dialog (QgsMessageOutput) is used to dislay the message. \
         Defaults to None.
         :type button_connect: Callable, optional
+        :param parent_location: parent location widget. \
+        If not set, QGIS canvas message bar is used to push message, \
+        otherwise if a QgsMessageBar is available in parent_location it is used instead. \
+        Defaults to None.
+        :type parent_location: Widget, optional
 
         :Example:
 
@@ -115,7 +122,15 @@ class PlgLogger(logging.Handler):
         )
 
         # optionally, display message on QGIS Message bar (above the map canvas)
-        if push:
+        if push and iface is not None:
+            msg_bar = None
+
+            # QGIS or custom dialog
+            if parent_location and isinstance(parent_location, QWidget):
+                msg_bar = parent_location.findChild(QgsMessageBar)
+
+            if not msg_bar:
+                msg_bar = iface.messageBar()
 
             # calc duration
             if duration is None:
@@ -139,13 +154,13 @@ class PlgLogger(logging.Handler):
                     widget_button.clicked.connect(partial(mini_dlg.showMessage, False))
 
                 notification.layout().addWidget(widget_button)
-                iface.messageBar().pushWidget(
+                msg_bar.pushWidget(
                     widget=notification, level=log_level, duration=duration
                 )
 
             else:
                 # send simple message
-                iface.messageBar().pushMessage(
+                msg_bar.pushMessage(
                     title=application,
                     text=message,
                     level=log_level,
@@ -153,7 +168,6 @@ class PlgLogger(logging.Handler):
                 )
 
     def set_logger(self):
-
         # create logger
         logger = logging.getLogger(__title_clean__)
         logging.captureWarnings(True)

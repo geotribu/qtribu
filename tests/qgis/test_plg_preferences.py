@@ -15,7 +15,7 @@
 import unittest
 
 # project
-from qtribu.__about__ import DIR_PLUGIN_ROOT, __title__, __version__
+from qtribu.__about__ import __version__
 from qtribu.toolbelt.preferences import PlgSettingsStructure
 
 # ############################################################################

@@ -11,11 +11,18 @@
 
 # Standard library
 import logging
+from typing import Optional
 
 # PyQGIS
 from qgis.PyQt.QtCore import QCoreApplication, Qt
 from qgis.PyQt.QtGui import QDesktopServices
-from qgis.PyQt.QtWebKitWidgets import QWebView
+
+try:
+    from qgis.PyQt.QtWebKitWidgets import QWebView
+except:
+    QCoreApplication.setAttribute(Qt.AA_ShareOpenGLContexts)
+    from PyQt.QtWebEngineWidgets import QWebEngineView as QWebView
+
 from qgis.PyQt.QtWidgets import QVBoxLayout, QWidget
 
 # project
@@ -38,6 +45,7 @@ class WebViewer:
     def __init__(self):
         """Class initialization."""
         self.log = PlgLogger().log
+        self.wdg_web: Optional[QWidget] = None
 
     def display_web_page(self, url: str):
         """Parse the feed XML as string and store items into an ordered tuple of tuples.
@@ -78,6 +86,9 @@ class WebViewer:
                 log_level=2,
                 push=True,
             )
+
+    def set_window_title(self, title: str) -> None:
+        self.wdg_web.setWindowTitle(title)
 
     def tr(self, message: str) -> str:
         """Translation method.

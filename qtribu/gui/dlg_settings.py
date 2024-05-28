@@ -12,13 +12,11 @@ from pathlib import Path
 from qgis.core import QgsApplication
 from qgis.gui import QgsOptionsPageWidget, QgsOptionsWidgetFactory
 from qgis.PyQt import uic
-from qgis.PyQt.Qt import QUrl
-from qgis.PyQt.QtGui import QDesktopServices, QIcon
+from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QButtonGroup
 
 # project
 from qtribu.__about__ import (
-    DIR_PLUGIN_ROOT,
     __icon_path__,
     __title__,
     __uri_homepage__,
@@ -26,15 +24,14 @@ from qtribu.__about__ import (
     __version__,
 )
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
+from qtribu.toolbelt.commons import open_url_in_browser
 from qtribu.toolbelt.preferences import PlgSettingsStructure
 
 # ############################################################################
 # ########## Globals ###############
 # ##################################
 
-FORM_CLASS, _ = uic.loadUiType(
-    Path(__file__).parent / "{}.ui".format(Path(__file__).stem)
-)
+FORM_CLASS, _ = uic.loadUiType(Path(__file__).parent / f"{Path(__file__).stem}.ui")
 
 # ############################################################################
 # ########## Classes ###############
@@ -52,7 +49,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
 
         # load UI and set objectName
         self.setupUi(self)
-        self.setObjectName("mOptionsPage{}".format(__title__))
+        self.setObjectName(f"mOptionsPage{__title__}")
 
         # header
         self.lbl_title.setText(f"{__title__} - Version {__version__}")
@@ -64,15 +61,13 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
 
         # customization
         self.btn_help.setIcon(QIcon(QgsApplication.iconPath("mActionHelpContents.svg")))
-        self.btn_help.pressed.connect(
-            partial(QDesktopServices.openUrl, QUrl(__uri_homepage__))
-        )
+        self.btn_help.pressed.connect(partial(open_url_in_browser, __uri_homepage__))
 
         self.btn_report.setIcon(
             QIcon(QgsApplication.iconPath("console/iconSyntaxErrorConsole.svg"))
         )
         self.btn_report.pressed.connect(
-            partial(QDesktopServices.openUrl, QUrl(f"{__uri_tracker__}new/choose"))
+            partial(open_url_in_browser, f"{__uri_tracker__}new/choose")
         )
 
         self.btn_reset_read_history.setIcon(
@@ -96,6 +91,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         settings.browser = self.opt_browser_group.checkedId()
         settings.notify_push_info = self.opt_notif_push_msg.isChecked()
         settings.notify_push_duration = self.sbx_notif_duration.value()
+        settings.integration_qgis_news_feed = self.chb_integration_news_feed.isChecked()
         settings.license_global_accept = self.chb_license_global_accept.isChecked()
 
         # misc
@@ -122,6 +118,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         self.opt_browser_group.button(settings.browser).setChecked(True)
         self.opt_notif_push_msg.setChecked(settings.notify_push_info)
         self.sbx_notif_duration.setValue(settings.notify_push_duration)
+        self.chb_integration_news_feed.setChecked(settings.integration_qgis_news_feed)
         self.chb_license_global_accept.setChecked(settings.license_global_accept)
 
         # misc
@@ -131,7 +128,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
     def reset_read_history(self):
         """Set latest_content_guid to None."""
         new_settings = PlgSettingsStructure(
-            latest_content_guid=None,
+            latest_content_guid="",
         )
 
         # dump new settings into QgsSettings

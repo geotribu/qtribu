@@ -28,15 +28,17 @@ class PlgSettingsStructure:
     version: str = __version__
 
     # RSS feed
-    rss_source: str = "https://static.geotribu.fr/feed_rss_created.xml"
+    rss_source: str = "https://geotribu.fr/feed_rss_created.xml"
+    json_feed_source: str = "https://geotribu.fr/feed_json_created.json"
 
     # usage
     browser: int = 1
     notify_push_info: bool = True
     notify_push_duration: int = 10
-    latest_content_guid: str = None
+    latest_content_guid: str = ""
     splash_screen_enabled: bool = False
     license_global_accept: bool = False
+    integration_qgis_news_feed: bool = True
 
     # network
     network_http_user_agent: str = f"{__title__}/{__version__}"
@@ -51,6 +53,7 @@ class PlgSettingsStructure:
     author_github: str = ""
     author_linkedin: str = ""
     author_twitter: str = ""
+    author_mastodon: str = ""
 
     @property
     def browser_as_str(self) -> str:

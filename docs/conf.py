@@ -27,7 +27,7 @@ description = __about__.__summary__
 project = __about__.__title__
 version = release = __about__.__version__
 
-github_doc_root = "{}/tree/master/doc/".format(__about__.__uri__)
+github_doc_root = f"{__about__.__uri__}/tree/master/docs/"
 
 # -- General configuration ---------------------------------------------------
 
@@ -48,6 +48,7 @@ extensions = [
     "sphinx_copybutton",
     "sphinxext.opengraph",
     "sphinx_rtd_theme",
+    "sphinx_sitemap",
 ]
 
 # The suffix(es) of source filenames.
@@ -78,6 +79,8 @@ pygments_style = "sphinx"
 
 # -- Theme
 
+# final URL
+html_baseurl = __about__.__uri_homepage__
 html_favicon = str(__about__.__icon_path__)
 html_logo = str(__about__.__icon_path__)
 html_sidebars = {
@@ -162,6 +165,7 @@ autodoc_mock_imports = [
     "qgis.PyQt.QtWidgets",
     "qgis.utils",
 ]
+
 
 # run api doc
 def run_apidoc(_):

@@ -1,4 +1,4 @@
-FROM qgis/qgis:release-3_16
+FROM qgis/qgis:release-3_28
 
 ENV PYTHONDONTWRITEBYTECODE=1
 
