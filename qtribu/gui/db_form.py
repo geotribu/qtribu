@@ -1,12 +1,13 @@
 """
     Form to let the end-user pick its options.
 """
+
 import logging
 
 from pg_background_tasks.core.utilities.db_tools import get_db_connections
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import pyqtSignal
-from qgis.PyQt.QtGui import QIcon, QPixmap
+from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QDialog
 
 ico_postgis = QIcon(":/images/themes/default/mIconPostgis.svg")
