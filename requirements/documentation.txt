@@ -2,7 +2,7 @@
 # -----------------------
 
 myst-parser[linkify]>=2
-sphinx-autobuild>=2021.*
+sphinx-autobuild>=2024
 sphinx-autodoc-typehints>=1.25
 sphinx-copybutton>=0.5,<1
 sphinxext-opengraph>=0.7
