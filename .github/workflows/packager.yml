@@ -139,7 +139,7 @@ jobs:
           # include compiled translations
           sed -i "s|^*.qm.*| |" .gitignore
 
-          include LICENSE file since it's mandatory
+          # include LICENSE file since it's mandatory
           cp LICENSE ${{ env.PROJECT_FOLDER }}/
 
           # git add full project
