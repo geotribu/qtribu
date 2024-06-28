@@ -10,6 +10,12 @@ Unreleased
 
 -->
 
+## 0.17.3 - 2024-06-28
+
+### Tooling 🔧
+
+* fix(ci): copy LICENSE file since it's mandatory on official repository by @Guts in <https://github.com/geotribu/qtribu/pull/180>
+
 ## 0.17.2 - 2024-06-28
 
 ### Features and enhancements 🎉
