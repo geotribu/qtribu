@@ -9,6 +9,15 @@ Unreleased
 ## [{version_tag}](https://github.com/geotribu/qtribu/releases/tag/{version_tag}) - YYYY-DD-mm
 
 -->
+## 0.17.2 - 2024-06-26
+
+### Features and enhancements 🎉
+
+* Retirer tri des colonnes by @gounux in https://github.com/geotribu/qtribu/pull/177
+
+### Documentation 📖
+
+* Doc: packaging by @gounux in https://github.com/geotribu/qtribu/pull/178
 
 ## 0.17.1 - 2024-05-01
 
