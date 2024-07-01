@@ -88,6 +88,10 @@ jobs:
           # include compiled translations
           sed -i "s|^*.qm.*| |" .gitignore
 
+          # include LICENSE file since it's mandatory
+          cp LICENSE ${{ env.PROJECT_FOLDER }}/
+          sed -i "s|^${{ env.PROJECT_FOLDER }}/LICENSE| |" .gitignore
+
           # git add full project
           git add ${{ env.PROJECT_FOLDER }}/
 
@@ -141,6 +145,7 @@ jobs:
 
           # include LICENSE file since it's mandatory
           cp LICENSE ${{ env.PROJECT_FOLDER }}/
+          sed -i "s|^${{ env.PROJECT_FOLDER }}/LICENSE| |" .gitignore
 
           # git add full project
           git add ${{ env.PROJECT_FOLDER }}/
