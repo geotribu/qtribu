@@ -101,13 +101,13 @@ class GeotribuPlugin:
         self.action_run.setToolTip(self.tr("Newest article"))
         self.action_run.triggered.connect(self.run)
 
-        self.action_contents = QAction(
+        self.action_open_contents = QAction(
             QgsApplication.getThemeIcon("mActionOpenTableVisible.svg"),
             self.tr("Browse latest contents"),
             self.iface.mainWindow(),
         )
-        self.action_contents.setToolTip(self.tr("Browse latest contents"))
-        self.action_contents.triggered.connect(self.open_contents)
+        self.action_open_contents.setToolTip(self.tr("Browse latest contents"))
+        self.action_open_contents.triggered.connect(self.open_contents)
 
         self.action_form_rdp_news = QAction(
             ICON_GEORDP,
@@ -124,7 +124,7 @@ class GeotribuPlugin:
         self.action_form_article.triggered.connect(self.open_form_article)
 
         self.action_open_chat = QAction(
-            QgsApplication.getThemeIcon("mActionOpenTableVisible.svg"),
+            QgsApplication.getThemeIcon("mMessageLog.svg"),
             self.tr("Open QChat"),
             self.iface.mainWindow(),
         )
@@ -153,7 +153,7 @@ class GeotribuPlugin:
 
         # -- Menu
         self.iface.addPluginToWebMenu(__title__, self.action_run)
-        self.iface.addPluginToWebMenu(__title__, self.action_contents)
+        self.iface.addPluginToWebMenu(__title__, self.action_open_contents)
         self.iface.addPluginToWebMenu(__title__, self.action_form_rdp_news)
         self.iface.addPluginToWebMenu(__title__, self.action_form_article)
         self.iface.addPluginToWebMenu(__title__, self.action_open_chat)
@@ -200,7 +200,7 @@ class GeotribuPlugin:
 
         # -- Toolbar
         self.toolbar.addAction(self.action_run)
-        self.toolbar.addAction(self.action_contents)
+        self.toolbar.addAction(self.action_open_contents)
         self.toolbar.addAction(self.action_form_rdp_news)
         self.toolbar.addAction(self.action_form_article)
 
@@ -214,7 +214,7 @@ class GeotribuPlugin:
         self.iface.removePluginWebMenu(__title__, self.action_form_article)
         self.iface.removePluginWebMenu(__title__, self.action_form_rdp_news)
         self.iface.removePluginWebMenu(__title__, self.action_run)
-        self.iface.removePluginWebMenu(__title__, self.action_contents)
+        self.iface.removePluginWebMenu(__title__, self.action_open_contents)
         self.iface.removePluginWebMenu(__title__, self.action_settings)
         self.iface.removePluginWebMenu(__title__, self.action_splash)
 

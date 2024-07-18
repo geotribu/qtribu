@@ -8,9 +8,11 @@ from typing import Any
 # PyQGIS
 #
 from PyQt5 import QtWebSockets  # noqa QGS103
+from qgis.core import QgsApplication
 from qgis.gui import QgsDockWidget
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import QUrl
+from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QMessageBox, QTreeWidgetItem, QWidget
 
 from qtribu.logic.qchat_client import QChatApiClient
@@ -53,6 +55,7 @@ class QChatWidget(QgsDockWidget):
         # connect signal listener
         self.connected = False
         self.btn_connect.pressed.connect(self.on_connect_button_clicked)
+        self.btn_connect.setIcon(QIcon(QgsApplication.iconPath("mIconConnect.svg")))
 
         # tree widget initialization
         self.tw_chat.setHeaderLabels(
@@ -66,6 +69,9 @@ class QChatWidget(QgsDockWidget):
 
         # clear chat signal listener
         self.btn_clear_chat.pressed.connect(self.on_clear_chat_button_clicked)
+        self.btn_clear_chat.setIcon(
+            QIcon(QgsApplication.iconPath("mActionDeleteSelectedFeatures.svg"))
+        )
 
         # initialize websocket client
         self.ws_client = QtWebSockets.QWebSocket(
@@ -75,6 +81,9 @@ class QChatWidget(QgsDockWidget):
 
         # send message signal listener
         self.btn_send.pressed.connect(self.on_send_button_clicked)
+        self.btn_send.setIcon(
+            QIcon(QgsApplication.iconPath("mActionDoubleArrowRight.svg"))
+        )
 
     def load_settings(self) -> None:
         """Load options from QgsSettings into UI form."""
