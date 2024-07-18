@@ -22,6 +22,7 @@ from qtribu.toolbelt import PlgLogger, PlgOptionsManager
 
 # -- GLOBALS --
 MARKER_VALUE = "---"
+DISPLAY_DATE_FORMAT = "%H:%M:%S"
 
 
 class QChatWidget(QgsDockWidget):
@@ -62,7 +63,7 @@ class QChatWidget(QgsDockWidget):
             [
                 self.tr("Room"),
                 self.tr("Date"),
-                self.tr("Nick"),
+                self.tr("Nickname"),
                 self.tr("Message"),
             ]
         )
@@ -123,13 +124,16 @@ class QChatWidget(QgsDockWidget):
             self.connect_to_room(room)
 
     def connect_to_room(self, room: str, log: bool = True) -> None:
+        """
+        Connect widget to a specific room
+        """
         if log:
             self.tw_chat.insertTopLevelItem(
                 0,
                 QTreeWidgetItem(
                     [
                         room,
-                        datetime.now().strftime("%H:%M"),
+                        datetime.now().strftime(DISPLAY_DATE_FORMAT),
                         self.tr("Admin"),
                         self.tr("Connected to room '{room}'").format(room=room),
                     ]
@@ -142,19 +146,26 @@ class QChatWidget(QgsDockWidget):
         self.ws_client.connected.connect(partial(self.on_ws_connected, room))
 
     def on_ws_connected(self, room: str) -> None:
+        """
+        Action called when websocket is connected to a room
+        """
         self.btn_connect.setText(self.tr("Disconnect"))
         self.lb_status.setText("Connected")
+        self.grb_user.setEnabled(True)
         self.current_room = room
         self.connected = True
 
     def disconnect_from_room(self, log: bool = True, close_ws: bool = True) -> None:
+        """
+        Disconnect widget from the current room
+        """
         if log:
             self.tw_chat.insertTopLevelItem(
                 0,
                 QTreeWidgetItem(
                     [
                         self.current_room,
-                        datetime.now().strftime("%H:%M"),
+                        datetime.now().strftime(DISPLAY_DATE_FORMAT),
                         self.tr("Admin"),
                         self.tr("Disconnected from room '{room}'").format(
                             room=self.current_room
@@ -164,36 +175,55 @@ class QChatWidget(QgsDockWidget):
             )
         self.btn_connect.setText(self.tr("Connect"))
         self.lb_status.setText("Disconnected")
+        self.grb_user.setEnabled(False)
         self.connected = False
         if close_ws:
             self.ws_client.connected.disconnect()
             self.ws_client.close()
 
     def on_ws_disconnected(self) -> None:
+        """
+        Action called when websocket is disconnected
+        """
         self.btn_connect.setText(self.tr("Connect"))
         self.lb_status.setText("Disconnected")
+        self.grb_user.setEnabled(False)
         self.connected = False
 
-    def on_ws_error(self, error_code) -> None:
+    def on_ws_error(self, error_code: int) -> None:
+        """
+        Action called when an error appears on the websocket
+        """
         QTreeWidgetItem(
             [
                 "ERROR",
-                datetime.now().strftime("%H:%M"),
+                datetime.now().strftime(DISPLAY_DATE_FORMAT),
                 self.tr("Admin"),
                 self.ws_client.errorString(),
             ]
         ),
 
     def on_ws_message_received(self, message: str) -> None:
+        """
+        Action called when a message is received from the websocket
+        """
         message = json.loads(message)
         self.tw_chat.insertTopLevelItem(
             0, self.add_message_to_treeview(message["room"], message)
         )
 
     def on_clear_chat_button_clicked(self) -> None:
+        """
+        Action called when the clear chat button is clicked
+        """
         self.tw_chat.clear()
 
     def on_send_button_clicked(self) -> None:
+        """
+        Action called when the send button is clicked
+        """
+
+        # retrieve nickname and message
         nickname = self.le_nickname.text()
         message_text = self.le_message.text()
 
@@ -215,12 +245,13 @@ class QChatWidget(QgsDockWidget):
     def add_message_to_treeview(
         self, room: str, message: dict[str, Any]
     ) -> QTreeWidgetItem:
+        """
+        Creates a QTreeWidgetItem from a QChat message dict
+        """
         item = QTreeWidgetItem(
             [
                 room,
-                datetime.strptime(
-                    message["date_posted"], "%Y-%m-%dT%H:%M:%SZ"
-                ).strftime("%H:%M"),
+                datetime.now().strftime("%H:%M:%S"),
                 message["author"],
                 message["message"],
             ]

@@ -126,7 +126,7 @@ class GeotribuPlugin:
 
         self.action_open_chat = QAction(
             QgsApplication.getThemeIcon("mMessageLog.svg"),
-            self.tr("Open QChat"),
+            self.tr("QChat"),
             self.iface.mainWindow(),
         )
         self.action_open_chat.triggered.connect(self.open_chat)
