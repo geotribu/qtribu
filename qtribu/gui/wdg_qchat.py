@@ -5,10 +5,11 @@ from functools import partial
 from pathlib import Path
 from typing import Any
 
-from qgis.gui import QgsDockWidget
-
 # PyQGIS
-from qgis.PyQt import QtWebSockets, uic
+#
+from PyQt5 import QtWebSockets  # noqa QGS103
+from qgis.gui import QgsDockWidget
+from qgis.PyQt import uic
 from qgis.PyQt.QtCore import QUrl
 from qgis.PyQt.QtWidgets import QMessageBox, QTreeWidgetItem, QWidget
 
@@ -63,6 +64,9 @@ class QChatWidget(QgsDockWidget):
             ]
         )
 
+        # clear chat signal listener
+        self.btn_clear_chat.pressed.connect(self.on_clear_chat_button_clicked)
+
         # initialize websocket client
         self.ws_client = QtWebSockets.QWebSocket(
             "", QtWebSockets.QWebSocketProtocol.Version13, None
@@ -110,8 +114,6 @@ class QChatWidget(QgsDockWidget):
             self.connect_to_room(room)
 
     def connect_to_room(self, room: str, log: bool = True) -> None:
-        messages = self.qchat_client.get_last_messages(room)
-        messages.reverse()
         if log:
             self.tw_chat.insertTopLevelItem(
                 0,
@@ -124,9 +126,6 @@ class QChatWidget(QgsDockWidget):
                     ]
                 ),
             )
-        for message in messages:
-            qtw_item = self.add_message_to_treeview(room, message)
-            self.tw_chat.insertTopLevelItem(0, qtw_item)
 
         ws_instance_url = "ws://" + self.settings.qchat_instance_uri.split("://")[-1]
         ws_url = f"{ws_instance_url}/room/{room}/ws"
@@ -181,6 +180,9 @@ class QChatWidget(QgsDockWidget):
         self.tw_chat.insertTopLevelItem(
             0, self.add_message_to_treeview(message["room"], message)
         )
+
+    def on_clear_chat_button_clicked(self) -> None:
+        self.tw_chat.clear()
 
     def on_send_button_clicked(self) -> None:
         nickname = self.le_nickname.text()

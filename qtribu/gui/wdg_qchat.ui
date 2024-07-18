@@ -177,6 +177,13 @@
          </column>
         </widget>
        </item>
+       <item>
+        <widget class="QPushButton" name="btn_clear_chat">
+         <property name="text">
+          <string>Clear</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </item>
