@@ -142,8 +142,9 @@ class QChatWidget(QgsDockWidget):
         item = QTreeWidgetItem(
             [
                 room,
-                # TODO: convert date to nice format like %H:%M
-                message["date_posted"],
+                datetime.strptime(
+                    message["date_posted"], "%Y-%m-%dT%H:%M:%SZ"
+                ).strftime("%H:%M"),
                 message["author"],
                 message["message"],
             ]
