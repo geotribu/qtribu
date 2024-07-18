@@ -1,13 +1,16 @@
 # standard
+import json
 from datetime import datetime
+from functools import partial
 from pathlib import Path
 from typing import Any
 
 from qgis.gui import QgsDockWidget
 
 # PyQGIS
-from qgis.PyQt import uic
-from qgis.PyQt.QtWidgets import QTreeWidgetItem, QWidget
+from qgis.PyQt import QtWebSockets, uic
+from qgis.PyQt.QtCore import QUrl
+from qgis.PyQt.QtWidgets import QMessageBox, QTreeWidgetItem, QWidget
 
 from qtribu.logic.qchat_client import QChatApiClient
 
@@ -60,7 +63,16 @@ class QChatWidget(QgsDockWidget):
             ]
         )
 
-    def load_settings(self) -> dict:
+        # initialize websocket client
+        self.ws_client = QtWebSockets.QWebSocket(
+            "", QtWebSockets.QWebSocketProtocol.Version13, None
+        )
+        self.ws_client.textMessageReceived.connect(self.on_ws_message_received)
+
+        # send message signal listener
+        self.btn_send.pressed.connect(self.on_send_button_clicked)
+
+    def load_settings(self) -> None:
         """Load options from QgsSettings into UI form."""
         self.lb_instance.setText(self.settings.qchat_instance_uri)
         self.le_nickname.setText(self.settings.qchat_nickname)
@@ -76,11 +88,12 @@ class QChatWidget(QgsDockWidget):
         """
         old_room = self.current_room
         new_room = self.cb_room.currentText()
+        is_marker = old_room != MARKER_VALUE
         if new_room == MARKER_VALUE:
-            self.disconnect_from_room()
+            self.disconnect_from_room(log=is_marker, close_ws=is_marker)
             self.current_room = MARKER_VALUE
             return
-        self.disconnect_from_room(log=old_room != MARKER_VALUE)
+        self.disconnect_from_room(log=is_marker, close_ws=is_marker)
         self.connect_to_room(new_room)
         self.current_room = new_room
 
@@ -115,11 +128,18 @@ class QChatWidget(QgsDockWidget):
             qtw_item = self.add_message_to_treeview(room, message)
             self.tw_chat.insertTopLevelItem(0, qtw_item)
 
+        ws_instance_url = "ws://" + self.settings.qchat_instance_uri.split("://")[-1]
+        ws_url = f"{ws_instance_url}/room/{room}/ws"
+        self.ws_client.open(QUrl(ws_url))
+        self.ws_client.connected.connect(partial(self.on_ws_connected, room))
+
+    def on_ws_connected(self, room: str) -> None:
         self.btn_connect.setText(self.tr("Disconnect"))
         self.lb_status.setText("Connected")
+        self.current_room = room
         self.connected = True
 
-    def disconnect_from_room(self, log: bool = True) -> None:
+    def disconnect_from_room(self, log: bool = True, close_ws: bool = True) -> None:
         if log:
             self.tw_chat.insertTopLevelItem(
                 0,
@@ -137,8 +157,53 @@ class QChatWidget(QgsDockWidget):
         self.btn_connect.setText(self.tr("Connect"))
         self.lb_status.setText("Disconnected")
         self.connected = False
+        if close_ws:
+            self.ws_client.connected.disconnect()
+            self.ws_client.close()
 
-    def add_message_to_treeview(self, room: str, message: dict[str, Any]) -> None:
+    def on_ws_disconnected(self) -> None:
+        self.btn_connect.setText(self.tr("Connect"))
+        self.lb_status.setText("Disconnected")
+        self.connected = False
+
+    def on_ws_error(self, error_code) -> None:
+        QTreeWidgetItem(
+            [
+                "ERROR",
+                datetime.now().strftime("%H:%M"),
+                self.tr("Admin"),
+                self.ws_client.errorString(),
+            ]
+        ),
+
+    def on_ws_message_received(self, message: str) -> None:
+        message = json.loads(message)
+        self.tw_chat.insertTopLevelItem(
+            0, self.add_message_to_treeview(message["room"], message)
+        )
+
+    def on_send_button_clicked(self) -> None:
+        nickname = self.le_nickname.text()
+        message_text = self.le_message.text()
+
+        # check if nickname and message are correctly filled
+        if not nickname or not message_text:
+            QMessageBox.warning(
+                self,
+                self.tr("Impossible"),
+                self.tr("Nickname and message boxes must be filled"),
+            )
+            return
+
+        # send message to websocket
+        message = {"message": message_text, "author": nickname}
+        self.ws_client.sendTextMessage(json.dumps(message))
+        self.le_message.setText("")
+        self.save_settings()
+
+    def add_message_to_treeview(
+        self, room: str, message: dict[str, Any]
+    ) -> QTreeWidgetItem:
         item = QTreeWidgetItem(
             [
                 room,
