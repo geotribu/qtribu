@@ -49,6 +49,7 @@ class QChatWidget(QgsDockWidget):
         # connect signal listener
         self.connected = False
         self.btn_connect.pressed.connect(self.on_connect_button_clicked)
+        self.btn_connect.setIcon(QIcon(QgsApplication.iconPath("mIconConnect.svg")))
 
         # tree widget initialization
         self.tw_chat.setHeaderLabels(
