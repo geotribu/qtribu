@@ -36,6 +36,10 @@ class PlgSettingsStructure:
     rss_source: str = "https://geotribu.fr/feed_rss_created.xml"
     rss_poll_frequency_hours: int = 24
 
+    # QChat
+    qchat_instance_uri: str = "http://localhost:8000"
+    qchat_nickname: str = "John Doe"
+
     # usage
     browser: int = 1
     notify_push_info: bool = True
