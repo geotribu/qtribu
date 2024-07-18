@@ -102,13 +102,13 @@ class GeotribuPlugin:
         self.action_show_latest_content.setToolTip(self.tr("Newest article"))
         self.action_show_latest_content.triggered.connect(self.on_show_latest_content)
 
-        self.action_contents = QAction(
+        self.action_open_contents = QAction(
             QgsApplication.getThemeIcon("mActionOpenTableVisible.svg"),
             self.tr("Browse latest contents"),
             self.iface.mainWindow(),
         )
-        self.action_contents.setToolTip(self.tr("Browse latest contents"))
-        self.action_contents.triggered.connect(self.open_contents)
+        self.action_open_contents.setToolTip(self.tr("Browse latest contents"))
+        self.action_open_contents.triggered.connect(self.open_contents)
 
         self.action_form_rdp_news = QAction(
             ICON_GEORDP,
@@ -125,7 +125,7 @@ class GeotribuPlugin:
         self.action_form_article.triggered.connect(self.open_form_article)
 
         self.action_open_chat = QAction(
-            QgsApplication.getThemeIcon("mActionOpenTableVisible.svg"),
+            QgsApplication.getThemeIcon("mMessageLog.svg"),
             self.tr("Open QChat"),
             self.iface.mainWindow(),
         )
