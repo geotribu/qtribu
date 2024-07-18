@@ -48,6 +48,10 @@ class PlgSettingsStructure:
     qchat_color_self: str = "#00cc00"
     qchat_color_admin: str = "#ffa500"
 
+    # QChat
+    qchat_instance_uri: str = "http://localhost:8000"
+    qchat_nickname: str = "John Doe"
+
     # usage
     browser: int = 1
     notify_push_info: bool = True
