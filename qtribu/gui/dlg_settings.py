@@ -121,6 +121,10 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         self.chb_integration_news_feed.setChecked(settings.integration_qgis_news_feed)
         self.chb_license_global_accept.setChecked(settings.license_global_accept)
 
+        # qchat
+        self.le_qchat_instance_uri.setText(settings.qchat_instance_uri)
+        self.le_qchat_nick_name.setText(settings.qchat_nickname)
+
         # misc
         self.opt_debug.setChecked(settings.debug_mode)
         self.lbl_version_saved_value.setText(settings.version)
