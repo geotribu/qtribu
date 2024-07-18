@@ -14,13 +14,17 @@ HEADERS: dict = {
     b"User-Agent": bytes(f"{__title__}/{__version__}", "utf8"),
 }
 
+NB_MESSAGES_TO_FETCH = 6
+
 
 class QChatApiClient:
     """
     QChat API client
     """
 
-    def __init__(self, instance_uri: str, nb_messages_to_fetch: int = 12):
+    def __init__(
+        self, instance_uri: str, nb_messages_to_fetch: int = NB_MESSAGES_TO_FETCH
+    ):
         self.instance_uri = instance_uri
         self.nb_messages_to_fetch = nb_messages_to_fetch
         self.qntwk = NetworkRequestsManager()
