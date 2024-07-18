@@ -31,6 +31,10 @@ class PlgSettingsStructure:
     rss_source: str = "https://geotribu.fr/feed_rss_created.xml"
     json_feed_source: str = "https://geotribu.fr/feed_json_created.json"
 
+    # QChat
+    qchat_instance_uri: str = "http://localhost:8000"
+    qchat_nickname: str = "John Doe"
+
     # usage
     browser: int = 1
     notify_push_info: bool = True

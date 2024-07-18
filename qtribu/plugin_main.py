@@ -11,7 +11,7 @@ from pathlib import Path
 # PyQGIS
 from qgis.core import Qgis, QgsApplication, QgsSettings
 from qgis.gui import QgisInterface
-from qgis.PyQt.QtCore import QCoreApplication, QLocale, QTranslator
+from qgis.PyQt.QtCore import QCoreApplication, QLocale, Qt, QTranslator
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction
 
@@ -22,6 +22,7 @@ from qtribu.gui.dlg_contents import GeotribuContentsDialog
 from qtribu.gui.dlg_settings import PlgOptionsFactory
 from qtribu.gui.form_article import ArticleForm
 from qtribu.gui.form_rdp_news import RdpNewsForm
+from qtribu.gui.wdg_qchat import QChatWidget
 from qtribu.logic import RssMiniReader, SplashChanger
 from qtribu.toolbelt import NetworkRequestsManager, PlgLogger, PlgOptionsManager
 from qtribu.toolbelt.commons import open_url_in_browser, open_url_in_webviewer
@@ -87,6 +88,9 @@ class GeotribuPlugin:
         self.form_contents = None
         self.form_rdp_news = None
 
+        # -- QChat
+        self.qchat_widget = None
+
         # -- Actions
         self.action_run = QAction(
             QIcon(str(DIR_PLUGIN_ROOT / "resources/images/logo_green_no_text.svg")),
@@ -103,7 +107,7 @@ class GeotribuPlugin:
             self.iface.mainWindow(),
         )
         self.action_contents.setToolTip(self.tr("Browse latest contents"))
-        self.action_contents.triggered.connect(self.contents)
+        self.action_contents.triggered.connect(self.open_contents)
 
         self.action_form_rdp_news = QAction(
             ICON_GEORDP,
@@ -118,6 +122,13 @@ class GeotribuPlugin:
             self.iface.mainWindow(),
         )
         self.action_form_article.triggered.connect(self.open_form_article)
+
+        self.action_open_chat = QAction(
+            QgsApplication.getThemeIcon("mActionOpenTableVisible.svg"),
+            self.tr("Open QChat"),
+            self.iface.mainWindow(),
+        )
+        self.action_open_chat.triggered.connect(self.open_chat)
 
         self.action_help = QAction(
             QIcon(QgsApplication.iconPath("mActionHelpContents.svg")),
@@ -145,6 +156,7 @@ class GeotribuPlugin:
         self.iface.addPluginToWebMenu(__title__, self.action_contents)
         self.iface.addPluginToWebMenu(__title__, self.action_form_rdp_news)
         self.iface.addPluginToWebMenu(__title__, self.action_form_article)
+        self.iface.addPluginToWebMenu(__title__, self.action_open_chat)
         self.iface.addPluginToWebMenu(__title__, self.action_splash)
         self.iface.addPluginToWebMenu(__title__, self.action_settings)
         self.iface.addPluginToWebMenu(__title__, self.action_help)
@@ -327,7 +339,7 @@ class GeotribuPlugin:
             )
             raise err
 
-    def contents(self):
+    def open_contents(self) -> None:
         """Action to open contents dialog"""
         if not self.form_contents:
             self.form_contents = GeotribuContentsDialog()
@@ -376,3 +388,9 @@ class GeotribuPlugin:
             # clean up
             self.form_rdp_news.deleteLater()
             self.form_rdp_news = None
+
+    def open_chat(self) -> None:
+        if not self.qchat_widget:
+            self.qchat_widget = QChatWidget(self.iface.mainWindow())
+            self.iface.addDockWidget(int(Qt.RightDockWidgetArea), self.qchat_widget)
+        self.qchat_widget.show()
