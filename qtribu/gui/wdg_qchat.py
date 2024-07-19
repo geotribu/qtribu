@@ -9,13 +9,15 @@ from typing import Any
 #
 from PyQt5 import QtWebSockets  # noqa QGS103
 from qgis.core import QgsApplication
-from qgis.gui import QgsDockWidget
+from qgis.gui import QgisInterface, QgsDockWidget
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import QUrl
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QMessageBox, QTreeWidgetItem, QWidget
 
+from qtribu.constants import CHEATCODE_DIZZY
 from qtribu.logic.qchat_client import QChatApiClient
+from qtribu.tasks.dizzy import DizzyTask
 
 # plugin
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
@@ -26,13 +28,14 @@ DISPLAY_DATE_FORMAT = "%H:%M:%S"
 
 
 class QChatWidget(QgsDockWidget):
-    def __init__(self, parent: QWidget = None):
+    def __init__(self, iface: QgisInterface, parent: QWidget = None):
         """QWidget to see and post messages on chat
 
         :param parent: parent widget or application
         :type parent: QWidget
         """
         super().__init__(parent)
+        self.iface = iface
         self.log = PlgLogger().log
         self.plg_settings = PlgOptionsManager()
         uic.loadUi(Path(__file__).parent / f"{Path(__file__).stem}.ui", self)
@@ -48,7 +51,7 @@ class QChatWidget(QgsDockWidget):
         rooms = self.qchat_client.get_rooms()
         self.cb_room.addItem(MARKER_VALUE)
         for room in rooms:
-            self.cb_room.addItem(room["name"])
+            self.cb_room.addItem(room)
         self.current_room = MARKER_VALUE
 
         self.cb_room.currentIndexChanged.connect(self.on_room_changed)
@@ -210,8 +213,12 @@ class QChatWidget(QgsDockWidget):
         Action called when a message is received from the websocket
         """
         message = json.loads(message)
+        if message["message"] == CHEATCODE_DIZZY:
+            task = DizzyTask("Cheatcode activation", self.iface)
+            QgsApplication.taskManager().addTask(task)
+            return
         self.tw_chat.insertTopLevelItem(
-            0, self.add_message_to_treeview(message["room"], message)
+            0, self.add_message_to_treeview(self.current_room, message)
         )
 
     def on_clear_chat_button_clicked(self) -> None:
