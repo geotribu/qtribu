@@ -29,7 +29,7 @@ class QChatApiClient:
         self.nb_messages_to_fetch = nb_messages_to_fetch
         self.qntwk = NetworkRequestsManager()
 
-    def get_rooms(self) -> list[dict[str, Any]]:
+    def get_rooms(self) -> list[str]:
         """
         Get available rooms with an API HTTP call
         """
