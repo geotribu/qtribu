@@ -81,6 +81,7 @@ class QChatWidget(QgsDockWidget):
         self.ws_client.textMessageReceived.connect(self.on_ws_message_received)
 
         # send message signal listener
+        self.le_message.returnPressed.connect(self.on_send_button_clicked)
         self.btn_send.pressed.connect(self.on_send_button_clicked)
         self.btn_send.setIcon(
             QIcon(QgsApplication.iconPath("mActionDoubleArrowRight.svg"))
