@@ -90,6 +90,9 @@ class QChatWidget(QgsDockWidget):
             QIcon(QgsApplication.iconPath("mActionDoubleArrowRight.svg"))
         )
 
+        # widget closed signal
+        self.closed.connect(self.on_widget_closed)
+
     def load_settings(self) -> None:
         """Load options from QgsSettings into UI form."""
         self.lb_instance.setText(self.settings.qchat_instance_uri)
@@ -260,9 +263,16 @@ class QChatWidget(QgsDockWidget):
         item = QTreeWidgetItem(
             [
                 room,
-                datetime.now().strftime("%H:%M:%S"),
+                datetime.now().strftime(DISPLAY_DATE_FORMAT),
                 message["author"],
                 message["message"],
             ]
         )
         return item
+
+    def on_widget_closed(self) -> None:
+        """
+        Action called when the widget is closed
+        """
+        if self.connected:
+            self.disconnect_from_room()
