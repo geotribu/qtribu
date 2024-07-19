@@ -103,12 +103,13 @@ class QChatWidget(QgsDockWidget):
         """
         old_room = self.current_room
         new_room = self.cb_room.currentText()
-        is_marker = old_room != MARKER_VALUE
+        old_is_marker = old_room != MARKER_VALUE
         if new_room == MARKER_VALUE:
-            self.disconnect_from_room(log=is_marker, close_ws=is_marker)
+            if self.connected:
+                self.disconnect_from_room(log=old_is_marker, close_ws=old_is_marker)
             self.current_room = MARKER_VALUE
             return
-        self.disconnect_from_room(log=is_marker, close_ws=is_marker)
+        self.disconnect_from_room(log=old_is_marker, close_ws=old_is_marker)
         self.connect_to_room(new_room)
         self.current_room = new_room
 
