@@ -356,6 +356,8 @@ class GeotribuPlugin:
 
     def open_chat(self) -> None:
         if not self.qchat_widget:
-            self.qchat_widget = QChatWidget(self.iface.mainWindow())
+            self.qchat_widget = QChatWidget(
+                iface=self.iface, parent=self.iface.mainWindow()
+            )
             self.iface.addDockWidget(int(Qt.RightDockWidgetArea), self.qchat_widget)
         self.qchat_widget.show()

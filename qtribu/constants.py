@@ -190,3 +190,5 @@ GEORDP_NEWS_ICONS: tuple = (
         description="icône globe pointillisme",
     ),
 )
+
+CHEATCODE_DIZZY = "givemesomecheese"
