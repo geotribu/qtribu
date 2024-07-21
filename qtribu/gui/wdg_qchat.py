@@ -21,6 +21,7 @@ from qtribu.tasks.dizzy import DizzyTask
 
 # plugin
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
+from qtribu.toolbelt.preferences import PlgSettingsStructure
 
 # -- GLOBALS --
 MARKER_VALUE = "---"
@@ -28,6 +29,13 @@ DISPLAY_DATE_FORMAT = "%H:%M:%S"
 
 
 class QChatWidget(QgsDockWidget):
+
+    connected: bool = False
+    current_room: str = None
+
+    settings: PlgSettingsStructure
+    qchat_client = QChatApiClient
+
     def __init__(self, iface: QgisInterface, parent: QWidget = None):
         """QWidget to see and post messages on chat
 
@@ -40,27 +48,13 @@ class QChatWidget(QgsDockWidget):
         self.plg_settings = PlgOptionsManager()
         uic.loadUi(Path(__file__).parent / f"{Path(__file__).stem}.ui", self)
 
-        # fill fields from saved settings
-        self.settings = self.plg_settings.get_plg_settings()
-        self.load_settings()
-
-        # initialize QChat API client
-        self.qchat_client = QChatApiClient(self.settings.qchat_instance_uri)
-
         # status signal listener
         self.btn_status.pressed.connect(self.on_status_button_clicked)
         self.btn_status.setIcon(QIcon(QgsApplication.iconPath("mIconInfo.svg")))
 
-        # load rooms
-        self.cb_room.addItem(MARKER_VALUE)
-        try:
-            rooms = self.qchat_client.get_rooms()
-            for room in rooms:
-                self.cb_room.addItem(room)
-        except Exception as exc:
-            self.iface.messageBar().pushCritical(self.tr("QChat error"), str(exc))
-        finally:
-            self.current_room = MARKER_VALUE
+        # widget opened / closed signals
+        self.opened.connect(self.on_widget_opened)
+        self.closed.connect(self.on_widget_closed)
 
         self.cb_room.currentIndexChanged.connect(self.on_room_changed)
 
@@ -98,9 +92,6 @@ class QChatWidget(QgsDockWidget):
             QIcon(QgsApplication.iconPath("mActionDoubleArrowRight.svg"))
         )
 
-        # widget closed signal
-        self.closed.connect(self.on_widget_closed)
-
     def load_settings(self) -> None:
         """Load options from QgsSettings into UI form."""
         self.lb_instance.setText(self.settings.qchat_instance_uri)
@@ -110,6 +101,32 @@ class QChatWidget(QgsDockWidget):
         """Save form text into QgsSettings."""
         self.settings.qchat_nickname = self.le_nickname.text()
         self.plg_settings.save_from_object(self.settings)
+
+    def on_widget_opened(self) -> None:
+        """
+        Action called when the widget is opened
+        """
+
+        # fill fields from saved settings
+        self.settings = self.plg_settings.get_plg_settings()
+        self.load_settings()
+
+        # initialize QChat API client
+        self.qchat_client = QChatApiClient(self.settings.qchat_instance_uri)
+
+        # clear rooms combobox items
+        self.cb_room.clear()  # delete all items from comboBox
+
+        # load rooms
+        self.cb_room.addItem(MARKER_VALUE)
+        try:
+            rooms = self.qchat_client.get_rooms()
+            for room in rooms:
+                self.cb_room.addItem(room)
+        except Exception as exc:
+            self.iface.messageBar().pushCritical(self.tr("QChat error"), str(exc))
+        finally:
+            self.current_room = MARKER_VALUE
 
     def on_status_button_clicked(self) -> None:
         """
@@ -178,7 +195,9 @@ Rooms:
                 ),
             )
 
-        ws_instance_url = "ws://" + self.settings.qchat_instance_uri.split("://")[-1]
+        protocol, domain = self.settings.qchat_instance_uri.split("://")
+        ws_protocol = "wss" if protocol == "https" else "ws"
+        ws_instance_url = f"{ws_protocol}://{domain}"
         ws_url = f"{ws_instance_url}/room/{room}/ws"
         self.ws_client.open(QUrl(ws_url))
         self.ws_client.connected.connect(partial(self.on_ws_connected, room))
