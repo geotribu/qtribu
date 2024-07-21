@@ -14,7 +14,7 @@ HEADERS: dict = {
     b"User-Agent": bytes(f"{__title__}/{__version__}", "utf8"),
 }
 
-NB_MESSAGES_TO_FETCH = 6
+CONTENT_TYPE_JSON = "application/json"
 
 
 class QChatApiClient:
@@ -23,10 +23,10 @@ class QChatApiClient:
     """
 
     def __init__(
-        self, instance_uri: str, nb_messages_to_fetch: int = NB_MESSAGES_TO_FETCH
+        self,
+        instance_uri: str,
     ):
         self.instance_uri = instance_uri
-        self.nb_messages_to_fetch = nb_messages_to_fetch
         self.qntwk = NetworkRequestsManager()
 
     def get_status(self) -> dict[str, Any]:
@@ -37,8 +37,22 @@ class QChatApiClient:
         response: QByteArray = self.qntwk.get_from_source(
             headers=HEADERS,
             url=url,
-            response_expected_content_type="application/json",
+            response_expected_content_type=CONTENT_TYPE_JSON,
             use_cache=False,
+        )
+        data = json.loads(str(response, "UTF8"))
+        return data
+
+    def get_rules(self) -> dict[str, str]:
+        """
+        Get instance rules with an API call
+        """
+        url = f"{self.instance_uri}/rules"
+        response: QByteArray = self.qntwk.get_from_source(
+            headers=HEADERS,
+            url=url,
+            response_expected_content_type=CONTENT_TYPE_JSON,
+            use_cache=True,
         )
         data = json.loads(str(response, "UTF8"))
         return data
@@ -51,7 +65,8 @@ class QChatApiClient:
         response: QByteArray = self.qntwk.get_from_source(
             headers=HEADERS,
             url=url,
-            response_expected_content_type="application/json",
+            response_expected_content_type=CONTENT_TYPE_JSON,
+            use_cache=True,
         )
         data = json.loads(str(response, "UTF8"))
         return data
