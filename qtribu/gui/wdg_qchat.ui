@@ -92,6 +92,9 @@
         <layout class="QHBoxLayout" name="hly_instance">
          <item>
           <widget class="QLabel" name="lb_instance">
+           <property name="cursor">
+            <cursorShape>ForbiddenCursor</cursorShape>
+           </property>
            <property name="toolTip">
             <string>Instance set in QTribu's plugin settings</string>
            </property>
@@ -102,6 +105,9 @@
          </item>
          <item>
           <widget class="QPushButton" name="btn_rules">
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
            <property name="text">
             <string>Rules</string>
            </property>
@@ -109,6 +115,9 @@
          </item>
          <item>
           <widget class="QPushButton" name="btn_status">
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
            <property name="toolTip">
             <string>Check instance status</string>
            </property>
