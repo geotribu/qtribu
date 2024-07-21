@@ -115,9 +115,10 @@ class NetworkRequestsManager:
         url: Optional[str] = None,
         headers: Optional[dict] = None,
         response_expected_content_type: str = "application/xml",
+        use_cache: bool = True,
     ) -> Optional[QByteArray]:
         """Method to retrieve a RSS feed from a referenced source in preferences. \
-        Use cache.
+        Can use cache if wanted, or not.
 
         :raises ConnectionError: if any problem occurs during feed fetching.
         :raises TypeError: if response mime-type is not valid
@@ -151,7 +152,7 @@ class NetworkRequestsManager:
 
             req_status = self.ntwk_requester.get(
                 request=req,
-                forceRefresh=False,
+                forceRefresh=not use_cache,
             )
 
             # check if request is fine
