@@ -32,8 +32,8 @@ class PlgSettingsStructure:
     json_feed_source: str = "https://geotribu.fr/feed_json_created.json"
 
     # QChat
-    qchat_instance_uri: str = "http://localhost:8000"
-    qchat_nickname: str = "John Doe"
+    qchat_instance_uri: str = "https://qchat.guilhemallaman.net"
+    qchat_nickname: str = "J.D."
 
     # usage
     browser: int = 1
