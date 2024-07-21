@@ -38,6 +38,7 @@ class QChatApiClient:
             headers=HEADERS,
             url=url,
             response_expected_content_type="application/json",
+            use_cache=False,
         )
         data = json.loads(str(response, "UTF8"))
         return data
