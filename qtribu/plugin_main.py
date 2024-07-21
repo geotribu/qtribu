@@ -115,6 +115,9 @@ class GeotribuPlugin:
             self.tr("Propose a news to the next GeoRDP"),
             self.iface.mainWindow(),
         )
+        self.action_form_rdp_news.setToolTip(
+            self.tr("Propose a news to the next GeoRDP")
+        )
         self.action_form_rdp_news.triggered.connect(self.open_form_rdp_news)
 
         self.action_form_article = QAction(
@@ -122,6 +125,7 @@ class GeotribuPlugin:
             self.tr("Submit an article"),
             self.iface.mainWindow(),
         )
+        self.action_form_article.setToolTip(self.tr("Submit an article"))
         self.action_form_article.triggered.connect(self.open_form_article)
 
         self.action_open_chat = QAction(
@@ -129,6 +133,7 @@ class GeotribuPlugin:
             self.tr("QChat"),
             self.iface.mainWindow(),
         )
+        self.action_open_chat.setToolTip(self.tr("QChat"))
         self.action_open_chat.triggered.connect(self.open_chat)
 
         self.action_help = QAction(
@@ -201,7 +206,7 @@ class GeotribuPlugin:
 
         # -- Toolbar
         self.toolbar.addAction(self.action_show_latest_content)
-        self.toolbar.addAction(self.action_contents)
+        self.toolbar.addAction(self.action_open_chat)
         self.toolbar.addAction(self.action_form_rdp_news)
         self.toolbar.addAction(self.action_form_article)
 
