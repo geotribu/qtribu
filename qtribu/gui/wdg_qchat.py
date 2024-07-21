@@ -3,7 +3,7 @@ import json
 from datetime import datetime
 from functools import partial
 from pathlib import Path
-from typing import Any
+from typing import Any, Optional
 
 # PyQGIS
 #
@@ -31,7 +31,7 @@ DISPLAY_DATE_FORMAT = "%H:%M:%S"
 class QChatWidget(QgsDockWidget):
 
     connected: bool = False
-    current_room: str = None
+    current_room: Optional[str] = None
 
     settings: PlgSettingsStructure
     qchat_client = QChatApiClient
@@ -44,6 +44,7 @@ class QChatWidget(QgsDockWidget):
         """
         super().__init__(parent)
         self.iface = iface
+        self.task_manager = QgsApplication.taskManager()
         self.log = PlgLogger().log
         self.plg_settings = PlgOptionsManager()
         uic.loadUi(Path(__file__).parent / f"{Path(__file__).stem}.ui", self)
@@ -267,7 +268,7 @@ Rooms:
         message = json.loads(message)
         if message["message"] == CHEATCODE_DIZZY:
             task = DizzyTask("Cheatcode activation", self.iface)
-            QgsApplication.taskManager().addTask(task)
+            self.task_manager.addTask(task)
             return
         self.tw_chat.insertTopLevelItem(
             0, self.add_message_to_treeview(self.current_room, message)
