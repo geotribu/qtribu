@@ -13,7 +13,7 @@ from qgis.core import QgsApplication
 from qgis.gui import QgsOptionsPageWidget, QgsOptionsWidgetFactory
 from qgis.PyQt import uic
 from qgis.PyQt.QtGui import QIcon
-from qgis.PyQt.QtWidgets import QButtonGroup
+from qgis.PyQt.QtWidgets import QButtonGroup, QMessageBox
 
 # project
 from qtribu.__about__ import (
@@ -23,6 +23,7 @@ from qtribu.__about__ import (
     __uri_tracker__,
     __version__,
 )
+from qtribu.logic.qchat_client import QChatApiClient
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
 from qtribu.toolbelt.commons import open_url_in_browser
 from qtribu.toolbelt.preferences import PlgSettingsStructure
@@ -58,6 +59,9 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         self.opt_browser_group = QButtonGroup(self)
         self.opt_browser_group.addButton(self.opt_browser_qt, 1)
         self.opt_browser_group.addButton(self.opt_browser_os, 2)
+
+        self.btn_rules.pressed.connect(self.show_instance_rules)
+        self.btn_rules.setIcon(QIcon(QgsApplication.iconPath("mIconWarning.svg")))
 
         # customization
         self.btn_help.setIcon(QIcon(QgsApplication.iconPath("mActionHelpContents.svg")))
@@ -132,6 +136,18 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         # misc
         self.opt_debug.setChecked(settings.debug_mode)
         self.lbl_version_saved_value.setText(settings.version)
+
+    def show_instance_rules(self) -> None:
+        instance_url = self.le_qchat_instance_uri.text()
+        client = QChatApiClient(instance_url)
+        rules = client.get_rules()
+        QMessageBox.information(
+            self,
+            self.tr("Instance rules"),
+            self.tr("Instance rules ({instance_url}):\n\n{rules}").format(
+                instance_url=instance_url, rules=rules["rules"]
+            ),
+        )
 
     def reset_read_history(self):
         """Set latest_content_guid to None."""

@@ -326,6 +326,13 @@
       <item row="3" column="1">
        <widget class="QLineEdit" name="le_qchat_nickname"/>
       </item>
+      <item row="2" column="1">
+       <widget class="QPushButton" name="btn_rules">
+        <property name="text">
+         <string>Instance rules</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>

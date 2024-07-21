@@ -8,7 +8,7 @@ from typing import Any, Optional
 # PyQGIS
 #
 from PyQt5 import QtWebSockets  # noqa QGS103
-from qgis.core import QgsApplication
+from qgis.core import Qgis, QgsApplication
 from qgis.gui import QgisInterface, QgsDockWidget
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import QUrl
@@ -49,7 +49,9 @@ class QChatWidget(QgsDockWidget):
         self.plg_settings = PlgOptionsManager()
         uic.loadUi(Path(__file__).parent / f"{Path(__file__).stem}.ui", self)
 
-        # status signal listener
+        # rules and status signal listener
+        self.btn_rules.pressed.connect(self.on_rules_button_clicked)
+        self.btn_rules.setIcon(QIcon(QgsApplication.iconPath("mIconWarning.svg")))
         self.btn_status.pressed.connect(self.on_status_button_clicked)
         self.btn_status.setIcon(QIcon(QgsApplication.iconPath("mIconInfo.svg")))
 
@@ -95,7 +97,11 @@ class QChatWidget(QgsDockWidget):
 
     def load_settings(self) -> None:
         """Load options from QgsSettings into UI form."""
-        self.lb_instance.setText(self.settings.qchat_instance_uri)
+        self.lb_instance.setText(
+            self.tr("Instance: {instance}").format(
+                instance=self.settings.qchat_instance_uri
+            )
+        )
         self.le_nickname.setText(self.settings.qchat_nickname)
 
     def save_settings(self) -> None:
@@ -126,8 +132,26 @@ class QChatWidget(QgsDockWidget):
                 self.cb_room.addItem(room)
         except Exception as exc:
             self.iface.messageBar().pushCritical(self.tr("QChat error"), str(exc))
+            self.log(message=str(exc), log_level=Qgis.Critical)
         finally:
             self.current_room = MARKER_VALUE
+
+    def on_rules_button_clicked(self) -> None:
+        """
+        Action called when clicking on "Rules" button
+        """
+        try:
+            rules = self.qchat_client.get_rules()
+            QMessageBox.information(
+                self,
+                self.tr("Instance rules"),
+                self.tr("Instance rules ({instance_url}):\n\n{rules}").format(
+                    instance_url=self.qchat_client.instance_uri, rules=rules["rules"]
+                ),
+            )
+        except Exception as exc:
+            self.iface.messageBar().pushCritical(self.tr("QChat error"), str(exc))
+            self.log(message=str(exc), log_level=Qgis.Critical)
 
     def on_status_button_clicked(self) -> None:
         """
@@ -149,7 +173,8 @@ Rooms:
             )
             QMessageBox.information(self, self.tr("QChat instance status"), text)
         except Exception as exc:
-            QMessageBox.critical(self, self.tr("QChat error"), str(exc))
+            self.iface.messageBar().pushCritical(self.tr("QChat error"), str(exc))
+            self.log(message=str(exc), log_level=Qgis.Critical)
 
     def on_room_changed(self) -> None:
         """
