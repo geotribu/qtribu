@@ -37,8 +37,8 @@ class PlgSettingsStructure:
     rss_poll_frequency_hours: int = 24
 
     # QChat
-    qchat_instance_uri: str = "http://localhost:8000"
-    qchat_nickname: str = "John Doe"
+    qchat_instance_uri: str = "https://qchat.guilhemallaman.net"
+    qchat_nickname: str = "J.D."
 
     # usage
     browser: int = 1
