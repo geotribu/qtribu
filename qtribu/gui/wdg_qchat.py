@@ -47,12 +47,20 @@ class QChatWidget(QgsDockWidget):
         # initialize QChat API client
         self.qchat_client = QChatApiClient(self.settings.qchat_instance_uri)
 
+        # status signal listener
+        self.btn_status.pressed.connect(self.on_status_button_clicked)
+        self.btn_status.setIcon(QIcon(QgsApplication.iconPath("mIconInfo.svg")))
+
         # load rooms
-        rooms = self.qchat_client.get_rooms()
         self.cb_room.addItem(MARKER_VALUE)
-        for room in rooms:
-            self.cb_room.addItem(room)
-        self.current_room = MARKER_VALUE
+        try:
+            rooms = self.qchat_client.get_rooms()
+            for room in rooms:
+                self.cb_room.addItem(room)
+        except Exception as exc:
+            self.iface.messageBar().pushCritical(self.tr("QChat error"), str(exc))
+        finally:
+            self.current_room = MARKER_VALUE
 
         self.cb_room.currentIndexChanged.connect(self.on_room_changed)
 
@@ -102,6 +110,28 @@ class QChatWidget(QgsDockWidget):
         """Save form text into QgsSettings."""
         self.settings.qchat_nickname = self.le_nickname.text()
         self.plg_settings.save_from_object(self.settings)
+
+    def on_status_button_clicked(self) -> None:
+        """
+        Action called when clicking on "Status" button
+        """
+        try:
+            status = self.qchat_client.get_status()
+            text = """Status: {status}
+
+Rooms:
+{rooms_status}""".format(
+                status=status["status"],
+                rooms_status="\n".join(
+                    [
+                        f"- {r['name']} : {r['nb_connected_users']} user(s)"
+                        for r in status["rooms"]
+                    ]
+                ),
+            )
+            QMessageBox.information(self, self.tr("QChat instance status"), text)
+        except Exception as exc:
+            QMessageBox.critical(self, self.tr("QChat error"), str(exc))
 
     def on_room_changed(self) -> None:
         """

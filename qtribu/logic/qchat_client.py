@@ -29,11 +29,11 @@ class QChatApiClient:
         self.nb_messages_to_fetch = nb_messages_to_fetch
         self.qntwk = NetworkRequestsManager()
 
-    def get_rooms(self) -> list[str]:
+    def get_status(self) -> dict[str, Any]:
         """
-        Get available rooms with an API HTTP call
+        Get instance status with an API call
         """
-        url = f"{self.instance_uri}/rooms"
+        url = f"{self.instance_uri}/status"
         response: QByteArray = self.qntwk.get_from_source(
             headers=HEADERS,
             url=url,
@@ -42,11 +42,11 @@ class QChatApiClient:
         data = json.loads(str(response, "UTF8"))
         return data
 
-    def get_last_messages(self, room: str) -> list[dict[str, Any]]:
+    def get_rooms(self) -> list[str]:
         """
-        Get last chat messages for a room with an API HTTP call
+        Get available rooms with an API HTTP call
         """
-        url = f"{self.instance_uri}/room/{room}/messages/{self.nb_messages_to_fetch}"
+        url = f"{self.instance_uri}/rooms"
         response: QByteArray = self.qntwk.get_from_source(
             headers=HEADERS,
             url=url,
