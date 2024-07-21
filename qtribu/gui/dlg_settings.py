@@ -94,6 +94,10 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         settings.integration_qgis_news_feed = self.chb_integration_news_feed.isChecked()
         settings.license_global_accept = self.chb_license_global_accept.isChecked()
 
+        # qchat
+        settings.qchat_instance_uri = self.le_qchat_instance_uri.text()
+        settings.qchat_nickname = self.le_qchat_nickname.text()
+
         # misc
         settings.debug_mode = self.opt_debug.isChecked()
         settings.version = __version__
@@ -123,7 +127,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
 
         # qchat
         self.le_qchat_instance_uri.setText(settings.qchat_instance_uri)
-        self.le_qchat_nick_name.setText(settings.qchat_nickname)
+        self.le_qchat_nickname.setText(settings.qchat_nickname)
 
         # misc
         self.opt_debug.setChecked(settings.debug_mode)
