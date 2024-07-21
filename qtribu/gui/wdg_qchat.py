@@ -188,7 +188,8 @@ Rooms:
                 self.disconnect_from_room(log=old_is_marker, close_ws=old_is_marker)
             self.current_room = MARKER_VALUE
             return
-        self.disconnect_from_room(log=old_is_marker, close_ws=old_is_marker)
+        if self.connected:
+            self.disconnect_from_room(log=old_is_marker, close_ws=old_is_marker)
         self.connect_to_room(new_room)
         self.current_room = new_room
 
