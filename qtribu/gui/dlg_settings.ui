@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>809</width>
+    <width>803</width>
     <height>468</height>
    </rect>
   </property>
@@ -313,7 +313,7 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="0">
+      <item row="5" column="0">
        <widget class="QLabel" name="lbl_nickname">
         <property name="text">
          <string>Nickname:</string>
@@ -323,13 +323,20 @@
       <item row="1" column="1">
        <widget class="QLineEdit" name="le_qchat_instance_uri"/>
       </item>
-      <item row="3" column="1">
+      <item row="5" column="1">
        <widget class="QLineEdit" name="le_qchat_nickname"/>
       </item>
       <item row="2" column="1">
        <widget class="QPushButton" name="btn_rules">
         <property name="text">
          <string>Instance rules</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <widget class="QCheckBox" name="ckb_cheatcodes">
+        <property name="text">
+         <string>Activate cheatcodes</string>
         </property>
        </widget>
       </item>
