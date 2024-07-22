@@ -292,10 +292,10 @@ Rooms:
         Action called when a message is received from the websocket
         """
         message = json.loads(message)
-        if message["message"] == CHEATCODE_DIZZY:
-            task = DizzyTask("Cheatcode activation", self.iface)
-            self.task_manager.addTask(task)
-            return
+        if self.settings.qchat_activate_cheatcode:
+            activated = self.check_cheatcode(message)
+            if activated:
+                return
         self.tw_chat.insertTopLevelItem(
             0, self.add_message_to_treeview(self.current_room, message)
         )
@@ -352,3 +352,15 @@ Rooms:
         """
         if self.connected:
             self.disconnect_from_room()
+
+    def check_cheatcode(self, message: dict[str, str]) -> bool:
+        """
+        Checks if a received message contains a cheatcode
+        Does action if necessary
+        Returns true if a cheatcode has been activated
+        """
+        if message["message"] == CHEATCODE_DIZZY:
+            task = DizzyTask(f"Cheatcode activation: {CHEATCODE_DIZZY}", self.iface)
+            self.task_manager.addTask(task)
+            return True
+        return False

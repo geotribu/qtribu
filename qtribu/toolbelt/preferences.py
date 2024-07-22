@@ -39,6 +39,7 @@ class PlgSettingsStructure:
     # QChat
     qchat_instance_uri: str = "https://qchat.guilhemallaman.net"
     qchat_nickname: str = "J.D."
+    qchat_activate_cheatcode: bool = True
 
     # usage
     browser: int = 1

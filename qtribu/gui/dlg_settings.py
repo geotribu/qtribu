@@ -101,6 +101,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         # qchat
         settings.qchat_instance_uri = self.le_qchat_instance_uri.text()
         settings.qchat_nickname = self.le_qchat_nickname.text()
+        settings.qchat_activate_cheatcode = self.ckb_cheatcodes.isChecked()
 
         # misc
         settings.debug_mode = self.opt_debug.isChecked()
@@ -132,6 +133,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         # qchat
         self.le_qchat_instance_uri.setText(settings.qchat_instance_uri)
         self.le_qchat_nickname.setText(settings.qchat_nickname)
+        self.ckb_cheatcodes.setChecked(settings.qchat_activate_cheatcode)
 
         # misc
         self.opt_debug.setChecked(settings.debug_mode)
