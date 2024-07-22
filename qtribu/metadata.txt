@@ -7,7 +7,7 @@ icon=resources/images/logo_geotribu.png
 tags=geotribu,blog,rss,splash,community
 
 # credits and contact
-author=Julien Moura (Geotribu)
+author=Julien Moura (Geotribu), Guilhem Allaman (Geotribu)
 email=geotribu@gmail.com
 homepage=https://geotribu.github.io/qtribu/
 repository=https://github.com/geotribu/qtribu/
