@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>803</width>
-    <height>468</height>
+    <width>796</width>
+    <height>583</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -338,6 +338,27 @@
         <property name="text">
          <string>Activate cheatcodes</string>
         </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QCheckBox" name="ckb_play_sounds">
+        <property name="text">
+         <string>Play sounds</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="1">
+       <widget class="QComboBox" name="cbb_ring_tone">
+        <item>
+         <property name="text">
+          <string>dog</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>chicken</string>
+         </property>
+        </item>
        </widget>
       </item>
      </layout>
