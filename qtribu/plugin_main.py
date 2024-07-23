@@ -158,11 +158,10 @@ class GeotribuPlugin:
         self.action_splash.triggered.connect(self.splash_chgr.switch)
 
         # -- Menu
+        self.iface.addPluginToWebMenu(__title__, self.action_open_chat)
         self.iface.addPluginToWebMenu(__title__, self.action_show_latest_content)
-        self.iface.addPluginToWebMenu(__title__, self.action_contents)
         self.iface.addPluginToWebMenu(__title__, self.action_form_rdp_news)
         self.iface.addPluginToWebMenu(__title__, self.action_form_article)
-        self.iface.addPluginToWebMenu(__title__, self.action_open_chat)
         self.iface.addPluginToWebMenu(__title__, self.action_splash)
         self.iface.addPluginToWebMenu(__title__, self.action_settings)
         self.iface.addPluginToWebMenu(__title__, self.action_help)
