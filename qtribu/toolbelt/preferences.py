@@ -37,7 +37,7 @@ class PlgSettingsStructure:
     rss_poll_frequency_hours: int = 24
 
     # QChat
-    qchat_instance_uri: str = "https://qchat.guilhemallaman.net"
+    qchat_instance_uri: str = "https://gischat.geotribu.net"
     qchat_nickname: str = "J.D."
     qchat_activate_cheatcode: bool = True
     qchat_play_sounds: bool = True
