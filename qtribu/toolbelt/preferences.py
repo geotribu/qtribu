@@ -49,7 +49,7 @@ class PlgSettingsStructure:
     qchat_color_admin: str = "#ffa500"
 
     # QChat
-    qchat_instance_uri: str = "https://qchat.guilhemallaman.net"
+    qchat_instance_uri: str = "https://gischat.geotribu.net"
     qchat_nickname: str = "J.D."
 
     # usage
