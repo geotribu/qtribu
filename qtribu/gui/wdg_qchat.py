@@ -29,7 +29,7 @@ from qtribu.tasks.dizzy import DizzyTask
 # plugin
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
 from qtribu.toolbelt.preferences import PlgSettingsStructure
-from qtribu.utils import play_sound_media
+from qtribu.utils import play_sound
 
 # -- GLOBALS --
 MARKER_VALUE = "---"
@@ -394,4 +394,4 @@ Rooms:
             err_msg = f"File '{file_name}.wav' not found in resources/sounds folder"
             self.log(message=err_msg, log_level=Qgis.Critical)
             raise FileNotFoundError(err_msg)
-        play_sound_media(file_path)
+        play_sound(file_path, self.settings.qchat_sound_volume)

@@ -41,6 +41,7 @@ class PlgSettingsStructure:
     qchat_nickname: str = "J.D."
     qchat_activate_cheatcode: bool = True
     qchat_play_sounds: bool = False
+    qchat_sound_volume: int = 50
     qchat_ring_tone: str = "dog"
 
     # usage
