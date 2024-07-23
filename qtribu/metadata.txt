@@ -1,6 +1,6 @@
 [general]
 name=QTribu
-about=Garde le Qontact avec ta Geotribu !
+about=Garde le Qontact avec ta Geotribu ! Keep in touch with your geo tribe !
 category=Web
 description=Geotribu (https://geotribu.fr) content right into QGIS.
 icon=resources/images/logo_geotribu.png
