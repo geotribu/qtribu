@@ -67,8 +67,6 @@ class QChatWidget(QgsDockWidget):
         self.opened.connect(self.on_widget_opened)
         self.closed.connect(self.on_widget_closed)
 
-        self.cb_room.currentIndexChanged.connect(self.on_room_changed)
-
         # connect signal listener
         self.connected = False
         self.btn_connect.pressed.connect(self.on_connect_button_clicked)
@@ -143,6 +141,8 @@ class QChatWidget(QgsDockWidget):
             self.log(message=str(exc), log_level=Qgis.Critical)
         finally:
             self.current_room = MARKER_VALUE
+
+        self.cb_room.currentIndexChanged.connect(self.on_room_changed)
 
     def on_rules_button_clicked(self) -> None:
         """
@@ -362,6 +362,7 @@ Rooms:
         """
         if self.connected:
             self.disconnect_from_room()
+        self.cb_room.currentIndexChanged.disconnect()
 
     def check_cheatcode(self, message: dict[str, str]) -> bool:
         """
