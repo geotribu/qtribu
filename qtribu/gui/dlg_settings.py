@@ -27,6 +27,7 @@ from qtribu.logic.qchat_client import QChatApiClient
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
 from qtribu.toolbelt.commons import open_url_in_browser
 from qtribu.toolbelt.preferences import PlgSettingsStructure
+from qtribu.utils import play_resource_sound
 
 # ############################################################################
 # ########## Globals ###############
@@ -84,6 +85,9 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
 
         # load previously saved settings
         self.load_settings()
+
+        # play sound on ringtone changed
+        self.cbb_ring_tone.currentIndexChanged.connect(self.on_ring_tone_changed)
 
     def apply(self):
         """Called to permanently apply the settings shown in the options page (e.g. \
@@ -156,6 +160,14 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
             self.tr("Instance rules ({instance_url}):\n\n{rules}").format(
                 instance_url=instance_url, rules=rules["rules"]
             ),
+        )
+
+    def on_ring_tone_changed(self) -> None:
+        """
+        Action called when ringtone value is changed
+        """
+        play_resource_sound(
+            self.cbb_ring_tone.currentText(), self.hsl_sound_volume.value()
         )
 
     def reset_read_history(self):

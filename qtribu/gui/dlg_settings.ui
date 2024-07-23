@@ -351,6 +351,46 @@
        <widget class="QComboBox" name="cbb_ring_tone">
         <item>
          <property name="text">
+          <string>beep_1</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>beep_2</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>beep_3</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>beep_4</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>beep_5</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>beep_6</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>beep_7</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>horn</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
           <string>dog</string>
          </property>
         </item>

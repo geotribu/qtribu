@@ -1,6 +1,5 @@
 # standard
 import json
-import os
 from datetime import datetime
 from functools import partial
 from pathlib import Path
@@ -16,7 +15,6 @@ from qgis.PyQt.QtCore import QUrl
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QMessageBox, QTreeWidgetItem, QWidget
 
-from qtribu.__about__ import DIR_PLUGIN_ROOT
 from qtribu.constants import (
     CHEATCODE_10OCLOCK,
     CHEATCODE_DIZZY,
@@ -29,7 +27,7 @@ from qtribu.tasks.dizzy import DizzyTask
 # plugin
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
 from qtribu.toolbelt.preferences import PlgSettingsStructure
-from qtribu.utils import play_sound
+from qtribu.utils import play_resource_sound
 
 # -- GLOBALS --
 MARKER_VALUE = "---"
@@ -308,7 +306,9 @@ Rooms:
             0, self.add_message_to_treeview(self.current_room, message)
         )
         if self.settings.qchat_play_sounds:
-            self._play_sound(self.settings.qchat_ring_tone)
+            play_resource_sound(
+                self.settings.qchat_ring_tone, self.settings.qchat_sound_volume
+            )
 
     def on_clear_chat_button_clicked(self) -> None:
         """
@@ -381,18 +381,6 @@ Rooms:
         # play sounds
         if self.settings.qchat_play_sounds:
             if msg in [CHEATCODE_DONTCRYBABY, CHEATCODE_IAMAROBOT, CHEATCODE_10OCLOCK]:
-                self._play_sound(msg)
+                play_resource_sound(msg, self.settings.qchat_sound_volume)
                 return True
         return False
-
-    def _play_sound(self, file_name: str) -> None:
-        """
-        Play a sound inside QGIS
-        The file_name param must be the name (without extension) of a .ogg audio file inside resources/sounds folder
-        """
-        file_path = str(DIR_PLUGIN_ROOT / f"resources/sounds/{file_name}.ogg")
-        if not os.path.exists(file_path):
-            err_msg = f"File '{file_name}.wav' not found in resources/sounds folder"
-            self.log(message=err_msg, log_level=Qgis.Critical)
-            raise FileNotFoundError(err_msg)
-        play_sound(file_path, self.settings.qchat_sound_volume)
