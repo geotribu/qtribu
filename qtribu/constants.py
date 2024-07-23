@@ -192,3 +192,6 @@ GEORDP_NEWS_ICONS: tuple = (
 )
 
 CHEATCODE_DIZZY = "givemesomecheese"
+CHEATCODE_DONTCRYBABY = "dontcrybaby"
+CHEATCODE_IAMAROBOT = "iamarobot"
+CHEATCODE_10OCLOCK = "its10oclock"

@@ -40,6 +40,8 @@ class PlgSettingsStructure:
     qchat_instance_uri: str = "https://qchat.guilhemallaman.net"
     qchat_nickname: str = "J.D."
     qchat_activate_cheatcode: bool = True
+    qchat_play_sounds: bool = False
+    qchat_ring_tone: str = "dog"
 
     # usage
     browser: int = 1

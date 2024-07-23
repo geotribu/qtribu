@@ -102,6 +102,8 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         settings.qchat_instance_uri = self.le_qchat_instance_uri.text()
         settings.qchat_nickname = self.le_qchat_nickname.text()
         settings.qchat_activate_cheatcode = self.ckb_cheatcodes.isChecked()
+        settings.qchat_play_sounds = self.ckb_play_sounds.isChecked()
+        settings.qchat_ring_tone = self.cbb_ring_tone.currentText()
 
         # misc
         settings.debug_mode = self.opt_debug.isChecked()
@@ -134,6 +136,9 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         self.le_qchat_instance_uri.setText(settings.qchat_instance_uri)
         self.le_qchat_nickname.setText(settings.qchat_nickname)
         self.ckb_cheatcodes.setChecked(settings.qchat_activate_cheatcode)
+        self.ckb_play_sounds.setChecked(settings.qchat_play_sounds)
+        # TODO: load and select item from settings
+        # self.cbb_ring_tone.setItemText(settings.qchat_ring_tone)
 
         # misc
         self.opt_debug.setChecked(settings.debug_mode)

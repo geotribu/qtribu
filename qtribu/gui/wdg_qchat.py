@@ -1,5 +1,6 @@
 # standard
 import json
+import os
 from datetime import datetime
 from functools import partial
 from pathlib import Path
@@ -15,13 +16,20 @@ from qgis.PyQt.QtCore import QUrl
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QMessageBox, QTreeWidgetItem, QWidget
 
-from qtribu.constants import CHEATCODE_DIZZY
+from qtribu.__about__ import DIR_PLUGIN_ROOT
+from qtribu.constants import (
+    CHEATCODE_10OCLOCK,
+    CHEATCODE_DIZZY,
+    CHEATCODE_DONTCRYBABY,
+    CHEATCODE_IAMAROBOT,
+)
 from qtribu.logic.qchat_client import QChatApiClient
 from qtribu.tasks.dizzy import DizzyTask
 
 # plugin
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
 from qtribu.toolbelt.preferences import PlgSettingsStructure
+from qtribu.utils import play_sound
 
 # -- GLOBALS --
 MARKER_VALUE = "---"
@@ -299,6 +307,8 @@ Rooms:
         self.tw_chat.insertTopLevelItem(
             0, self.add_message_to_treeview(self.current_room, message)
         )
+        if self.settings.qchat_play_sounds:
+            self._play_sound(self.settings.qchat_ring_tone)
 
     def on_clear_chat_button_clicked(self) -> None:
         """
@@ -359,8 +369,29 @@ Rooms:
         Does action if necessary
         Returns true if a cheatcode has been activated
         """
-        if message["message"] == CHEATCODE_DIZZY:
+        msg = message["message"]
+
+        # make QGIS shuffle for a few seconds
+        if msg == CHEATCODE_DIZZY:
             task = DizzyTask(f"Cheatcode activation: {CHEATCODE_DIZZY}", self.iface)
             self.task_manager.addTask(task)
             return True
+
+        # play sounds
+        if self.settings.qchat_play_sounds:
+            if msg in [CHEATCODE_DONTCRYBABY, CHEATCODE_IAMAROBOT, CHEATCODE_10OCLOCK]:
+                self._play_sound(msg)
+                return True
         return False
+
+    def _play_sound(self, file_name: str) -> None:
+        """
+        Play a sound inside QGIS
+        The file_name param must be the name (without extension) of a .ogg audio file inside resources/sounds folder
+        """
+        file_path = str(DIR_PLUGIN_ROOT / f"resources/sounds/{file_name}.ogg")
+        if not os.path.exists(file_path):
+            err_msg = f"File '{file_name}.wav' not found in resources/sounds folder"
+            self.log(message=err_msg, log_level=Qgis.Critical)
+            raise FileNotFoundError(err_msg)
+        play_sound(file_path)
