@@ -32,7 +32,7 @@ class PlgSettingsStructure:
     json_feed_source: str = "https://geotribu.fr/feed_json_created.json"
 
     # QChat
-    qchat_instance_uri: str = "https://qchat.guilhemallaman.net"
+    qchat_instance_uri: str = "https://gischat.geotribu.net"
     qchat_nickname: str = "J.D."
     qchat_activate_cheatcode: bool = True
     qchat_play_sounds: bool = True
