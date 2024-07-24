@@ -424,7 +424,6 @@ Rooms:
         room: str,
         author: str,
         message: str,
-        dt: datetime = datetime.now(),
         foreground_color: str = None,
         background_color: str = None,
     ) -> QTreeWidgetItem:
@@ -434,7 +433,7 @@ Rooms:
         """
         item_data = [
             room,
-            dt.strftime(DISPLAY_DATE_FORMAT),
+            datetime.now().strftime(DISPLAY_DATE_FORMAT),
             author,
             message,
         ]
