@@ -22,6 +22,7 @@ from qtribu.constants import (
     CHEATCODE_DIZZY,
     CHEATCODE_DONTCRYBABY,
     CHEATCODE_IAMAROBOT,
+    CHEATCODE_QGIS_PRO_LICENSE,
     INTERNAL_MESSAGE_AUTHOR,
     MENTION_MESSAGES_COLOR,
     QCHAT_NICKNAME_MINLENGTH,
@@ -32,12 +33,11 @@ from qtribu.tasks.dizzy import DizzyTask
 
 # plugin
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
-from qtribu.toolbelt.commons import play_resource_sound
+from qtribu.toolbelt.commons import open_url_in_webviewer, play_resource_sound
 from qtribu.toolbelt.preferences import PlgSettingsStructure
 
 # -- GLOBALS --
 MARKER_VALUE = "---"
-DISPLAY_DATE_FORMAT = "%H:%M:%S"
 
 
 class QChatWidget(QgsDockWidget):
@@ -330,6 +330,7 @@ Rooms:
                 message=self.tr("You were mentionned by {sender}: {message}").format(
                     sender=message["author"], message=message["message"]
                 ),
+                application=self.tr("QChat"),
                 log_level=Qgis.Info,
                 push=PlgOptionsManager().get_plg_settings().notify_push_info,
                 duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
@@ -479,9 +480,42 @@ Rooms:
             self.task_manager.addTask(task)
             return True
 
+        # QGIS pro license expiration message
+        if msg == CHEATCODE_QGIS_PRO_LICENSE:
+            self.log(
+                message=self.tr("Your QGIS Pro license is about to expire"),
+                application=self.tr("QGIS Pro"),
+                log_level=Qgis.Warning,
+                push=PlgOptionsManager().get_plg_settings().notify_push_info,
+                duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
+                button=True,
+                button_label=self.tr("Click here to renew it"),
+                button_connect=self.on_renew_clicked,
+            )
+            return True
         # play sounds
         if self.settings.qchat_play_sounds:
             if msg in [CHEATCODE_DONTCRYBABY, CHEATCODE_IAMAROBOT, CHEATCODE_10OCLOCK]:
                 play_resource_sound(msg, self.settings.qchat_sound_volume)
                 return True
         return False
+
+    def on_renew_clicked(self) -> None:
+        msg_box = QMessageBox()
+        msg_box.setWindowTitle(self.tr("QGIS"))
+        msg_box.setIcon(QMessageBox.Information)
+        msg_box.setText(
+            self.tr(
+                """No ... it was a joke !
+
+QGIS is Free and Open Source software, forever.
+Free to use, not to make.
+
+Visit the new website ?
+"""
+            )
+        )
+        msg_box.setStandardButtons(QMessageBox.Yes)
+        return_value = msg_box.exec()
+        if return_value == QMessageBox.Yes:
+            open_url_in_webviewer("https://qgis.org/funding/donate/", "qgis.org")
