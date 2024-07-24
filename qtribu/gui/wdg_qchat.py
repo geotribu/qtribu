@@ -179,7 +179,7 @@ Rooms:
                 status=status["status"],
                 rooms_status="\n".join(
                     [
-                        f"- {r['name']} : {r['nb_connected_users']} user(s)"
+                        f"- {r['name']} : {r['nb_connected_users']} user{'s' if r['nb_connected_users'] > 1 else ''}"
                         for r in status["rooms"]
                     ]
                 ),

@@ -54,6 +54,26 @@
        <string>Rooms</string>
       </property>
       <layout class="QFormLayout" name="formLayout_2">
+       <item row="0" column="0">
+        <widget class="QLabel" name="lbl_instance_text">
+         <property name="text">
+          <string>Instance:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="lbl_instance">
+         <property name="cursor">
+          <cursorShape>ForbiddenCursor</cursorShape>
+         </property>
+         <property name="toolTip">
+          <string>Instance set in QTribu's plugin settings</string>
+         </property>
+         <property name="text">
+          <string>https://gischat.geotribu.net</string>
+         </property>
+        </widget>
+       </item>
        <item row="1" column="1">
         <layout class="QHBoxLayout" name="hly_instance">
          <item>
@@ -122,26 +142,6 @@
         <widget class="QLabel" name="lbl_status">
          <property name="text">
           <string>Not connected</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLabel" name="lbl_instance">
-         <property name="cursor">
-          <cursorShape>ForbiddenCursor</cursorShape>
-         </property>
-         <property name="toolTip">
-          <string>Instance set in QTribu's plugin settings</string>
-         </property>
-         <property name="text">
-          <string>https://gischat.geotribu.net</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="lbl_instance_text">
-         <property name="text">
-          <string>Instance:</string>
          </property>
         </widget>
        </item>
