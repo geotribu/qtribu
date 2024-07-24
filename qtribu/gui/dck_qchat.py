@@ -454,6 +454,7 @@ Rooms:
             message,
         ]
         item = QTreeWidgetItem(item_data)
+        item.setTooltip(message)
         if foreground_color:
             for i in range(len(item_data)):
                 item.setForeground(i, QBrush(QColor(foreground_color)))
