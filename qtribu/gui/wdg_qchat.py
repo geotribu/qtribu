@@ -3,7 +3,7 @@ import json
 from datetime import datetime
 from functools import partial
 from pathlib import Path
-from typing import Any, Optional
+from typing import Optional
 
 # PyQGIS
 #
@@ -17,11 +17,15 @@ from qgis.PyQt.QtWidgets import QMessageBox, QTreeWidgetItem, QWidget
 
 from qtribu.__about__ import __title__
 from qtribu.constants import (
+    ADMIN_MESSAGES_COLOR,
+    ADMIN_MESSAGES_NICKNAME,
     CHEATCODE_10OCLOCK,
     CHEATCODE_DIZZY,
     CHEATCODE_DONTCRYBABY,
     CHEATCODE_IAMAROBOT,
+    MENTION_MESSAGES_COLOR,
     QCHAT_NICKNAME_MINLENGTH,
+    USER_MESSAGES_COLOR,
 )
 from qtribu.logic.qchat_client import QChatApiClient
 from qtribu.tasks.dizzy import DizzyTask
@@ -34,12 +38,6 @@ from qtribu.utils import play_resource_sound
 # -- GLOBALS --
 MARKER_VALUE = "---"
 DISPLAY_DATE_FORMAT = "%H:%M:%S"
-
-ADMIN_MESSAGES_NICKNAME = "admin"
-ADMIN_MESSAGES_COLOR = "#ffa500"
-MENTION_MESSAGES_COLOR = "#00cc00"
-USER_MESSAGES_COLOR = "#4169e1"
-ERROR_MESSAGES_COLOR = "#ff0000"
 
 
 class QChatWidget(QgsDockWidget):
@@ -229,16 +227,9 @@ Rooms:
         Connect widget to a specific room
         """
         if log:
-            item = QTreeWidgetItem(
-                [
-                    room,
-                    datetime.now().strftime(DISPLAY_DATE_FORMAT),
-                    ADMIN_MESSAGES_NICKNAME,
-                    self.tr("Connected to room '{room}'").format(room=room),
-                ]
+            self.add_admin_message(
+                room, self.tr("Connected to room '{room}'").format(room=room)
             )
-            item.setForeground(0, QBrush(QColor(ADMIN_MESSAGES_COLOR)))
-            self.twg_chat.insertTopLevelItem(0, item)
 
         protocol, domain = self.settings.qchat_instance_uri.split("://")
         ws_protocol = "wss" if protocol == "https" else "ws"
@@ -262,18 +253,12 @@ Rooms:
         Disconnect widget from the current room
         """
         if log:
-            item = QTreeWidgetItem(
-                [
-                    self.current_room,
-                    datetime.now().strftime(DISPLAY_DATE_FORMAT),
-                    ADMIN_MESSAGES_NICKNAME,
-                    self.tr("Disconnected from room '{room}'").format(
-                        room=self.current_room
-                    ),
-                ]
+            self.add_admin_message(
+                self.current_room,
+                self.tr("Disconnected from room '{room}'").format(
+                    room=self.current_room
+                ),
             )
-            item.setForeground(0, QBrush(QColor(ADMIN_MESSAGES_COLOR)))
-            self.twg_chat.insertTopLevelItem(0, item)
         self.btn_connect.setText(self.tr("Connect"))
         self.lbl_status.setText("Disconnected")
         self.grb_user.setEnabled(False)
@@ -295,18 +280,7 @@ Rooms:
         """
         Action called when an error appears on the websocket
         """
-        item = (
-            QTreeWidgetItem(
-                [
-                    self.tr("ERROR"),
-                    datetime.now().strftime(DISPLAY_DATE_FORMAT),
-                    ADMIN_MESSAGES_NICKNAME,
-                    self.ws_client.errorString(),
-                ]
-            ),
-        )
-        item.setForeground(0, QBrush(QColor(ERROR_MESSAGES_COLOR)))
-        self.twg_chat.insertTopLevelItem(0, item)
+        self.add_admin_message(self.tr("ERROR"), self.ws_client.errorString())
         self.log(
             message=f"{error_code}: {self.ws_client.errorString()}",
             log_level=Qgis.Critical,
@@ -327,7 +301,10 @@ Rooms:
         # check if message mentions current user
         if f"@{self.settings.qchat_nickname}" in message["message"]:
             item = self.create_message_item(
-                self.current_room, message, color=MENTION_MESSAGES_COLOR
+                self.current_room,
+                message["author"],
+                message["message"],
+                foreground_color=MENTION_MESSAGES_COLOR,
             )
             self.log(
                 message=self.tr("You were mentionned by {sender}: {message}").format(
@@ -339,10 +316,15 @@ Rooms:
             )
         elif message["author"] == self.settings.qchat_nickname:
             item = self.create_message_item(
-                self.current_room, message, color=USER_MESSAGES_COLOR
+                self.current_room,
+                message["author"],
+                message["message"],
+                foreground_color=USER_MESSAGES_COLOR,
             )
         else:
-            item = self.create_message_item(self.current_room, message)
+            item = self.create_message_item(
+                self.current_room, message["author"], message["message"]
+            )
         self.twg_chat.insertTopLevelItem(0, item)
 
         # check if a notification sound should be played
@@ -400,24 +382,44 @@ Rooms:
         self.ws_client.sendTextMessage(json.dumps(message))
         self.lne_message.setText("")
 
+    def add_admin_message(self, room: str, message: str) -> None:
+        """
+        Adds an admin message to QTreeWidget chat
+        """
+        item = self.create_message_item(
+            room,
+            ADMIN_MESSAGES_NICKNAME,
+            message,
+            foreground_color=ADMIN_MESSAGES_COLOR,
+        )
+        self.twg_chat.insertTopLevelItem(0, item)
+
     @staticmethod
     def create_message_item(
-        room: str, message: dict[str, Any], color: str = None
+        room: str,
+        author: str,
+        message: str,
+        dt: datetime = datetime.now(),
+        foreground_color: str = None,
+        background_color: str = None,
     ) -> QTreeWidgetItem:
         """
-        Creates a QTreeWidgetItem from a QChat message dict
-        Optionally with a color given as hexa string
+        Creates a QTreeWidgetItem for adding to QTreeWidget chat
+        Optionally with foreground / background colors given as hexa string
         """
-        item = QTreeWidgetItem(
-            [
-                room,
-                datetime.now().strftime(DISPLAY_DATE_FORMAT),
-                message["author"],
-                message["message"],
-            ]
-        )
-        if color:
-            item.setForeground(0, QBrush(QColor(color)))
+        item_data = [
+            room,
+            dt.strftime(DISPLAY_DATE_FORMAT),
+            author,
+            message,
+        ]
+        item = QTreeWidgetItem(item_data)
+        if foreground_color:
+            for i in range(len(item_data)):
+                item.setForeground(i, QBrush(QColor(foreground_color)))
+        if background_color:
+            for i in range(len(item_data)):
+                item.setBackground(i, QBrush(QColor(background_color)))
         return item
 
     def on_widget_closed(self) -> None:
