@@ -506,12 +506,12 @@ Rooms:
         msg_box.setIcon(QMessageBox.Information)
         msg_box.setText(
             self.tr(
-                """No ... it was a joke !
+                """No... it was a joke!
 
 QGIS is Free and Open Source software, forever.
 Free to use, not to make.
 
-Visit the new website ?
+Visit the website ?
 """
             )
         )
