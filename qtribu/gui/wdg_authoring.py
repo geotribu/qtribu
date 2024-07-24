@@ -6,7 +6,7 @@ from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QWidget
 
 # plugin
-from qtribu.gui.gui_commons import QVAL_EMAIL, QVAL_URL
+from qtribu.gui.gui_commons import QVAL_ALPHANUM, QVAL_EMAIL, QVAL_URL
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
 
 
@@ -23,6 +23,7 @@ class AuthoringWidget(QWidget):
         uic.loadUi(Path(__file__).parent / f"{Path(__file__).stem}.ui", self)
 
         # check inputs
+        self.lne_qchat_nickname.setValidator(QVAL_ALPHANUM)
         self.lne_email.setValidator(QVAL_EMAIL)
         self.lne_github_account.setValidator(QVAL_URL)
         self.lne_linkedin_account.setValidator(QVAL_URL)
