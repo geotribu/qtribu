@@ -15,6 +15,7 @@ from qgis.PyQt.QtCore import QUrl
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QMessageBox, QTreeWidgetItem, QWidget
 
+from qtribu.__about__ import __title__
 from qtribu.constants import (
     CHEATCODE_10OCLOCK,
     CHEATCODE_DIZZY,
@@ -70,7 +71,7 @@ class QChatWidget(QgsDockWidget):
         self.btn_connect.setIcon(QIcon(QgsApplication.iconPath("mIconConnect.svg")))
 
         # tree widget initialization
-        self.tw_chat.setHeaderLabels(
+        self.twg_chat.setHeaderLabels(
             [
                 self.tr("Room"),
                 self.tr("Date"),
@@ -213,7 +214,7 @@ Rooms:
         Connect widget to a specific room
         """
         if log:
-            self.tw_chat.insertTopLevelItem(
+            self.twg_chat.insertTopLevelItem(
                 0,
                 QTreeWidgetItem(
                     [
@@ -237,7 +238,7 @@ Rooms:
         Action called when websocket is connected to a room
         """
         self.btn_connect.setText(self.tr("Disconnect"))
-        self.lb_status.setText("Connected")
+        self.lbl_status.setText("Connected")
         self.grb_user.setEnabled(True)
         self.current_room = room
         self.connected = True
@@ -247,7 +248,7 @@ Rooms:
         Disconnect widget from the current room
         """
         if log:
-            self.tw_chat.insertTopLevelItem(
+            self.twg_chat.insertTopLevelItem(
                 0,
                 QTreeWidgetItem(
                     [
@@ -261,7 +262,7 @@ Rooms:
                 ),
             )
         self.btn_connect.setText(self.tr("Connect"))
-        self.lb_status.setText("Disconnected")
+        self.lbl_status.setText("Disconnected")
         self.grb_user.setEnabled(False)
         self.connected = False
         if close_ws:
@@ -273,7 +274,7 @@ Rooms:
         Action called when websocket is disconnected
         """
         self.btn_connect.setText(self.tr("Connect"))
-        self.lb_status.setText("Disconnected")
+        self.lbl_status.setText("Disconnected")
         self.grb_user.setEnabled(False)
         self.connected = False
 
@@ -299,7 +300,7 @@ Rooms:
             activated = self.check_cheatcode(message)
             if activated:
                 return
-        self.tw_chat.insertTopLevelItem(
+        self.twg_chat.insertTopLevelItem(
             0, self.add_message_to_treeview(self.current_room, message)
         )
         if self.settings.qchat_play_sounds:
@@ -322,13 +323,21 @@ Rooms:
         nickname = self.settings.qchat_nickname
         message_text = self.lne_message.text()
 
-        # check if nickname and message are correctly filled
-        if not nickname or not message_text:
-            QMessageBox.warning(
-                self,
-                self.tr("Impossible"),
-                self.tr("Nickname and message boxes must be filled"),
+        if not nickname:
+            self.log(
+                message=self.tr("Nickname not set : please open settings and set it"),
+                log_level=Qgis.Warning,
+                push=PlgOptionsManager().get_plg_settings().notify_push_info,
+                duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
+                button=True,
+                button_label=self.tr("Open Settings"),
+                button_connect=lambda: self.iface.showOptionsDialog(
+                    currentPage=f"mOptionsPage{__title__}"
+                ),
             )
+            return
+
+        if not message_text:
             return
 
         # send message to websocket
