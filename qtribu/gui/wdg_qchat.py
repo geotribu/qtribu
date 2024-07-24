@@ -32,8 +32,8 @@ from qtribu.tasks.dizzy import DizzyTask
 
 # plugin
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
+from qtribu.toolbelt.commons import play_resource_sound
 from qtribu.toolbelt.preferences import PlgSettingsStructure
-from qtribu.utils import play_resource_sound
 
 # -- GLOBALS --
 MARKER_VALUE = "---"

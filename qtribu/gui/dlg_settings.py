@@ -25,9 +25,8 @@ from qtribu.__about__ import (
 )
 from qtribu.logic.qchat_client import QChatApiClient
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
-from qtribu.toolbelt.commons import open_url_in_browser
+from qtribu.toolbelt.commons import open_url_in_browser, play_resource_sound
 from qtribu.toolbelt.preferences import PlgSettingsStructure
-from qtribu.utils import play_resource_sound
 
 # ############################################################################
 # ########## Globals ###############
