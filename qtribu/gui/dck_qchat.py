@@ -172,14 +172,18 @@ class QChatWidget(QgsDockWidget):
         """
         try:
             status = self.qchat_client.get_status()
-            text = """Status: {status}
+            user_txt = self.tr("user")
+            text = self.tr(
+                """Status: {status}
 
 Rooms:
-{rooms_status}""".format(
+
+{rooms_status}"""
+            ).format(
                 status=status["status"],
                 rooms_status="\n".join(
                     [
-                        f"- {r['name']} : {r['nb_connected_users']} user{'s' if r['nb_connected_users'] > 1 else ''}"
+                        f"- {r['name']} : {r['nb_connected_users']} {user_txt}{'s' if r['nb_connected_users'] > 1 else ''}"
                         for r in status["rooms"]
                     ]
                 ),
@@ -364,9 +368,9 @@ Rooms:
         if "nb_users" in message:
             nb_users = message["nb_users"]
             self.grb_qchat.setTitle(
-                self.tr("QChat - {nb_users} user{suffix}").format(
+                self.tr("QChat - {nb_users} {user_txt}").format(
                     nb_users=nb_users,
-                    suffix="" if nb_users <= 1 else "s",
+                    user_txt=self.tr("user") if nb_users <= 1 else self.tr("users"),
                 )
             )
 
