@@ -397,6 +397,11 @@
         </item>
         <item>
          <property name="text">
+          <string>cat</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
           <string>dog</string>
          </property>
         </item>
