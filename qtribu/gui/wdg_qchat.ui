@@ -54,27 +54,7 @@
        <string>Instance</string>
       </property>
       <layout class="QFormLayout" name="formLayout_3">
-       <item row="0" column="0">
-        <widget class="QLabel" name="lbl_instance_uri">
-         <property name="text">
-          <string>URI:</string>
-         </property>
-        </widget>
-       </item>
        <item row="0" column="1">
-        <widget class="QLabel" name="lbl_instance">
-         <property name="cursor">
-          <cursorShape>ForbiddenCursor</cursorShape>
-         </property>
-         <property name="toolTip">
-          <string>Instance set in QTribu's plugin settings</string>
-         </property>
-         <property name="text">
-          <string>https://gischat.geotribu.net</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
         <layout class="QHBoxLayout" name="hly_instance">
          <item>
           <widget class="QPushButton" name="btn_rules">
@@ -96,16 +76,6 @@
            </property>
            <property name="text">
             <string>Status</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="btn_settings">
-           <property name="cursor">
-            <cursorShape>PointingHandCursor</cursorShape>
-           </property>
-           <property name="text">
-            <string>Settings</string>
            </property>
           </widget>
          </item>
@@ -323,6 +293,16 @@
         </widget>
        </item>
       </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="btn_settings">
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="text">
+       <string>Settings</string>
+      </property>
      </widget>
     </item>
    </layout>
