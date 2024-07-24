@@ -21,6 +21,7 @@ from qtribu.constants import (
     CHEATCODE_DIZZY,
     CHEATCODE_DONTCRYBABY,
     CHEATCODE_IAMAROBOT,
+    QCHAT_NICKNAME_MINLENGTH,
 )
 from qtribu.logic.qchat_client import QChatApiClient
 from qtribu.tasks.dizzy import DizzyTask
@@ -38,6 +39,7 @@ ADMIN_MESSAGES_NICKNAME = "admin"
 ADMIN_MESSAGES_COLOR = "#ffa500"
 MENTION_MESSAGES_COLOR = "#00cc00"
 USER_MESSAGES_COLOR = "#4169e1"
+ERROR_MESSAGES_COLOR = "#ff0000"
 
 
 class QChatWidget(QgsDockWidget):
@@ -67,9 +69,7 @@ class QChatWidget(QgsDockWidget):
         self.btn_status.setIcon(QIcon(QgsApplication.iconPath("mIconInfo.svg")))
 
         # open settings signal listener
-        self.btn_settings.pressed.connect(
-            lambda: self.iface.showOptionsDialog(currentPage=f"mOptionsPage{__title__}")
-        )
+        self.btn_settings.pressed.connect(self.on_settings_button_clicked)
         self.btn_settings.setIcon(
             QgsApplication.getThemeIcon("console/iconSettingsConsole.svg")
         )
@@ -186,8 +186,14 @@ Rooms:
             )
             QMessageBox.information(self, self.tr("QChat instance status"), text)
         except Exception as exc:
-            self.iface.messageBar().pushCritical(self.tr("QChat error"), str(exc))
             self.log(message=str(exc), log_level=Qgis.Critical)
+
+    def on_settings_button_clicked(self) -> None:
+        """
+        Action called when clicking on "Settings" button
+        """
+        self.iface.showOptionsDialog(currentPage=f"mOptionsPage{__title__}")
+        self.load_settings()
 
     def on_room_changed(self) -> None:
         """
@@ -289,14 +295,22 @@ Rooms:
         """
         Action called when an error appears on the websocket
         """
-        QTreeWidgetItem(
-            [
-                "ERROR",
-                datetime.now().strftime(DISPLAY_DATE_FORMAT),
-                self.tr("Admin"),
-                self.ws_client.errorString(),
-            ]
-        ),
+        item = (
+            QTreeWidgetItem(
+                [
+                    self.tr("ERROR"),
+                    datetime.now().strftime(DISPLAY_DATE_FORMAT),
+                    ADMIN_MESSAGES_NICKNAME,
+                    self.ws_client.errorString(),
+                ]
+            ),
+        )
+        item.setForeground(0, QBrush(QColor(ERROR_MESSAGES_COLOR)))
+        self.twg_chat.insertTopLevelItem(0, item)
+        self.log(
+            message=f"{error_code}: {self.ws_client.errorString()}",
+            log_level=Qgis.Critical,
+        )
 
     def on_ws_message_received(self, message: str) -> None:
         """
@@ -360,9 +374,21 @@ Rooms:
                 duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
                 button=True,
                 button_label=self.tr("Open Settings"),
-                button_connect=lambda: self.iface.showOptionsDialog(
-                    currentPage=f"mOptionsPage{__title__}"
+                button_connect=self.on_settings_button_clicked,
+            )
+            return
+
+        if len(nickname) < QCHAT_NICKNAME_MINLENGTH:
+            self.log(
+                message=self.tr(
+                    "Nickname too short : must be at least 3 characters. Please open settings and set it"
                 ),
+                log_level=Qgis.Warning,
+                push=PlgOptionsManager().get_plg_settings().notify_push_info,
+                duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
+                button=True,
+                button_label=self.tr("Open Settings"),
+                button_connect=self.on_settings_button_clicked,
             )
             return
 
