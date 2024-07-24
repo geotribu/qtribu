@@ -190,7 +190,20 @@ Rooms:
         """
         Action called when clicking on "Settings" button
         """
+        # save current instance and nickname to check afterwards if they have changed
+        old_instance = self.settings.qchat_instance_uri
+        old_nickname = self.settings.qchat_nickname
         self.iface.showOptionsDialog(currentPage=f"mOptionsPage{__title__}")
+
+        # get new instance and nickname settings
+        new_instance = self.settings.qchat_instance_uri
+        new_nickname = self.settings.qchat_nickname
+
+        # disconnect if instance or nickname have changed
+        if old_instance != new_instance or old_nickname != new_nickname:
+            self.disconnect_from_room(log=self.connected, close_ws=self.connected)
+
+        # reload settings
         self.load_settings()
 
     def on_room_changed(self) -> None:
