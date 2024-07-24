@@ -57,7 +57,7 @@ class QChatWidget(QgsDockWidget):
 
         # rules and status signal listener
         self.btn_rules.pressed.connect(self.on_rules_button_clicked)
-        self.btn_rules.setIcon(QIcon(QgsApplication.iconPath("mIconWarning.svg")))
+        self.btn_rules.setIcon(QIcon(QgsApplication.iconPath("processingResult.svg")))
         self.btn_status.pressed.connect(self.on_status_button_clicked)
         self.btn_status.setIcon(QIcon(QgsApplication.iconPath("mIconInfo.svg")))
 

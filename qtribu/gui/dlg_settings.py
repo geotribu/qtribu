@@ -62,7 +62,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         self.opt_browser_group.addButton(self.opt_browser_os, 2)
 
         self.btn_rules.pressed.connect(self.show_instance_rules)
-        self.btn_rules.setIcon(QIcon(QgsApplication.iconPath("mIconWarning.svg")))
+        self.btn_rules.setIcon(QIcon(QgsApplication.iconPath("processingResult.svg")))
 
         # customization
         self.btn_help.setIcon(QIcon(QgsApplication.iconPath("mActionHelpContents.svg")))
