@@ -24,6 +24,7 @@ from qtribu.__about__ import (
     __uri_tracker__,
     __version__,
 )
+from qtribu.gui.gui_commons import QVAL_URL
 from qtribu.logic.qchat_client import QChatApiClient
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
 from qtribu.toolbelt.commons import open_url_in_browser, play_resource_sound
@@ -61,6 +62,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         self.opt_browser_group.addButton(self.opt_browser_qt, 1)
         self.opt_browser_group.addButton(self.opt_browser_os, 2)
 
+        self.lne_qchat_instance_uri.setValidator(QVAL_URL)
         self.btn_rules.pressed.connect(self.show_instance_rules)
         self.btn_rules.setIcon(QIcon(QgsApplication.iconPath("processingResult.svg")))
 
@@ -103,7 +105,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         settings.license_global_accept = self.chb_license_global_accept.isChecked()
 
         # qchat
-        settings.qchat_instance_uri = self.le_qchat_instance_uri.text()
+        settings.qchat_instance_uri = self.lne_qchat_instance_uri.text()
         settings.qchat_activate_cheatcode = self.ckb_cheatcodes.isChecked()
         settings.qchat_play_sounds = self.ckb_play_sounds.isChecked()
         settings.qchat_sound_volume = self.hsl_sound_volume.value()
@@ -137,7 +139,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         self.chb_license_global_accept.setChecked(settings.license_global_accept)
 
         # qchat
-        self.le_qchat_instance_uri.setText(settings.qchat_instance_uri)
+        self.lne_qchat_instance_uri.setText(settings.qchat_instance_uri)
         self.ckb_cheatcodes.setChecked(settings.qchat_activate_cheatcode)
         self.ckb_play_sounds.setChecked(settings.qchat_play_sounds)
         self.hsl_sound_volume.setValue(settings.qchat_sound_volume)

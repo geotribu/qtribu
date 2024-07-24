@@ -116,7 +116,9 @@ class QChatWidget(QgsDockWidget):
 
     def load_settings(self) -> None:
         """Load options from QgsSettings into UI form."""
-        self.lbl_instance.setText(self.settings.qchat_instance_uri)
+        self.grb_instance.setTitle(
+            self.tr("Instance: {uri}").format(uri=self.settings.qchat_instance_uri)
+        )
         self.lbl_nickname.setText(self.settings.qchat_nickname)
 
     def on_widget_opened(self) -> None:
@@ -257,6 +259,7 @@ Rooms:
         """
         self.btn_connect.setText(self.tr("Disconnect"))
         self.lbl_status.setText("Connected")
+        self.grb_room.setTitle(self.tr("Room: {room}").format(room=room))
         self.grb_user.setEnabled(True)
         self.current_room = room
         self.connected = True
@@ -274,6 +277,7 @@ Rooms:
             )
         self.btn_connect.setText(self.tr("Connect"))
         self.lbl_status.setText("Disconnected")
+        self.grb_room.setTitle(self.tr("Room"))
         self.grb_qchat.setTitle(self.tr("QChat"))
         self.grb_user.setEnabled(False)
         self.connected = False
@@ -285,10 +289,6 @@ Rooms:
         """
         Action called when websocket is disconnected
         """
-        self.btn_connect.setText(self.tr("Connect"))
-        self.lbl_status.setText("Disconnected")
-        self.grb_qchat.setTitle(self.tr("QChat"))
-        self.grb_user.setEnabled(False)
         self.connected = False
 
     def on_ws_error(self, error_code: int) -> None:
@@ -363,8 +363,7 @@ Rooms:
         if "nb_users" in message:
             nb_users = message["nb_users"]
             self.grb_qchat.setTitle(
-                self.tr("QChat - room: {room} - {nb_users} user{suffix}").format(
-                    room=self.current_room,
+                self.tr("QChat - {nb_users} user{suffix}").format(
                     nb_users=nb_users,
                     suffix="" if nb_users <= 1 else "s",
                 )
