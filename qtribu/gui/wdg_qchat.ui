@@ -55,24 +55,24 @@
       </property>
       <layout class="QFormLayout" name="formLayout_2">
        <item row="3" column="0">
-        <widget class="QLabel" name="lb_room">
+        <widget class="QLabel" name="lbl_room">
          <property name="text">
           <string>Room:</string>
          </property>
         </widget>
        </item>
        <item row="5" column="0">
-        <widget class="QLabel" name="lb_status_text">
+        <widget class="QLabel" name="lbl_status_text">
          <property name="text">
           <string>Status:</string>
          </property>
         </widget>
        </item>
        <item row="3" column="1">
-        <widget class="QComboBox" name="cb_room"/>
+        <widget class="QComboBox" name="cbb_room"/>
        </item>
        <item row="5" column="1">
-        <widget class="QLabel" name="lb_status">
+        <widget class="QLabel" name="lbl_status">
          <property name="text">
           <string>Not connected</string>
          </property>
@@ -91,7 +91,7 @@
        <item row="0" column="1">
         <layout class="QHBoxLayout" name="hly_instance">
          <item>
-          <widget class="QLabel" name="lb_instance">
+          <widget class="QLabel" name="lbl_instance">
            <property name="cursor">
             <cursorShape>ForbiddenCursor</cursorShape>
            </property>
@@ -159,7 +159,7 @@
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
-        <widget class="QTreeWidget" name="tw_chat">
+        <widget class="QTreeWidget" name="twg_chat">
          <property name="uniformRowHeights">
           <bool>true</bool>
          </property>
@@ -240,33 +240,43 @@
        <string>User</string>
       </property>
       <layout class="QFormLayout" name="formLayout">
-       <item row="1" column="0">
-        <widget class="QLabel" name="lb_nickname">
+       <item row="2" column="0">
+        <widget class="QLabel" name="lbl_nickname_text">
          <property name="text">
           <string>Nickname:</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="le_nickname"/>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="lb_message">
+       <item row="3" column="0">
+        <widget class="QLabel" name="lbl_message">
          <property name="text">
           <string>Message:</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
-        <widget class="QLineEdit" name="le_message"/>
-       </item>
        <item row="3" column="1">
+        <widget class="QLineEdit" name="lne_message"/>
+       </item>
+       <item row="4" column="1">
         <widget class="QPushButton" name="btn_send">
          <property name="cursor">
           <cursorShape>PointingHandCursor</cursorShape>
          </property>
          <property name="text">
           <string>Send message</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="lbl_nickname">
+         <property name="cursor">
+          <cursorShape>ForbiddenCursor</cursorShape>
+         </property>
+         <property name="toolTip">
+          <string>Nickname set in QTribu's plugin settings</string>
+         </property>
+         <property name="text">
+          <string>Nickname</string>
          </property>
         </widget>
        </item>

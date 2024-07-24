@@ -39,7 +39,6 @@ class QChatWidget(QgsDockWidget):
     connected: bool = False
     current_room: Optional[str] = None
 
-    settings: PlgSettingsStructure
     qchat_client = QChatApiClient
 
     def __init__(self, iface: QgisInterface, parent: QWidget = None):
@@ -93,25 +92,24 @@ class QChatWidget(QgsDockWidget):
         self.ws_client.textMessageReceived.connect(self.on_ws_message_received)
 
         # send message signal listener
-        self.le_message.returnPressed.connect(self.on_send_button_clicked)
+        self.lne_message.returnPressed.connect(self.on_send_button_clicked)
         self.btn_send.pressed.connect(self.on_send_button_clicked)
         self.btn_send.setIcon(
             QIcon(QgsApplication.iconPath("mActionDoubleArrowRight.svg"))
         )
 
+    @property
+    def settings(self) -> PlgSettingsStructure:
+        return self.plg_settings.get_plg_settings()
+
     def load_settings(self) -> None:
         """Load options from QgsSettings into UI form."""
-        self.lb_instance.setText(
+        self.lbl_instance.setText(
             self.tr("Instance: {instance}").format(
                 instance=self.settings.qchat_instance_uri
             )
         )
-        self.le_nickname.setText(self.settings.qchat_nickname)
-
-    def save_settings(self) -> None:
-        """Save form text into QgsSettings."""
-        self.settings.qchat_nickname = self.le_nickname.text()
-        self.plg_settings.save_from_object(self.settings)
+        self.lbl_nickname.setText(self.settings.qchat_nickname)
 
     def on_widget_opened(self) -> None:
         """
@@ -119,28 +117,27 @@ class QChatWidget(QgsDockWidget):
         """
 
         # fill fields from saved settings
-        self.settings = self.plg_settings.get_plg_settings()
         self.load_settings()
 
         # initialize QChat API client
         self.qchat_client = QChatApiClient(self.settings.qchat_instance_uri)
 
         # clear rooms combobox items
-        self.cb_room.clear()  # delete all items from comboBox
+        self.cbb_room.clear()  # delete all items from comboBox
 
         # load rooms
-        self.cb_room.addItem(MARKER_VALUE)
+        self.cbb_room.addItem(MARKER_VALUE)
         try:
             rooms = self.qchat_client.get_rooms()
             for room in rooms:
-                self.cb_room.addItem(room)
+                self.cbb_room.addItem(room)
         except Exception as exc:
             self.iface.messageBar().pushCritical(self.tr("QChat error"), str(exc))
             self.log(message=str(exc), log_level=Qgis.Critical)
         finally:
             self.current_room = MARKER_VALUE
 
-        self.cb_room.currentIndexChanged.connect(self.on_room_changed)
+        self.cbb_room.currentIndexChanged.connect(self.on_room_changed)
 
     def on_rules_button_clicked(self) -> None:
         """
@@ -187,7 +184,7 @@ Rooms:
         Action called when room index is changed in the room combobox
         """
         old_room = self.current_room
-        new_room = self.cb_room.currentText()
+        new_room = self.cbb_room.currentText()
         old_is_marker = old_room != MARKER_VALUE
         if new_room == MARKER_VALUE:
             if self.connected:
@@ -206,7 +203,7 @@ Rooms:
         if self.connected:
             self.disconnect_from_room()
         else:
-            room = self.cb_room.currentText()
+            room = self.cbb_room.currentText()
             if room == MARKER_VALUE:
                 return
             self.connect_to_room(room)
@@ -322,8 +319,8 @@ Rooms:
         """
 
         # retrieve nickname and message
-        nickname = self.le_nickname.text()
-        message_text = self.le_message.text()
+        nickname = self.settings.qchat_nickname
+        message_text = self.lne_message.text()
 
         # check if nickname and message are correctly filled
         if not nickname or not message_text:
@@ -337,8 +334,7 @@ Rooms:
         # send message to websocket
         message = {"message": message_text, "author": nickname}
         self.ws_client.sendTextMessage(json.dumps(message))
-        self.le_message.setText("")
-        self.save_settings()
+        self.lne_message.setText("")
 
     def add_message_to_treeview(
         self, room: str, message: dict[str, Any]
@@ -362,7 +358,7 @@ Rooms:
         """
         if self.connected:
             self.disconnect_from_room()
-        self.cb_room.currentIndexChanged.disconnect()
+        self.cbb_room.currentIndexChanged.disconnect()
 
     def check_cheatcode(self, message: dict[str, str]) -> bool:
         """
