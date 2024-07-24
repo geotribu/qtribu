@@ -12,6 +12,7 @@ from pathlib import Path
 from qgis.core import QgsApplication
 from qgis.gui import QgsOptionsPageWidget, QgsOptionsWidgetFactory
 from qgis.PyQt import uic
+from qgis.PyQt.QtCore import Qt
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QButtonGroup, QMessageBox
 
@@ -140,8 +141,11 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         self.ckb_cheatcodes.setChecked(settings.qchat_activate_cheatcode)
         self.ckb_play_sounds.setChecked(settings.qchat_play_sounds)
         self.hsl_sound_volume.setValue(settings.qchat_sound_volume)
-        # TODO: load and select item from settings
-        # self.cbb_ring_tone.setItemText(settings.qchat_ring_tone)
+        beep_index = self.cbb_ring_tone.findText(
+            settings.qchat_ring_tone, Qt.MatchFixedString
+        )
+        if beep_index >= 0:
+            self.cbb_ring_tone.setCurrentIndex(beep_index)
 
         # misc
         self.opt_debug.setChecked(settings.debug_mode)
