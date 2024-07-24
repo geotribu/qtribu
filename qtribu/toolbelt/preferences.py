@@ -65,7 +65,7 @@ class PlgSettingsStructure:
 
     @property
     def browser_as_str(self) -> str:
-        """Returns mathcing browser value name from its code.
+        """Returns matching browser value name from its code.
 
         :return: browser value name
         :rtype: str
@@ -76,7 +76,7 @@ class PlgSettingsStructure:
             return "system"
         else:
             log_hdlr.PlgLogger.log(
-                message=f"Invalid browser code: {self.impex_access_mode}", log_level=1
+                message=f"Invalid browser code: {self.browser}", log_level=1
             )
             return "qgis"
 
