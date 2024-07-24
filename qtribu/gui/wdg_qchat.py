@@ -3,7 +3,7 @@ import json
 from datetime import datetime
 from functools import partial
 from pathlib import Path
-from typing import Optional
+from typing import Any, Optional
 
 # PyQGIS
 #
@@ -23,6 +23,7 @@ from qtribu.constants import (
     CHEATCODE_DIZZY,
     CHEATCODE_DONTCRYBABY,
     CHEATCODE_IAMAROBOT,
+    INTERNAL_MESSAGE_AUTHOR,
     MENTION_MESSAGES_COLOR,
     QCHAT_NICKNAME_MINLENGTH,
     USER_MESSAGES_COLOR,
@@ -261,6 +262,7 @@ Rooms:
             )
         self.btn_connect.setText(self.tr("Connect"))
         self.lbl_status.setText("Disconnected")
+        self.grb_qchat.setTitle(self.tr("QChat"))
         self.grb_user.setEnabled(False)
         self.connected = False
         if close_ws:
@@ -273,6 +275,7 @@ Rooms:
         """
         self.btn_connect.setText(self.tr("Connect"))
         self.lbl_status.setText("Disconnected")
+        self.grb_qchat.setTitle(self.tr("QChat"))
         self.grb_user.setEnabled(False)
         self.connected = False
 
@@ -291,6 +294,11 @@ Rooms:
         Action called when a message is received from the websocket
         """
         message = json.loads(message)
+
+        # check if this is an internal message
+        if message["author"] == INTERNAL_MESSAGE_AUTHOR:
+            self.handle_internal_message(message)
+            return
 
         # check if a cheatcode is activated
         if self.settings.qchat_activate_cheatcode:
@@ -328,9 +336,27 @@ Rooms:
         self.twg_chat.insertTopLevelItem(0, item)
 
         # check if a notification sound should be played
-        if self.settings.qchat_play_sounds:
+        if (
+            self.settings.qchat_play_sounds
+            and message["author"] != self.settings.qchat_nickname
+        ):
             play_resource_sound(
                 self.settings.qchat_ring_tone, self.settings.qchat_sound_volume
+            )
+
+    def handle_internal_message(self, message: dict[str, Any]) -> None:
+        """
+        Handle an internal message, spotted by its author
+        """
+        payload = json.loads(message["message"])
+        if "nb_users" in payload:
+            nb_users = payload["nb_users"]
+            self.grb_qchat.setTitle(
+                self.tr("QChat - room: {room} - {nb_users} user{suffix}").format(
+                    room=self.current_room,
+                    nb_users=nb_users,
+                    suffix="" if nb_users <= 1 else "s",
+                )
             )
 
     def on_clear_chat_button_clicked(self) -> None:

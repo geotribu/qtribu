@@ -149,7 +149,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QgsCollapsibleGroupBox" name="grb_chat">
+     <widget class="QgsCollapsibleGroupBox" name="grb_qchat">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
         <horstretch>0</horstretch>
@@ -169,7 +169,7 @@
        </size>
       </property>
       <property name="title">
-       <string>Chat</string>
+       <string>QChat</string>
       </property>
       <property name="collapsed">
        <bool>false</bool>
@@ -313,7 +313,7 @@
  </customwidgets>
  <tabstops>
   <tabstop>grb_rooms</tabstop>
-  <tabstop>grb_chat</tabstop>
+  <tabstop>grb_qchat</tabstop>
   <tabstop>grb_user</tabstop>
  </tabstops>
  <resources/>
