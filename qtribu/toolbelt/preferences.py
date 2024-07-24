@@ -38,7 +38,6 @@ class PlgSettingsStructure:
 
     # QChat
     qchat_instance_uri: str = "https://gischat.geotribu.net"
-    qchat_nickname: str = "J.D."
     qchat_activate_cheatcode: bool = True
     qchat_play_sounds: bool = True
     qchat_sound_volume: int = 33
@@ -59,6 +58,7 @@ class PlgSettingsStructure:
     )
 
     # authoring
+    author_nickname: str = ""
     author_firstname: str = ""
     author_lastname: str = ""
     author_email: str = ""

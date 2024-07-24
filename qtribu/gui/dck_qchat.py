@@ -119,7 +119,7 @@ class QChatWidget(QgsDockWidget):
         self.grb_instance.setTitle(
             self.tr("Instance: {uri}").format(uri=self.settings.qchat_instance_uri)
         )
-        self.lbl_nickname.setText(self.settings.qchat_nickname)
+        self.lbl_nickname.setText(self.settings.author_nickname)
 
     def on_widget_opened(self) -> None:
         """
@@ -194,12 +194,12 @@ Rooms:
         """
         # save current instance and nickname to check afterwards if they have changed
         old_instance = self.settings.qchat_instance_uri
-        old_nickname = self.settings.qchat_nickname
+        old_nickname = self.settings.author_nickname
         self.iface.showOptionsDialog(currentPage=f"mOptionsPage{__title__}")
 
         # get new instance and nickname settings
         new_instance = self.settings.qchat_instance_uri
-        new_nickname = self.settings.qchat_nickname
+        new_nickname = self.settings.author_nickname
 
         # disconnect if instance or nickname have changed
         if old_instance != new_instance or old_nickname != new_nickname:
@@ -319,7 +319,7 @@ Rooms:
                 return
 
         # check if message mentions current user
-        if f"@{self.settings.qchat_nickname}" in message["message"]:
+        if f"@{self.settings.author_nickname}" in message["message"]:
             item = self.create_message_item(
                 self.current_room,
                 message["author"],
@@ -334,7 +334,7 @@ Rooms:
                 push=PlgOptionsManager().get_plg_settings().notify_push_info,
                 duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
             )
-        elif message["author"] == self.settings.qchat_nickname:
+        elif message["author"] == self.settings.author_nickname:
             item = self.create_message_item(
                 self.current_room,
                 message["author"],
@@ -350,7 +350,7 @@ Rooms:
         # check if a notification sound should be played
         if (
             self.settings.qchat_play_sounds
-            and message["author"] != self.settings.qchat_nickname
+            and message["author"] != self.settings.author_nickname
         ):
             play_resource_sound(
                 self.settings.qchat_ring_tone, self.settings.qchat_sound_volume
@@ -381,7 +381,7 @@ Rooms:
         """
 
         # retrieve nickname and message
-        nickname = self.settings.qchat_nickname
+        nickname = self.settings.author_nickname
         message_text = self.lne_message.text()
 
         if not nickname:
