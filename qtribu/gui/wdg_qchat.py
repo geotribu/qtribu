@@ -348,9 +348,8 @@ Rooms:
         """
         Handle an internal message, spotted by its author
         """
-        payload = json.loads(message["message"])
-        if "nb_users" in payload:
-            nb_users = payload["nb_users"]
+        if "nb_users" in message:
+            nb_users = message["nb_users"]
             self.grb_qchat.setTitle(
                 self.tr("QChat - room: {room} - {nb_users} user{suffix}").format(
                     room=self.current_room,
