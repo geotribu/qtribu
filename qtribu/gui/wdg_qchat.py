@@ -1,6 +1,5 @@
 # standard
 import json
-from datetime import datetime
 from functools import partial
 from pathlib import Path
 from typing import Any, Optional
@@ -11,7 +10,7 @@ from PyQt5 import QtWebSockets  # noqa QGS103
 from qgis.core import Qgis, QgsApplication
 from qgis.gui import QgisInterface, QgsDockWidget
 from qgis.PyQt import uic
-from qgis.PyQt.QtCore import QUrl
+from qgis.PyQt.QtCore import QTime, QUrl
 from qgis.PyQt.QtGui import QBrush, QColor, QIcon
 from qgis.PyQt.QtWidgets import QMessageBox, QTreeWidgetItem, QWidget
 
@@ -433,7 +432,7 @@ Rooms:
         """
         item_data = [
             room,
-            datetime.now().strftime(DISPLAY_DATE_FORMAT),
+            QTime.currentTime().toString(),
             author,
             message,
         ]
