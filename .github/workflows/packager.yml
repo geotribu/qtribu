@@ -17,7 +17,7 @@ on:
     paths:
       - .github/workflows/packager.yml
       - requirements/packaging.txt
-      - qtribu/
+      - qtribu/**/*
 
 # Allow one concurrent deployment per branch/pr
 concurrency:
