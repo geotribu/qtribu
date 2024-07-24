@@ -36,6 +36,11 @@
         "--config=setup.cfg",
         "--verbose"
     ],
+    "dash.fileNameToDocsetMap": {
+        "qtribu/**/*.py": [
+            "pyqgis_3"
+        ]
+    },
     "yaml.schemas": {
         "https://json.schemastore.org/github-workflow.json": ".github/workflows/*.yml"
     }
