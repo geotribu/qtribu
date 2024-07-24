@@ -19,6 +19,7 @@ from qtribu.constants import (
     ADMIN_MESSAGES_COLOR,
     ADMIN_MESSAGES_NICKNAME,
     CHEATCODE_10OCLOCK,
+    CHEATCODE_ARCGIS_MONEY_MONEY,
     CHEATCODE_DIZZY,
     CHEATCODE_DONTCRYBABY,
     CHEATCODE_IAMAROBOT,
@@ -477,6 +478,18 @@ Rooms:
         if msg == CHEATCODE_DIZZY:
             task = DizzyTask(f"Cheatcode activation: {CHEATCODE_DIZZY}", self.iface)
             self.task_manager.addTask(task)
+            return True
+
+        # mimic the behaviour of ArcGIS Pro
+        if msg == CHEATCODE_ARCGIS_MONEY_MONEY:
+            text = self.tr(
+                "Your account is not licensed for QGIS Pro. "
+                "Please ask your organization administrator to assign you a user type "
+                "that is compatible with QGIS Pro (e.g. Creator) along with an add-on "
+                "QGIS Pro license, or a user type that includes QGIS Pro "
+                "(e.g. GIS Professional)."
+            )
+            QMessageBox.critical(self, self.tr("QGIS Pro"), text, QMessageBox.Ok)
             return True
 
         # play sounds
