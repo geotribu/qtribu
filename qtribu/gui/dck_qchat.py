@@ -14,6 +14,7 @@ from qgis.PyQt.QtCore import QPoint, Qt, QTime, QUrl
 from qgis.PyQt.QtGui import QBrush, QColor, QCursor, QIcon
 from qgis.PyQt.QtWidgets import QAction, QMenu, QMessageBox, QTreeWidgetItem, QWidget
 
+# plugin
 from qtribu.__about__ import __title__
 from qtribu.constants import (
     ADMIN_MESSAGES_AVATAR,
@@ -27,10 +28,9 @@ from qtribu.constants import (
     INTERNAL_MESSAGE_AUTHOR,
     QCHAT_NICKNAME_MINLENGTH,
 )
+from qtribu.gui.dlg_emoji_picker import QEmojiPicker
 from qtribu.logic.qchat_client import QChatApiClient
 from qtribu.tasks.dizzy import DizzyTask
-
-# plugin
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
 from qtribu.toolbelt.commons import open_url_in_webviewer, play_resource_sound
 from qtribu.toolbelt.preferences import PlgSettingsStructure
@@ -58,6 +58,14 @@ class QChatWidget(QgsDockWidget):
         self.task_manager = QgsApplication.taskManager()
         self.log = PlgLogger().log
         self.plg_settings = PlgOptionsManager()
+        self.emoji_picker = QEmojiPicker(
+            parent=self,
+            # this option can say how many emojis are in a row
+            items_per_row=8,
+            # with this enabled, the emoji search will be faster but less accurate
+            performance_search=True,
+        )
+
         uic.loadUi(Path(__file__).parent / f"{Path(__file__).stem}.ui", self)
 
         # rules and status signal listener
@@ -114,6 +122,8 @@ class QChatWidget(QgsDockWidget):
         self.btn_send.setIcon(
             QIcon(QgsApplication.iconPath("mActionDoubleArrowRight.svg"))
         )
+        # connect emojis picker
+        self.btn_emojis_picker.pressed.connect(self.on_emoji_picker_pressed)
 
     @property
     def settings(self) -> PlgSettingsStructure:
@@ -624,6 +634,17 @@ Rooms:
                 play_resource_sound(msg, self.settings.qchat_sound_volume)
                 return True
         return False
+
+    def on_emoji_picker_pressed(self) -> Optional[str]:
+        """Display the emoji picker and insert the selected one at the end of message line edit.
+
+        :return: selected emoji
+        :rtype: str
+        """
+        selected_emoji = self.emoji_picker.select()
+        self.lne_message.insert(selected_emoji)
+
+        return selected_emoji
 
     def on_renew_clicked(self) -> None:
         msg_box = QMessageBox()
