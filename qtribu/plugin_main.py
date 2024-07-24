@@ -246,6 +246,7 @@ class GeotribuPlugin:
 
         # -- Clean up toolbar
         del self.toolbar
+        del self.qchat_widget
 
         # -- Clean up preferences panel in QGIS settings
         self.iface.unregisterOptionsWidgetFactory(self.options_factory)
