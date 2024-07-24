@@ -22,7 +22,7 @@ def play_resource_sound(resource: str, volume: int) -> None:
 
 def play_sound(file: str, volume: int) -> None:
     """
-    Play a sound using QTMultimedia QMediaPlayer
+    Play a sound using QtMultimedia QMediaPlayer
     """
     url = QUrl.fromLocalFile(file)
     player = QMediaPlayer()

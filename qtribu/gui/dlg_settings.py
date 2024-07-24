@@ -104,7 +104,6 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
 
         # qchat
         settings.qchat_instance_uri = self.le_qchat_instance_uri.text()
-        settings.qchat_nickname = self.le_qchat_nickname.text()
         settings.qchat_activate_cheatcode = self.ckb_cheatcodes.isChecked()
         settings.qchat_play_sounds = self.ckb_play_sounds.isChecked()
         settings.qchat_sound_volume = self.hsl_sound_volume.value()
@@ -139,7 +138,6 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
 
         # qchat
         self.le_qchat_instance_uri.setText(settings.qchat_instance_uri)
-        self.le_qchat_nickname.setText(settings.qchat_nickname)
         self.ckb_cheatcodes.setChecked(settings.qchat_activate_cheatcode)
         self.ckb_play_sounds.setChecked(settings.qchat_play_sounds)
         self.hsl_sound_volume.setValue(settings.qchat_sound_volume)
