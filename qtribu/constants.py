@@ -191,6 +191,8 @@ GEORDP_NEWS_ICONS: tuple = (
     ),
 )
 
+QCHAT_NICKNAME_MINLENGTH = 3
+
 CHEATCODE_DIZZY = "givemesomecheese"
 CHEATCODE_DONTCRYBABY = "dontcrybaby"
 CHEATCODE_IAMAROBOT = "iamarobot"
