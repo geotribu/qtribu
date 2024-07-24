@@ -235,6 +235,7 @@ class GeotribuPlugin:
         self.iface.removePluginWebMenu(__title__, self.action_form_article)
         self.iface.removePluginWebMenu(__title__, self.action_form_rdp_news)
         self.iface.removePluginWebMenu(__title__, self.action_show_latest_content)
+        self.iface.removePluginWebMenu(__title__, self.action_open_chat)
         self.iface.removePluginWebMenu(__title__, self.action_contents)
         self.iface.removePluginWebMenu(__title__, self.action_settings)
         self.iface.removePluginWebMenu(__title__, self.action_splash)
@@ -252,6 +253,7 @@ class GeotribuPlugin:
         # remove actions
         del self.action_help
         del self.action_georezo
+        del self.action_open_chat
 
     def post_ui_init(self):
         """Run after plugin's UI has been initialized.
