@@ -37,7 +37,7 @@ class AuthoringWidget(QWidget):
         settings = self.plg_settings.get_plg_settings()
 
         # author
-        self.lne_qchat_nickname.setText(settings.qchat_nickname)
+        self.lne_qchat_nickname.setText(settings.author_nickname)
         self.lne_firstname.setText(settings.author_firstname)
         self.lne_lastname.setText(settings.author_lastname)
         self.lne_email.setText(settings.author_email)
@@ -52,7 +52,7 @@ class AuthoringWidget(QWidget):
         settings = self.plg_settings.get_plg_settings()
 
         # store user inputs
-        settings.qchat_nickname = self.lne_qchat_nickname.text()
+        settings.author_nickname = self.lne_qchat_nickname.text()
         settings.author_firstname = self.lne_firstname.text()
         settings.author_lastname = self.lne_lastname.text()
         settings.author_email = self.lne_email.text()
