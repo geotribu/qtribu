@@ -61,6 +61,14 @@ class QChatWidget(QgsDockWidget):
         self.btn_status.pressed.connect(self.on_status_button_clicked)
         self.btn_status.setIcon(QIcon(QgsApplication.iconPath("mIconInfo.svg")))
 
+        # open settings signal listener
+        self.btn_settings.pressed.connect(
+            lambda: self.iface.showOptionsDialog(currentPage=f"mOptionsPage{__title__}")
+        )
+        self.btn_settings.setIcon(
+            QgsApplication.getThemeIcon("console/iconSettingsConsole.svg")
+        )
+
         # widget opened / closed signals
         self.opened.connect(self.on_widget_opened)
         self.closed.connect(self.on_widget_closed)
@@ -105,11 +113,7 @@ class QChatWidget(QgsDockWidget):
 
     def load_settings(self) -> None:
         """Load options from QgsSettings into UI form."""
-        self.lbl_instance.setText(
-            self.tr("Instance: {instance}").format(
-                instance=self.settings.qchat_instance_uri
-            )
-        )
+        self.lbl_instance.setText(self.settings.qchat_instance_uri)
         self.lbl_nickname.setText(self.settings.qchat_nickname)
 
     def on_widget_opened(self) -> None:
