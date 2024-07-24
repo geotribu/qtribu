@@ -30,7 +30,7 @@ from qtribu.toolbelt.commons import open_url_in_browser, open_url_in_webviewer
 
 # conditional imports
 try:
-    from qtribu.gui.wdg_qchat import QChatWidget
+    from qtribu.gui.dck_qchat import QChatWidget
 
     EXTERNAL_DEPENDENCIES_AVAILABLE: bool = True
 except ImportError:
