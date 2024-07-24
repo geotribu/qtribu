@@ -11,8 +11,8 @@ from pathlib import Path
 # PyQGIS
 from qgis.core import Qgis, QgsApplication, QgsSettings
 from qgis.gui import QgisInterface
-from qgis.PyQt.QtCore import QCoreApplication, QLocale, Qt, QTranslator
-from qgis.PyQt.QtGui import QIcon
+from qgis.PyQt.QtCore import QCoreApplication, QLocale, Qt, QTranslator, QUrl
+from qgis.PyQt.QtGui import QDesktopServices, QIcon
 from qgis.PyQt.QtWidgets import QAction
 
 # project
@@ -27,6 +27,15 @@ from qtribu.logic.news_feed.rss_reader import RssMiniReader
 from qtribu.logic.splash_changer import SplashChanger
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
 from qtribu.toolbelt.commons import open_url_in_browser, open_url_in_webviewer
+
+# conditional imports
+try:
+    from qtribu.gui.wdg_qchat import QChatWidget
+
+    EXTERNAL_DEPENDENCIES_AVAILABLE: bool = True
+except ImportError:
+    EXTERNAL_DEPENDENCIES_AVAILABLE: bool = False
+
 
 # ############################################################################
 # ########## Classes ###############
@@ -216,6 +225,9 @@ class GeotribuPlugin:
         )
         self.iface.initializationCompleted.connect(self.post_ui_init)
 
+        if not self.check_dependencies():
+            return
+
     def unload(self):
         """Cleans up when plugin is disabled/uninstalled."""
         # -- Clean up menu
@@ -307,6 +319,42 @@ class GeotribuPlugin:
                 push=True,
             )
             raise err
+
+    def check_dependencies(self) -> bool:
+        """Check if all dependencies are satisfied. If not, warn the user and disable plugin.
+
+        :return: dependencies status
+        :rtype: bool
+        """
+        # if import failed
+        if not EXTERNAL_DEPENDENCIES_AVAILABLE:
+            self.log(
+                message=self.tr(
+                    "Error importing some of dependencies. "
+                    "Related functions have been disabled."
+                ),
+                log_level=2,
+                push=True,
+                duration=60,
+                button=True,
+                button_connect=partial(
+                    QDesktopServices.openUrl,
+                    QUrl(f"{__uri_homepage__}installation.html"),
+                ),
+            )
+            # disable plugin widgets
+            self.action_open_chat.setEnabled(False)
+
+            # add tooltip over menu
+            msg_disable = self.tr(
+                "Plugin disabled. Please install all dependencies and then restart QGIS."
+                " Refer to the documentation for more information."
+            )
+            self.action_open_chat.setToolTip(msg_disable)
+            return False
+        else:
+            self.log(message=self.tr("Dependencies satisfied"), log_level=3)
+            return True
 
     def open_contents(self) -> None:
         """Action to open contents dialog"""
