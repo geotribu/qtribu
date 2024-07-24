@@ -19,6 +19,11 @@ on:
       - requirements/packaging.txt
       - qtribu/
 
+# Allow one concurrent deployment per branch/pr
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   translation:
     name: "💬 i18n compilation"
