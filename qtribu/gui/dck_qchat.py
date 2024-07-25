@@ -167,8 +167,12 @@ class QChatWidget(QgsDockWidget):
             QMessageBox.information(
                 self,
                 self.tr("Instance rules"),
-                self.tr("Instance rules ({instance_url}):\n\n{rules}").format(
-                    instance_url=self.qchat_client.instance_uri, rules=rules["rules"]
+                self.tr(
+                    "Instance rules ({instance_url}):\n\n{rules}\n\nMain language: {main_lang}"
+                ).format(
+                    instance_url=self.qchat_client.instance_uri,
+                    rules=rules["rules"],
+                    main_lang=rules["main_lang"],
                 ),
             )
         except Exception as exc:
