@@ -213,6 +213,8 @@ Rooms:
         # disconnect if instance or nickname have changed
         if old_instance != new_instance or old_nickname != new_nickname:
             self.disconnect_from_room(log=self.connected, close_ws=self.connected)
+            self.on_widget_closed()
+            self.on_widget_opened()
 
         # reload settings
         self.load_settings()
