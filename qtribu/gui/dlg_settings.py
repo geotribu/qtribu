@@ -9,7 +9,7 @@ from functools import partial
 from pathlib import Path
 
 # PyQGIS
-from qgis.core import QgsApplication
+from qgis.core import Qgis, QgsApplication
 from qgis.gui import QgsOptionsPageWidget, QgsOptionsWidgetFactory
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import Qt
@@ -105,7 +105,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         settings.license_global_accept = self.chb_license_global_accept.isChecked()
 
         # qchat
-        settings.qchat_instance_uri = self.lne_qchat_instance_uri.text()
+        settings.qchat_instance_uri = self.cbb_qchat_instance_uri.currentText()
         settings.qchat_activate_cheatcode = self.ckb_cheatcodes.isChecked()
         settings.qchat_display_admin_messages = (
             self.ckb_display_admin_messages.isChecked()
@@ -143,7 +143,13 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         self.chb_license_global_accept.setChecked(settings.license_global_accept)
 
         # qchat
-        self.lne_qchat_instance_uri.setText(settings.qchat_instance_uri)
+        instance_index = self.cbb_qchat_instance_uri.findText(
+            settings.qchat_instance_uri, Qt.MatchFixedString
+        )
+        if instance_index >= 0:
+            self.cbb_qchat_instance_uri.setCurrentIndex(instance_index)
+        else:
+            self.cbb_qchat_instance_uri.setCurrentText(settings.qchat_instance_uri)
         self.ckb_cheatcodes.setChecked(settings.qchat_activate_cheatcode)
         self.ckb_display_admin_messages.setChecked(
             settings.qchat_display_admin_messages
@@ -162,16 +168,19 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         self.lbl_version_saved_value.setText(settings.version)
 
     def show_instance_rules(self) -> None:
-        instance_url = self.lne_qchat_instance_uri.text()
-        client = QChatApiClient(instance_url)
-        rules = client.get_rules()
-        QMessageBox.information(
-            self,
-            self.tr("Instance rules"),
-            self.tr("Instance rules ({instance_url}):\n\n{rules}").format(
-                instance_url=instance_url, rules=rules["rules"]
-            ),
-        )
+        instance_url = self.cbb_qchat_instance_uri.currentText()
+        try:
+            client = QChatApiClient(instance_url)
+            rules = client.get_rules()
+            QMessageBox.information(
+                self,
+                self.tr("Instance rules"),
+                self.tr("Instance rules ({instance_url}):\n\n{rules}").format(
+                    instance_url=instance_url, rules=rules["rules"]
+                ),
+            )
+        except Exception as e:
+            self.log(message=str(e), log_level=Qgis.Critical)
 
     def on_ring_tone_changed(self) -> None:
         """
