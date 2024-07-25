@@ -10,9 +10,9 @@ from PyQt5 import QtWebSockets  # noqa QGS103
 from qgis.core import Qgis, QgsApplication
 from qgis.gui import QgisInterface, QgsDockWidget
 from qgis.PyQt import uic
-from qgis.PyQt.QtCore import QTime, QUrl
-from qgis.PyQt.QtGui import QBrush, QColor, QIcon
-from qgis.PyQt.QtWidgets import QMessageBox, QTreeWidgetItem, QWidget
+from qgis.PyQt.QtCore import Qt, QTime, QUrl
+from qgis.PyQt.QtGui import QBrush, QColor, QCursor, QIcon
+from qgis.PyQt.QtWidgets import QAction, QMenu, QMessageBox, QTreeWidgetItem, QWidget
 
 from qtribu.__about__ import __title__
 from qtribu.constants import (
@@ -89,6 +89,10 @@ class QChatWidget(QgsDockWidget):
                 self.tr("Nickname"),
                 self.tr("Message"),
             ]
+        )
+        self.twg_chat.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.twg_chat.customContextMenuRequested.connect(
+            self.on_custom_context_menu_requested
         )
 
         # clear chat signal listener
@@ -373,6 +377,31 @@ Rooms:
                     user_txt=self.tr("user") if nb_users <= 1 else self.tr("users"),
                 )
             )
+
+    def on_custom_context_menu_requested(self, point) -> None:
+        """
+        Action called on right click on a chat message
+        """
+        item = self.twg_chat.itemAt(point)
+        message = item.text(3)
+
+        menu = QMenu(self.tr("QChat Menu"), self)
+
+        # copy message action
+        copy_action = QAction(
+            QgsApplication.getThemeIcon("mActionEditCopy.svg"),
+            self.tr("Copy message to clipboard"),
+        )
+        copy_action.triggered.connect(partial(self.on_copy_message, message))
+        menu.addAction(copy_action)
+
+        menu.exec(QCursor.pos())
+
+    def on_copy_message(self, message: str) -> None:
+        """
+        Action called when copy to clipboard is triggered
+        """
+        QgsApplication.instance().clipboard().setText(message)
 
     def on_clear_chat_button_clicked(self) -> None:
         """
