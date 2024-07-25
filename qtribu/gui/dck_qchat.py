@@ -415,6 +415,16 @@ Rooms:
         hide_action.triggered.connect(partial(self.on_hide_message, item))
         menu.addAction(hide_action)
 
+        # mention user action
+        mention_action = QAction(
+            QgsApplication.getThemeIcon("mMessageLogRead.svg"),
+            self.tr("Mention user"),
+        )
+        mention_action.triggered.connect(
+            partial(self.on_message_double_clicked, item, 2)
+        )
+        menu.addAction(mention_action)
+
         menu.exec(QCursor.pos())
 
     def on_copy_message_to_clipboard(self, message: str) -> None:
