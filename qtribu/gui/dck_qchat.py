@@ -10,7 +10,7 @@ from PyQt5 import QtWebSockets  # noqa QGS103
 from qgis.core import Qgis, QgsApplication
 from qgis.gui import QgisInterface, QgsDockWidget
 from qgis.PyQt import uic
-from qgis.PyQt.QtCore import Qt, QTime, QUrl
+from qgis.PyQt.QtCore import QPoint, Qt, QTime, QUrl
 from qgis.PyQt.QtGui import QBrush, QColor, QCursor, QIcon
 from qgis.PyQt.QtWidgets import QAction, QMenu, QMessageBox, QTreeWidgetItem, QWidget
 
@@ -90,6 +90,7 @@ class QChatWidget(QgsDockWidget):
                 self.tr("Message"),
             ]
         )
+        self.twg_chat.itemDoubleClicked.connect(self.on_message_double_clicked)
         self.twg_chat.setContextMenuPolicy(Qt.CustomContextMenu)
         self.twg_chat.customContextMenuRequested.connect(
             self.on_custom_context_menu_requested
@@ -379,9 +380,18 @@ Rooms:
                 )
             )
 
-    def on_custom_context_menu_requested(self, point) -> None:
+    # def on_message_double_clicked(self, point: QModelIndex) -> None:
+    def on_message_double_clicked(self, item: QTreeWidgetItem, column: int) -> None:
         """
-        Action called on right click on a chat message
+        Action called when double clicking on a chat message
+        """
+        text = self.lne_message.text()
+        author = item.text(2)
+        self.lne_message.setText(f"{text}@{author} ")
+
+    def on_custom_context_menu_requested(self, point: QPoint) -> None:
+        """
+        Action called when right clicking on a chat message
         """
         item = self.twg_chat.itemAt(point)
         message = item.text(3)
@@ -466,7 +476,7 @@ Rooms:
             return
 
         # send message to websocket
-        message = {"message": message_text, "author": nickname}
+        message = {"message": message_text.strip(), "author": nickname}
         self.ws_client.sendTextMessage(json.dumps(message))
         self.lne_message.setText("")
 
