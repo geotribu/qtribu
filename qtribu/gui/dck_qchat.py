@@ -16,6 +16,7 @@ from qgis.PyQt.QtWidgets import QAction, QMenu, QMessageBox, QTreeWidgetItem, QW
 
 from qtribu.__about__ import __title__
 from qtribu.constants import (
+    ADMIN_MESSAGES_AVATAR,
     ADMIN_MESSAGES_COLOR,
     ADMIN_MESSAGES_NICKNAME,
     CHEATCODE_10OCLOCK,
@@ -125,6 +126,9 @@ class QChatWidget(QgsDockWidget):
             self.tr("Instance: {uri}").format(uri=self.settings.qchat_instance_uri)
         )
         self.lbl_nickname.setText(self.settings.author_nickname)
+        self.btn_send.setIcon(
+            QIcon(QgsApplication.iconPath(self.settings.author_avatar))
+        )
 
     def on_widget_opened(self) -> None:
         """
@@ -335,6 +339,7 @@ Rooms:
             item = self.create_message_item(
                 self.current_room,
                 message["author"],
+                message["avatar"],
                 message["message"],
                 foreground_color=MENTION_MESSAGES_COLOR,
             )
@@ -351,12 +356,16 @@ Rooms:
             item = self.create_message_item(
                 self.current_room,
                 message["author"],
+                message["avatar"],
                 message["message"],
                 foreground_color=USER_MESSAGES_COLOR,
             )
         else:
             item = self.create_message_item(
-                self.current_room, message["author"], message["message"]
+                self.current_room,
+                message["author"],
+                message["avatar"],
+                message["message"],
             )
         self.twg_chat.insertTopLevelItem(0, item)
 
@@ -460,6 +469,7 @@ Rooms:
 
         # retrieve nickname and message
         nickname = self.settings.author_nickname
+        avatar = self.settings.author_avatar
         message_text = self.lne_message.text()
 
         if not nickname:
@@ -492,7 +502,11 @@ Rooms:
             return
 
         # send message to websocket
-        message = {"message": message_text.strip(), "author": nickname}
+        message = {
+            "message": message_text.strip(),
+            "author": nickname,
+            "avatar": avatar,
+        }
         self.ws_client.sendTextMessage(json.dumps(message))
         self.lne_message.setText("")
 
@@ -503,15 +517,17 @@ Rooms:
         item = self.create_message_item(
             room,
             ADMIN_MESSAGES_NICKNAME,
+            ADMIN_MESSAGES_AVATAR,
             message,
             foreground_color=ADMIN_MESSAGES_COLOR,
         )
         self.twg_chat.insertTopLevelItem(0, item)
 
-    @staticmethod
     def create_message_item(
+        self,
         room: str,
         author: str,
+        avatar: Optional[str],
         message: str,
         foreground_color: str = None,
         background_color: str = None,
@@ -527,6 +543,8 @@ Rooms:
             message,
         ]
         item = QTreeWidgetItem(item_data)
+        if self.settings.qchat_show_avatars and avatar:
+            item.setIcon(2, QIcon(QgsApplication.iconPath(avatar)))
         item.setToolTip(3, message)
         if foreground_color:
             for i in range(len(item_data)):

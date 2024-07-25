@@ -343,6 +343,13 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QCheckBox" name="ckb_show_avatars">
+          <property name="text">
+           <string>Show avatars</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item>
