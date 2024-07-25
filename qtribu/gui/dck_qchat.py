@@ -380,7 +380,6 @@ Rooms:
                 )
             )
 
-    # def on_message_double_clicked(self, point: QModelIndex) -> None:
     def on_message_double_clicked(self, item: QTreeWidgetItem, column: int) -> None:
         """
         Action called when double clicking on a chat message
