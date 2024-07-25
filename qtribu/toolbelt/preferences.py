@@ -44,6 +44,9 @@ class PlgSettingsStructure:
     qchat_play_sounds: bool = True
     qchat_sound_volume: int = 33
     qchat_ring_tone: str = "beep_1"
+    qchat_color_mention: str = "#4169e1"
+    qchat_color_self: str = "#00cc00"
+    qchat_color_admin: str = "#ffa500"
 
     # usage
     browser: int = 1
