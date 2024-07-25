@@ -107,6 +107,9 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         # qchat
         settings.qchat_instance_uri = self.lne_qchat_instance_uri.text()
         settings.qchat_activate_cheatcode = self.ckb_cheatcodes.isChecked()
+        settings.qchat_display_admin_messages = (
+            self.ckb_display_admin_messages.isChecked()
+        )
         settings.qchat_play_sounds = self.ckb_play_sounds.isChecked()
         settings.qchat_sound_volume = self.hsl_sound_volume.value()
         settings.qchat_ring_tone = self.cbb_ring_tone.currentText()
@@ -141,6 +144,9 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         # qchat
         self.lne_qchat_instance_uri.setText(settings.qchat_instance_uri)
         self.ckb_cheatcodes.setChecked(settings.qchat_activate_cheatcode)
+        self.ckb_display_admin_messages.setChecked(
+            settings.qchat_display_admin_messages
+        )
         self.ckb_play_sounds.setChecked(settings.qchat_play_sounds)
         self.hsl_sound_volume.setValue(settings.qchat_sound_volume)
         beep_index = self.cbb_ring_tone.findText(
