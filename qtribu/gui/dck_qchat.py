@@ -387,21 +387,38 @@ Rooms:
 
         menu = QMenu(self.tr("QChat Menu"), self)
 
-        # copy message action
+        # copy message to clipboard action
         copy_action = QAction(
             QgsApplication.getThemeIcon("mActionEditCopy.svg"),
             self.tr("Copy message to clipboard"),
         )
-        copy_action.triggered.connect(partial(self.on_copy_message, message))
+        copy_action.triggered.connect(
+            partial(self.on_copy_message_to_clipboard, message)
+        )
         menu.addAction(copy_action)
+
+        # hide message action
+        hide_action = QAction(
+            QgsApplication.getThemeIcon("mActionHideSelectedLayers.svg"),
+            self.tr("Hide message"),
+        )
+        hide_action.triggered.connect(partial(self.on_hide_message, item))
+        menu.addAction(hide_action)
 
         menu.exec(QCursor.pos())
 
-    def on_copy_message(self, message: str) -> None:
+    def on_copy_message_to_clipboard(self, message: str) -> None:
         """
-        Action called when copy to clipboard is triggered
+        Action called when copy to clipboard menu action is triggered
         """
         QgsApplication.instance().clipboard().setText(message)
+
+    def on_hide_message(self, item: QTreeWidgetItem) -> None:
+        """
+        Action called when hide message menu action is triggered
+        """
+        root = self.twg_chat.invisibleRootItem()
+        (item.parent() or root).removeChild(item)
 
     def on_clear_chat_button_clicked(self) -> None:
         """
