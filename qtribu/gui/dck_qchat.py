@@ -395,6 +395,7 @@ Rooms:
         Action called when right clicking on a chat message
         """
         item = self.twg_chat.itemAt(point)
+        author = item.text(2)
         message = item.text(3)
 
         menu = QMenu(self.tr("QChat Menu"), self)
@@ -418,14 +419,18 @@ Rooms:
         menu.addAction(hide_action)
 
         # mention user action
-        mention_action = QAction(
-            QgsApplication.getThemeIcon("mMessageLogRead.svg"),
-            self.tr("Mention user"),
-        )
-        mention_action.triggered.connect(
-            partial(self.on_message_double_clicked, item, 2)
-        )
-        menu.addAction(mention_action)
+        if (
+            author != self.settings.author_nickname
+            and author != ADMIN_MESSAGES_NICKNAME
+        ):
+            mention_action = QAction(
+                QgsApplication.getThemeIcon("mMessageLogRead.svg"),
+                self.tr("Mention user"),
+            )
+            mention_action.triggered.connect(
+                partial(self.on_message_double_clicked, item, 2)
+            )
+            menu.addAction(mention_action)
 
         menu.exec(QCursor.pos())
 
