@@ -53,6 +53,32 @@ Selon votre configuration, redémarrer QGIS peut être nécessaire, le gestionna
 
 ----
 
+## Version en développement
+
+### Depuis une branche
+
+1. S'identifier sur Github.com
+1. Se rendre sur la page correspondant au workflow GitHub Actions "📦 Packaging & 🚀 Release" : [cliquer ici](https://github.com/geotribu/qtribu/actions/workflows/packager.yml)
+1. Filtrer sur la branche souhaitée
+
+    ![Github - Workflow run listing](./static/github_actions_workflow_packaging_listing.webp)
+
+1. Sélectionner la dernière exécution qui a fonctionné (avec une coche verte)
+1. En bas de la page _Summary_, télécharger l'artefact du plugin packagé :
+
+    ![Github - Workflow run summary](./static/github_actions_workflow_packaging_summary_annotated_artefact.webp)
+
+1. Décompresser le fichier ZIP.
+1. Ajouter le zip depuis le menu de QGIS ([voir la doc officielle](https://docs.qgis.org/3.34/fr/docs/user_manual/plugins/plugins.html#the-install-from-zip-tab) pour cette étape si besoin)
+
+:::{note}
+Il est aussi possible d'accéder à la page depuis l'onglet `Checks` de la Pull Request correspondante :
+
+![Github - PR Checks tab](./static/github_pr_checks_tab_annotated_packaging.webp)
+:::
+
+----
+
 ## Intégration dans QGIS
 
 Une fois installé, le plugin s'intègre :
