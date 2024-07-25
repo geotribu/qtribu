@@ -316,7 +316,30 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="lne_qchat_instance_uri"/>
+         <widget class="QgsSymbolButton" name="mSymbolButton"/>
+        </item>
+        <item>
+         <widget class="QComboBox" name="cbb_qchat_instance_uri">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="editable">
+           <bool>true</bool>
+          </property>
+          <item>
+           <property name="text">
+            <string>https://gischat.geotribu.net</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://gischat.geotribu.fr</string>
+           </property>
+          </item>
+         </widget>
         </item>
         <item>
          <widget class="QPushButton" name="btn_rules">
@@ -653,6 +676,11 @@
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>QgsSymbolButton</class>
+   <extends>QToolButton</extends>
+   <header>qgssymbolbutton.h</header>
+  </customwidget>
   <customwidget>
    <class>AuthoringWidget</class>
    <extends>QWidget</extends>
