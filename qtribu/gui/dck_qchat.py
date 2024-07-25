@@ -17,7 +17,6 @@ from qgis.PyQt.QtWidgets import QAction, QMenu, QMessageBox, QTreeWidgetItem, QW
 from qtribu.__about__ import __title__
 from qtribu.constants import (
     ADMIN_MESSAGES_AVATAR,
-    ADMIN_MESSAGES_COLOR,
     ADMIN_MESSAGES_NICKNAME,
     CHEATCODE_10OCLOCK,
     CHEATCODE_DIZZY,
@@ -25,9 +24,7 @@ from qtribu.constants import (
     CHEATCODE_IAMAROBOT,
     CHEATCODE_QGIS_PRO_LICENSE,
     INTERNAL_MESSAGE_AUTHOR,
-    MENTION_MESSAGES_COLOR,
     QCHAT_NICKNAME_MINLENGTH,
-    USER_MESSAGES_COLOR,
 )
 from qtribu.logic.qchat_client import QChatApiClient
 from qtribu.tasks.dizzy import DizzyTask
@@ -345,7 +342,7 @@ Rooms:
                 message["author"],
                 message["avatar"],
                 message["message"],
-                foreground_color=MENTION_MESSAGES_COLOR,
+                foreground_color=self.settings.qchat_color_mention,
             )
             self.log(
                 message=self.tr("You were mentionned by {sender}: {message}").format(
@@ -362,7 +359,7 @@ Rooms:
                 message["author"],
                 message["avatar"],
                 message["message"],
-                foreground_color=USER_MESSAGES_COLOR,
+                foreground_color=self.settings.qchat_color_self,
             )
         else:
             item = self.create_message_item(
@@ -523,7 +520,7 @@ Rooms:
             ADMIN_MESSAGES_NICKNAME,
             ADMIN_MESSAGES_AVATAR,
             message,
-            foreground_color=ADMIN_MESSAGES_COLOR,
+            foreground_color=self.settings.qchat_color_admin,
         )
         self.twg_chat.insertTopLevelItem(0, item)
 

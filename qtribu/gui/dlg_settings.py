@@ -13,7 +13,7 @@ from qgis.core import Qgis, QgsApplication
 from qgis.gui import QgsOptionsPageWidget, QgsOptionsWidgetFactory
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import Qt
-from qgis.PyQt.QtGui import QIcon
+from qgis.PyQt.QtGui import QColor, QIcon
 from qgis.PyQt.QtWidgets import QButtonGroup, QMessageBox
 
 # project
@@ -114,6 +114,9 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         settings.qchat_play_sounds = self.ckb_play_sounds.isChecked()
         settings.qchat_sound_volume = self.hsl_sound_volume.value()
         settings.qchat_ring_tone = self.cbb_ring_tone.currentText()
+        settings.qchat_color_mention = self.cbt_color_mention.color().name()
+        settings.qchat_color_self = self.cbt_color_self.color().name()
+        settings.qchat_color_admin = self.cbt_color_admin.color().name()
 
         # misc
         settings.debug_mode = self.opt_debug.isChecked()
@@ -162,6 +165,9 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         )
         if beep_index >= 0:
             self.cbb_ring_tone.setCurrentIndex(beep_index)
+        self.cbt_color_mention.setColor(QColor(settings.qchat_color_mention))
+        self.cbt_color_self.setColor(QColor(settings.qchat_color_self))
+        self.cbt_color_admin.setColor(QColor(settings.qchat_color_admin))
 
         # misc
         self.opt_debug.setChecked(settings.debug_mode)
