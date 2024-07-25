@@ -305,119 +305,145 @@
      <property name="title">
       <string>QChat</string>
      </property>
-     <layout class="QFormLayout" name="formLayout">
-      <item row="1" column="0">
-       <widget class="QLabel" name="lbl_instance_uri">
-        <property name="text">
-         <string>Instance URI:</string>
-        </property>
-       </widget>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <layout class="QHBoxLayout" name="hly_instance">
+        <item>
+         <widget class="QLabel" name="lbl_instance_uri">
+          <property name="text">
+           <string>Instance URI:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lne_qchat_instance_uri"/>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btn_rules">
+          <property name="text">
+           <string>Instance rules</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="lne_qchat_instance_uri"/>
+      <item>
+       <layout class="QHBoxLayout" name="hly_misc">
+        <item>
+         <widget class="QCheckBox" name="ckb_cheatcodes">
+          <property name="text">
+           <string>Activate cheatcodes</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="ckb_display_admin_messages">
+          <property name="text">
+           <string>Display admin messages</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
-      <item row="2" column="1">
-       <widget class="QPushButton" name="btn_rules">
-        <property name="text">
-         <string>Instance rules</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="1">
-       <widget class="QCheckBox" name="ckb_cheatcodes">
-        <property name="text">
-         <string>Activate cheatcodes</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="1">
-       <widget class="QCheckBox" name="ckb_play_sounds">
-        <property name="text">
-         <string>Play sounds</string>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="1">
-       <widget class="QSlider" name="hsl_sound_volume">
-        <property name="minimum">
-         <number>0</number>
-        </property>
-        <property name="maximum">
-         <number>100</number>
-        </property>
-        <property name="value">
-         <number>33</number>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="8" column="1">
-       <widget class="QComboBox" name="cbb_ring_tone">
+      <item>
+       <layout class="QHBoxLayout" name="hly_sounds">
         <item>
-         <property name="text">
-          <string>beep_1</string>
-         </property>
+         <widget class="QCheckBox" name="ckb_play_sounds">
+          <property name="text">
+           <string>Play sounds</string>
+          </property>
+         </widget>
         </item>
         <item>
-         <property name="text">
-          <string>beep_2</string>
-         </property>
+         <widget class="QLabel" name="lbl_volume">
+          <property name="text">
+           <string>Volume:</string>
+          </property>
+         </widget>
         </item>
         <item>
-         <property name="text">
-          <string>beep_3</string>
-         </property>
+         <widget class="QSlider" name="hsl_sound_volume">
+          <property name="minimum">
+           <number>0</number>
+          </property>
+          <property name="maximum">
+           <number>100</number>
+          </property>
+          <property name="value">
+           <number>33</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
         </item>
         <item>
-         <property name="text">
-          <string>beep_4</string>
-         </property>
+         <widget class="QLabel" name="lbl_ringtone">
+          <property name="text">
+           <string>Notification tone:</string>
+          </property>
+         </widget>
         </item>
         <item>
-         <property name="text">
-          <string>beep_5</string>
-         </property>
+         <widget class="QComboBox" name="cbb_ring_tone">
+          <item>
+           <property name="text">
+            <string>beep_1</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>beep_2</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>beep_3</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>beep_4</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>beep_5</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>beep_6</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>beep_7</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>horn</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>cat</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>dog</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>chicken</string>
+           </property>
+          </item>
+         </widget>
         </item>
-        <item>
-         <property name="text">
-          <string>beep_6</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>beep_7</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>horn</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>cat</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>dog</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>chicken</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="7" column="0">
-       <widget class="QLabel" name="lbl_sounds_volume">
-        <property name="text">
-         <string>Sounds volume :</string>
-        </property>
-       </widget>
+       </layout>
       </item>
      </layout>
     </widget>

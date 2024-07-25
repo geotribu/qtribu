@@ -249,7 +249,7 @@ Rooms:
         """
         Connect widget to a specific room
         """
-        if log:
+        if log and self.settings.qchat_display_admin_messages:
             self.add_admin_message(
                 room, self.tr("Connected to room '{room}'").format(room=room)
             )
@@ -276,7 +276,7 @@ Rooms:
         """
         Disconnect widget from the current room
         """
-        if log:
+        if log and self.settings.qchat_display_admin_messages:
             self.add_admin_message(
                 self.current_room,
                 self.tr("Disconnected from room '{room}'").format(
@@ -303,7 +303,8 @@ Rooms:
         """
         Action called when an error appears on the websocket
         """
-        self.add_admin_message(self.tr("ERROR"), self.ws_client.errorString())
+        if self.settings.qchat_display_admin_messages:
+            self.add_admin_message(self.tr("ERROR"), self.ws_client.errorString())
         self.log(
             message=f"{error_code}: {self.ws_client.errorString()}",
             log_level=Qgis.Critical,
