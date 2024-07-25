@@ -1,3 +1,13 @@
+#! python3  # noqa: E265
+
+"""A minimalist emoji picker using PyQt.
+
+
+Inspirations:
+
+- https://github.com/Svxy/mint-emojis/ (Apache 2.0)
+"""
+
 # standard
 import json
 import typing
@@ -94,11 +104,11 @@ class QEmojiPicker(QDialog):
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(400, 300)
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(Form.sizePolicy().hasHeightForWidth())
-        Form.setSizePolicy(sizePolicy)
+        size_policy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        size_policy.setHorizontalStretch(0)
+        size_policy.setVerticalStretch(0)
+        size_policy.setHeightForWidth(Form.sizePolicy().hasHeightForWidth())
+        Form.setSizePolicy(size_policy)
         self.verticalLayout = QVBoxLayout(Form)
         self.verticalLayout.setObjectName("verticalLayout")
         self.search_line_edit = QLineEdit(Form)
@@ -117,13 +127,13 @@ class QEmojiPicker(QDialog):
         self.emoji_information_hlayout = QHBoxLayout()
         self.emoji_information_hlayout.setObjectName("emoji_information_hlayout")
         self.emoji_image_label = QLabel(Form)
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
+        size_policy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        size_policy.setHorizontalStretch(0)
+        size_policy.setVerticalStretch(0)
+        size_policy.setHeightForWidth(
             self.emoji_image_label.sizePolicy().hasHeightForWidth()
         )
-        self.emoji_image_label.setSizePolicy(sizePolicy)
+        self.emoji_image_label.setSizePolicy(size_policy)
         font = QtGui.QFont()
         font.setPointSize(22)
         self.emoji_image_label.setFont(font)
@@ -131,13 +141,13 @@ class QEmojiPicker(QDialog):
         self.emoji_image_label.setObjectName("emoji_image_label")
         self.emoji_information_hlayout.addWidget(self.emoji_image_label)
         self.emoji_name_label = QLabel(Form)
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
+        size_policy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        size_policy.setHorizontalStretch(0)
+        size_policy.setVerticalStretch(0)
+        size_policy.setHeightForWidth(
             self.emoji_name_label.sizePolicy().hasHeightForWidth()
         )
-        self.emoji_name_label.setSizePolicy(sizePolicy)
+        self.emoji_name_label.setSizePolicy(size_policy)
         font = QtGui.QFont()
         font.setPointSize(10)
         self.emoji_name_label.setFont(font)
@@ -274,6 +284,9 @@ class QEmojiPicker(QDialog):
             self.parent_emoji_picker.emoji_name_label.setText("")
 
         def on_click(self):
-            """Gets called if the button is pressed. Closes the emoji picker and if it was called via `QEmojiPicker.select()` the current button emoji will be returned"""
+            """Gets called if the button is pressed. Closes the emoji picker and if it
+            was called via `QEmojiPicker.select()` the current button emoji will be
+            returned.
+            """
             self.parent_emoji_picker.selected_emoji = self.text()
             self.parent_emoji_picker.close()
