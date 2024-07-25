@@ -24,7 +24,6 @@ from qtribu.__about__ import (
     __uri_tracker__,
     __version__,
 )
-from qtribu.gui.gui_commons import QVAL_URL
 from qtribu.logic.qchat_client import QChatApiClient
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
 from qtribu.toolbelt.commons import open_url_in_browser, play_resource_sound
@@ -62,7 +61,8 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         self.opt_browser_group.addButton(self.opt_browser_qt, 1)
         self.opt_browser_group.addButton(self.opt_browser_os, 2)
 
-        self.lne_qchat_instance_uri.setValidator(QVAL_URL)
+        # disabled this for instances with port in URL
+        # self.lne_qchat_instance_uri.setValidator(QVAL_URL)
         self.btn_rules.pressed.connect(self.show_instance_rules)
         self.btn_rules.setIcon(QIcon(QgsApplication.iconPath("processingResult.svg")))
 
@@ -110,6 +110,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         settings.qchat_display_admin_messages = (
             self.ckb_display_admin_messages.isChecked()
         )
+        settings.qchat_show_avatars = self.ckb_show_avatars.isChecked()
         settings.qchat_play_sounds = self.ckb_play_sounds.isChecked()
         settings.qchat_sound_volume = self.hsl_sound_volume.value()
         settings.qchat_ring_tone = self.cbb_ring_tone.currentText()
@@ -130,7 +131,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
                 log_level=4,
             )
 
-    def load_settings(self) -> dict:
+    def load_settings(self) -> None:
         """Load options from QgsSettings into UI form."""
         settings = self.plg_settings.get_plg_settings()
 
@@ -147,6 +148,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         self.ckb_display_admin_messages.setChecked(
             settings.qchat_display_admin_messages
         )
+        self.ckb_show_avatars.setChecked(settings.qchat_show_avatars)
         self.ckb_play_sounds.setChecked(settings.qchat_play_sounds)
         self.hsl_sound_volume.setValue(settings.qchat_sound_volume)
         beep_index = self.cbb_ring_tone.findText(

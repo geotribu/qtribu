@@ -35,6 +35,7 @@ class PlgSettingsStructure:
     qchat_instance_uri: str = "https://gischat.geotribu.net"
     qchat_activate_cheatcode: bool = True
     qchat_display_admin_messages: bool = True
+    qchat_show_avatars: bool = True
     qchat_play_sounds: bool = True
     qchat_sound_volume: int = 33
     qchat_ring_tone: str = "beep_1"
@@ -56,6 +57,7 @@ class PlgSettingsStructure:
 
     # authoring
     author_nickname: str = ""
+    author_avatar: str = "mGeoPackage.svg"
     author_firstname: str = ""
     author_lastname: str = ""
     author_email: str = ""

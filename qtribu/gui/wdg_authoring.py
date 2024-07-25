@@ -2,7 +2,10 @@
 from pathlib import Path
 
 # PyQGIS
+from qgis.core import QgsApplication
 from qgis.PyQt import uic
+from qgis.PyQt.QtCore import Qt
+from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QWidget
 
 # plugin
@@ -29,6 +32,9 @@ class AuthoringWidget(QWidget):
         self.lne_linkedin_account.setValidator(QVAL_URL)
         self.lne_twitter_account.setValidator(QVAL_URL)
 
+        # play sound on ringtone changed
+        self.cbb_qchat_avatar.currentIndexChanged.connect(self.on_avatar_index_changed)
+
         # fill fields from saved settings
         self.load_settings()
 
@@ -38,6 +44,15 @@ class AuthoringWidget(QWidget):
 
         # author
         self.lne_qchat_nickname.setText(settings.author_nickname)
+        avatar_index = self.cbb_qchat_avatar.findText(
+            settings.author_avatar, Qt.MatchFixedString
+        )
+        if avatar_index >= 0:
+            self.cbb_qchat_avatar.setCurrentIndex(avatar_index)
+            self.btn_avatar_preview.setIcon(
+                QIcon(QgsApplication.iconPath(settings.author_avatar))
+            )
+
         self.lne_firstname.setText(settings.author_firstname)
         self.lne_lastname.setText(settings.author_lastname)
         self.lne_email.setText(settings.author_email)
@@ -53,6 +68,7 @@ class AuthoringWidget(QWidget):
 
         # store user inputs
         settings.author_nickname = self.lne_qchat_nickname.text()
+        settings.author_avatar = self.cbb_qchat_avatar.currentText()
         settings.author_firstname = self.lne_firstname.text()
         settings.author_lastname = self.lne_lastname.text()
         settings.author_email = self.lne_email.text()
@@ -63,3 +79,11 @@ class AuthoringWidget(QWidget):
 
         # save it
         self.plg_settings.save_from_object(settings)
+
+    def on_avatar_index_changed(self) -> None:
+        """
+        Action launched when avatar index is changed in combobox
+        """
+        self.btn_avatar_preview.setIcon(
+            QIcon(QgsApplication.iconPath(self.cbb_qchat_avatar.currentText()))
+        )
