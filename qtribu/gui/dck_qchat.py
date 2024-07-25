@@ -104,6 +104,7 @@ class QChatWidget(QgsDockWidget):
         self.ws_client = QtWebSockets.QWebSocket(
             "", QtWebSockets.QWebSocketProtocol.Version13, None
         )
+        self.ws_client.error.connect(self.on_ws_error)
         self.ws_client.textMessageReceived.connect(self.on_ws_message_received)
 
         # send message signal listener
@@ -279,6 +280,7 @@ Rooms:
         self.grb_user.setEnabled(True)
         self.current_room = room
         self.connected = True
+        self.log(message=f"Websocket connected to room {room}")
 
     def disconnect_from_room(self, log: bool = True, close_ws: bool = True) -> None:
         """
@@ -306,6 +308,7 @@ Rooms:
         Action called when websocket is disconnected
         """
         self.connected = False
+        self.log(message="Websocket disconnected")
 
     def on_ws_error(self, error_code: int) -> None:
         """
@@ -328,6 +331,10 @@ Rooms:
         if message["author"] == INTERNAL_MESSAGE_AUTHOR:
             self.handle_internal_message(message)
             return
+
+        self.log(
+            message=f"Message received: [{message['author']}]: '{message['message']}'"
+        )
 
         # check if a cheatcode is activated
         if self.settings.qchat_activate_cheatcode:
@@ -391,6 +398,7 @@ Rooms:
                     user_txt=self.tr("user") if nb_users <= 1 else self.tr("users"),
                 )
             )
+            self.log(message=f"Internal message received: {nb_users} users in room")
 
     def on_message_double_clicked(self, item: QTreeWidgetItem, column: int) -> None:
         """
