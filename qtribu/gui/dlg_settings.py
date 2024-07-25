@@ -154,7 +154,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         self.lbl_version_saved_value.setText(settings.version)
 
     def show_instance_rules(self) -> None:
-        instance_url = self.le_qchat_instance_uri.text()
+        instance_url = self.lne_qchat_instance_uri.text()
         client = QChatApiClient(instance_url)
         rules = client.get_rules()
         QMessageBox.information(
