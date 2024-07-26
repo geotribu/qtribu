@@ -83,7 +83,6 @@ class QChatWidget(QgsDockWidget):
         # tree widget initialization
         self.twg_chat.setHeaderLabels(
             [
-                self.tr("Room"),
                 self.tr("Date"),
                 self.tr("Nickname"),
                 self.tr("Message"),
@@ -361,7 +360,6 @@ Rooms:
         words = message["message"].split(" ")
         if f"@{self.settings.author_nickname}" in words or "@all" in words:
             item = self.create_message_item(
-                self.current_room,
                 message["author"],
                 message["avatar"],
                 message["message"],
@@ -378,7 +376,6 @@ Rooms:
             )
         elif message["author"] == self.settings.author_nickname:
             item = self.create_message_item(
-                self.current_room,
                 message["author"],
                 message["avatar"],
                 message["message"],
@@ -386,7 +383,6 @@ Rooms:
             )
         else:
             item = self.create_message_item(
-                self.current_room,
                 message["author"],
                 message["avatar"],
                 message["message"],
@@ -421,7 +417,7 @@ Rooms:
         Action called when double clicking on a chat message
         """
         text = self.lne_message.text()
-        author = item.text(2)
+        author = item.text(1)
         self.lne_message.setText(f"{text}@{author} ")
 
     def on_custom_context_menu_requested(self, point: QPoint) -> None:
@@ -429,8 +425,8 @@ Rooms:
         Action called when right clicking on a chat message
         """
         item = self.twg_chat.itemAt(point)
-        author = item.text(2)
-        message = item.text(3)
+        author = item.text(1)
+        message = item.text(2)
 
         menu = QMenu(self.tr("QChat Menu"), self)
 
@@ -540,7 +536,6 @@ Rooms:
         Adds an admin message to QTreeWidget chat
         """
         item = self.create_message_item(
-            room,
             ADMIN_MESSAGES_NICKNAME,
             ADMIN_MESSAGES_AVATAR,
             message,
@@ -550,7 +545,6 @@ Rooms:
 
     def create_message_item(
         self,
-        room: str,
         author: str,
         avatar: Optional[str],
         message: str,
@@ -562,15 +556,14 @@ Rooms:
         Optionally with foreground / background colors given as hexa string
         """
         item_data = [
-            room,
             QTime.currentTime().toString(),
             author,
             message,
         ]
         item = QTreeWidgetItem(item_data)
         if self.settings.qchat_show_avatars and avatar:
-            item.setIcon(2, QIcon(QgsApplication.iconPath(avatar)))
-        item.setToolTip(3, message)
+            item.setIcon(1, QIcon(QgsApplication.iconPath(avatar)))
+        item.setToolTip(2, message)
         if foreground_color:
             for i in range(len(item_data)):
                 item.setForeground(i, QBrush(QColor(foreground_color)))
