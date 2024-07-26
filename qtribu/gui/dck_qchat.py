@@ -387,7 +387,8 @@ Rooms:
                 message["avatar"],
                 message["message"],
             )
-        self.twg_chat.insertTopLevelItem(0, item)
+        self.twg_chat.addTopLevelItem(item)
+        self.twg_chat.scrollToItem(item)
 
         # check if a notification sound should be played
         if (
@@ -541,7 +542,8 @@ Rooms:
             message,
             foreground_color=self.settings.qchat_color_admin,
         )
-        self.twg_chat.insertTopLevelItem(0, item)
+        self.twg_chat.addTopLevelItem(item)
+        self.twg_chat.scrollToItem(item)
 
     def create_message_item(
         self,
