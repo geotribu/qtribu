@@ -65,6 +65,8 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         # self.lne_qchat_instance_uri.setValidator(QVAL_URL)
         self.btn_rules.pressed.connect(self.show_instance_rules)
         self.btn_rules.setIcon(QIcon(QgsApplication.iconPath("processingResult.svg")))
+        self.btn_discover.pressed.connect(self.discover_instances)
+        self.btn_discover.setIcon(QIcon(QgsApplication.iconPath("mIconListView.svg")))
 
         # customization
         self.btn_help.setIcon(QIcon(QgsApplication.iconPath("mActionHelpContents.svg")))
@@ -178,6 +180,9 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         self.lbl_version_saved_value.setText(settings.version)
 
     def show_instance_rules(self) -> None:
+        """
+        Action called when clicking on the "Instance rules" button
+        """
         instance_url = self.cbb_qchat_instance_uri.currentText()
         try:
             client = QChatApiClient(instance_url)
@@ -202,6 +207,27 @@ Max nickname length: {max_nickname_length}"""
                     min_nickname_length=rules["min_author_length"],
                     max_nickname_length=rules["max_author_length"],
                 ),
+            )
+        except Exception as e:
+            self.log(message=str(e), log_level=Qgis.Critical)
+
+    def discover_instances(self) -> None:
+        """
+        Action called when clicking on the "Discover instances" button
+        """
+        try:
+            client = QChatApiClient(self.cbb_qchat_instance_uri.currentText())
+            instances = client.get_registered_instances()
+            msg = ""
+            for lang, lang_instances in instances.items():
+                msg += f"[{lang}]:\n"
+                for li in lang_instances:
+                    msg += f"- {li}\n"
+                msg += "\n"
+            QMessageBox.information(
+                self,
+                self.tr("Registered instances"),
+                msg,
             )
         except Exception as e:
             self.log(message=str(e), log_level=Qgis.Critical)
