@@ -23,6 +23,7 @@ from qtribu.constants import (
     CHEATCODE_DONTCRYBABY,
     CHEATCODE_IAMAROBOT,
     CHEATCODE_QGIS_PRO_LICENSE,
+    CHEATCODES,
     INTERNAL_MESSAGE_AUTHOR,
     QCHAT_NICKNAME_MINLENGTH,
 )
@@ -352,8 +353,13 @@ Rooms:
             if activated:
                 return
 
+        # do not display cheatcodes
+        if message["message"] in CHEATCODES:
+            return
+
         # check if message mentions current user
-        if f"@{self.settings.author_nickname}" in message["message"]:
+        words = message["message"].split(" ")
+        if f"@{self.settings.author_nickname}" in words or "@all" in words:
             item = self.create_message_item(
                 self.current_room,
                 message["author"],
