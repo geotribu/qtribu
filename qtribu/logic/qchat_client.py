@@ -16,6 +16,8 @@ HEADERS: dict = {
 
 CONTENT_TYPE_JSON = "application/json"
 
+INSTANCES_JSON_URL = "https://github.com/geotribu/gischat/raw/main/instances.json"
+
 
 class QChatApiClient:
     """
@@ -28,6 +30,16 @@ class QChatApiClient:
     ):
         self.instance_uri = instance_uri
         self.qntwk = NetworkRequestsManager()
+
+    def get_registered_instances(self) -> dict[str, list[str]]:
+        response: QByteArray = self.qntwk.get_from_source(
+            headers=HEADERS,
+            url=INSTANCES_JSON_URL,
+            response_expected_content_type="text/plain; charset=utf-8",
+            use_cache=False,
+        )
+        data = json.loads(str(response, "UTF8"))
+        return data
 
     def get_status(self) -> dict[str, Any]:
         """

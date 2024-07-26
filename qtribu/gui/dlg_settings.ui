@@ -316,9 +316,6 @@
          </widget>
         </item>
         <item>
-         <widget class="QgsSymbolButton" name="mSymbolButton"/>
-        </item>
-        <item>
          <widget class="QComboBox" name="cbb_qchat_instance_uri">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -345,6 +342,13 @@
          <widget class="QPushButton" name="btn_rules">
           <property name="text">
            <string>Instance rules</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btn_discover">
+          <property name="text">
+           <string>Discover instances</string>
           </property>
          </widget>
         </item>
@@ -755,11 +759,6 @@
    <header>qgscolorbutton.h</header>
   </customwidget>
   <customwidget>
-   <class>QgsSymbolButton</class>
-   <extends>QToolButton</extends>
-   <header>qgssymbolbutton.h</header>
-  </customwidget>
-  <customwidget>
    <class>AuthoringWidget</class>
    <extends>QWidget</extends>
    <header>qtribu.gui.wdg_authoring</header>
@@ -774,7 +773,6 @@
   <tabstop>btn_reset_read_history</tabstop>
   <tabstop>chb_integration_news_feed</tabstop>
   <tabstop>chb_license_global_accept</tabstop>
-  <tabstop>mSymbolButton</tabstop>
   <tabstop>cbb_qchat_instance_uri</tabstop>
   <tabstop>btn_rules</tabstop>
   <tabstop>ckb_show_avatars</tabstop>
