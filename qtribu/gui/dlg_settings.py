@@ -186,11 +186,21 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
                 self,
                 self.tr("Instance rules"),
                 self.tr(
-                    "Instance rules ({instance_url}):\n\n{rules}\n\nMain language: {main_lang}"
+                    """Instance rules ({instance_url}):
+
+{rules}
+
+Main language: {main_lang}
+Max message length: {max_message_length}
+Min nickname length: {min_nickname_length}
+Max nickname length: {max_nickname_length}"""
                 ).format(
                     instance_url=instance_url,
                     rules=rules["rules"],
                     main_lang=rules["main_lang"],
+                    max_message_length=rules["max_message_length"],
+                    min_nickname_length=rules["min_author_length"],
+                    max_nickname_length=rules["max_author_length"],
                 ),
             )
         except Exception as e:
