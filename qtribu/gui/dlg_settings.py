@@ -105,7 +105,11 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         settings.license_global_accept = self.chb_license_global_accept.isChecked()
 
         # qchat
-        settings.qchat_instance_uri = self.cbb_qchat_instance_uri.currentText()
+        instance = self.cbb_qchat_instance_uri.currentText()
+        if instance.endswith("/"):
+            settings.qchat_instance_uri = instance[0:-1]
+        else:
+            settings.qchat_instance_uri = instance
         settings.qchat_activate_cheatcode = self.ckb_cheatcodes.isChecked()
         settings.qchat_display_admin_messages = (
             self.ckb_display_admin_messages.isChecked()
