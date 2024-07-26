@@ -282,7 +282,22 @@
           </item>
           <item>
            <property name="text">
+            <string>mIconFolder.svg</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>mIconGPU.svg</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
             <string>mIconInfo.svg</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>mIconNetworkLogger.svg</string>
            </property>
           </item>
           <item>
@@ -293,6 +308,11 @@
           <item>
            <property name="text">
             <string>mIconPyramid.svg</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>mIconPythonFile.svg</string>
            </property>
           </item>
           <item>
