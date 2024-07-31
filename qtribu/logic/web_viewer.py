@@ -19,7 +19,6 @@ from qgis.PyQt.QtGui import QDesktopServices
 
 QCoreApplication.setAttribute(Qt.AA_ShareOpenGLContexts)
 from qgis.PyQt.QtWebEngineWidgets import QWebEngineView as QWebView
-
 from qgis.PyQt.QtWidgets import QVBoxLayout, QWidget
 
 # project
