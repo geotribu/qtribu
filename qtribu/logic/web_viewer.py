@@ -17,11 +17,8 @@ from typing import Optional
 from qgis.PyQt.QtCore import QCoreApplication, Qt
 from qgis.PyQt.QtGui import QDesktopServices
 
-try:
-    from qgis.PyQt.QtWebKitWidgets import QWebView
-except:
-    QCoreApplication.setAttribute(Qt.AA_ShareOpenGLContexts)
-    from PyQt.QtWebEngineWidgets import QWebEngineView as QWebView
+QCoreApplication.setAttribute(Qt.AA_ShareOpenGLContexts)
+from qgis.PyQt.QtWebEngineWidgets import QWebEngineView as QWebView
 
 from qgis.PyQt.QtWidgets import QVBoxLayout, QWidget
 
