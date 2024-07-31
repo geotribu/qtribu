@@ -420,6 +420,7 @@ Rooms:
         text = self.lne_message.text()
         author = item.text(1)
         self.lne_message.setText(f"{text}@{author} ")
+        self.lne_message.setFocus()
 
     def on_custom_context_menu_requested(self, point: QPoint) -> None:
         """
