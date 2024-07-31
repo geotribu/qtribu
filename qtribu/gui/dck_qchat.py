@@ -5,7 +5,6 @@ from pathlib import Path
 from typing import Any, Optional
 
 # PyQGIS
-#
 from PyQt5 import QtWebSockets  # noqa QGS103
 from qgis.core import Qgis, QgsApplication
 from qgis.gui import QgisInterface, QgsDockWidget
@@ -28,7 +27,7 @@ from qtribu.constants import (
     INTERNAL_MESSAGE_AUTHOR,
     QCHAT_NICKNAME_MINLENGTH,
 )
-from qtribu.gui.dlg_emoji_picker import QEmojiPicker
+from qtribu.gui.dlg_emoji_picker import EmojiPicker
 from qtribu.logic.qchat_client import QChatApiClient
 from qtribu.tasks.dizzy import DizzyTask
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
@@ -58,13 +57,7 @@ class QChatWidget(QgsDockWidget):
         self.task_manager = QgsApplication.taskManager()
         self.log = PlgLogger().log
         self.plg_settings = PlgOptionsManager()
-        self.emoji_picker = QEmojiPicker(
-            parent=self,
-            # this option can say how many emojis are in a row
-            items_per_row=8,
-            # with this enabled, the emoji search will be faster but less accurate
-            performance_search=True,
-        )
+        self.emoji_picker_new = EmojiPicker(self)
 
         uic.loadUi(Path(__file__).parent / f"{Path(__file__).stem}.ui", self)
 
@@ -641,10 +634,11 @@ Rooms:
         :return: selected emoji
         :rtype: str
         """
-        selected_emoji = self.emoji_picker.select()
-        self.lne_message.insert(selected_emoji)
+        self.emoji_picker_new.show()
+        # selected_emoji = self.emoji_picker.select()
+        # self.lne_message.insert(selected_emoji)
 
-        return selected_emoji
+        # return selected_emoji
 
     def on_renew_clicked(self) -> None:
         msg_box = QMessageBox()

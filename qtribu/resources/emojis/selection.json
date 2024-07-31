@@ -1,0 +1,39 @@
+{
+    "Gestures": {
+        "🤲": {
+            "name": "Palms Up Together",
+            "codes": [
+                "palms"
+            ]
+        },
+        "🤝": {
+            "name": "Handshake",
+            "codes": [
+                "handshake",
+                "shake"
+            ]
+        }
+    },
+    "Smileys & People": {
+        "🙂": {
+            "name": "Slightly Smiling Face",
+            "codes": [
+                "palms"
+            ]
+        },
+        "😂": {
+            "name": "Handshake",
+            "codes": [
+                "handshake",
+                "shake"
+            ]
+        },
+        "😇": {
+            "name": "Handshake",
+            "codes": [
+                "handshake",
+                "shake"
+            ]
+        }
+    }
+}

@@ -10,10 +10,14 @@ Inspirations:
 
 # standard
 import json
-import typing
+from pathlib import Path
+from typing import Optional, Union
 
 # PyQGIS
-from qgis.PyQt import QtCore, QtGui
+from qgis.core import QgsApplication
+from qgis.PyQt import QtCore, QtGui, uic
+from qgis.PyQt.QtCore import QUrl
+from qgis.PyQt.QtGui import QFontDatabase
 from qgis.PyQt.QtWidgets import (
     QDialog,
     QGridLayout,
@@ -31,6 +35,190 @@ from qgis.PyQt.QtWidgets import (
 
 # plugin
 from qtribu.__about__ import DIR_PLUGIN_ROOT
+from qtribu.toolbelt import PlgLogger, PlgOptionsManager
+
+# ############################################################################
+# ########## Classes ###############
+# ##################################
+
+
+class QHoverPushButton(QPushButton):
+    """A custom QPushButton which detects when a mouse hovers it"""
+
+    def __init__(self, text: str, parent_emoji_picker):
+        """
+        Args:
+            text: The button text
+            parent_emoji_picker (QEmojiPicker): The parent emoji picker
+        """
+        super().__init__(text)
+        self.clicked.connect(self.on_click)
+
+        self.parent_emoji_picker = parent_emoji_picker
+
+    def enterEvent(self, a0: QtCore.QEvent) -> None:
+        """On mouse hover / when the mouse is over the button"""
+        self.parent_emoji_picker.emoji_image_label.setText(self.text())
+        group_title = self.parentWidget().title()
+        # when the group title is 'Search results' the user has used the search input
+        if group_title == "Search results":
+            self.parent_emoji_picker.emoji_name_label.setText(
+                self.parent_emoji_picker.total_emojis[self.text()]
+            )
+        else:
+            self.parent_emoji_picker.emoji_name_label.setText(
+                self.parent_emoji_picker.emojis[group_title][self.text()].get("name")
+            )
+
+    def leaveEvent(self, a0: QtCore.QEvent) -> None:
+        """When the mouse leaves the button"""
+        self.parent_emoji_picker.emoji_image_label.setText("")
+        self.parent_emoji_picker.emoji_name_label.setText("")
+
+    def on_click(self):
+        """Gets called if the button is pressed. Closes the emoji picker and if it
+        was called via `QEmojiPicker.select()` the current button emoji will be
+        returned.
+        """
+        self.parent_emoji_picker.selected_emoji = self.text()
+        self.parent_emoji_picker.close()
+
+
+class EmojiPicker(QDialog):
+    """Emoji Picker.
+
+    :param QDialog: parent widget
+    :type QDialog:
+    """
+
+    def __init__(self, parent: Optional[QWidget] = None):
+        """Mini dialog to pick up an emoji."""
+        # init module and ui
+        super().__init__(parent, QtCore.Qt.WindowCloseButtonHint)
+
+        uic.loadUi(Path(__file__).parent / f"{Path(__file__).stem}.ui", self)
+
+        self.log = PlgLogger().log
+        self.plg_settings = PlgOptionsManager().get_plg_settings()
+
+        self.items_per_row: int = 8
+
+        self.check_emoji_font()
+        self.emoji_font = QtGui.QFont("Noto Color Emoji")
+
+        self.emojis = self.load_emojis()
+        self.total_emojis = {}
+
+        self.setupUi()
+
+    def setupUi(self):
+        for group, items in self.emojis.items():
+            box = QGroupBox(group)
+            layout = QGridLayout()
+            for i, (emoji, name) in enumerate(items.items()):
+                # for every emoji, build a button
+                button = QHoverPushButton(text=emoji, parent_emoji_picker=self)
+                button.setFont(self.emoji_font)
+                button.setFlat(True)
+                button.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+                button.setFixedSize(30, 30)
+                # the button style
+                button.setStyleSheet(
+                    "QPushButton {"
+                    "  font-size: 20px;"
+                    "  border-radius: 50%%;"
+                    "}"
+                    "QPushButton:hover {"
+                    "  background-color: %s"
+                    "}" % button.palette().button().color().darker().name()
+                )
+                layout.addWidget(
+                    button, int(i / self.items_per_row), i % self.items_per_row
+                )
+
+                # adds the current emoji with its name to a dict where are all emojis without groups are listed
+                self.total_emojis[emoji] = name
+
+                box.setLayout(layout)
+            self.scr_emojis.addWidget(box)
+
+    def check_emoji_font(self):
+        """Check if the font used for displaying emojis is installed. If not, try to
+            download it.
+
+        :return: _description_
+        :rtype: _type_
+        """
+        if self.is_font_available(font_family=self.plg_settings.font_emoji_family):
+            self.log(
+                message=self.tr(
+                    "Required font to display emojis is already installed: {}".format(
+                        self.plg_settings.font_emoji_family
+                    )
+                ),
+                push=False,
+                log_level=4,
+            )
+            return True
+        else:
+            self.log(
+                message="Required font for emojis needs to be installed: {}".format(
+                    self.plg_settings.font_emoji_family
+                ),
+                push=False,
+            )
+            font_manager = QgsApplication.fontManager()
+            font_manager.fontDownloadErrorOccurred.connect(self.on_font_download_failed)
+            auto_downloaded = font_manager.tryToDownloadFontFamily(
+                self.plg_settings.font_emoji_family
+            )
+            if not auto_downloaded:
+                self.log(message="not downloaded", log_level=1)
+
+            font_manager.downloadAndInstallFont(
+                url=QUrl(self.plg_settings.font_emoji_download_url),
+                identifier="qtribu-emoji-font",
+            )
+
+    def on_font_download_failed(self, error_message: Optional[str] = None):
+        """Handle pyqtsignal emitted by QgsFontManager when font downloading failed.
+
+        :param error_message: error message, defaults to None
+        :type error_message: Optional[str], optional
+        """
+        self.log(
+            message=self.tr(
+                "Downloading the font {} from {} failed. Since it's required to "
+                "correctly display emojis, consider to add it manually to your system. "
+                "Trace: {}".format(
+                    self.EMOJI_FONT_FAMILY, self.EMOJI_FONT_DOWNLOAD_URL, error_message
+                )
+            )
+        )
+
+    def is_font_available(self, font_family: str) -> bool:
+        """Check if the given font family if among the Qt font database.
+
+        :param font_family: font family name
+        :type font_family: str
+
+        :return: True if the font family is available.
+        :rtype: bool
+        """
+        available_fonts = QFontDatabase().families()
+        return font_family in available_fonts
+
+    def load_emojis(self) -> dict:
+        """Load emojis from JSON file.
+
+        :return: _description_
+        :rtype: dict
+        """
+        with DIR_PLUGIN_ROOT.joinpath("resources/emojis/selection.json").open(
+            mode="r", encoding="UTF-8"
+        ) as in_json:
+            emojis = json.load(in_json)
+        return emojis
 
 
 class QEmojiPicker(QDialog):
@@ -38,8 +226,8 @@ class QEmojiPicker(QDialog):
 
     def __init__(
         self,
-        parent: typing.Optional[QWidget] = None,
-        flags: typing.Union[None, QtCore.Qt.WindowFlags, QtCore.Qt.WindowType] = None,
+        parent: Optional[QWidget] = None,
+        flags: Union[None, QtCore.Qt.WindowFlags, QtCore.Qt.WindowType] = None,
         items_per_row: int = 8,
         performance_search: bool = True,
     ):
@@ -54,9 +242,13 @@ class QEmojiPicker(QDialog):
             super().__init__(parent, flags)
         else:
             super().__init__(parent)
+
+        self.check_emoji_font()
+
         # initializes the ui
         self.setupUi(self)
-        self.retranslateUi(self)
+
+        self.font_manager = QgsApplication.fontManager()
 
         self.items_per_row = items_per_row
         self.performance_search = performance_search
@@ -77,7 +269,7 @@ class QEmojiPicker(QDialog):
             for i, (emoji, name) in enumerate(items.items()):
                 # uses a little modified push button which recognizes when the mouse is over the button
                 button = self.__QHoverPushButton(text=emoji, parent_emoji_picker=self)
-
+                button.setFont(emoji_font)
                 button.setFlat(True)
                 button.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
                 button.setFixedSize(30, 30)
@@ -134,44 +326,46 @@ class QEmojiPicker(QDialog):
             self.emoji_image_label.sizePolicy().hasHeightForWidth()
         )
         self.emoji_image_label.setSizePolicy(size_policy)
-        font = QtGui.QFont()
-        font.setPointSize(22)
-        self.emoji_image_label.setFont(font)
+        self.emoji_image_label.setFont(emoji_font)
         self.emoji_image_label.setText("")
         self.emoji_image_label.setObjectName("emoji_image_label")
         self.emoji_information_hlayout.addWidget(self.emoji_image_label)
         self.emoji_name_label = QLabel(Form)
-        size_policy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        size_policy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         size_policy.setHorizontalStretch(0)
         size_policy.setVerticalStretch(0)
         size_policy.setHeightForWidth(
             self.emoji_name_label.sizePolicy().hasHeightForWidth()
         )
         self.emoji_name_label.setSizePolicy(size_policy)
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.emoji_name_label.setFont(font)
+        self.emoji_name_label.setFont(emoji_font)
         self.emoji_name_label.setText("")
         self.emoji_name_label.setObjectName("emoji_name_label")
         self.emoji_information_hlayout.addWidget(self.emoji_name_label)
         self.verticalLayout.addLayout(self.emoji_information_hlayout)
 
-        self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
+    def check_emoji_font(self):
+        print(self.is_font_available(font_family="Noto Color Emoji"))
+
+    def is_font_available(self, font_family: str) -> bool:
+        available_fonts = QFontDatabase().families()
+        return font_family in available_fonts
+
     def load_emojis(self) -> dict:
-        with DIR_PLUGIN_ROOT.joinpath("resources/emojis2.json").open(
+        """Load emojis from JSON file.
+
+        :return: _description_
+        :rtype: dict
+        """
+        with DIR_PLUGIN_ROOT.joinpath("resources/emojis/selection.json").open(
             mode="r", encoding="UTF-8"
         ) as in_json:
             emojis = json.load(in_json)
         return emojis
 
-    def retranslateUi(self, Form):
-        _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
-        self.search_line_edit.setPlaceholderText(_translate("Form", "Search..."))
-
-    def select(self) -> typing.Union[str, None]:
+    def select(self) -> Union[str, None]:
         """Shows this window and returns the selected emoji if a button was pressed or none, if the window was closed without choosing an emoji"""
         self.exec()
         return self.selected_emoji
@@ -275,7 +469,9 @@ class QEmojiPicker(QDialog):
                 )
             else:
                 self.parent_emoji_picker.emoji_name_label.setText(
-                    self.parent_emoji_picker.emojis[group_title][self.text()]
+                    self.parent_emoji_picker.emojis[group_title][self.text()].get(
+                        "name"
+                    )
                 )
 
         def leaveEvent(self, a0: QtCore.QEvent) -> None:

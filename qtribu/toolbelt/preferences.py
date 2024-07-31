@@ -47,6 +47,10 @@ class PlgSettingsStructure:
     qchat_color_mention: str = "#4169e1"
     qchat_color_self: str = "#00cc00"
     qchat_color_admin: str = "#ffa500"
+    font_emoji_family: str = "Noto Color Emoji"
+    font_emoji_download_url: str = (
+        "https://github.com/google/fonts/raw/main/ofl/notocoloremoji/NotoColorEmoji-Regular.ttf"
+    )
 
     # QChat
     qchat_instance_uri: str = "https://gischat.geotribu.net"
