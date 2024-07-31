@@ -10,7 +10,7 @@
         "**/*.ui": "xml"
     },
     // Python
-    "python.analysis.autoFormatStrings": true,
+    "python.analysis.autoFormatStrings": false, // incompatible with PyQt5 translation engine
     "python.analysis.typeCheckingMode": "basic",
     "python.terminal.activateEnvInCurrentTerminal": true,
     "python.terminal.activateEnvironment": true,
