@@ -223,17 +223,3 @@ class RssMiniReader:
         :rtype: str
         """
         return QCoreApplication.translate(self.__class__.__name__, message)
-
-
-class RssArticlesMiniReader(RssMiniReader):
-    PATTERN_INCLUDE: list = ["articles/"]
-
-    def __init__(self):
-        super().__init__()
-
-
-class RssRdpMiniReader(RssMiniReader):
-    PATTERN_INCLUDE: list = ["rdp/"]
-
-    def __init__(self):
-        super().__init__()
