@@ -1,7 +1,7 @@
 from qgis.PyQt.QtCore import QUrl
 from qgis.PyQt.QtGui import QDesktopServices
 
-from qtribu.logic import WebViewer
+from qtribu.logic.web_viewer import WebViewer
 
 web_viewer = WebViewer()
 
