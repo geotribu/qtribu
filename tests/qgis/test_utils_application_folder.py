@@ -16,7 +16,7 @@ from os import getenv
 from pathlib import Path
 
 # project
-from oslandia.toolbelt.application_folder import _posixify, get_app_dir
+from qtribu.toolbelt.application_folder import _posixify, get_app_dir
 
 # ############################################################################
 # ########## Classes #############
