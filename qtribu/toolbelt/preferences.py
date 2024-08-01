@@ -6,6 +6,7 @@
 
 # standard
 from dataclasses import asdict, dataclass, fields
+from pathlib import Path
 
 # PyQGIS
 from qgis.core import QgsSettings
@@ -13,6 +14,7 @@ from qgis.core import QgsSettings
 # package
 import qtribu.toolbelt.log_handler as log_hdlr
 from qtribu.__about__ import __title__, __version__
+from qtribu.toolbelt.application_folder import get_app_dir
 
 # ############################################################################
 # ########## Classes ###############
@@ -26,6 +28,7 @@ class PlgSettingsStructure:
     # global
     debug_mode: bool = False
     version: str = __version__
+    local_app_folder: Path = get_app_dir(dir_name="cache")
 
     # RSS feed
     rss_source: str = "https://geotribu.fr/feed_rss_created.xml"
