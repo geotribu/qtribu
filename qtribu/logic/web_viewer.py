@@ -16,13 +16,13 @@ from typing import Optional
 # PyQGIS
 from qgis.PyQt.QtCore import QCoreApplication, Qt
 from qgis.PyQt.QtGui import QDesktopServices
+from qgis.PyQt.QtWidgets import QVBoxLayout, QWidget
 
 try:
     QCoreApplication.setAttribute(Qt.AA_ShareOpenGLContexts)
     from qgis.PyQt.QtWebEngineWidgets import QWebEngineView as QWebView
 except Exception:
     from qgis.PyQt.QtWebKitWidgets import QWebView
-from qgis.PyQt.QtWidgets import QVBoxLayout, QWidget
 
 # project
 from qtribu.toolbelt import NetworkRequestsManager, PlgLogger, PlgOptionsManager
