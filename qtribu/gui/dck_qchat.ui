@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>441</width>
-    <height>887</height>
+    <width>482</width>
+    <height>672</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -182,7 +182,7 @@
           <bool>true</bool>
          </property>
          <property name="columnCount">
-          <number>3</number>
+          <number>4</number>
          </property>
          <attribute name="headerCascadingSectionResizes">
           <bool>true</bool>
@@ -203,6 +203,11 @@
          <column>
           <property name="text">
            <string notr="true">3</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string notr="true">4</string>
           </property>
          </column>
         </widget>
@@ -247,10 +252,23 @@
        <string>User</string>
       </property>
       <layout class="QFormLayout" name="formLayout">
-       <item row="2" column="0">
+       <item row="3" column="0">
         <widget class="QLabel" name="lbl_nickname_text">
          <property name="text">
           <string>Nickname:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="lbl_nickname">
+         <property name="cursor">
+          <cursorShape>ForbiddenCursor</cursorShape>
+         </property>
+         <property name="toolTip">
+          <string>Nickname set in QTribu's plugin settings</string>
+         </property>
+         <property name="text">
+          <string>Nickname</string>
          </property>
         </widget>
        </item>
@@ -271,25 +289,38 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
-        <widget class="QLabel" name="lbl_nickname">
-         <property name="cursor">
-          <cursorShape>ForbiddenCursor</cursorShape>
-         </property>
-         <property name="toolTip">
-          <string>Nickname set in QTribu's plugin settings</string>
-         </property>
-         <property name="text">
-          <string>Nickname</string>
-         </property>
-        </widget>
-       </item>
        <item row="4" column="1">
-        <widget class="QgsFilterLineEdit" name="lne_message">
-         <property name="qgisRelation" stdset="0">
-          <string notr="true"/>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QLineEdit" name="lne_message">
+           <property name="maxLength">
+            <number>255</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn_emojis_picker">
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="contextMenuPolicy">
+            <enum>Qt::NoContextMenu</enum>
+           </property>
+           <property name="toolTip">
+            <string>Pick an emoji. Not sure it'll be properly rendered for every users, still it's a bit of un.</string>
+           </property>
+           <property name="locale">
+            <locale language="English" country="UnitedStates"/>
+           </property>
+           <property name="text">
+            <string>😀</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>
@@ -313,11 +344,6 @@
    <extends>QGroupBox</extends>
    <header>qgscollapsiblegroupbox.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>QgsFilterLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>qgsfilterlineedit.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
