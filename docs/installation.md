@@ -4,7 +4,7 @@
 
 Certaines fonctionnalités du plugin reposent sur des dépendances logicielles tierces non incluses dans le packaging de QGIS sur certaines plateformes :
 
-- QGISChat: (Py)QtMutimedia, (Py)QtWebSockets
+- QGISChat: (Py)QtMutimedia, (Py)QtWebEngine, (Py)QtWebSockets,
 
 ### Linux
 
@@ -13,7 +13,7 @@ Certaines fonctionnalités du plugin reposent sur des dépendances logicielles t
 Ouvrir un terminal et exécuter la commande suivante :
 
 ```sh
-sudo apt install python3-pyqt5.qtmultimedia python3-pyqt5.qtwebsockets
+sudo apt install python3-pyqt5.qtmultimedia python3-pyqt5.qtwebengine python3-pyqt5.qtwebsockets
 ```
 
 ----
