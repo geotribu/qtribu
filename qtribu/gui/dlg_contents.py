@@ -257,7 +257,7 @@ class GeotribuContentsDialog(QDialog):
             [
                 content.date_pub.strftime("%d %B"),
                 content.title,
-                ", ".join(content.author),
+                ", ".join(content.authors),
                 tags,
                 content.url,
             ]

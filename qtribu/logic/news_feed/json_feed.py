@@ -89,7 +89,7 @@ class JsonFeedClient:
         """
         authors = []
         for content in self.fetch():
-            for ca in content.author:
+            for ca in content.authors:
                 authors.append(" ".join([a.title() for a in ca.split(" ")]))
         return sorted(set(authors))
 
@@ -142,7 +142,7 @@ class JsonFeedClient:
             return all([JsonFeedClient._matches(w, item) for w in words])
         return (
             query.upper() in item.abstract.upper()
-            or query.upper() in ",".join(item.author).upper()
+            or query.upper() in ",".join(item.authors).upper()
             or query.upper() in ",".join(item.categories).upper()
             or query.upper() in item.date_pub.isoformat().upper()
             or query.upper() in item.image_url.upper()
