@@ -70,7 +70,7 @@ class GeotribuPlugin:
             )
 
         # sub-modules
-        self.rss_reader = RssMiniReader()
+        self.rss_reader = None
         self.splash_chgr = SplashChanger(self)
 
     def initGui(self):
@@ -96,7 +96,7 @@ class GeotribuPlugin:
         )
 
         self.action_show_latest_content.setToolTip(self.tr("Newest article"))
-        self.action_show_latest_content.triggered.connect(self.show_latest_content)
+        self.action_show_latest_content.triggered.connect(self.on_show_latest_content)
 
         self.action_contents = QAction(
             QgsApplication.getThemeIcon("mActionOpenTableVisible.svg"),
@@ -194,6 +194,10 @@ class GeotribuPlugin:
         self.toolbar.addAction(self.action_form_article)
 
         # -- Post UI initialization
+        self.rss_reader = RssMiniReader(
+            action_read=self.action_show_latest_content,
+            on_read_button=self.on_show_latest_content,
+        )
         self.iface.initializationCompleted.connect(self.post_ui_init)
 
     def unload(self):
@@ -228,28 +232,9 @@ class GeotribuPlugin:
         """
         try:
             self.rss_reader.process()
-
-            # change tooltip
-            self.action_show_latest_content.setToolTip(
-                "{} - {}".format(
-                    self.tr("Newest article"), self.rss_reader.latest_item.title
-                )
-            )
-
-            # check if a new content has been published
-            if self.rss_reader.has_new_content:
-                # change action icon
-                self.action_show_latest_content.setIcon(
-                    QIcon(
-                        str(
-                            DIR_PLUGIN_ROOT / "resources/images/logo_orange_no_text.svg"
-                        )
-                    ),
-                )
-
         except Exception as err:
             self.log(
-                message=self.tr(f"Michel, we've got a problem: {err}"),
+                message=self.tr(f"Reading the RSS feed failed. Trace: {err}"),
                 log_level=2,
                 push=True,
             )
@@ -279,12 +264,15 @@ class GeotribuPlugin:
         """
         return QCoreApplication.translate(self.__class__.__name__, message)
 
-    def show_latest_content(self):
+    def on_show_latest_content(self):
         """Main action on plugin icon pressed event."""
         try:
             if not self.rss_reader.latest_item:
                 self.post_ui_init()
+            rss_item = self.rss_reader.latest_item
+            open_url_in_webviewer(url=rss_item.url, window_title=rss_item.title)
 
+            # save latest RSS item displayed
             open_url_in_webviewer(
                 self.rss_reader.latest_item.url, self.rss_reader.latest_item.title
             )

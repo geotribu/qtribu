@@ -15,7 +15,7 @@ import xml.etree.ElementTree as ET
 from email.utils import parsedate
 from functools import partial
 from pathlib import Path
-from typing import Optional
+from typing import Callable, Optional
 
 # QGIS
 from qgis.core import Qgis, QgsSettings
@@ -52,7 +52,11 @@ class RssMiniReader:
     }
     PATTERN_INCLUDE: list = ["articles/", "rdp/"]
 
-    def __init__(self, action_read: Optional[QAction] = None):
+    def __init__(
+        self,
+        action_read: Optional[QAction] = None,
+        on_read_button: Optional[Callable] = None,
+    ):
         """Class initialization."""
         self.log = PlgLogger().log
         self.ntwk_manager = NetworkRequestsManager()
@@ -61,6 +65,7 @@ class RssMiniReader:
             "rss.xml"
         )
         self.action_read = action_read
+        self.on_read_button = on_read_button
 
     def process(self):
         """Download, parse and read RSS feed than store items as attribute."""
@@ -96,8 +101,18 @@ class RssMiniReader:
                 duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
                 button=True,
                 button_label=self.tr("Read it!"),
-                button_connect=partial(self.on_read_item, latest_item),
+                button_connect=self.on_read_button,
             )
+
+            # change action icon
+            if isinstance(self.action_read, QAction):
+                self.action_read.setIcon(
+                    QIcon(
+                        str(
+                            DIR_PLUGIN_ROOT / "resources/images/logo_orange_no_text.svg"
+                        )
+                    ),
+                )
 
     def download_feed(self) -> bool:
         """Download RSS feed locally if it's older than latest 24 hours.
@@ -124,25 +139,6 @@ class RssMiniReader:
             log_level=0,
         )
         return False
-
-    def on_read_item(self, rss_item: RssItem):
-        """Slot ran when end-user want to a read an item.
-
-        :param rss_item: RSS item.
-        :type rss_item: RssItem
-        """
-        open_url_in_webviewer(rss_item.url, rss_item.title)
-
-        if isinstance(self.action_read, QAction):
-            self.action_read.setIcon(
-                QIcon(str(DIR_PLUGIN_ROOT / "resources/images/logo_green_no_text.svg"))
-            )
-            self.action_read.setToolTip(self.tr("Newest article"))
-
-        # save latest RSS item displayed
-        PlgOptionsManager().set_value_from_key(
-            key="latest_content_guid", value=self.rss_reader.latest_item.guid
-        )
 
     def read_feed(self) -> list[RssItem]:
         """Parse the feed XML as string and store items into an ordered list of RSS items.
