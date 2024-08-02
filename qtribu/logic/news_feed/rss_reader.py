@@ -13,16 +13,23 @@
 import logging
 import xml.etree.ElementTree as ET
 from email.utils import parsedate
-from typing import List, Optional
+from functools import partial
+from pathlib import Path
+from typing import Optional
 
 # QGIS
 from qgis.core import Qgis, QgsSettings
 from qgis.PyQt.QtCore import QCoreApplication
+from qgis.PyQt.QtGui import QIcon
+from qgis.PyQt.QtWidgets import QAction
 
 # project
-from qtribu.__about__ import __title__, __version__
-from qtribu.logic.custom_datatypes import RssItem
+from qtribu.__about__ import DIR_PLUGIN_ROOT, __title__, __version__
+from qtribu.logic.news_feed.mdl_rss_item import RssItem
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
+from qtribu.toolbelt.commons import open_url_in_browser, open_url_in_webviewer
+from qtribu.toolbelt.file_stats import is_file_older_than
+from qtribu.toolbelt.network_manager import NetworkRequestsManager
 
 # ############################################################################
 # ########## Globals ###############
@@ -38,63 +45,154 @@ logger = logging.getLogger(__name__)
 class RssMiniReader:
     """Minimalist RSS feed parser."""
 
-    FEED_ITEMS: Optional[tuple] = None
+    FEED_ITEMS: Optional[list[RssItem]] = None
     HEADERS: dict = {
         b"Accept": b"application/xml",
         b"User-Agent": bytes(f"{__title__}/{__version__}", "utf8"),
     }
     PATTERN_INCLUDE: list = ["articles/", "rdp/"]
 
-    def __init__(self):
+    def __init__(self, action_read: Optional[QAction] = None):
         """Class initialization."""
         self.log = PlgLogger().log
+        self.ntwk_manager = NetworkRequestsManager()
+        self.plg_settings = PlgOptionsManager.get_plg_settings()
+        self.local_feed_filepath: Path = self.plg_settings.local_app_folder.joinpath(
+            "rss.xml"
+        )
+        self.action_read = action_read
 
-    def read_feed(self, in_xml: str) -> tuple[RssItem]:
-        """Parse the feed XML as string and store items into an ordered tuple of tuples.
+    def process(self):
+        """Download, parse and read RSS feed than store items as attribute."""
+        # download remote RSS feed to cache folder
+        self.download_feed()
+        if not self.local_feed_filepath.exists():
+            self.log(
+                message=self.tr(
+                    "The RSS feed is not available locally. "
+                    "Disabling RSS reader related features."
+                ),
+                log_level=1,
+            )
+            return
 
-        :param in_xml: XML as string. Must be RSS compliant.
-        :type in_xml: str
+        # parse the local RSS feed
+        self.read_feed()
 
-        :return: RSS items loaded as namedtuples
-        :rtype: Tuple[RssItem]
+        # check if a new item has been published since last check
+        if not self.has_new_content:
+            self.log(message="No new item found in RSS feed.", log_level=4)
+            return
+        # notify
+        if isinstance(self.latest_item, RssItem):
+            latest_item = self.latest_item
+            self.log(
+                message="{} {}".format(
+                    self.tr("New content published:"),
+                    latest_item.title,
+                ),
+                log_level=3,
+                push=PlgOptionsManager().get_plg_settings().notify_push_info,
+                duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
+                button=True,
+                button_label=self.tr("Read it!"),
+                button_connect=partial(self.on_read_item, latest_item),
+            )
+
+    def download_feed(self) -> bool:
+        """Download RSS feed locally if it's older than latest 24 hours.
+
+        :return: True is a new file has been downloaded.
+        :rtype: bool
         """
-        feed_items = []
-        tree = ET.ElementTree(ET.fromstring(in_xml))
-        root = tree.getroot()
-        items = root.findall("channel/item")
+        if is_file_older_than(
+            local_file_path=self.local_feed_filepath,
+            expiration_rotating_hours=self.plg_settings.rss_poll_frequency_hours,
+        ):
+            self.ntwk_manager.download_file_to(
+                remote_url=self.plg_settings.rss_source,
+                local_path=self.local_feed_filepath,
+            )
+            self.log(
+                message=f"The remote RSS feed ({self.plg_settings.rss_source}) has been "
+                f"downloaded to {self.local_feed_filepath}",
+                log_level=0,
+            )
+            return True
+        self.log(
+            message=f"A fresh local RSS feed already exists: {self.local_feed_filepath}",
+            log_level=0,
+        )
+        return False
+
+    def on_read_item(self, rss_item: RssItem):
+        """Slot ran when end-user want to a read an item.
+
+        :param rss_item: RSS item.
+        :type rss_item: RssItem
+        """
+        open_url_in_webviewer(rss_item.url, rss_item.title)
+
+        if isinstance(self.action_read, QAction):
+            self.action_read.setIcon(
+                QIcon(str(DIR_PLUGIN_ROOT / "resources/images/logo_green_no_text.svg"))
+            )
+            self.action_read.setToolTip(self.tr("Newest article"))
+
+        # save latest RSS item displayed
+        PlgOptionsManager().set_value_from_key(
+            key="latest_content_guid", value=self.rss_reader.latest_item.guid
+        )
+
+    def read_feed(self) -> list[RssItem]:
+        """Parse the feed XML as string and store items into an ordered list of RSS items.
+
+        :return: list of RSS items dataclasses
+        :rtype: list[RssItem]
+        """
+        feed_items: list[RssItem] = []
+        tree = ET.parse(self.local_feed_filepath)
+        items = tree.findall("channel/item")
         for item in items:
             try:
                 # filter on included pattern
                 if not any([i in item.find("link").text for i in self.PATTERN_INCLUDE]):
-                    logging.debug(
-                        "Item ignored because unmatches the include pattern: {}".format(
-                            item.find("title")
-                        )
+                    self.log(
+                        message="Item ignored because unmatches the include pattern: {}".format(
+                            item.find("title").text
+                        ),
+                        log_level=4,
                     )
                     continue
 
-                # add items to the feed
-                feed_items.append(
-                    RssItem(
-                        abstract=item.find("description").text,
-                        author=[author.text for author in item.findall("author")]
-                        or None,
-                        categories=[
-                            category.text for category in item.findall("category")
-                        ]
-                        or None,
-                        date_pub=parsedate(item.find("pubDate").text),
-                        guid=item.find("guid").text,
-                        image_length=item.find("enclosure").attrib.get("length"),
-                        image_type=item.find("enclosure").attrib.get("type"),
-                        image_url=item.find("enclosure").attrib.get("url"),
-                        title=item.find("title").text,
-                        url=item.find("link").text,
-                    )
+                # feed item object
+                feed_item_obj = RssItem(
+                    abstract=item.find("description").text,
+                    authors=[author.text for author in item.findall("author")] or None,
+                    categories=[category.text for category in item.findall("category")]
+                    or None,
+                    date_pub=parsedate(item.find("pubDate").text),
+                    guid=item.find("guid").text,
+                    image_length=item.find("enclosure").attrib.get("length"),
+                    image_type=item.find("enclosure").attrib.get("type"),
+                    image_url=item.find("enclosure").attrib.get("url"),
+                    title=item.find("title").text,
+                    url=item.find("link").text,
                 )
+                if item.find("enclosure") is not None:
+                    item_enclosure = item.find("enclosure")
+                    feed_item_obj.image_length = item_enclosure.attrib.get("length")
+                    feed_item_obj.image_type = item_enclosure.attrib.get("type")
+                    feed_item_obj.image_url = item_enclosure.attrib.get("url")
+
+                # add items to the feed
+                feed_items.append(feed_item_obj)
             except Exception as err:
-                err_msg = f"Feed item triggers an error. Trace: {err}"
-                logger.error(err_msg)
+                item_idx: Optional[int] = None
+                if hasattr(items, "index"):
+                    item_idx = items.index(item)
+
+                err_msg = f"Feed item {item_idx} triggers an error. Trace: {err}"
                 self.log(message=err_msg, log_level=2)
 
         # store feed items as attribute and return it
@@ -102,7 +200,7 @@ class RssMiniReader:
         return feed_items
 
     @property
-    def latest_item(self) -> RssItem:
+    def latest_item(self) -> Optional[RssItem]:
         """Returns the latest feed item, based on index 0.
 
         :return: latest feed item.
@@ -117,7 +215,7 @@ class RssMiniReader:
 
         return self.FEED_ITEMS[0]
 
-    def latest_items(self, count: int = 36) -> List[RssItem]:
+    def latest_items(self, count: int = 36) -> list[RssItem]:
         """Returns the latest feed items.
         :param count: number of items to fetch
         :type count: int
@@ -143,7 +241,10 @@ class RssMiniReader:
         :rtype: bool
         """
         settings = PlgOptionsManager.get_plg_settings()
-        if self.latest_item.guid != settings.latest_content_guid:
+        if (
+            isinstance(self.latest_item, RssItem)
+            and self.latest_item.guid != settings.latest_content_guid
+        ):
             return True
         else:
             return False
@@ -187,7 +288,7 @@ class RssMiniReader:
             key=f"news-feed/items/httpsfeedqgisorg/entries/items/{item_id}/content",
             value=f"<p>{latest_geotribu_article.abstract}</p><p>"
             + self.tr("Author(s): ")
-            + f"{', '.join(latest_geotribu_article.author)}</p><p><small>"
+            + f"{', '.join(latest_geotribu_article.authors)}</p><p><small>"
             + self.tr("Keywords: ")
             + f"{', '.join(latest_geotribu_article.categories)}</small></p>",
             section=QgsSettings.App,
