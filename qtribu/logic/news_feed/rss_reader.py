@@ -13,7 +13,6 @@
 import logging
 import xml.etree.ElementTree as ET
 from email.utils import parsedate
-from functools import partial
 from pathlib import Path
 from typing import Callable, Optional
 
@@ -27,7 +26,6 @@ from qgis.PyQt.QtWidgets import QAction
 from qtribu.__about__ import DIR_PLUGIN_ROOT, __title__, __version__
 from qtribu.logic.news_feed.mdl_rss_item import RssItem
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
-from qtribu.toolbelt.commons import open_url_in_webviewer
 from qtribu.toolbelt.file_stats import is_file_older_than
 from qtribu.toolbelt.network_manager import NetworkRequestsManager
 
