@@ -14,7 +14,7 @@
 import unittest
 
 # project
-from qtribu.logic import RssMiniReader
+from qtribu.logic.news_feed.rss_reader import RssMiniReader
 
 # ############################################################################
 # ########## Classes #############
