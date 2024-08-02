@@ -11,7 +11,8 @@
 # Standard library
 import logging
 from functools import lru_cache
-from typing import Optional
+from pathlib import Path
+from typing import Optional, Union
 from urllib.parse import urlparse, urlunparse
 
 # PyQGIS
@@ -180,7 +181,7 @@ class NetworkRequestsManager:
             logger.error(err_msg)
             self.log(message=err_msg, log_level=2, push=True)
 
-    def download_file(self, remote_url: str, local_path: str) -> str:
+    def download_file_to(self, remote_url: str, local_path: Union[Path, str]) -> str:
         """Download a file from a remote web server accessible through HTTP.
 
         :param remote_url: remote URL
@@ -190,6 +191,13 @@ class NetworkRequestsManager:
         :return: output path
         :rtype: str
         """
+        # check if destination path is a str and if parent folder exists
+        if isinstance(local_path, Path):
+            local_path.parent.mkdir(parents=True, exist_ok=True)
+            local_path = f"{local_path.resolve()}"
+        elif isinstance(local_path, str):
+            Path(local_path).parent.mkdir(parents=True, exist_ok=True)
+
         self.log(
             message=f"Downloading file from {remote_url} to {local_path}", log_level=4
         )
