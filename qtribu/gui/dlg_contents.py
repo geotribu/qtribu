@@ -16,8 +16,8 @@ from qtribu.__about__ import DIR_PLUGIN_ROOT
 from qtribu.constants import ICON_ARTICLE, ICON_GEORDP
 from qtribu.gui.form_article import ArticleForm
 from qtribu.gui.form_rdp_news import RdpNewsForm
-from qtribu.logic import RssItem
-from qtribu.logic.json_feed import JsonFeedClient
+from qtribu.logic.news_feed.json_feed import JsonFeedClient
+from qtribu.logic.news_feed.mdl_rss_item import RssItem
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
 from qtribu.toolbelt.commons import open_url_in_browser, open_url_in_webviewer
 

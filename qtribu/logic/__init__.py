@@ -1,3 +1,2 @@
 #! python3  # noqa: E265
-from .custom_datatypes import RssItem  # noqa: F401
 from .splash_changer import SplashChanger  # noqa: F401
