@@ -17,3 +17,5 @@ Plugin pour QGIS > 3.28
 Inutile au travail donc forcément indispensable.
 
 :book: :fr: [Voir la documentation](https://geotribu.github.io/qtribu/)
+
+:sound: Audio sounds come from [pixabay.com](https://pixabay.com) (see [terms of license](https://pixabay.com/service/license-summary/))

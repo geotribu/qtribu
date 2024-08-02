@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>350</width>
-    <height>225</height>
+    <width>406</width>
+    <height>344</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -41,7 +41,7 @@
       <string notr="true"/>
      </property>
      <layout class="QFormLayout" name="formLayout">
-      <item row="0" column="0">
+      <item row="3" column="0">
        <widget class="QLabel" name="lbl_firstname">
         <property name="font">
          <font>
@@ -54,7 +54,7 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
+      <item row="3" column="1">
        <widget class="QLineEdit" name="lne_firstname">
         <property name="placeholderText">
          <string notr="true">Pierre</string>
@@ -64,7 +64,7 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
+      <item row="4" column="0">
        <widget class="QLabel" name="lbl_lastname">
         <property name="font">
          <font>
@@ -77,7 +77,7 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
+      <item row="4" column="1">
        <widget class="QLineEdit" name="lne_lastname">
         <property name="inputMethodHints">
          <set>Qt::ImhUppercaseOnly</set>
@@ -90,7 +90,7 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="0">
+      <item row="5" column="0">
        <widget class="QLabel" name="lbl_email">
         <property name="font">
          <font>
@@ -103,7 +103,7 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
+      <item row="5" column="1">
        <widget class="QLineEdit" name="lne_email">
         <property name="inputMethodHints">
          <set>Qt::ImhEmailCharactersOnly</set>
@@ -116,7 +116,7 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="0">
+      <item row="6" column="0">
        <widget class="QLabel" name="lbl_github_account">
         <property name="toolTip">
          <string>Used to credit the commit author.</string>
@@ -126,7 +126,7 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
+      <item row="6" column="1">
        <widget class="QLineEdit" name="lne_github_account">
         <property name="inputMethodHints">
          <set>Qt::ImhUrlCharactersOnly</set>
@@ -139,7 +139,7 @@
         </property>
        </widget>
       </item>
-      <item row="5" column="0">
+      <item row="8" column="0">
        <widget class="QLabel" name="lbl_linked_account">
         <property name="toolTip">
          <string>Used during broadcasting to credit author.</string>
@@ -149,7 +149,7 @@
         </property>
        </widget>
       </item>
-      <item row="5" column="1">
+      <item row="8" column="1">
        <widget class="QLineEdit" name="lne_linkedin_account">
         <property name="placeholderText">
          <string notr="true">https://www.linkedin.com/in/pierredupont/</string>
@@ -159,7 +159,7 @@
         </property>
        </widget>
       </item>
-      <item row="6" column="0">
+      <item row="9" column="0">
        <widget class="QLabel" name="lbl_twitter_account">
         <property name="toolTip">
          <string>Used during broadcasting to credit author.</string>
@@ -169,7 +169,7 @@
         </property>
        </widget>
       </item>
-      <item row="6" column="1">
+      <item row="9" column="1">
        <widget class="QLineEdit" name="lne_twitter_account">
         <property name="placeholderText">
          <string notr="true">https://twitter.com/geotribu</string>
@@ -179,14 +179,14 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="0">
+      <item row="7" column="0">
        <widget class="QLabel" name="lbl_mastodon_account">
         <property name="text">
          <string>Mastodon account:</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="1">
+      <item row="7" column="1">
        <widget class="QLineEdit" name="lne_mastodon_account">
         <property name="inputMethodHints">
          <set>Qt::ImhUrlCharactersOnly</set>
@@ -198,6 +198,167 @@
          <bool>true</bool>
         </property>
        </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="lbl_qchat_nickname">
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>QChat nickname:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="lne_qchat_nickname">
+        <property name="maxLength">
+         <number>32</number>
+        </property>
+        <property name="placeholderText">
+         <string>pdupont</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="lbl_qchat_avatar">
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>QChat avatar:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <layout class="QHBoxLayout" name="hly_avatar">
+        <item>
+         <widget class="QComboBox" name="cbb_qchat_avatar">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <item>
+           <property name="text">
+            <string>mActionAddHtml.svg</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>mActionArrowUp.svg</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>mActionCalculateField.svg</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>mActionMapTips.svg</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>mActionPropertiesWidget.svg</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>mIconCamera.svg</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>mIconCertificate.svg</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>mIconFolder.svg</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>mIconGPU.svg</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>mIconInfo.svg</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>mIconNetworkLogger.svg</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>mIconPostgis.svg</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>mIconPyramid.svg</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>mIconPythonFile.svg</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>mIconRaster.svg</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>mIconSpatialite.svg</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>mIconXyz.svg</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>mIconZip.svg</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>mGeoPackage.svg</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btn_avatar_preview">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Preview</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>

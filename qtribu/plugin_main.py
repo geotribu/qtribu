@@ -11,8 +11,8 @@ from pathlib import Path
 # PyQGIS
 from qgis.core import Qgis, QgsApplication, QgsSettings
 from qgis.gui import QgisInterface
-from qgis.PyQt.QtCore import QCoreApplication, QLocale, QTranslator
-from qgis.PyQt.QtGui import QIcon
+from qgis.PyQt.QtCore import QCoreApplication, QLocale, Qt, QTranslator, QUrl
+from qgis.PyQt.QtGui import QDesktopServices, QIcon
 from qgis.PyQt.QtWidgets import QAction
 
 # project
@@ -25,6 +25,15 @@ from qtribu.gui.form_rdp_news import RdpNewsForm
 from qtribu.logic import RssMiniReader, SplashChanger
 from qtribu.toolbelt import NetworkRequestsManager, PlgLogger, PlgOptionsManager
 from qtribu.toolbelt.commons import open_url_in_browser, open_url_in_webviewer
+
+# conditional imports
+try:
+    from qtribu.gui.dck_qchat import QChatWidget
+
+    EXTERNAL_DEPENDENCIES_AVAILABLE: bool = True
+except ImportError:
+    EXTERNAL_DEPENDENCIES_AVAILABLE: bool = False
+
 
 # ############################################################################
 # ########## Classes ###############
@@ -87,6 +96,9 @@ class GeotribuPlugin:
         self.form_contents = None
         self.form_rdp_news = None
 
+        # -- QChat
+        self.qchat_widget = None
+
         # -- Actions
         self.action_run = QAction(
             QIcon(str(DIR_PLUGIN_ROOT / "resources/images/logo_green_no_text.svg")),
@@ -97,18 +109,21 @@ class GeotribuPlugin:
         self.action_run.setToolTip(self.tr("Newest article"))
         self.action_run.triggered.connect(self.run)
 
-        self.action_contents = QAction(
+        self.action_open_contents = QAction(
             QgsApplication.getThemeIcon("mActionOpenTableVisible.svg"),
             self.tr("Browse latest contents"),
             self.iface.mainWindow(),
         )
-        self.action_contents.setToolTip(self.tr("Browse latest contents"))
-        self.action_contents.triggered.connect(self.contents)
+        self.action_open_contents.setToolTip(self.tr("Browse latest contents"))
+        self.action_open_contents.triggered.connect(self.open_contents)
 
         self.action_form_rdp_news = QAction(
             ICON_GEORDP,
             self.tr("Propose a news to the next GeoRDP"),
             self.iface.mainWindow(),
+        )
+        self.action_form_rdp_news.setToolTip(
+            self.tr("Propose a news to the next GeoRDP")
         )
         self.action_form_rdp_news.triggered.connect(self.open_form_rdp_news)
 
@@ -117,7 +132,16 @@ class GeotribuPlugin:
             self.tr("Submit an article"),
             self.iface.mainWindow(),
         )
+        self.action_form_article.setToolTip(self.tr("Submit an article"))
         self.action_form_article.triggered.connect(self.open_form_article)
+
+        self.action_open_chat = QAction(
+            QgsApplication.getThemeIcon("mMessageLog.svg"),
+            self.tr("QChat"),
+            self.iface.mainWindow(),
+        )
+        self.action_open_chat.setToolTip(self.tr("QChat"))
+        self.action_open_chat.triggered.connect(self.open_chat)
 
         self.action_help = QAction(
             QIcon(QgsApplication.iconPath("mActionHelpContents.svg")),
@@ -141,8 +165,9 @@ class GeotribuPlugin:
         self.action_splash.triggered.connect(self.splash_chgr.switch)
 
         # -- Menu
+        self.iface.addPluginToWebMenu(__title__, self.action_open_chat)
         self.iface.addPluginToWebMenu(__title__, self.action_run)
-        self.iface.addPluginToWebMenu(__title__, self.action_contents)
+        self.iface.addPluginToWebMenu(__title__, self.action_open_contents)
         self.iface.addPluginToWebMenu(__title__, self.action_form_rdp_news)
         self.iface.addPluginToWebMenu(__title__, self.action_form_article)
         self.iface.addPluginToWebMenu(__title__, self.action_splash)
@@ -187,13 +212,17 @@ class GeotribuPlugin:
         self.iface.helpMenu().addAction(self.action_osgeofr)
 
         # -- Toolbar
+        self.toolbar.addAction(self.action_open_chat)
         self.toolbar.addAction(self.action_run)
-        self.toolbar.addAction(self.action_contents)
+        self.toolbar.addAction(self.action_open_contents)
         self.toolbar.addAction(self.action_form_rdp_news)
         self.toolbar.addAction(self.action_form_article)
 
         # -- Post UI initialization
         self.iface.initializationCompleted.connect(self.post_ui_init)
+
+        if not self.check_dependencies():
+            return
 
     def unload(self):
         """Cleans up when plugin is disabled/uninstalled."""
@@ -202,7 +231,8 @@ class GeotribuPlugin:
         self.iface.removePluginWebMenu(__title__, self.action_form_article)
         self.iface.removePluginWebMenu(__title__, self.action_form_rdp_news)
         self.iface.removePluginWebMenu(__title__, self.action_run)
-        self.iface.removePluginWebMenu(__title__, self.action_contents)
+        self.iface.removePluginWebMenu(__title__, self.action_open_chat)
+        self.iface.removePluginWebMenu(__title__, self.action_open_contents)
         self.iface.removePluginWebMenu(__title__, self.action_settings)
         self.iface.removePluginWebMenu(__title__, self.action_splash)
 
@@ -212,6 +242,7 @@ class GeotribuPlugin:
 
         # -- Clean up toolbar
         del self.toolbar
+        del self.qchat_widget
 
         # -- Clean up preferences panel in QGIS settings
         self.iface.unregisterOptionsWidgetFactory(self.options_factory)
@@ -220,6 +251,7 @@ class GeotribuPlugin:
         del self.action_run
         del self.action_help
         del self.action_georezo
+        del self.action_open_chat
 
     def post_ui_init(self):
         """Run after plugin's UI has been initialized.
@@ -327,7 +359,43 @@ class GeotribuPlugin:
             )
             raise err
 
-    def contents(self):
+    def check_dependencies(self) -> bool:
+        """Check if all dependencies are satisfied. If not, warn the user and disable plugin.
+
+        :return: dependencies status
+        :rtype: bool
+        """
+        # if import failed
+        if not EXTERNAL_DEPENDENCIES_AVAILABLE:
+            self.log(
+                message=self.tr(
+                    "Error importing some of dependencies. "
+                    "Related functions have been disabled."
+                ),
+                log_level=2,
+                push=True,
+                duration=60,
+                button=True,
+                button_connect=partial(
+                    QDesktopServices.openUrl,
+                    QUrl(f"{__uri_homepage__}installation.html"),
+                ),
+            )
+            # disable plugin widgets
+            self.action_open_chat.setEnabled(False)
+
+            # add tooltip over menu
+            msg_disable = self.tr(
+                "Plugin disabled. Please install all dependencies and then restart QGIS."
+                " Refer to the documentation for more information."
+            )
+            self.action_open_chat.setToolTip(msg_disable)
+            return False
+        else:
+            self.log(message=self.tr("Dependencies satisfied"), log_level=3)
+            return True
+
+    def open_contents(self) -> None:
         """Action to open contents dialog"""
         if not self.form_contents:
             self.form_contents = GeotribuContentsDialog()
@@ -376,3 +444,11 @@ class GeotribuPlugin:
             # clean up
             self.form_rdp_news.deleteLater()
             self.form_rdp_news = None
+
+    def open_chat(self) -> None:
+        if not self.qchat_widget:
+            self.qchat_widget = QChatWidget(
+                iface=self.iface, parent=self.iface.mainWindow()
+            )
+            self.iface.addDockWidget(int(Qt.RightDockWidgetArea), self.qchat_widget)
+        self.qchat_widget.show()

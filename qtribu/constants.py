@@ -190,3 +190,25 @@ GEORDP_NEWS_ICONS: tuple = (
         description="icône globe pointillisme",
     ),
 )
+
+# QChat
+QCHAT_NICKNAME_MINLENGTH = 3
+ADMIN_MESSAGES_NICKNAME = "admin"
+ADMIN_MESSAGES_AVATAR = "mIconWarning.svg"
+ERROR_MESSAGES_COLOR = "#ff0000"
+INTERNAL_MESSAGE_AUTHOR = "internal"
+
+# QChat cheatcodes
+CHEATCODE_DIZZY = "givemesomecheese"
+CHEATCODE_DONTCRYBABY = "dontcrybaby"
+CHEATCODE_IAMAROBOT = "iamarobot"
+CHEATCODE_10OCLOCK = "its10oclock"
+CHEATCODE_QGIS_PRO_LICENSE = "qgisprolicense"
+
+CHEATCODES = [
+    CHEATCODE_DIZZY,
+    CHEATCODE_DONTCRYBABY,
+    CHEATCODE_IAMAROBOT,
+    CHEATCODE_10OCLOCK,
+    CHEATCODE_QGIS_PRO_LICENSE,
+]
