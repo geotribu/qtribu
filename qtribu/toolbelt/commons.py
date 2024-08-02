@@ -1,12 +1,16 @@
 from qgis.PyQt.QtCore import QUrl
 from qgis.PyQt.QtGui import QDesktopServices
 
+# project
 try:
     from qtribu.logic.web_viewer import WebViewer
 
     web_viewer = WebViewer()
 except ImportError:
     web_viewer = None
+
+from qtribu.toolbelt.log_handler import PlgLogger
+from qtribu.toolbelt.preferences import PlgOptionsManager
 
 
 def open_url_in_browser(url: str) -> bool:
@@ -30,7 +34,13 @@ def open_url_in_webviewer(url: str, window_title: str) -> None:
     :param window_title: title to give to the webviewer window
     :type window_title: str
     """
-    if web_viewer is None:
+    if web_viewer is None and PlgOptionsManager().get_plg_settings().browser == 1:
+        PlgLogger.log(
+            message="The embedded webviewer is not avaible, probably because "
+            "of unfilled system dependencies (QtWebEngine). Using default system "
+            "browser as fallback.",
+            log_level=2,
+        )
         open_url_in_browser(url=url)
 
     web_viewer.display_web_page(url)
