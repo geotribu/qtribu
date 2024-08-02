@@ -30,7 +30,7 @@ class TestToolbeltApplicationFolder(unittest.TestCase):
         """Test application folder retrieval."""
         self.assertEqual(
             get_app_dir(dir_name="cache", roaming=False),
-            Path(getenv("LOCALAPPDATA", Path.home())).joinpath(".oslandia/cache"),
+            Path(getenv("LOCALAPPDATA", Path.home())).joinpath(".geotribu/cache"),
         )
 
     def test_posixify(self):
