@@ -24,7 +24,7 @@ from qtribu.gui.form_article import ArticleForm
 from qtribu.gui.form_rdp_news import RdpNewsForm
 from qtribu.logic.news_feed.rss_reader import RssMiniReader
 from qtribu.logic.splash_changer import SplashChanger
-from qtribu.toolbelt import NetworkRequestsManager, PlgLogger, PlgOptionsManager
+from qtribu.toolbelt import PlgLogger, PlgOptionsManager
 from qtribu.toolbelt.commons import open_url_in_browser, open_url_in_webviewer
 
 # ############################################################################
