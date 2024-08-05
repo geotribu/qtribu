@@ -65,15 +65,15 @@ class RssMiniReader:
         self.action_read = action_read
         self.on_read_button = on_read_button
 
-    def process(self):
+    def process(self) -> None:
         """Download, parse and read RSS feed than store items as attribute."""
         # download remote RSS feed to cache folder
         self.download_feed()
         if not self.local_feed_filepath.exists():
             self.log(
                 message=self.tr(
-                    "The RSS feed is not available locally. "
-                    "Disabling RSS reader related features."
+                    f"The RSS feed is not available locally: {self.local_feed_filepath}. "
+                    "Features related to the RSS reader are disabled."
                 ),
                 log_level=1,
             )
