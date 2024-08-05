@@ -75,7 +75,7 @@ class RssMiniReader:
                     f"The RSS feed is not available locally: {self.local_feed_filepath}. "
                     "Features related to the RSS reader are disabled."
                 ),
-                log_level=1,
+                log_level=Qgis.Critical,
             )
             return
 
@@ -84,7 +84,7 @@ class RssMiniReader:
 
         # check if a new item has been published since last check
         if not self.has_new_content:
-            self.log(message="No new item found in RSS feed.", log_level=4)
+            self.log(message="No new item found in RSS feed.", log_level=Qgis.NoLevel)
             return
         # notify
         if isinstance(self.latest_item, RssItem):
@@ -94,7 +94,7 @@ class RssMiniReader:
                     self.tr("New content published:"),
                     latest_item.title,
                 ),
-                log_level=3,
+                log_level=Qgis.Success,
                 push=PlgOptionsManager().get_plg_settings().notify_push_info,
                 duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
                 button=True,
@@ -129,12 +129,12 @@ class RssMiniReader:
             self.log(
                 message=f"The remote RSS feed ({self.plg_settings.rss_source}) has been "
                 f"downloaded to {self.local_feed_filepath}",
-                log_level=0,
+                log_level=Qgis.Info,
             )
             return True
         self.log(
             message=f"A fresh local RSS feed already exists: {self.local_feed_filepath}",
-            log_level=0,
+            log_level=Qgis.Info,
         )
         return False
 
@@ -155,7 +155,7 @@ class RssMiniReader:
                         message="Item ignored because unmatches the include pattern: {}".format(
                             item.find("title").text
                         ),
-                        log_level=4,
+                        log_level=Qgis.NoLevel,
                     )
                     continue
 
@@ -187,7 +187,7 @@ class RssMiniReader:
                     item_idx = items.index(item)
 
                 err_msg = f"Feed item {item_idx} triggers an error. Trace: {err}"
-                self.log(message=err_msg, log_level=2)
+                self.log(message=err_msg, log_level=Qgis.Critical)
 
         # store feed items as attribute and return it
         self.FEED_ITEMS = feed_items
@@ -263,7 +263,7 @@ class RssMiniReader:
         if not plg_settings.integration_qgis_news_feed:
             self.log(
                 message="The QGIS news feed integration is disabled. Abort!",
-                log_level=4,
+                log_level=Qgis.NoLevel,
             )
             return False
 
