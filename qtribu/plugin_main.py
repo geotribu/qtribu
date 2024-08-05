@@ -22,8 +22,9 @@ from qtribu.gui.dlg_contents import GeotribuContentsDialog
 from qtribu.gui.dlg_settings import PlgOptionsFactory
 from qtribu.gui.form_article import ArticleForm
 from qtribu.gui.form_rdp_news import RdpNewsForm
-from qtribu.logic import RssMiniReader, SplashChanger
-from qtribu.toolbelt import NetworkRequestsManager, PlgLogger, PlgOptionsManager
+from qtribu.logic.news_feed.rss_reader import RssMiniReader
+from qtribu.logic.splash_changer import SplashChanger
+from qtribu.toolbelt import PlgLogger, PlgOptionsManager
 from qtribu.toolbelt.commons import open_url_in_browser, open_url_in_webviewer
 
 # ############################################################################
@@ -69,7 +70,7 @@ class GeotribuPlugin:
             )
 
         # sub-modules
-        self.rss_rdr = RssMiniReader()
+        self.rss_reader = None
         self.splash_chgr = SplashChanger(self)
 
     def initGui(self):
@@ -88,14 +89,14 @@ class GeotribuPlugin:
         self.form_rdp_news = None
 
         # -- Actions
-        self.action_run = QAction(
+        self.action_show_latest_content = QAction(
             QIcon(str(DIR_PLUGIN_ROOT / "resources/images/logo_green_no_text.svg")),
             self.tr("Newest article"),
             self.iface.mainWindow(),
         )
 
-        self.action_run.setToolTip(self.tr("Newest article"))
-        self.action_run.triggered.connect(self.run)
+        self.action_show_latest_content.setToolTip(self.tr("Newest article"))
+        self.action_show_latest_content.triggered.connect(self.on_show_latest_content)
 
         self.action_contents = QAction(
             QgsApplication.getThemeIcon("mActionOpenTableVisible.svg"),
@@ -141,7 +142,7 @@ class GeotribuPlugin:
         self.action_splash.triggered.connect(self.splash_chgr.switch)
 
         # -- Menu
-        self.iface.addPluginToWebMenu(__title__, self.action_run)
+        self.iface.addPluginToWebMenu(__title__, self.action_show_latest_content)
         self.iface.addPluginToWebMenu(__title__, self.action_contents)
         self.iface.addPluginToWebMenu(__title__, self.action_form_rdp_news)
         self.iface.addPluginToWebMenu(__title__, self.action_form_article)
@@ -187,12 +188,16 @@ class GeotribuPlugin:
         self.iface.helpMenu().addAction(self.action_osgeofr)
 
         # -- Toolbar
-        self.toolbar.addAction(self.action_run)
+        self.toolbar.addAction(self.action_show_latest_content)
         self.toolbar.addAction(self.action_contents)
         self.toolbar.addAction(self.action_form_rdp_news)
         self.toolbar.addAction(self.action_form_article)
 
         # -- Post UI initialization
+        self.rss_reader = RssMiniReader(
+            action_read=self.action_show_latest_content,
+            on_read_button=self.on_show_latest_content,
+        )
         self.iface.initializationCompleted.connect(self.post_ui_init)
 
     def unload(self):
@@ -201,7 +206,7 @@ class GeotribuPlugin:
         self.iface.removePluginWebMenu(__title__, self.action_help)
         self.iface.removePluginWebMenu(__title__, self.action_form_article)
         self.iface.removePluginWebMenu(__title__, self.action_form_rdp_news)
-        self.iface.removePluginWebMenu(__title__, self.action_run)
+        self.iface.removePluginWebMenu(__title__, self.action_show_latest_content)
         self.iface.removePluginWebMenu(__title__, self.action_contents)
         self.iface.removePluginWebMenu(__title__, self.action_settings)
         self.iface.removePluginWebMenu(__title__, self.action_splash)
@@ -217,7 +222,6 @@ class GeotribuPlugin:
         self.iface.unregisterOptionsWidgetFactory(self.options_factory)
 
         # remove actions
-        del self.action_run
         del self.action_help
         del self.action_georezo
 
@@ -227,52 +231,10 @@ class GeotribuPlugin:
         :raises Exception: if there is no item in the feed
         """
         try:
-            qntwk = NetworkRequestsManager()
-            rss_feed_content = qntwk.get_from_source(
-                headers=self.rss_rdr.HEADERS,
-                response_expected_content_type="application/xml",
-            )
-
-            self.rss_rdr.read_feed(rss_feed_content)
-            if not self.rss_rdr.latest_item:
-                raise Exception("No item found")
-
-            # change tooltip
-            self.action_run.setToolTip(
-                "{} - {}".format(
-                    self.tr("Newest article"), self.rss_rdr.latest_item.title
-                )
-            )
-
-            # check if a new content has been published
-            if self.rss_rdr.has_new_content:
-                # change action icon
-                self.action_run.setIcon(
-                    QIcon(
-                        str(
-                            DIR_PLUGIN_ROOT / "resources/images/logo_orange_no_text.svg"
-                        )
-                    ),
-                )
-                # notify
-                self.log(
-                    message="{} {}".format(
-                        self.tr("New content published:"),
-                        self.rss_rdr.latest_item.title,
-                    ),
-                    log_level=3,
-                    push=PlgOptionsManager().get_plg_settings().notify_push_info,
-                    duration=PlgOptionsManager()
-                    .get_plg_settings()
-                    .notify_push_duration,
-                    button=True,
-                    button_label=self.tr("Newest article"),
-                    button_connect=self.run,
-                )
-
+            self.rss_reader.process()
         except Exception as err:
             self.log(
-                message=self.tr(f"Michel, we've got a problem: {err}"),
+                message=self.tr(f"Reading the RSS feed failed. Trace: {err}"),
                 log_level=2,
                 push=True,
             )
@@ -280,7 +242,7 @@ class GeotribuPlugin:
 
         # insert latest item within news feed
         try:
-            self.rss_rdr.add_latest_item_to_news_feed()
+            self.rss_reader.add_latest_item_to_news_feed()
         except Exception as err:
             self.log(
                 message=self.tr(
@@ -302,22 +264,25 @@ class GeotribuPlugin:
         """
         return QCoreApplication.translate(self.__class__.__name__, message)
 
-    def run(self):
+    def on_show_latest_content(self):
         """Main action on plugin icon pressed event."""
         try:
-            if not self.rss_rdr.latest_item:
+            if not self.rss_reader.latest_item:
                 self.post_ui_init()
+            rss_item = self.rss_reader.latest_item
+            open_url_in_webviewer(url=rss_item.url, window_title=rss_item.title)
 
+            # save latest RSS item displayed
             open_url_in_webviewer(
-                self.rss_rdr.latest_item.url, self.rss_rdr.latest_item.title
+                self.rss_reader.latest_item.url, self.rss_reader.latest_item.title
             )
-            self.action_run.setIcon(
+            self.action_show_latest_content.setIcon(
                 QIcon(str(DIR_PLUGIN_ROOT / "resources/images/logo_green_no_text.svg"))
             )
-            self.action_run.setToolTip(self.tr("Newest article"))
+            self.action_show_latest_content.setToolTip(self.tr("Newest article"))
             # save latest RSS item displayed
             PlgOptionsManager().set_value_from_key(
-                key="latest_content_guid", value=self.rss_rdr.latest_item.guid
+                key="latest_content_guid", value=self.rss_reader.latest_item.guid
             )
         except Exception as err:
             self.log(

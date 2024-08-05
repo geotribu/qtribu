@@ -18,7 +18,7 @@ from qgis.PyQt.QtCore import QByteArray
 
 # plugin
 from qtribu.__about__ import __title__, __version__
-from qtribu.logic import RssItem
+from qtribu.logic.news_feed.mdl_rss_item import RssItem
 from qtribu.toolbelt import NetworkRequestsManager, PlgLogger, PlgOptionsManager
 
 # -- GLOBALS --
@@ -30,7 +30,7 @@ HEADERS: dict = {
 FETCH_UPDATE_INTERVAL_SECONDS = 7200
 
 
-## -- CLASSES --
+# -- CLASSES --
 
 
 class JsonFeedClient:
@@ -89,7 +89,7 @@ class JsonFeedClient:
         """
         authors = []
         for content in self.fetch():
-            for ca in content.author:
+            for ca in content.authors:
                 authors.append(" ".join([a.title() for a in ca.split(" ")]))
         return sorted(set(authors))
 
@@ -115,7 +115,7 @@ class JsonFeedClient:
         """
         return RssItem(
             abstract=item.get("content_html"),
-            author=[i["name"] for i in item.get("authors")],
+            authors=[i["name"] for i in item.get("authors")],
             categories=item.get("tags", []),
             date_pub=datetime.fromisoformat(item.get("date_published")),
             guid=item.get("id"),
@@ -142,7 +142,7 @@ class JsonFeedClient:
             return all([JsonFeedClient._matches(w, item) for w in words])
         return (
             query.upper() in item.abstract.upper()
-            or query.upper() in ",".join(item.author).upper()
+            or query.upper() in ",".join(item.authors).upper()
             or query.upper() in ",".join(item.categories).upper()
             or query.upper() in item.date_pub.isoformat().upper()
             or query.upper() in item.image_url.upper()

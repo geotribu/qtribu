@@ -31,14 +31,15 @@ class PlgSettingsStructure:
     local_app_folder: Path = get_app_dir(dir_name="cache")
 
     # RSS feed
-    rss_source: str = "https://geotribu.fr/feed_rss_created.xml"
     json_feed_source: str = "https://geotribu.fr/feed_json_created.json"
+    latest_content_guid: str = ""
+    rss_source: str = "https://geotribu.fr/feed_rss_created.xml"
+    rss_poll_frequency_hours: int = 24
 
     # usage
     browser: int = 1
     notify_push_info: bool = True
     notify_push_duration: int = 10
-    latest_content_guid: str = ""
     splash_screen_enabled: bool = False
     license_global_accept: bool = False
     integration_qgis_news_feed: bool = True

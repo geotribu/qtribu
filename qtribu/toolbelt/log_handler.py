@@ -99,6 +99,15 @@ class PlgLogger(logging.Handler):
                 button_more_text=detailed_error_message
             )
             log(message="Plugin loaded - TEST", log_level=4, push=0)
+
+            # also works using enums from Qgis:
+            # Qgis.Info, Qgis.Warning, Qgis.Critical, Qgis.Success, Qgis.NoLevel
+            from qgis.core import Qgis
+            log(
+                message="Something went wrong but it's not blocking",
+                log_level=Qgis.Warning
+            )
+
         """
         # if not debug mode and not push, let's ignore INFO, SUCCESS and TEST
         debug_mode = plg_prefs_hdlr.PlgOptionsManager.get_plg_settings().debug_mode
