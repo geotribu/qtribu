@@ -39,7 +39,7 @@ class PlgSettingsStructure:
     # QChat
     qchat_instance_uri: str = "https://gischat.geotribu.net"
     qchat_activate_cheatcode: bool = True
-    qchat_display_admin_messages: bool = True
+    qchat_display_admin_messages: bool = False
     qchat_show_avatars: bool = True
     qchat_play_sounds: bool = True
     qchat_sound_volume: int = 33
