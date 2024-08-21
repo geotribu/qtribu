@@ -41,6 +41,7 @@ MARKER_VALUE = "---"
 
 class QChatWidget(QgsDockWidget):
 
+    initialized: bool = False
     connected: bool = False
     current_room: Optional[str] = None
 
@@ -132,6 +133,11 @@ class QChatWidget(QgsDockWidget):
         """
         Action called when the widget is opened
         """
+
+        # hack to bypass multiple widget opened triggers when moving widget
+        if self.initialized:
+            return
+        self.initialized = True
 
         # fill fields from saved settings
         self.load_settings()
@@ -264,15 +270,10 @@ Rooms:
                 return
             self.connect_to_room(room)
 
-    def connect_to_room(self, room: str, log: bool = True) -> None:
+    def connect_to_room(self, room: str) -> None:
         """
         Connect widget to a specific room
         """
-        if log and self.settings.qchat_display_admin_messages:
-            self.add_admin_message(
-                room, self.tr("Connected to room '{room}'").format(room=room)
-            )
-
         protocol, domain = self.settings.qchat_instance_uri.split("://")
         ws_protocol = "wss" if protocol == "https" else "ws"
         ws_instance_url = f"{ws_protocol}://{domain}"
@@ -291,6 +292,10 @@ Rooms:
         self.current_room = room
         self.connected = True
         self.log(message=f"Websocket connected to room {room}")
+        if self.settings.qchat_display_admin_messages:
+            self.add_admin_message(
+                self.tr("Connected to room '{room}'").format(room=room)
+            )
 
     def disconnect_from_room(self, log: bool = True, close_ws: bool = True) -> None:
         """
@@ -298,7 +303,6 @@ Rooms:
         """
         if log and self.settings.qchat_display_admin_messages:
             self.add_admin_message(
-                self.current_room,
                 self.tr("Disconnected from room '{room}'").format(
                     room=self.current_room
                 ),
@@ -325,7 +329,7 @@ Rooms:
         Action called when an error appears on the websocket
         """
         if self.settings.qchat_display_admin_messages:
-            self.add_admin_message(self.tr("ERROR"), self.ws_client.errorString())
+            self.add_admin_message(self.ws_client.errorString())
         self.log(
             message=f"{error_code}: {self.ws_client.errorString()}",
             log_level=Qgis.Critical,
@@ -533,7 +537,7 @@ Rooms:
         self.ws_client.sendTextMessage(json.dumps(message))
         self.lne_message.setText("")
 
-    def add_admin_message(self, room: str, message: str) -> None:
+    def add_admin_message(self, message: str) -> None:
         """
         Adds an admin message to QTreeWidget chat
         """
@@ -582,6 +586,7 @@ Rooms:
         if self.connected:
             self.disconnect_from_room()
         self.cbb_room.currentIndexChanged.disconnect()
+        self.initialized = False
 
     def check_cheatcode(self, message: dict[str, str]) -> bool:
         """
