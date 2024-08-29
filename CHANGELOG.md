@@ -10,6 +10,21 @@ Unreleased
 
 -->
 
+## 0.18.0 - 2024-08-25
+
+### Bugs fixes 🐛
+
+* fix(web_viewer): switch from QtWebKit to QtWebEngine by @lbartoletti in https://github.com/geotribu/qtribu/pull/186
+
+### Features and enhancements 🎉
+
+* refacto(rss): remove unused rss reader subclasses by @Guts in https://github.com/geotribu/qtribu/pull/184
+* Feature: add application folder by @Guts in https://github.com/geotribu/qtribu/pull/187
+* refactor(rss): move RSS reader to its own folder by @Guts in https://github.com/geotribu/qtribu/pull/188
+
+## New Contributors
+* @lbartoletti made their first contribution in https://github.com/geotribu/qtribu/pull/186
+
 ## 0.17.3 - 2024-06-28
 
 ### Tooling 🔧
