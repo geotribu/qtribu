@@ -475,6 +475,11 @@
             <string>chicken</string>
            </property>
           </item>
+          <item>
+           <property name="text">
+            <string>cow</string>
+           </property>
+          </item>
          </widget>
         </item>
        </layout>
