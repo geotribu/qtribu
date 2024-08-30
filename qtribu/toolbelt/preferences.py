@@ -36,6 +36,18 @@ class PlgSettingsStructure:
     rss_source: str = "https://geotribu.fr/feed_rss_created.xml"
     rss_poll_frequency_hours: int = 24
 
+    # QChat
+    qchat_instance_uri: str = "https://gischat.geotribu.net"
+    qchat_activate_cheatcode: bool = True
+    qchat_display_admin_messages: bool = False
+    qchat_show_avatars: bool = True
+    qchat_play_sounds: bool = True
+    qchat_sound_volume: int = 33
+    qchat_ring_tone: str = "beep_1"
+    qchat_color_mention: str = "#4169e1"
+    qchat_color_self: str = "#00cc00"
+    qchat_color_admin: str = "#ffa500"
+
     # usage
     browser: int = 1
     notify_push_info: bool = True
@@ -51,6 +63,8 @@ class PlgSettingsStructure:
     )
 
     # authoring
+    author_nickname: str = ""
+    author_avatar: str = "mGeoPackage.svg"
     author_firstname: str = ""
     author_lastname: str = ""
     author_email: str = ""
@@ -61,7 +75,7 @@ class PlgSettingsStructure:
 
     @property
     def browser_as_str(self) -> str:
-        """Returns mathcing browser value name from its code.
+        """Returns matching browser value name from its code.
 
         :return: browser value name
         :rtype: str
@@ -72,7 +86,7 @@ class PlgSettingsStructure:
             return "system"
         else:
             log_hdlr.PlgLogger.log(
-                message=f"Invalid browser code: {self.impex_access_mode}", log_level=1
+                message=f"Invalid browser code: {self.browser}", log_level=1
             )
             return "qgis"
 

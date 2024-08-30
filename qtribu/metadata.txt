@@ -1,13 +1,14 @@
 [general]
 name=QTribu
-about=Garde le Qontact avec ta Geotribu !
+about[en]=Keep in touch with your GIS Tribe!
+about[fr]=Garde le Qontact avec ta Geotribu !
 category=Web
 description=Geotribu (https://geotribu.fr) content right into QGIS.
 icon=resources/images/logo_geotribu.png
 tags=geotribu,blog,rss,splash,community
 
 # credits and contact
-author=Julien Moura (Geotribu)
+author=Julien Moura (Geotribu), Guilhem Allaman (Geotribu)
 email=geotribu@gmail.com
 homepage=https://geotribu.github.io/qtribu/
 repository=https://github.com/geotribu/qtribu/
@@ -15,10 +16,10 @@ tracker=https://github.com/geotribu/qtribu/issues/
 
 # experimental flag
 deprecated=False
-experimental=False
+experimental=True
 qgisMinimumVersion=3.28
 qgisMaximumVersion=3.99
 
 # versionnement
-version=0.18.0
+version=1.0.0-beta1
 changelog=

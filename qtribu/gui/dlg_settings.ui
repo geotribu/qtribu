@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>809</width>
-    <height>468</height>
+    <width>796</width>
+    <height>583</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -301,6 +301,266 @@
     </widget>
    </item>
    <item>
+    <widget class="QGroupBox" name="grp_qchat">
+     <property name="title">
+      <string>QChat</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <layout class="QHBoxLayout" name="hly_instance">
+        <item>
+         <widget class="QLabel" name="lbl_instance_uri">
+          <property name="text">
+           <string>Instance URI:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="cbb_qchat_instance_uri">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="editable">
+           <bool>true</bool>
+          </property>
+          <item>
+           <property name="text">
+            <string>https://gischat.geotribu.net</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>https://gischat.geotribu.fr</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btn_rules">
+          <property name="text">
+           <string>Instance rules</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btn_discover">
+          <property name="text">
+           <string>Discover instances</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="hly_misc">
+        <item>
+         <widget class="QCheckBox" name="ckb_show_avatars">
+          <property name="text">
+           <string>Show avatars</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="ckb_display_admin_messages">
+          <property name="text">
+           <string>Display admin messages</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="ckb_cheatcodes">
+          <property name="text">
+           <string>Activate cheatcodes</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="hly_sounds">
+        <item>
+         <widget class="QCheckBox" name="ckb_play_sounds">
+          <property name="text">
+           <string>Play sounds</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lbl_volume">
+          <property name="text">
+           <string>Volume:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSlider" name="hsl_sound_volume">
+          <property name="minimum">
+           <number>0</number>
+          </property>
+          <property name="maximum">
+           <number>100</number>
+          </property>
+          <property name="value">
+           <number>33</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lbl_ringtone">
+          <property name="text">
+           <string>Notification tone:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="cbb_ring_tone">
+          <item>
+           <property name="text">
+            <string>beep_1</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>beep_2</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>beep_3</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>beep_4</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>beep_5</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>beep_6</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>beep_7</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>horn</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>cat</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>dog</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>chicken</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>cow</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="hly_colors">
+        <item>
+         <widget class="QLabel" name="lbl_color_mention">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Mention message color:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QgsColorButton" name="cbt_color_mention">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lbl_color_self">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Self message color:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QgsColorButton" name="cbt_color_self">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lbl_color_admin">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Admin message color:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QgsColorButton" name="cbt_color_admin">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <widget class="AuthoringWidget" name="wdg_author" native="true"/>
    </item>
    <item>
@@ -499,12 +759,41 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>QgsColorButton</class>
+   <extends>QToolButton</extends>
+   <header>qgscolorbutton.h</header>
+  </customwidget>
+  <customwidget>
    <class>AuthoringWidget</class>
    <extends>QWidget</extends>
    <header>qtribu.gui.wdg_authoring</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>opt_browser_qt</tabstop>
+  <tabstop>opt_browser_os</tabstop>
+  <tabstop>opt_notif_push_msg</tabstop>
+  <tabstop>sbx_notif_duration</tabstop>
+  <tabstop>btn_reset_read_history</tabstop>
+  <tabstop>chb_integration_news_feed</tabstop>
+  <tabstop>chb_license_global_accept</tabstop>
+  <tabstop>cbb_qchat_instance_uri</tabstop>
+  <tabstop>btn_rules</tabstop>
+  <tabstop>ckb_show_avatars</tabstop>
+  <tabstop>ckb_display_admin_messages</tabstop>
+  <tabstop>ckb_cheatcodes</tabstop>
+  <tabstop>ckb_play_sounds</tabstop>
+  <tabstop>hsl_sound_volume</tabstop>
+  <tabstop>cbb_ring_tone</tabstop>
+  <tabstop>cbt_color_mention</tabstop>
+  <tabstop>cbt_color_self</tabstop>
+  <tabstop>cbt_color_admin</tabstop>
+  <tabstop>btn_help</tabstop>
+  <tabstop>btn_report</tabstop>
+  <tabstop>opt_debug</tabstop>
+  <tabstop>btn_reset</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
