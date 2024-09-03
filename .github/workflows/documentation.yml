@@ -23,12 +23,19 @@ on:
 
   workflow_dispatch:
 
+  workflow_run:
+    workflows:
+      - "📦 Packaging & 🚀 Release"
+    types:
+      - completed
+
 # Allow one concurrent deployment per branch/pr
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 env:
+  PROJECT_FOLDER: "qtribu"
   PYTHON_VERSION: 3.9
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
@@ -67,6 +74,20 @@ jobs:
           path: docs/_build/html/*
           if-no-files-found: error
           retention-days: 30
+
+      - name: Download artifact from build workflow
+        if: github.event_name == 'push' && (startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main')
+        uses: dawidd6/action-download-artifact@v6
+        with:
+          allow_forks: false
+          branch: main
+          event: push
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          if_no_artifact_found: warn
+          name: ${{ env.PROJECT_FOLDER }}-latest
+          path: docs/_build/html/
+          # run_id: ${{ github.event.workflow_run.id }}
+          workflow: packager.yml
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
