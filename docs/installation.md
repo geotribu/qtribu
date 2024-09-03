@@ -55,6 +55,22 @@ Selon votre configuration, redémarrer QGIS peut être nécessaire, le gestionna
 
 ## Version en développement
 
+### Depuis Version en développement
+
+Si vous vous considérez comme un *early adopter*, un testeur ou que vous ne pouvez attendre qu'une version soit publiée (même dans le canal expérimental du dépôt officiel de QGIS !), vous pouvez utiliser la version automatiquement packagée pour chaque commit poussé sur la branche principale.
+
+Pour cela, il faut ajouter cette URL dans [les dépôts référencés du gestionnaire d'extensions de QGIS](https://docs.qgis.org/3.34/fr/docs/user_manual/plugins/plugins.html#the-settings-tab) :
+
+```html
+https://qtribu.geotribu.fr/plugins.xml
+```
+
+![QGIS - Plugin repositories](https://docs.qgis.org/3.34/fr/_images/plugins_settings.png)
+
+Cliquer sur `+ Add` et entrer l'URL :
+
+![QGIS - Détail du dépôt de plugins](./static/qgis_plugin_installation_custom_repository.webp)
+
 ### Depuis une branche
 
 1. S'identifier sur Github.com
@@ -64,7 +80,7 @@ Selon votre configuration, redémarrer QGIS peut être nécessaire, le gestionna
     ![Github - Workflow run listing](./static/github_actions_workflow_packaging_listing.webp)
 
 1. Sélectionner la dernière exécution qui a fonctionné (avec une coche verte)
-1. En bas de la page _Summary_, télécharger l'artefact du plugin packagé :
+1. En bas de la page *Summary*, télécharger l'artefact du plugin packagé :
 
     ![Github - Workflow run summary](./static/github_actions_workflow_packaging_summary_annotated_artefact.webp)
 
