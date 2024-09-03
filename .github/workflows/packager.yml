@@ -104,12 +104,19 @@ jobs:
           git add ${{ env.PROJECT_FOLDER }}/
 
       - name: Package the latest version
-        run: qgis-plugin-ci package latest --allow-uncommitted-changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          qgis-plugin-ci package latest \
+            --allow-uncommitted-changes \
+            --plugin-repo-url $(gh api "repos/$GITHUB_REPOSITORY/pages" --jq '.html_url')
 
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ env.PROJECT_FOLDER }}-latest
-          path: ${{ env.PROJECT_FOLDER }}.*.zip
+          path: |
+            plugins.xml
+            ${{ env.PROJECT_FOLDER }}.*.zip
           if-no-files-found: error
 
   # -- ONLY TAGS ----------------------------------------------------------------------
