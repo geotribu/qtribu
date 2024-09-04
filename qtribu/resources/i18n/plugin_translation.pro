@@ -1,4 +1,5 @@
-FORMS = ../../gui/dlg_contents.ui \
+FORMS = ../../gui/dck_qchat.ui \
+    ../../gui/dlg_contents.ui \
     ../../gui/dlg_settings.ui \
     ../../gui/form_article.ui \
     ../../gui/form_rdp_news.ui \
