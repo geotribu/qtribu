@@ -142,3 +142,4 @@ qtribu/gui/*.db
 .idea
 qtribu/LICENSE
 plugins.xml
+qtribu/resources/**/*.db

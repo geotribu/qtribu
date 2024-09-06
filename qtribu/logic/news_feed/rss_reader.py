@@ -72,8 +72,10 @@ class RssMiniReader:
         if not self.local_feed_filepath.exists():
             self.log(
                 message=self.tr(
-                    f"The RSS feed is not available locally: {self.local_feed_filepath}. "
-                    "Features related to the RSS reader are disabled."
+                    "The RSS feed is not available locally: {}. "
+                    "Features related to the RSS reader are disabled.".format(
+                        self.local_feed_filepath
+                    )
                 ),
                 log_level=Qgis.Critical,
             )
