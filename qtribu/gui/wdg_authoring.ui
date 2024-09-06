@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>406</width>
+    <width>484</width>
     <height>344</height>
    </rect>
   </property>
@@ -247,97 +247,97 @@
           </property>
           <item>
            <property name="text">
-            <string>mActionAddHtml.svg</string>
+            <string notr="true">mActionAddHtml.svg</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>mActionArrowUp.svg</string>
+            <string notr="true">mActionArrowUp.svg</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>mActionCalculateField.svg</string>
+            <string notr="true">mActionCalculateField.svg</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>mActionMapTips.svg</string>
+            <string notr="true">mActionMapTips.svg</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>mActionPropertiesWidget.svg</string>
+            <string notr="true">mActionPropertiesWidget.svg</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>mIconCamera.svg</string>
+            <string notr="true">mGeoPackage.svg</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>mIconCertificate.svg</string>
+            <string notr="true">mIconCamera.svg</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>mIconFolder.svg</string>
+            <string notr="true">mIconCertificate.svg</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>mIconGPU.svg</string>
+            <string notr="true">mIconFolder.svg</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>mIconInfo.svg</string>
+            <string notr="true">mIconGPU.svg</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>mIconNetworkLogger.svg</string>
+            <string notr="true">mIconInfo.svg</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>mIconPostgis.svg</string>
+            <string notr="true">mIconNetworkLogger.svg</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>mIconPyramid.svg</string>
+            <string notr="true">mIconPostgis.svg</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>mIconPythonFile.svg</string>
+            <string notr="true">mIconPyramid.svg</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>mIconRaster.svg</string>
+            <string notr="true">mIconPythonFile.svg</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>mIconSpatialite.svg</string>
+            <string notr="true">mIconRaster.svg</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>mIconXyz.svg</string>
+            <string notr="true">mIconSpatialite.svg</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>mIconZip.svg</string>
+            <string notr="true">mIconXyz.svg</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>mGeoPackage.svg</string>
+            <string notr="true">mIconZip.svg</string>
            </property>
           </item>
          </widget>

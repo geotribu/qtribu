@@ -42,8 +42,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>778</width>
-        <height>565</height>
+        <width>762</width>
+        <height>569</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -338,8 +338,14 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="inputMethodHints">
+               <set>Qt::ImhUrlCharactersOnly</set>
+              </property>
               <property name="editable">
                <bool>true</bool>
+              </property>
+              <property name="currentText">
+               <string notr="true">https://gischat.geotribu.net</string>
               </property>
               <item>
                <property name="text">
@@ -437,62 +443,62 @@
              <widget class="QComboBox" name="cbb_ring_tone">
               <item>
                <property name="text">
-                <string>beep_1</string>
+                <string notr="true">beep_1</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>beep_2</string>
+                <string notr="true">beep_2</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>beep_3</string>
+                <string notr="true">beep_3</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>beep_4</string>
+                <string notr="true">beep_4</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>beep_5</string>
+                <string notr="true">beep_5</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>beep_6</string>
+                <string notr="true">beep_6</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>beep_7</string>
+                <string notr="true">beep_7</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>horn</string>
+                <string notr="true">horn</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>cat</string>
+                <string notr="true">cat</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>dog</string>
+                <string notr="true">dog</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>chicken</string>
+                <string notr="true">chicken</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>cow</string>
+                <string notr="true">cow</string>
                </property>
               </item>
              </widget>
