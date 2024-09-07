@@ -5,8 +5,9 @@ about[en]=Keep in touch with your GIS Tribe!
 about[fr]=Garde le Qontact avec ta Geotribu !
 category=Web
 description=Geotribu (https://geotribu.fr) content right into QGIS.
+description[fr]=Consulter et chercher des contenus Geotribu (https://geotribu.fr) directement dans QGIS. Il est également possible de proposer des articles ou des news pour la GeoRDP.
 icon=resources/images/logo_geotribu.png
-tags=geotribu,blog,rss,splash,community
+tags=geotribu,blog,rss,splash,community,chat,gischat
 
 # credits and contact
 author=Julien Moura (Geotribu), Guilhem Allaman (Geotribu)
