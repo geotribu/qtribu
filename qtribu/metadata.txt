@@ -1,5 +1,6 @@
 [general]
 name=QTribu
+about=Keep in touch with your GIS Tribe!
 about[en]=Keep in touch with your GIS Tribe!
 about[fr]=Garde le Qontact avec ta Geotribu !
 category=Web
@@ -21,5 +22,5 @@ qgisMinimumVersion=3.28
 qgisMaximumVersion=3.99
 
 # versionnement
-version=1.0.0-beta1
+version=1.0.0-beta2
 changelog=
