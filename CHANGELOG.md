@@ -10,6 +10,17 @@ Unreleased
 
 -->
 
+## 1.0.0-beta2 - 2024-09-07
+
+### Tooling 🔧
+
+* update(ci): switch to geotribu user as releases publisher to plugins.qgis.org and use a toiken instead of raw OSGeo password
+
+## Other changes
+
+* update(packaging): add French description by @Guts in <https://github.com/geotribu/qtribu/pull/194>
+* update(packaging): add Guilhem as plugin contributor @gounux in <https://github.com/geotribu/qtribu/pull/193>
+
 ## 1.0.0-beta1 - 2024-09-07
 
 ### Features and enhancements 🎉
