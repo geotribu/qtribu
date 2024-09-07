@@ -9,7 +9,6 @@ from qgis.PyQt.QtGui import (
     QSyntaxHighlighter,
     QTextCharFormat,
     QTextCursor,
-    QTextLayout,
 )
 
 
