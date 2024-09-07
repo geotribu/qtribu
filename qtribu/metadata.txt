@@ -1,5 +1,6 @@
 [general]
 name=QTribu
+about=Keep in touch with your GIS Tribe!
 about[en]=Keep in touch with your GIS Tribe!
 about[fr]=Garde le Qontact avec ta Geotribu !
 category=Web

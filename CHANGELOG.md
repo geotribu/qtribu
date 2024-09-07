@@ -10,7 +10,7 @@ Unreleased
 
 -->
 
-## 1.0.0-beta1 - 2024-03-15
+## 1.0.0-beta1 - 2024-09-07
 
 ### Features and enhancements 🎉
 
