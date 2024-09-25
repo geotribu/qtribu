@@ -18,7 +18,6 @@ from qgis.PyQt.QtWidgets import QAction
 # project
 from qtribu.__about__ import DIR_PLUGIN_ROOT, __icon_path__, __title__, __uri_homepage__
 from qtribu.constants import ICON_ARTICLE, ICON_GEORDP
-from qtribu.gui.dck_qchat import QChatWidget
 from qtribu.gui.dlg_contents import GeotribuContentsDialog
 from qtribu.gui.dlg_settings import PlgOptionsFactory
 from qtribu.gui.form_article import ArticleForm
