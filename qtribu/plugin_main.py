@@ -336,7 +336,7 @@ class GeotribuPlugin:
                 ),
                 log_level=2,
                 push=True,
-                duration=60,
+                duration=0,
                 button=True,
                 button_connect=partial(
                     QDesktopServices.openUrl,
