@@ -369,15 +369,18 @@ Rooms:
                 message["message"],
                 foreground_color=self.settings.qchat_color_mention,
             )
-            self.log(
-                message=self.tr("You were mentionned by {sender}: {message}").format(
-                    sender=message["author"], message=message["message"]
-                ),
-                application=self.tr("QChat"),
-                log_level=Qgis.Info,
-                push=PlgOptionsManager().get_plg_settings().notify_push_info,
-                duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
-            )
+            if message["author"] != self.settings.author_nickname:
+                self.log(
+                    message=self.tr(
+                        "You were mentionned by {sender}: {message}"
+                    ).format(sender=message["author"], message=message["message"]),
+                    application=self.tr("QChat"),
+                    log_level=Qgis.Info,
+                    push=PlgOptionsManager().get_plg_settings().notify_push_info,
+                    duration=PlgOptionsManager()
+                    .get_plg_settings()
+                    .notify_push_duration,
+                )
         elif message["author"] == self.settings.author_nickname:
             item = self.create_message_item(
                 message["author"],
