@@ -10,6 +10,13 @@ Unreleased
 
 -->
 
+## 1.0.0-beta3 - 2024-09-27
+
+### Bugs fixes 🐛
+
+* fix(init): remove QChat import outside try/except by @Guts in <https://github.com/geotribu/qtribu/pull/196>
+* fix(qchat): no notification on self message mention by @gounux in <https://github.com/geotribu/qtribu/pull/197>
+
 ## 1.0.0-beta2 - 2024-09-07
 
 ### Tooling 🔧
