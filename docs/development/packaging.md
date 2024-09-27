@@ -5,7 +5,13 @@
 This plugin is using the [qgis-plugin-ci](https://github.com/opengisch/qgis-plugin-ci/) tool to perform packaging operations.  
 The package command is performing a `git archive` run based on changelog.
 
-```bash
+Install additional dependencies:
+
+```sh
+python -m pip install -U -r requirements/packaging.txt
+```
+
+```sh
 # package a specific version
 qgis-plugin-ci package 1.3.1
 # package latest version
