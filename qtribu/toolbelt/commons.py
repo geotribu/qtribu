@@ -59,9 +59,9 @@ from qtribu.__about__ import DIR_PLUGIN_ROOT
 def play_resource_sound(resource: str, volume: int) -> None:
     """
     Play a sound inside QGIS
-    The file_name param must be the name (without extension) of a .ogg audio file inside resources/sounds folder
+    The file_name param must be the name (without extension) of a .mp3 audio file inside resources/sounds folder
     """
-    file_path = str(DIR_PLUGIN_ROOT / f"resources/sounds/{resource}.ogg")
+    file_path = str(DIR_PLUGIN_ROOT / f"resources/sounds/{resource}.mp3")
     if not os.path.exists(file_path):
         raise FileNotFoundError(
             f"File '{resource}.wav' not found in resources/sounds folder"
