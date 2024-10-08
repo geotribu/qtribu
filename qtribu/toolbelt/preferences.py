@@ -41,6 +41,7 @@ class PlgSettingsStructure:
     qchat_activate_cheatcode: bool = True
     qchat_display_admin_messages: bool = False
     qchat_show_avatars: bool = True
+    qchat_register_user: bool = True
     qchat_play_sounds: bool = True
     qchat_sound_volume: int = 33
     qchat_ring_tone: str = "beep_1"

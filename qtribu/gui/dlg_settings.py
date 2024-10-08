@@ -117,6 +117,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
             self.ckb_display_admin_messages.isChecked()
         )
         settings.qchat_show_avatars = self.ckb_show_avatars.isChecked()
+        settings.qchat_register_user = self.ckb_register_nickname.isChecked()
         settings.qchat_play_sounds = self.ckb_play_sounds.isChecked()
         settings.qchat_sound_volume = self.hsl_sound_volume.value()
         settings.qchat_ring_tone = self.cbb_ring_tone.currentText()
@@ -164,6 +165,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
             settings.qchat_display_admin_messages
         )
         self.ckb_show_avatars.setChecked(settings.qchat_show_avatars)
+        self.ckb_register_nickname.setChecked(settings.qchat_register_user)
         self.ckb_play_sounds.setChecked(settings.qchat_play_sounds)
         self.hsl_sound_volume.setValue(settings.qchat_sound_volume)
         beep_index = self.cbb_ring_tone.findText(

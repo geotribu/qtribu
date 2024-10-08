@@ -303,12 +303,14 @@ Rooms:
             self.add_admin_message(
                 self.tr("Connected to room '{room}'").format(room=room)
             )
+
         # send newcomer message to websocket
-        message = {
-            "author": INTERNAL_MESSAGE_AUTHOR,
-            "newcomer": self.settings.author_nickname,
-        }
-        self.ws_client.sendTextMessage(json.dumps(message))
+        if self.settings.qchat_register_user:
+            message = {
+                "author": INTERNAL_MESSAGE_AUTHOR,
+                "newcomer": self.settings.author_nickname,
+            }
+            self.ws_client.sendTextMessage(json.dumps(message))
 
     def disconnect_from_room(self, log: bool = True, close_ws: bool = True) -> None:
         """
