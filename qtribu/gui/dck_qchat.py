@@ -437,11 +437,21 @@ Rooms:
             self.log(message=f"Internal message received: {nb_users} users in room")
         if (
             "newcomer" in message
+            and self.settings.qchat_display_admin_messages
             and message["newcomer"] != self.settings.author_nickname
         ):
             newcomer = message["newcomer"]
             self.add_admin_message(
                 self.tr("{newcomer} has joined the room").format(newcomer=newcomer)
+            )
+        if (
+            "exiter" in message
+            and self.settings.qchat_display_admin_messages
+            and message["exiter"] != self.settings.author_nickname
+        ):
+            exiter = message["exiter"]
+            self.add_admin_message(
+                self.tr("{newcomer} has left the room").format(newcomer=exiter)
             )
 
     def on_message_double_clicked(self, item: QTreeWidgetItem, column: int) -> None:
