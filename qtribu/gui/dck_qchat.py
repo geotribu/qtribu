@@ -305,7 +305,7 @@ Rooms:
             )
 
         # send newcomer message to websocket
-        if self.settings.qchat_register_user:
+        if not self.settings.qchat_incognito_mode:
             message = {
                 "author": INTERNAL_MESSAGE_AUTHOR,
                 "newcomer": self.settings.author_nickname,

@@ -385,9 +385,9 @@
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="ckb_register_nickname">
+             <widget class="QCheckBox" name="ckb_incognito_mode">
               <property name="text">
-               <string>Register nickname</string>
+               <string>Incognito mode</string>
               </property>
               <property name="checked">
                <bool>false</bool>
