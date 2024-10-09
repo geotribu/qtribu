@@ -385,6 +385,16 @@
              </widget>
             </item>
             <item>
+             <widget class="QCheckBox" name="ckb_incognito_mode">
+              <property name="text">
+               <string>Incognito mode</string>
+              </property>
+              <property name="checked">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QCheckBox" name="ckb_display_admin_messages">
               <property name="text">
                <string>Display admin messages</string>
