@@ -5,7 +5,6 @@ from pathlib import Path
 from typing import Any, Optional
 
 # PyQGIS
-#
 from PyQt5 import QtWebSockets  # noqa QGS103
 from qgis.core import Qgis, QgsApplication
 from qgis.gui import QgisInterface, QgsDockWidget
