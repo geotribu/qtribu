@@ -22,6 +22,7 @@ from qtribu.gui.dlg_contents import GeotribuContentsDialog
 from qtribu.gui.dlg_settings import PlgOptionsFactory
 from qtribu.gui.form_article import ArticleForm
 from qtribu.gui.form_rdp_news import RdpNewsForm
+from qtribu.gui.wdg_qchat import QChatWidget
 from qtribu.logic.news_feed.rss_reader import RssMiniReader
 from qtribu.logic.splash_changer import SplashChanger
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
