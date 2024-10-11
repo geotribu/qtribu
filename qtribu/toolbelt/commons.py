@@ -2,9 +2,18 @@
 import os
 
 # 3rd party
-from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer  # noqa QGS103
-from qgis.PyQt.QtCore import QUrl
+from qgis.PyQt.QtCore import QT_VERSION_STR, QUrl
 from qgis.PyQt.QtGui import QDesktopServices
+
+# conditional import depending on Qt version
+if QT_VERSION_STR.split(".")[0] == 5:
+    from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer  # noqa QGS103
+elif QT_VERSION_STR.split(".")[0] == 6:
+    # see: https://doc.qt.io/qt-6/qtmultimedia-changes-qt6.html
+    QMediaContent = QUrl
+    from PyQt6.QtMultimedia import QMediaPlayer  # noqa QGS103
+else:
+    QMediaPlayer = None
 
 # project
 from qtribu.__about__ import DIR_PLUGIN_ROOT
