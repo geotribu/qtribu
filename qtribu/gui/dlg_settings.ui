@@ -1,794 +1,794 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>dlg_settings</class>
- <widget class="QDialog" name="dlg_settings">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>796</width>
-    <height>583</height>
-   </rect>
-  </property>
-  <property name="sizePolicy">
-   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-    <horstretch>0</horstretch>
-    <verstretch>0</verstretch>
-   </sizepolicy>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>640</width>
-    <height>300</height>
-   </size>
-  </property>
-  <property name="windowTitle">
-   <string>Settings</string>
-  </property>
-  <property name="autoFillBackground">
-   <bool>true</bool>
-  </property>
-  <property name="locale">
-   <locale language="English" country="UnitedStates"/>
-  </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <widget class="QScrollArea" name="sca_settings">
-     <property name="widgetResizable">
-      <bool>true</bool>
-     </property>
-     <widget class="QWidget" name="scrollAreaWidgetContents">
-      <property name="geometry">
-       <rect>
+  <class>dlg_settings</class>
+  <widget class="QDialog" name="dlg_settings">
+    <property name="geometry">
+      <rect>
         <x>0</x>
         <y>0</y>
-        <width>762</width>
-        <height>569</height>
-       </rect>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
-       <item>
-        <widget class="QLabel" name="lbl_title">
-         <property name="minimumSize">
-          <size>
-           <width>50</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>11</pointsize>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="toolTip">
-          <string notr="true"/>
-         </property>
-         <property name="autoFillBackground">
-          <bool>true</bool>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <property name="text">
-          <string notr="true">PluginTitle - Version X.X.X</string>
-         </property>
-         <property name="scaledContents">
-          <bool>true</bool>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-         <property name="margin">
-          <number>5</number>
-         </property>
-         <property name="textInteractionFlags">
-          <set>Qt::TextSelectableByMouse</set>
-         </property>
+        <width>796</width>
+        <height>583</height>
+      </rect>
+    </property>
+    <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+      </sizepolicy>
+    </property>
+    <property name="minimumSize">
+      <size>
+        <width>640</width>
+        <height>300</height>
+      </size>
+    </property>
+    <property name="windowTitle">
+      <string>Settings</string>
+    </property>
+    <property name="autoFillBackground">
+      <bool>true</bool>
+    </property>
+    <property name="locale">
+      <locale language="English" country="UnitedStates"/>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+        <widget class="QScrollArea" name="sca_settings">
+          <property name="widgetResizable">
+            <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="scrollAreaWidgetContents">
+            <property name="geometry">
+              <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>762</width>
+                <height>569</height>
+              </rect>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_3">
+              <item>
+                <widget class="QLabel" name="lbl_title">
+                  <property name="minimumSize">
+                    <size>
+                      <width>50</width>
+                      <height>30</height>
+                    </size>
+                  </property>
+                  <property name="font">
+                    <font>
+                      <pointsize>11</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                    </font>
+                  </property>
+                  <property name="toolTip">
+                    <string notr="true"/>
+                  </property>
+                  <property name="autoFillBackground">
+                    <bool>true</bool>
+                  </property>
+                  <property name="frameShape">
+                    <enum>QFrame::NoFrame</enum>
+                  </property>
+                  <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                  </property>
+                  <property name="text">
+                    <string notr="true">PluginTitle - Version X.X.X</string>
+                  </property>
+                  <property name="scaledContents">
+                    <bool>true</bool>
+                  </property>
+                  <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                  </property>
+                  <property name="margin">
+                    <number>5</number>
+                  </property>
+                  <property name="textInteractionFlags">
+                    <set>Qt::TextSelectableByMouse</set>
+                  </property>
+                </widget>
+              </item>
+              <item>
+                <widget class="QGroupBox" name="grp_features">
+                  <property name="minimumSize">
+                    <size>
+                      <width>550</width>
+                      <height>0</height>
+                    </size>
+                  </property>
+                  <property name="title">
+                    <string>Features</string>
+                  </property>
+                  <layout class="QGridLayout" name="gridLayout_2">
+                    <item row="4" column="1">
+                      <widget class="QPushButton" name="btn_reset_read_history">
+                        <property name="minimumSize">
+                          <size>
+                            <width>0</width>
+                            <height>25</height>
+                          </size>
+                        </property>
+                        <property name="maximumSize">
+                          <size>
+                            <width>16777215</width>
+                            <height>30</height>
+                          </size>
+                        </property>
+                        <property name="text">
+                          <string>Reset read history</string>
+                        </property>
+                      </widget>
+                    </item>
+                    <item row="3" column="3">
+                      <layout class="QHBoxLayout" name="horizontalLayout">
+                        <item>
+                          <widget class="QLabel" name="lbl_notif_duration">
+                            <property name="text">
+                              <string>Duration:</string>
+                            </property>
+                          </widget>
+                        </item>
+                        <item>
+                          <widget class="QSpinBox" name="sbx_notif_duration">
+                            <property name="toolTip">
+                              <string>'0' means unlimited time, waiting a manual close from the end-user.</string>
+                            </property>
+                            <property name="wrapping">
+                              <bool>false</bool>
+                            </property>
+                            <property name="buttonSymbols">
+                              <enum>QAbstractSpinBox::PlusMinus</enum>
+                            </property>
+                            <property name="specialValueText">
+                              <string/>
+                            </property>
+                            <property name="suffix">
+                              <string> seconds</string>
+                            </property>
+                            <property name="prefix">
+                              <string/>
+                            </property>
+                            <property name="maximum">
+                              <number>30</number>
+                            </property>
+                            <property name="value">
+                              <number>10</number>
+                            </property>
+                          </widget>
+                        </item>
+                      </layout>
+                    </item>
+                    <item row="5" column="1">
+                      <widget class="QCheckBox" name="chb_license_global_accept">
+                        <property name="minimumSize">
+                          <size>
+                            <width>0</width>
+                            <height>25</height>
+                          </size>
+                        </property>
+                        <property name="text">
+                          <string>Accept publication license globally</string>
+                        </property>
+                      </widget>
+                    </item>
+                    <item row="3" column="0">
+                      <widget class="QLabel" name="lbl_notification">
+                        <property name="minimumSize">
+                          <size>
+                            <width>175</width>
+                            <height>25</height>
+                          </size>
+                        </property>
+                        <property name="maximumSize">
+                          <size>
+                            <width>250</width>
+                            <height>30</height>
+                          </size>
+                        </property>
+                        <property name="text">
+                          <string>Notify for new content:</string>
+                        </property>
+                      </widget>
+                    </item>
+                    <item row="1" column="0">
+                      <widget class="QLabel" name="lbl_browser">
+                        <property name="minimumSize">
+                          <size>
+                            <width>175</width>
+                            <height>25</height>
+                          </size>
+                        </property>
+                        <property name="maximumSize">
+                          <size>
+                            <width>250</width>
+                            <height>30</height>
+                          </size>
+                        </property>
+                        <property name="toolTip">
+                          <string>Which web browser to use to display articles.</string>
+                        </property>
+                        <property name="text">
+                          <string>Open in web browser:</string>
+                        </property>
+                      </widget>
+                    </item>
+                    <item row="1" column="1">
+                      <widget class="QRadioButton" name="opt_browser_qt">
+                        <property name="minimumSize">
+                          <size>
+                            <width>0</width>
+                            <height>25</height>
+                          </size>
+                        </property>
+                        <property name="maximumSize">
+                          <size>
+                            <width>16777215</width>
+                            <height>30</height>
+                          </size>
+                        </property>
+                        <property name="text">
+                          <string>Embedded browser</string>
+                        </property>
+                        <property name="checked">
+                          <bool>true</bool>
+                        </property>
+                      </widget>
+                    </item>
+                    <item row="1" column="3">
+                      <widget class="QRadioButton" name="opt_browser_os">
+                        <property name="minimumSize">
+                          <size>
+                            <width>0</width>
+                            <height>25</height>
+                          </size>
+                        </property>
+                        <property name="maximumSize">
+                          <size>
+                            <width>16777215</width>
+                            <height>30</height>
+                          </size>
+                        </property>
+                        <property name="text">
+                          <string>System default browser</string>
+                        </property>
+                      </widget>
+                    </item>
+                    <item row="3" column="1">
+                      <widget class="QCheckBox" name="opt_notif_push_msg">
+                        <property name="minimumSize">
+                          <size>
+                            <width>275</width>
+                            <height>25</height>
+                          </size>
+                        </property>
+                        <property name="maximumSize">
+                          <size>
+                            <width>16777215</width>
+                            <height>30</height>
+                          </size>
+                        </property>
+                        <property name="autoFillBackground">
+                          <bool>false</bool>
+                        </property>
+                        <property name="text">
+                          <string>Informational push message</string>
+                        </property>
+                        <property name="checked">
+                          <bool>true</bool>
+                        </property>
+                        <property name="tristate">
+                          <bool>false</bool>
+                        </property>
+                      </widget>
+                    </item>
+                    <item row="5" column="0">
+                      <widget class="QCheckBox" name="chb_integration_news_feed">
+                        <property name="sizePolicy">
+                          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                          </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                          <size>
+                            <width>0</width>
+                            <height>25</height>
+                          </size>
+                        </property>
+                        <property name="toolTip">
+                          <string>The only 'Show QGIS news feed on welcome page' must be checked in General Settings</string>
+                        </property>
+                        <property name="text">
+                          <string>Insert latest item in QGIS news feed</string>
+                        </property>
+                        <property name="shortcut">
+                          <string notr="true"/>
+                        </property>
+                        <property name="checked">
+                          <bool>true</bool>
+                        </property>
+                      </widget>
+                    </item>
+                  </layout>
+                </widget>
+              </item>
+              <item>
+                <widget class="QGroupBox" name="grp_qchat">
+                  <property name="title">
+                    <string>QChat</string>
+                  </property>
+                  <layout class="QVBoxLayout" name="verticalLayout_2">
+                    <item>
+                      <layout class="QHBoxLayout" name="hly_instance">
+                        <item>
+                          <widget class="QLabel" name="lbl_instance_uri">
+                            <property name="text">
+                              <string>Instance URI:</string>
+                            </property>
+                          </widget>
+                        </item>
+                        <item>
+                          <widget class="QComboBox" name="cbb_qchat_instance_uri">
+                            <property name="sizePolicy">
+                              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                              </sizepolicy>
+                            </property>
+                            <property name="inputMethodHints">
+                              <set>Qt::ImhUrlCharactersOnly</set>
+                            </property>
+                            <property name="editable">
+                              <bool>true</bool>
+                            </property>
+                            <property name="currentText">
+                              <string notr="true">https://gischat.geotribu.net</string>
+                            </property>
+                            <item>
+                              <property name="text">
+                                <string>https://gischat.geotribu.net</string>
+                              </property>
+                            </item>
+                            <item>
+                              <property name="text">
+                                <string>https://gischat.geotribu.fr</string>
+                              </property>
+                            </item>
+                          </widget>
+                        </item>
+                        <item>
+                          <widget class="QPushButton" name="btn_rules">
+                            <property name="text">
+                              <string>Instance rules</string>
+                            </property>
+                          </widget>
+                        </item>
+                        <item>
+                          <widget class="QPushButton" name="btn_discover">
+                            <property name="text">
+                              <string>Discover instances</string>
+                            </property>
+                          </widget>
+                        </item>
+                      </layout>
+                    </item>
+                    <item>
+                      <layout class="QHBoxLayout" name="hly_misc">
+                        <item>
+                          <widget class="QCheckBox" name="ckb_show_avatars">
+                            <property name="text">
+                              <string>Show avatars</string>
+                            </property>
+                          </widget>
+                        </item>
+                        <item>
+                          <widget class="QCheckBox" name="ckb_display_admin_messages">
+                            <property name="text">
+                              <string>Display admin messages</string>
+                            </property>
+                          </widget>
+                        </item>
+                        <item>
+                          <widget class="QCheckBox" name="ckb_cheatcodes">
+                            <property name="text">
+                              <string>Activate cheatcodes</string>
+                            </property>
+                          </widget>
+                        </item>
+                      </layout>
+                    </item>
+                    <item>
+                      <layout class="QHBoxLayout" name="hly_sounds">
+                        <item>
+                          <widget class="QCheckBox" name="ckb_play_sounds">
+                            <property name="text">
+                              <string>Play sounds</string>
+                            </property>
+                          </widget>
+                        </item>
+                        <item>
+                          <widget class="QLabel" name="lbl_volume">
+                            <property name="text">
+                              <string>Volume:</string>
+                            </property>
+                          </widget>
+                        </item>
+                        <item>
+                          <widget class="QSlider" name="hsl_sound_volume">
+                            <property name="minimum">
+                              <number>0</number>
+                            </property>
+                            <property name="maximum">
+                              <number>100</number>
+                            </property>
+                            <property name="value">
+                              <number>33</number>
+                            </property>
+                            <property name="orientation">
+                              <enum>Qt::Horizontal</enum>
+                            </property>
+                          </widget>
+                        </item>
+                        <item>
+                          <widget class="QLabel" name="lbl_ringtone">
+                            <property name="text">
+                              <string>Notification tone:</string>
+                            </property>
+                          </widget>
+                        </item>
+                        <item>
+                          <widget class="QComboBox" name="cbb_ring_tone">
+                            <item>
+                              <property name="text">
+                                <string notr="true">beep_1</string>
+                              </property>
+                            </item>
+                            <item>
+                              <property name="text">
+                                <string notr="true">beep_2</string>
+                              </property>
+                            </item>
+                            <item>
+                              <property name="text">
+                                <string notr="true">beep_3</string>
+                              </property>
+                            </item>
+                            <item>
+                              <property name="text">
+                                <string notr="true">beep_4</string>
+                              </property>
+                            </item>
+                            <item>
+                              <property name="text">
+                                <string notr="true">beep_5</string>
+                              </property>
+                            </item>
+                            <item>
+                              <property name="text">
+                                <string notr="true">beep_6</string>
+                              </property>
+                            </item>
+                            <item>
+                              <property name="text">
+                                <string notr="true">beep_7</string>
+                              </property>
+                            </item>
+                            <item>
+                              <property name="text">
+                                <string notr="true">horn</string>
+                              </property>
+                            </item>
+                            <item>
+                              <property name="text">
+                                <string notr="true">cat</string>
+                              </property>
+                            </item>
+                            <item>
+                              <property name="text">
+                                <string notr="true">dog</string>
+                              </property>
+                            </item>
+                            <item>
+                              <property name="text">
+                                <string notr="true">chicken</string>
+                              </property>
+                            </item>
+                            <item>
+                              <property name="text">
+                                <string notr="true">cow</string>
+                              </property>
+                            </item>
+                          </widget>
+                        </item>
+                      </layout>
+                    </item>
+                    <item>
+                      <layout class="QHBoxLayout" name="hly_colors">
+                        <item>
+                          <widget class="QLabel" name="lbl_color_mention">
+                            <property name="sizePolicy">
+                              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                              </sizepolicy>
+                            </property>
+                            <property name="text">
+                              <string>Mention message color:</string>
+                            </property>
+                          </widget>
+                        </item>
+                        <item>
+                          <widget class="QgsColorButton" name="cbt_color_mention">
+                            <property name="sizePolicy">
+                              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                              </sizepolicy>
+                            </property>
+                          </widget>
+                        </item>
+                        <item>
+                          <widget class="QLabel" name="lbl_color_self">
+                            <property name="sizePolicy">
+                              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                              </sizepolicy>
+                            </property>
+                            <property name="text">
+                              <string>Self message color:</string>
+                            </property>
+                          </widget>
+                        </item>
+                        <item>
+                          <widget class="QgsColorButton" name="cbt_color_self">
+                            <property name="sizePolicy">
+                              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                              </sizepolicy>
+                            </property>
+                          </widget>
+                        </item>
+                        <item>
+                          <widget class="QLabel" name="lbl_color_admin">
+                            <property name="sizePolicy">
+                              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                              </sizepolicy>
+                            </property>
+                            <property name="text">
+                              <string>Admin message color:</string>
+                            </property>
+                          </widget>
+                        </item>
+                        <item>
+                          <widget class="QgsColorButton" name="cbt_color_admin">
+                            <property name="sizePolicy">
+                              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                              </sizepolicy>
+                            </property>
+                          </widget>
+                        </item>
+                      </layout>
+                    </item>
+                  </layout>
+                </widget>
+              </item>
+              <item>
+                <widget class="AuthoringWidget" name="wdg_author" native="true"/>
+              </item>
+              <item>
+                <widget class="QGroupBox" name="grp_misc">
+                  <property name="minimumSize">
+                    <size>
+                      <width>0</width>
+                      <height>0</height>
+                    </size>
+                  </property>
+                  <property name="title">
+                    <string>Miscellaneous</string>
+                  </property>
+                  <property name="flat">
+                    <bool>false</bool>
+                  </property>
+                  <layout class="QGridLayout" name="gridLayout">
+                    <item row="1" column="0">
+                      <widget class="QCheckBox" name="opt_debug">
+                        <property name="minimumSize">
+                          <size>
+                            <width>0</width>
+                            <height>25</height>
+                          </size>
+                        </property>
+                        <property name="maximumSize">
+                          <size>
+                            <width>16777215</width>
+                            <height>30</height>
+                          </size>
+                        </property>
+                        <property name="toolTip">
+                          <string>Enable debug mode.</string>
+                        </property>
+                        <property name="autoFillBackground">
+                          <bool>true</bool>
+                        </property>
+                        <property name="locale">
+                          <locale language="English" country="UnitedStates"/>
+                        </property>
+                        <property name="text">
+                          <string>Debug mode (degraded performances)</string>
+                        </property>
+                        <property name="tristate">
+                          <bool>false</bool>
+                        </property>
+                      </widget>
+                    </item>
+                    <item row="2" column="1">
+                      <widget class="QLabel" name="lbl_version_saved_value">
+                        <property name="minimumSize">
+                          <size>
+                            <width>0</width>
+                            <height>25</height>
+                          </size>
+                        </property>
+                        <property name="maximumSize">
+                          <size>
+                            <width>16777215</width>
+                            <height>30</height>
+                          </size>
+                        </property>
+                        <property name="text">
+                          <string notr="true">X.X.x</string>
+                        </property>
+                        <property name="textInteractionFlags">
+                          <set>Qt::NoTextInteraction</set>
+                        </property>
+                      </widget>
+                    </item>
+                    <item row="2" column="0">
+                      <widget class="QLabel" name="lbl_version_saved">
+                        <property name="minimumSize">
+                          <size>
+                            <width>0</width>
+                            <height>25</height>
+                          </size>
+                        </property>
+                        <property name="maximumSize">
+                          <size>
+                            <width>16777215</width>
+                            <height>30</height>
+                          </size>
+                        </property>
+                        <property name="text">
+                          <string>Version used to save settings:</string>
+                        </property>
+                      </widget>
+                    </item>
+                    <item row="0" column="1">
+                      <widget class="QPushButton" name="btn_report">
+                        <property name="minimumSize">
+                          <size>
+                            <width>0</width>
+                            <height>25</height>
+                          </size>
+                        </property>
+                        <property name="maximumSize">
+                          <size>
+                            <width>16777215</width>
+                            <height>30</height>
+                          </size>
+                        </property>
+                        <property name="text">
+                          <string>Report an issue</string>
+                        </property>
+                        <property name="icon">
+                          <iconset>
+                            <normaloff>:/plugins/qtribu/resources/images/bullhorn.svg</normaloff>:/plugins/qtribu/resources/images/bullhorn.svg</iconset>
+                        </property>
+                      </widget>
+                    </item>
+                    <item row="0" column="0">
+                      <widget class="QPushButton" name="btn_help">
+                        <property name="minimumSize">
+                          <size>
+                            <width>0</width>
+                            <height>25</height>
+                          </size>
+                        </property>
+                        <property name="maximumSize">
+                          <size>
+                            <width>16777215</width>
+                            <height>30</height>
+                          </size>
+                        </property>
+                        <property name="text">
+                          <string>Help</string>
+                        </property>
+                      </widget>
+                    </item>
+                    <item row="3" column="0" colspan="2">
+                      <widget class="QPushButton" name="btn_reset">
+                        <property name="minimumSize">
+                          <size>
+                            <width>200</width>
+                            <height>25</height>
+                          </size>
+                        </property>
+                        <property name="maximumSize">
+                          <size>
+                            <width>1000</width>
+                            <height>30</height>
+                          </size>
+                        </property>
+                        <property name="autoFillBackground">
+                          <bool>true</bool>
+                        </property>
+                        <property name="text">
+                          <string>Reset to factory defaults</string>
+                        </property>
+                        <property name="autoDefault">
+                          <bool>false</bool>
+                        </property>
+                        <property name="flat">
+                          <bool>false</bool>
+                        </property>
+                      </widget>
+                    </item>
+                  </layout>
+                </widget>
+              </item>
+            </layout>
+          </widget>
         </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="grp_features">
-         <property name="minimumSize">
-          <size>
-           <width>550</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="title">
-          <string>Features</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_2">
-          <item row="4" column="1">
-           <widget class="QPushButton" name="btn_reset_read_history">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Reset read history</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="3">
-           <layout class="QHBoxLayout" name="horizontalLayout">
-            <item>
-             <widget class="QLabel" name="lbl_notif_duration">
-              <property name="text">
-               <string>Duration:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSpinBox" name="sbx_notif_duration">
-              <property name="toolTip">
-               <string>'0' means unlimited time, waiting a manual close from the end-user.</string>
-              </property>
-              <property name="wrapping">
-               <bool>false</bool>
-              </property>
-              <property name="buttonSymbols">
-               <enum>QAbstractSpinBox::PlusMinus</enum>
-              </property>
-              <property name="specialValueText">
-               <string/>
-              </property>
-              <property name="suffix">
-               <string> seconds</string>
-              </property>
-              <property name="prefix">
-               <string/>
-              </property>
-              <property name="maximum">
-               <number>30</number>
-              </property>
-              <property name="value">
-               <number>10</number>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item row="5" column="1">
-           <widget class="QCheckBox" name="chb_license_global_accept">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Accept publication license globally</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="lbl_notification">
-            <property name="minimumSize">
-             <size>
-              <width>175</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>250</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Notify for new content:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="lbl_browser">
-            <property name="minimumSize">
-             <size>
-              <width>175</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>250</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>Which web browser to use to display articles.</string>
-            </property>
-            <property name="text">
-             <string>Open in web browser:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QRadioButton" name="opt_browser_qt">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Embedded browser</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="3">
-           <widget class="QRadioButton" name="opt_browser_os">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>System default browser</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QCheckBox" name="opt_notif_push_msg">
-            <property name="minimumSize">
-             <size>
-              <width>275</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="autoFillBackground">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Informational push message</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-            <property name="tristate">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="QCheckBox" name="chb_integration_news_feed">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>The only 'Show QGIS news feed on welcome page' must be checked in General Settings</string>
-            </property>
-            <property name="text">
-             <string>Insert latest item in QGIS news feed</string>
-            </property>
-            <property name="shortcut">
-             <string notr="true"/>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="grp_qchat">
-         <property name="title">
-          <string>QChat</string>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <item>
-           <layout class="QHBoxLayout" name="hly_instance">
-            <item>
-             <widget class="QLabel" name="lbl_instance_uri">
-              <property name="text">
-               <string>Instance URI:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QComboBox" name="cbb_qchat_instance_uri">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="inputMethodHints">
-               <set>Qt::ImhUrlCharactersOnly</set>
-              </property>
-              <property name="editable">
-               <bool>true</bool>
-              </property>
-              <property name="currentText">
-               <string notr="true">https://gischat.geotribu.net</string>
-              </property>
-              <item>
-               <property name="text">
-                <string>https://gischat.geotribu.net</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>https://gischat.geotribu.fr</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="btn_rules">
-              <property name="text">
-               <string>Instance rules</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="btn_discover">
-              <property name="text">
-               <string>Discover instances</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="hly_misc">
-            <item>
-             <widget class="QCheckBox" name="ckb_show_avatars">
-              <property name="text">
-               <string>Show avatars</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="ckb_display_admin_messages">
-              <property name="text">
-               <string>Display admin messages</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="ckb_cheatcodes">
-              <property name="text">
-               <string>Activate cheatcodes</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="hly_sounds">
-            <item>
-             <widget class="QCheckBox" name="ckb_play_sounds">
-              <property name="text">
-               <string>Play sounds</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="lbl_volume">
-              <property name="text">
-               <string>Volume:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSlider" name="hsl_sound_volume">
-              <property name="minimum">
-               <number>0</number>
-              </property>
-              <property name="maximum">
-               <number>100</number>
-              </property>
-              <property name="value">
-               <number>33</number>
-              </property>
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="lbl_ringtone">
-              <property name="text">
-               <string>Notification tone:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QComboBox" name="cbb_ring_tone">
-              <item>
-               <property name="text">
-                <string notr="true">beep_1</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">beep_2</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">beep_3</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">beep_4</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">beep_5</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">beep_6</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">beep_7</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">horn</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">cat</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">dog</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">chicken</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">cow</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="hly_colors">
-            <item>
-             <widget class="QLabel" name="lbl_color_mention">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>Mention message color:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QgsColorButton" name="cbt_color_mention">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="lbl_color_self">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>Self message color:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QgsColorButton" name="cbt_color_self">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="lbl_color_admin">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>Admin message color:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QgsColorButton" name="cbt_color_admin">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="grp_misc">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="title">
-          <string>Miscellaneous</string>
-         </property>
-         <property name="flat">
-          <bool>false</bool>
-         </property>
-         <layout class="QGridLayout" name="gridLayout">
-          <item row="1" column="0">
-           <widget class="QCheckBox" name="opt_debug">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>Enable debug mode.</string>
-            </property>
-            <property name="autoFillBackground">
-             <bool>true</bool>
-            </property>
-            <property name="locale">
-             <locale language="English" country="UnitedStates"/>
-            </property>
-            <property name="text">
-             <string>Debug mode (degraded performances)</string>
-            </property>
-            <property name="tristate">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QLabel" name="lbl_version_saved_value">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="text">
-             <string notr="true">X.X.x</string>
-            </property>
-            <property name="textInteractionFlags">
-             <set>Qt::NoTextInteraction</set>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="lbl_version_saved">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Version used to save settings:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QPushButton" name="btn_report">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Report an issue</string>
-            </property>
-            <property name="icon">
-             <iconset>
-              <normaloff>:/plugins/qtribu/resources/images/bullhorn.svg</normaloff>:/plugins/qtribu/resources/images/bullhorn.svg</iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QPushButton" name="btn_help">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Help</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0" colspan="2">
-           <widget class="QPushButton" name="btn_reset">
-            <property name="minimumSize">
-             <size>
-              <width>200</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>1000</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="autoFillBackground">
-             <bool>true</bool>
-            </property>
-            <property name="text">
-             <string>Reset to factory defaults</string>
-            </property>
-            <property name="autoDefault">
-             <bool>false</bool>
-            </property>
-            <property name="flat">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="AuthoringWidget" name="wdg_author" native="true"/>
-       </item>
-      </layout>
-     </widget>
-    </widget>
-   </item>
-  </layout>
- </widget>
- <customwidgets>
-  <customwidget>
-   <class>QgsColorButton</class>
-   <extends>QToolButton</extends>
-   <header>qgscolorbutton.h</header>
-  </customwidget>
-  <customwidget>
-   <class>AuthoringWidget</class>
-   <extends>QWidget</extends>
-   <header>qtribu.gui.wdg_authoring</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
- <tabstops>
-  <tabstop>opt_browser_qt</tabstop>
-  <tabstop>opt_browser_os</tabstop>
-  <tabstop>opt_notif_push_msg</tabstop>
-  <tabstop>sbx_notif_duration</tabstop>
-  <tabstop>btn_reset_read_history</tabstop>
-  <tabstop>chb_integration_news_feed</tabstop>
-  <tabstop>chb_license_global_accept</tabstop>
-  <tabstop>cbb_qchat_instance_uri</tabstop>
-  <tabstop>btn_rules</tabstop>
-  <tabstop>btn_discover</tabstop>
-  <tabstop>ckb_show_avatars</tabstop>
-  <tabstop>ckb_display_admin_messages</tabstop>
-  <tabstop>ckb_cheatcodes</tabstop>
-  <tabstop>ckb_play_sounds</tabstop>
-  <tabstop>hsl_sound_volume</tabstop>
-  <tabstop>cbb_ring_tone</tabstop>
-  <tabstop>cbt_color_mention</tabstop>
-  <tabstop>cbt_color_self</tabstop>
-  <tabstop>cbt_color_admin</tabstop>
-  <tabstop>btn_help</tabstop>
-  <tabstop>btn_report</tabstop>
-  <tabstop>opt_debug</tabstop>
-  <tabstop>btn_reset</tabstop>
-  <tabstop>sca_settings</tabstop>
- </tabstops>
- <resources/>
- <connections/>
+      </item>
+    </layout>
+  </widget>
+  <customwidgets>
+    <customwidget>
+      <class>QgsColorButton</class>
+      <extends>QToolButton</extends>
+      <header>qgscolorbutton.h</header>
+    </customwidget>
+    <customwidget>
+      <class>AuthoringWidget</class>
+      <extends>QWidget</extends>
+      <header>qtribu.gui.wdg_authoring</header>
+      <container>1</container>
+    </customwidget>
+  </customwidgets>
+  <tabstops>
+    <tabstop>opt_browser_qt</tabstop>
+    <tabstop>opt_browser_os</tabstop>
+    <tabstop>opt_notif_push_msg</tabstop>
+    <tabstop>sbx_notif_duration</tabstop>
+    <tabstop>btn_reset_read_history</tabstop>
+    <tabstop>chb_integration_news_feed</tabstop>
+    <tabstop>chb_license_global_accept</tabstop>
+    <tabstop>cbb_qchat_instance_uri</tabstop>
+    <tabstop>btn_rules</tabstop>
+    <tabstop>btn_discover</tabstop>
+    <tabstop>ckb_show_avatars</tabstop>
+    <tabstop>ckb_display_admin_messages</tabstop>
+    <tabstop>ckb_cheatcodes</tabstop>
+    <tabstop>ckb_play_sounds</tabstop>
+    <tabstop>hsl_sound_volume</tabstop>
+    <tabstop>cbb_ring_tone</tabstop>
+    <tabstop>cbt_color_mention</tabstop>
+    <tabstop>cbt_color_self</tabstop>
+    <tabstop>cbt_color_admin</tabstop>
+    <tabstop>btn_help</tabstop>
+    <tabstop>btn_report</tabstop>
+    <tabstop>opt_debug</tabstop>
+    <tabstop>btn_reset</tabstop>
+    <tabstop>sca_settings</tabstop>
+  </tabstops>
+  <resources/>
+  <connections/>
 </ui>
