@@ -1,7 +1,14 @@
+# standard
+import os
+
+# 3rd party
+from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer  # noqa QGS103
 from qgis.PyQt.QtCore import QUrl
 from qgis.PyQt.QtGui import QDesktopServices
 
 # project
+from qtribu.__about__ import DIR_PLUGIN_ROOT
+
 try:
     from qtribu.logic.web_viewer import WebViewer
 
@@ -46,14 +53,6 @@ def open_url_in_webviewer(url: str, window_title: str) -> None:
     web_viewer.display_web_page(url)
     if web_viewer.wdg_web:
         web_viewer.set_window_title(window_title)
-
-
-import os
-
-from PyQt5 import QtMultimedia  # noqa QGS103
-from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer, QSound  # noqa QGS103
-
-from qtribu.__about__ import DIR_PLUGIN_ROOT
 
 
 def play_resource_sound(resource: str, volume: int) -> None:
