@@ -16,11 +16,12 @@ homepage=https://geotribu.github.io/qtribu/
 repository=https://github.com/geotribu/qtribu/
 tracker=https://github.com/geotribu/qtribu/issues/
 
-# experimental flag
+# QGIS context
 deprecated=False
 experimental=False
 qgisMinimumVersion=3.28
 qgisMaximumVersion=3.99
+supportsQt6=True
 
 # versionnement
 version=1.1.0
