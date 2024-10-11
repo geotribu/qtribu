@@ -18,11 +18,11 @@ tracker=https://github.com/geotribu/qtribu/issues/
 
 # QGIS context
 deprecated=False
-experimental=True
+experimental=False
 qgisMinimumVersion=3.28
 qgisMaximumVersion=3.99
 supportsQt6=True
 
 # versionnement
-version=1.0.0-beta3
+version=1.0.0
 changelog=
