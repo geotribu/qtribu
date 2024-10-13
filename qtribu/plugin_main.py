@@ -282,6 +282,18 @@ class GeotribuPlugin:
             )
             return
 
+        # auto reconnect to room if needed
+        settings = PlgOptionsManager().get_plg_settings()
+        if settings.qchat_auto_reconnect and settings.qchat_auto_reconnect_room:
+            if not self.qchat_widget:
+                self.qchat_widget = QChatWidget(
+                    iface=self.iface,
+                    parent=self.iface.mainWindow(),
+                    auto_reconnect_room=settings.qchat_auto_reconnect_room,
+                )
+                self.iface.addDockWidget(int(Qt.RightDockWidgetArea), self.qchat_widget)
+            self.qchat_widget.show()
+
     def tr(self, message: str) -> str:
         """Get the translation for a string using Qt translation API.
 

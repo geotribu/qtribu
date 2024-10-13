@@ -46,7 +46,12 @@ class QChatWidget(QgsDockWidget):
 
     qchat_client = QChatApiClient
 
-    def __init__(self, iface: QgisInterface, parent: QWidget = None):
+    def __init__(
+        self,
+        iface: QgisInterface,
+        parent: QWidget = None,
+        auto_reconnect_room: str = None,
+    ):
         """QWidget to see and post messages on chat
 
         :param parent: parent widget or application
@@ -58,6 +63,9 @@ class QChatWidget(QgsDockWidget):
         self.log = PlgLogger().log
         self.plg_settings = PlgOptionsManager()
         uic.loadUi(Path(__file__).parent / f"{Path(__file__).stem}.ui", self)
+
+        # set room to autoreconnect to when widget will open
+        self.auto_reconnect_room = auto_reconnect_room
 
         # rules and status signal listener
         self.btn_rules.pressed.connect(self.on_rules_button_clicked)
@@ -161,6 +169,10 @@ class QChatWidget(QgsDockWidget):
 
         self.cbb_room.currentIndexChanged.connect(self.on_room_changed)
 
+        # auto reconnect to room if needed
+        if self.auto_reconnect_room:
+            self.cbb_room.setCurrentText(self.auto_reconnect_room)
+
     def on_rules_button_clicked(self) -> None:
         """
         Action called when clicking on "Rules" button
@@ -257,6 +269,12 @@ Rooms:
         self.connect_to_room(new_room)
         self.current_room = new_room
 
+        # write new room value to auto-reconnect room in settings if needed
+        settings = self.settings
+        if settings.qchat_auto_reconnect:
+            settings.qchat_auto_reconnect_room = new_room
+            self.plg_settings.save_from_object(settings)
+
     def on_connect_button_clicked(self) -> None:
         """
         Action called when clicking on "Connect" / "Disconnect" button
@@ -289,6 +307,13 @@ Rooms:
         self.grb_room.setTitle(self.tr("Room: {room}").format(room=room))
         self.grb_user.setEnabled(True)
         self.current_room = room
+
+        # write new room value to auto-reconnect room in settings if needed
+        settings = self.settings
+        if settings.qchat_auto_reconnect:
+            settings.qchat_auto_reconnect_room = room
+            self.plg_settings.save_from_object(settings)
+
         self.connected = True
         self.log(message=f"Websocket connected to room {room}")
         if self.settings.qchat_display_admin_messages:
