@@ -35,21 +35,21 @@
         <location filename="../../gui/form_article.py" line="100"/>
         <source>- For attribution purpose, author&apos;s firstname is required.
 </source>
-        <translation>- Pour les besoins d'attribution, le prénom de l'auteur/e est requis.
+        <translation>- Pour les besoins d&apos;attribution, le prénom de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
         <location filename="../../gui/form_article.py" line="107"/>
         <source>- For attribution purpose, author&apos;s lastname is required.
 </source>
-        <translation>- Pour les besoins d'attribution, le nom de l'auteur/e est requis.
+        <translation>- Pour les besoins d&apos;attribution, le nom de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
         <location filename="../../gui/form_article.py" line="114"/>
         <source>- For attribution purpose, author&apos;s email is required.
 </source>
-        <translation>- Pour les besoins d'attribution, l'email de l'auteur/e est requis.
+        <translation>- Pour les besoins d&apos;attribution, l&apos;email de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
@@ -89,7 +89,7 @@
     <message>
         <location filename="../../gui/form_article.py" line="177"/>
         <source>Opening issue form URL in default system web browser failed. Check if there is any special characters in form fields and try again.</source>
-        <translation>L'ouverture de l'URL par le navigateur par défaut du système a échoué. Vérifier qu'il n'y a pas de caractère trop spécial dans les champs renseignés et réessayer.</translation>
+        <translation>L&apos;ouverture de l&apos;URL par le navigateur par défaut du système a échoué. Vérifier qu&apos;il n&apos;y a pas de caractère trop spécial dans les champs renseignés et réessayer.</translation>
     </message>
     <message>
         <location filename="../../gui/form_article.py" line="90"/>
@@ -109,72 +109,77 @@
     <message>
         <location filename="../../gui/wdg_authoring.ui" line="35"/>
         <source>Authoring information</source>
-        <translation>Informations d'attribution</translation>
+        <translation>Informations d&apos;attribution</translation>
     </message>
     <message>
-        <location filename="../../gui/wdg_authoring.ui" line="53"/>
+        <location filename="../../gui/wdg_authoring.ui" line="96"/>
         <source>Firstname:</source>
         <translation>Prénom :</translation>
     </message>
     <message>
-        <location filename="../../gui/wdg_authoring.ui" line="76"/>
+        <location filename="../../gui/wdg_authoring.ui" line="119"/>
         <source>Lastname:</source>
         <translation>Nom :</translation>
     </message>
     <message>
-        <location filename="../../gui/wdg_authoring.ui" line="102"/>
+        <location filename="../../gui/wdg_authoring.ui" line="145"/>
         <source>Email:</source>
         <translation>Email :</translation>
     </message>
     <message>
-        <location filename="../../gui/wdg_authoring.ui" line="122"/>
+        <location filename="../../gui/wdg_authoring.ui" line="165"/>
         <source>Used to credit the commit author.</source>
-        <translation>Utilisé pour attribuer le commit à l'auteur/e.</translation>
+        <translation>Utilisé pour attribuer le commit à l&apos;auteur/e.</translation>
     </message>
     <message>
-        <location filename="../../gui/wdg_authoring.ui" line="125"/>
+        <location filename="../../gui/wdg_authoring.ui" line="168"/>
         <source>GitHub account:</source>
         <translation>GitHub :</translation>
     </message>
     <message>
-        <location filename="../../gui/wdg_authoring.ui" line="165"/>
+        <location filename="../../gui/wdg_authoring.ui" line="228"/>
         <source>Used during broadcasting to credit author.</source>
-        <translation>Utilisé pour créditer l'auteur/e au moment de la diffusion.</translation>
+        <translation>Utilisé pour créditer l&apos;auteur/e au moment de la diffusion.</translation>
     </message>
     <message>
-        <location filename="../../gui/wdg_authoring.ui" line="148"/>
+        <location filename="../../gui/wdg_authoring.ui" line="211"/>
         <source>LinkedIn account:</source>
         <translation>LinkedIn :</translation>
     </message>
     <message>
-        <location filename="../../gui/wdg_authoring.ui" line="168"/>
+        <location filename="../../gui/wdg_authoring.ui" line="231"/>
         <source>Twitter account:</source>
         <translation>Twitter :</translation>
     </message>
     <message>
-        <location filename="../../gui/wdg_authoring.ui" line="185"/>
+        <location filename="../../gui/wdg_authoring.ui" line="188"/>
         <source>Mastodon account:</source>
-        <translation>Compte Mastodon :</translation>
+        <translation>Mastodon :</translation>
     </message>
     <message>
-        <location filename="../../gui/wdg_authoring.ui" line="211"/>
+        <location filename="../../gui/wdg_authoring.ui" line="53"/>
         <source>QChat nickname:</source>
-        <translation>Pseudo QChat:</translation>
+        <translation>Pseudo QChat :</translation>
     </message>
     <message>
-        <location filename="../../gui/wdg_authoring.ui" line="221"/>
+        <location filename="../../gui/wdg_authoring.ui" line="63"/>
         <source>pdupont</source>
         <translation>pdupont</translation>
     </message>
     <message>
-        <location filename="../../gui/wdg_authoring.ui" line="234"/>
+        <location filename="../../gui/wdg_authoring.ui" line="76"/>
         <source>QChat avatar:</source>
-        <translation>Avatar QChat:</translation>
+        <translation>Avatar QChat :</translation>
     </message>
     <message>
         <location filename="../../gui/wdg_authoring.ui" line="357"/>
         <source>Preview</source>
-        <translation>Prévisualiser</translation>
+        <translation type="obsolete">Prévisualiser</translation>
+    </message>
+    <message>
+        <location filename="../../gui/wdg_authoring.ui" line="83"/>
+        <source>Pick an avatar</source>
+        <translation>Choisir un avatar pour QChat</translation>
     </message>
 </context>
 <context>
@@ -182,12 +187,12 @@
     <message>
         <location filename="../../gui/dlg_settings.py" line="253"/>
         <source>Read history has been reset.</source>
-        <translation>L'historique de lecture a été réinitialisé.</translation>
+        <translation>L&apos;historique de lecture a été réinitialisé.</translation>
     </message>
     <message>
         <location filename="../../gui/dlg_settings.py" line="190"/>
         <source>Instance rules</source>
-        <translation>Règles de l'instance</translation>
+        <translation>Règles de l&apos;instance</translation>
     </message>
     <message>
         <location filename="../../gui/dlg_settings.py" line="190"/>
@@ -199,14 +204,14 @@ Main language: {main_lang}
 Max message length: {max_message_length}
 Min nickname length: {min_nickname_length}
 Max nickname length: {max_nickname_length}</source>
-        <translation>Règles de l'instance ({instance_url}):
+        <translation>Règles de l&apos;instance ({instance_url}):
 
 {rules}
 
 Langue principale: {main_lang}
-Longueur max d'un message: {max_message_length}
-Longueur min d'un pseudo: {min_nickname_length}
-Longueur max d'un pseudo: {max_nickname_length}</translation>
+Longueur max d&apos;un message: {max_message_length}
+Longueur min d&apos;un pseudo: {min_nickname_length}
+Longueur max d&apos;un pseudo: {max_nickname_length}</translation>
     </message>
     <message>
         <location filename="../../gui/dlg_settings.py" line="227"/>
@@ -240,17 +245,17 @@ Longueur max d'un pseudo: {max_nickname_length}</translation>
 <context>
     <name>GeotribuPlugin</name>
     <message>
-        <location filename="../../plugin_main.py" line="312"/>
+        <location filename="../../plugin_main.py" line="311"/>
         <source>Newest article</source>
         <translation>Afficher le dernier article</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="148"/>
+        <location filename="../../plugin_main.py" line="147"/>
         <source>Help</source>
         <translation>Aide en ligne</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="157"/>
+        <location filename="../../plugin_main.py" line="156"/>
         <source>Settings</source>
         <translation>Réglages</translation>
     </message>
@@ -260,72 +265,72 @@ Longueur max d'un pseudo: {max_nickname_length}</translation>
         <translation type="obsolete">Nouveau contenu publié :</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="191"/>
+        <location filename="../../plugin_main.py" line="190"/>
         <source>QGIS forum on GeoRezo</source>
         <translation>Forum QGIS sur GeoRezo</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="180"/>
+        <location filename="../../plugin_main.py" line="179"/>
         <source>Geotribu website</source>
         <translation>Site Geotribu</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="201"/>
+        <location filename="../../plugin_main.py" line="200"/>
         <source>OSGeo France</source>
         <translation>OSGeo FR</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="127"/>
+        <location filename="../../plugin_main.py" line="126"/>
         <source>Propose a news to the next GeoRDP</source>
         <translation>Proposer une news pour la GeoRDP</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="318"/>
+        <location filename="../../plugin_main.py" line="317"/>
         <source>Michel, we&apos;ve got a problem: {err}</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="277"/>
+        <location filename="../../plugin_main.py" line="276"/>
         <source>Unable to insert latest item within QGIS news feed. Trace: {err}</source>
-        <translation>Impossible d'insérer le dernier contenu publié dans le fil d'actualité de QGIS. Trace : {err}</translation>
+        <translation>Impossible d&apos;insérer le dernier contenu publié dans le fil d&apos;actualité de QGIS. Trace : {err}</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="119"/>
+        <location filename="../../plugin_main.py" line="118"/>
         <source>Browse latest contents</source>
         <translation>Rechercher dans les contenus</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="137"/>
+        <location filename="../../plugin_main.py" line="136"/>
         <source>Submit an article</source>
         <translation>Proposer un article</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="94"/>
+        <location filename="../../plugin_main.py" line="93"/>
         <source>Geotribu toolbar</source>
-        <translation>Barre d'outils du plugin Geotribu</translation>
+        <translation>Barre d&apos;outils du plugin Geotribu</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="145"/>
+        <location filename="../../plugin_main.py" line="144"/>
         <source>QChat</source>
         <translation>QChat</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="266"/>
+        <location filename="../../plugin_main.py" line="265"/>
         <source>Reading the RSS feed failed. Trace: {err}</source>
         <translation>La lecture du flux RSS a planté. Trace: {err}</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="333"/>
+        <location filename="../../plugin_main.py" line="332"/>
         <source>Error importing some of dependencies. Related functions have been disabled.</source>
-        <translation>Erreur lors de l'import de certaines dépendances. Les fonctionnalités liées ont été désactivées.</translation>
+        <translation>Erreur lors de l&apos;import de certaines dépendances. Les fonctionnalités liées ont été désactivées.</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="351"/>
+        <location filename="../../plugin_main.py" line="350"/>
         <source>Plugin disabled. Please install all dependencies and then restart QGIS. Refer to the documentation for more information.</source>
-        <translation>Extension désactivée. Veuillez installer toutes les dépendances puis redémarrer QGIS. Pour plus d'informations, se référer à la documentation.</translation>
+        <translation>Extension désactivée. Veuillez installer toutes les dépendances puis redémarrer QGIS. Pour plus d&apos;informations, se référer à la documentation.</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="358"/>
+        <location filename="../../plugin_main.py" line="357"/>
         <source>Dependencies satisfied</source>
         <translation>Dépendances satisfaites</translation>
     </message>
@@ -335,90 +340,90 @@ Longueur max d'un pseudo: {max_nickname_length}</translation>
     <message>
         <location filename="../../gui/dck_qchat.ui" line="167"/>
         <source>QChat</source>
-        <translation>QChat</translation>
+        <translation type="obsolete">QChat</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.ui" line="54"/>
+        <location filename="../../gui/dck_qchat.ui" line="57"/>
         <source>Instance</source>
         <translation>Instance</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.ui" line="65"/>
+        <location filename="../../gui/dck_qchat.ui" line="68"/>
         <source>Rules</source>
         <translation>Règles</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.ui" line="75"/>
+        <location filename="../../gui/dck_qchat.ui" line="78"/>
         <source>Check instance status</source>
-        <translation>Vérifier statut de l'instance</translation>
+        <translation>Vérifier statut de l&apos;instance</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.ui" line="78"/>
+        <location filename="../../gui/dck_qchat.ui" line="81"/>
         <source>Status</source>
         <translation>Statut</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.ui" line="96"/>
+        <location filename="../../gui/dck_qchat.ui" line="99"/>
         <source>Room</source>
         <translation>Room</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.ui" line="102"/>
+        <location filename="../../gui/dck_qchat.ui" line="105"/>
         <source>Room:</source>
         <translation>Room:</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.ui" line="123"/>
+        <location filename="../../gui/dck_qchat.ui" line="130"/>
         <source>Connect</source>
         <translation>Se connecter</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.ui" line="132"/>
+        <location filename="../../gui/dck_qchat.ui" line="139"/>
         <source>Status:</source>
         <translation>Statut:</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.ui" line="139"/>
+        <location filename="../../gui/dck_qchat.ui" line="146"/>
         <source>Not connected</source>
-        <translation>Déconnecté.e</translation>
+        <translation>Déconnecté e</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.ui" line="216"/>
+        <location filename="../../gui/dck_qchat.ui" line="223"/>
         <source>Clear</source>
         <translation>Vider</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.ui" line="247"/>
+        <location filename="../../gui/dck_qchat.ui" line="254"/>
         <source>User</source>
         <translation>Utilisateur/rice</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.ui" line="253"/>
+        <location filename="../../gui/dck_qchat.ui" line="260"/>
         <source>Nickname:</source>
         <translation>Pseudo:</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.ui" line="260"/>
+        <location filename="../../gui/dck_qchat.ui" line="267"/>
         <source>Message:</source>
         <translation>Message:</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.ui" line="270"/>
+        <location filename="../../gui/dck_qchat.ui" line="277"/>
         <source>Send message</source>
         <translation>Envoyer message</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.ui" line="280"/>
+        <location filename="../../gui/dck_qchat.ui" line="287"/>
         <source>Nickname set in QTribu&apos;s plugin settings</source>
         <translation>Pseudo renseigné dans les réglages du plugin QTribu</translation>
     </message>
     <message>
         <location filename="../../gui/dck_qchat.ui" line="283"/>
         <source>Nickname</source>
-        <translation>Pseudo</translation>
+        <translation type="obsolete">Pseudo</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.ui" line="303"/>
+        <location filename="../../gui/dck_qchat.ui" line="310"/>
         <source>Settings</source>
         <translation>Réglages</translation>
     </message>
@@ -450,21 +455,21 @@ Longueur max d'un pseudo: {max_nickname_length}</translation>
         <location filename="../../gui/form_rdp_news.py" line="210"/>
         <source>- For attribution purpose, author&apos;s firstname is required.
 </source>
-        <translation>- Pour les besoins d'attribution, le prénom de l'auteur/e est requis.
+        <translation>- Pour les besoins d&apos;attribution, le prénom de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
         <location filename="../../gui/form_rdp_news.py" line="217"/>
         <source>- For attribution purpose, author&apos;s lastname is required.
 </source>
-        <translation>- Pour les besoins d'attribution, le nom de l'auteur/e est requis.
+        <translation>- Pour les besoins d&apos;attribution, le nom de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
         <location filename="../../gui/form_rdp_news.py" line="224"/>
         <source>- For attribution purpose, author&apos;s email is required.
 </source>
-        <translation>- Pour les besoins d'attribution, l'email de l'auteur/e est requis.
+        <translation>- Pour les besoins d&apos;attribution, l&apos;email de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
@@ -504,7 +509,7 @@ Longueur max d'un pseudo: {max_nickname_length}</translation>
     <message>
         <location filename="../../gui/form_rdp_news.py" line="288"/>
         <source>Opening issue form URL in default system web browser failed. Check if there is any special characters in form fields and try again.</source>
-        <translation>L'ouverture de l'URL par le navigateur par défaut du système a échoué. Vérifier qu'il n'y a pas de caractère trop spécial dans les champs renseignés et réessayer.</translation>
+        <translation>L&apos;ouverture de l&apos;URL par le navigateur par défaut du système a échoué. Vérifier qu&apos;il n&apos;y a pas de caractère trop spécial dans les champs renseignés et réessayer.</translation>
     </message>
     <message>
         <location filename="../../gui/form_rdp_news.py" line="260"/>
@@ -527,7 +532,7 @@ Longueur max d'un pseudo: {max_nickname_length}</translation>
     <message>
         <location filename="../../logic/news_feed/rss_reader.py" line="73"/>
         <source>The RSS feed is not available locally: {}. Features related to the RSS reader are disabled.</source>
-        <translation>Le flux RSS n'est pas disponible localement: {}. Les fonctionnalités liées à la lecture du RSS sont donc désactivées.</translation>
+        <translation>Le flux RSS n&apos;est pas disponible localement: {}. Les fonctionnalités liées à la lecture du RSS sont donc désactivées.</translation>
     </message>
     <message>
         <location filename="../../logic/news_feed/rss_reader.py" line="94"/>
@@ -641,7 +646,7 @@ Longueur max d'un pseudo: {max_nickname_length}</translation>
     <message>
         <location filename="../../gui/form_rdp_news.ui" line="299"/>
         <source>I accept that my contribution is published under the CC BY-NC-SA 4.0</source>
-        <translation>J'accepte que ma contribution soit publiée en CC BY-NC-SA 4.0</translation>
+        <translation>J&apos;accepte que ma contribution soit publiée en CC BY-NC-SA 4.0</translation>
     </message>
     <message>
         <location filename="../../gui/form_rdp_news.ui" line="316"/>
@@ -656,7 +661,7 @@ Longueur max d'un pseudo: {max_nickname_length}</translation>
     <message>
         <location filename="../../gui/form_rdp_news.ui" line="202"/>
         <source>I&apos;m not related to thepublished content. If not, I give some details in the comment area.</source>
-        <translation type="obsolete">Je ne fais pas d'autopromotion. Si c'est le cas, je donne des détails en commentaire.</translation>
+        <translation type="obsolete">Je ne fais pas d&apos;autopromotion. Si c&apos;est le cas, je donne des détails en commentaire.</translation>
     </message>
     <message>
         <location filename="../../gui/form_rdp_news.ui" line="206"/>
@@ -676,7 +681,7 @@ Longueur max d'un pseudo: {max_nickname_length}</translation>
     <message>
         <location filename="../../gui/form_rdp_news.ui" line="219"/>
         <source>Minimal preview. Be careful, this render is not contractual with the final render on Geotribu website.</source>
-        <translation>Prévisualisation brute. Attention, ce rendu n'est pas contractuel et très différent du rendu final sur le site Geotribu.</translation>
+        <translation>Prévisualisation brute. Attention, ce rendu n&apos;est pas contractuel et très différent du rendu final sur le site Geotribu.</translation>
     </message>
     <message>
         <location filename="../../gui/form_rdp_news.ui" line="222"/>
@@ -686,13 +691,13 @@ Longueur max d'un pseudo: {max_nickname_length}</translation>
     <message>
         <location filename="../../gui/form_rdp_news.ui" line="309"/>
         <source>I&apos;m not related to the published content. If not, I give some details in the comment area.</source>
-        <translation>Ceci n'est pas une autopromotion, une publicité ou un simple copié/collé d'un CP etc.
-Si c'est le cas, ne pas cocher et donner des précisions en commentaire.</translation>
+        <translation>Ceci n&apos;est pas une autopromotion, une publicité ou un simple copié/collé d&apos;un CP etc.
+Si c&apos;est le cas, ne pas cocher et donner des précisions en commentaire.</translation>
     </message>
     <message>
         <location filename="../../gui/form_article.ui" line="167"/>
         <source>Description:</source>
-        <translation>Description du projet d'article ou contenu complet au format Markdown :</translation>
+        <translation>Description du projet d&apos;article ou contenu complet au format Markdown :</translation>
     </message>
     <message>
         <location filename="../../gui/form_rdp_news.ui" line="155"/>
@@ -702,18 +707,18 @@ Si c'est le cas, ne pas cocher et donner des précisions en commentaire.</transl
     <message>
         <location filename="../../gui/form_article.ui" line="231"/>
         <source>I&apos;m sure that the content fit with editing rules. If not, I give some details in the comment area.</source>
-        <translation>Ceci n'est pas une publicité ou un simple copié/collé d'un CP etc.
-Si c'est le cas, ne pas cocher et donner des précisions en commentaire.</translation>
+        <translation>Ceci n&apos;est pas une publicité ou un simple copié/collé d&apos;un CP etc.
+Si c&apos;est le cas, ne pas cocher et donner des précisions en commentaire.</translation>
     </message>
     <message>
         <location filename="../../gui/form_article.ui" line="14"/>
         <source>Article - Proposal form</source>
-        <translation>Formulaire de proposition d'article</translation>
+        <translation>Formulaire de proposition d&apos;article</translation>
     </message>
     <message>
         <location filename="../../gui/form_article.ui" line="61"/>
         <source>The article</source>
-        <translation>L'article</translation>
+        <translation>L&apos;article</translation>
     </message>
     <message>
         <location filename="../../gui/form_article.ui" line="97"/>
@@ -723,7 +728,7 @@ Si c'est le cas, ne pas cocher et donner des précisions en commentaire.</transl
     <message>
         <location filename="../../gui/form_rdp_news.ui" line="266"/>
         <source>Enter text in body editiing box and click on preview button to see your Markdown text rendered here.</source>
-        <translation>Commencer à taper un corps de texte et cliquer sur le bouton &amp;quot;Prévisualiser&amp;quot; pour voir s'afficher ici un rendu du Markdown.</translation>
+        <translation>Commencer à taper un corps de texte et cliquer sur le bouton &amp;quot;Prévisualiser&amp;quot; pour voir s&apos;afficher ici un rendu du Markdown.</translation>
     </message>
 </context>
 <context>
@@ -769,39 +774,39 @@ Si c'est le cas, ne pas cocher et donner des précisions en commentaire.</transl
         <translation>Activer la notification push</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="593"/>
+        <location filename="../../gui/dlg_settings.ui" line="596"/>
         <source>Miscellaneous</source>
         <translation>Divers</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="614"/>
+        <location filename="../../gui/dlg_settings.ui" line="617"/>
         <source>Enable debug mode.</source>
         <translation>Activer le mode DEBUG.</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="623"/>
+        <location filename="../../gui/dlg_settings.ui" line="626"/>
         <source>Debug mode (degraded performances)</source>
         <translation>Mode DEBUG (performances dégradées)</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="667"/>
+        <location filename="../../gui/dlg_settings.ui" line="670"/>
         <source>Version used to save settings:</source>
         <translation>Version des paramètres :</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="686"/>
+        <location filename="../../gui/dlg_settings.ui" line="689"/>
         <source>Report an issue</source>
         <translation>Créer un ticket</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="709"/>
+        <location filename="../../gui/dlg_settings.ui" line="712"/>
         <source>Help</source>
         <translation>Aide en ligne</translation>
     </message>
     <message>
         <location filename="../../gui/dlg_settings.ui" line="121"/>
         <source>Reset read history</source>
-        <translation>Effacer l'historique</translation>
+        <translation>Effacer l&apos;historique</translation>
     </message>
     <message>
         <location filename="../../gui/dlg_settings.ui" line="130"/>
@@ -811,7 +816,7 @@ Si c'est le cas, ne pas cocher et donner des précisions en commentaire.</transl
     <message>
         <location filename="../../gui/dlg_settings.ui" line="137"/>
         <source>&apos;0&apos; means unlimited time, waiting a manual close from the end-user.</source>
-        <translation>'0' signifie une durée illimitée, l'utilisateur final devra fermer la notification manuellement.</translation>
+        <translation>&apos;0&apos; signifie une durée illimitée, l&apos;utilisateur final devra fermer la notification manuellement.</translation>
     </message>
     <message>
         <location filename="../../gui/dlg_settings.ui" line="149"/>
@@ -824,44 +829,34 @@ Si c'est le cas, ne pas cocher et donner des précisions en commentaire.</transl
         <translation>Accepter une fois pour toutes la licence de publication</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="731"/>
+        <location filename="../../gui/dlg_settings.ui" line="734"/>
         <source>Reset to factory defaults</source>
         <translation>Réinitialise les paramètres à leur valeur par défaut</translation>
     </message>
     <message>
         <location filename="../../gui/dlg_settings.ui" line="302"/>
         <source>The only &apos;Show QGIS news feed on welcome page&apos; must be checked in General Settings</source>
-        <translation>Les options &amp;quot;Afficher le fil d'actualités QGIS sur la page d'accueil&amp;quot; et &amp;quot;Ouverture de projet et démarrage = la page d'accueil&amp;quot; doivent être activées dans les préférences générales de QGIS</translation>
+        <translation>Les options &amp;quot;Afficher le fil d&apos;actualités QGIS sur la page d&apos;accueil&amp;quot; et &amp;quot;Ouverture de projet et démarrage = la page d&apos;accueil&amp;quot; doivent être activées dans les préférences générales de QGIS</translation>
     </message>
     <message>
         <location filename="../../gui/dlg_settings.ui" line="305"/>
         <source>Insert latest item in QGIS news feed</source>
-        <translation>Insérer le dernier contenu publié sur Geotribu dans le fil d'actualités</translation>
+        <translation>Insérer le dernier contenu publié sur Geotribu dans le fil d&apos;actualités</translation>
     </message>
     <message>
         <location filename="../../gui/dlg_settings.ui" line="321"/>
         <source>QChat</source>
-        <translation>QChat</translation>
+        <translation type="obsolete">QChat</translation>
     </message>
     <message>
         <location filename="../../gui/dlg_settings.ui" line="329"/>
         <source>Instance URI:</source>
-        <translation>URL de l'instance:</translation>
-    </message>
-    <message>
-        <location filename="../../gui/dlg_settings.ui" line="352"/>
-        <source>https://gischat.geotribu.net</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../gui/dlg_settings.ui" line="357"/>
-        <source>https://gischat.geotribu.fr</source>
-        <translation type="unfinished"></translation>
+        <translation>URL de l&apos;instance:</translation>
     </message>
     <message>
         <location filename="../../gui/dlg_settings.ui" line="365"/>
         <source>Instance rules</source>
-        <translation>Règles de l'instance</translation>
+        <translation>Règles de l&apos;instance</translation>
     </message>
     <message>
         <location filename="../../gui/dlg_settings.ui" line="372"/>
@@ -876,7 +871,7 @@ Si c'est le cas, ne pas cocher et donner des précisions en commentaire.</transl
     <message>
         <location filename="../../gui/dlg_settings.ui" line="390"/>
         <source>Display admin messages</source>
-        <translation>Afficher les messages d'admin</translation>
+        <translation>Afficher les messages d&apos;admin</translation>
     </message>
     <message>
         <location filename="../../gui/dlg_settings.ui" line="397"/>
@@ -901,17 +896,17 @@ Si c'est le cas, ne pas cocher et donner des précisions en commentaire.</transl
     <message>
         <location filename="../../gui/dlg_settings.ui" line="519"/>
         <source>Mention message color:</source>
-        <translation>Couleur d'un message de mention:</translation>
+        <translation>Couleur d&apos;un message de mention:</translation>
     </message>
     <message>
         <location filename="../../gui/dlg_settings.ui" line="542"/>
         <source>Self message color:</source>
-        <translation>Couleur d'un message de soi-même:</translation>
+        <translation>Couleur d&apos;un message de soi-même:</translation>
     </message>
     <message>
         <location filename="../../gui/dlg_settings.ui" line="565"/>
         <source>Admin message color:</source>
-        <translation>Couleur des messages d'admin:</translation>
+        <translation>Couleur des messages d&apos;admin:</translation>
     </message>
 </context>
 <context>

@@ -16,8 +16,11 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
+  </property>
   <property name="windowTitle">
-   <string>QChat</string>
+   <string notr="true">QChat</string>
   </property>
   <widget class="QWidget" name="dockWidgetContents">
    <property name="sizePolicy">
@@ -106,7 +109,11 @@
        <item row="0" column="1">
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
-          <widget class="QComboBox" name="cbb_room"/>
+          <widget class="QComboBox" name="cbb_room">
+           <property name="currentText">
+            <string notr="true"/>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QPushButton" name="btn_connect">
@@ -167,7 +174,7 @@
        </size>
       </property>
       <property name="title">
-       <string>QChat</string>
+       <string notr="true">QChat</string>
       </property>
       <property name="collapsed">
        <bool>false</bool>
@@ -297,7 +304,7 @@
           <string>Nickname set in QTribu's plugin settings</string>
          </property>
          <property name="text">
-          <string>Nickname</string>
+          <string notr="true">Nickname</string>
          </property>
         </widget>
        </item>

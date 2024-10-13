@@ -5,7 +5,6 @@ from pathlib import Path
 from typing import Any, Optional
 
 # PyQGIS
-#
 from PyQt5 import QtWebSockets  # noqa QGS103
 from qgis.core import Qgis, QgsApplication
 from qgis.gui import QgisInterface, QgsDockWidget
@@ -397,6 +396,12 @@ Rooms:
                     .get_plg_settings()
                     .notify_push_duration,
                 )
+
+                # check if a notification sound should be played
+                if self.settings.qchat_play_sounds:
+                    play_resource_sound(
+                        self.settings.qchat_ring_tone, self.settings.qchat_sound_volume
+                    )
         elif message["author"] == self.settings.author_nickname:
             item = self.create_message_item(
                 message["author"],
@@ -412,15 +417,6 @@ Rooms:
             )
         self.twg_chat.addTopLevelItem(item)
         self.twg_chat.scrollToItem(item)
-
-        # check if a notification sound should be played
-        if (
-            self.settings.qchat_play_sounds
-            and message["author"] != self.settings.author_nickname
-        ):
-            play_resource_sound(
-                self.settings.qchat_ring_tone, self.settings.qchat_sound_volume
-            )
 
     def handle_internal_message(self, message: dict[str, Any]) -> None:
         """

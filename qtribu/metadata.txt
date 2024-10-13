@@ -18,10 +18,10 @@ tracker=https://github.com/geotribu/qtribu/issues/
 
 # experimental flag
 deprecated=False
-experimental=True
+experimental=False
 qgisMinimumVersion=3.28
 qgisMaximumVersion=3.99
 
 # versionnement
-version=1.0.0-beta3
+version=1.0.0
 changelog=

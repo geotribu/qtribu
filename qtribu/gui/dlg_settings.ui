@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>796</width>
-    <height>583</height>
+    <width>895</width>
+    <height>597</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -42,8 +42,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>762</width>
-        <height>569</height>
+        <width>875</width>
+        <height>577</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -318,7 +318,7 @@
        <item>
         <widget class="QGroupBox" name="grp_qchat">
          <property name="title">
-          <string>QChat</string>
+          <string notr="true">QChat</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
@@ -349,12 +349,12 @@
               </property>
               <item>
                <property name="text">
-                <string>https://gischat.geotribu.net</string>
+                <string notr="true">https://gischat.geotribu.net</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>https://gischat.geotribu.fr</string>
+                <string notr="true">https://gischat.geotribu.fr</string>
                </property>
               </item>
              </widget>
@@ -592,6 +592,9 @@
         </widget>
        </item>
        <item>
+        <widget class="AuthoringWidget" name="wdg_author" native="true"/>
+       </item>
+       <item>
         <widget class="QGroupBox" name="grp_misc">
          <property name="minimumSize">
           <size>
@@ -750,9 +753,6 @@
           </item>
          </layout>
         </widget>
-       </item>
-       <item>
-        <widget class="AuthoringWidget" name="wdg_author" native="true"/>
        </item>
       </layout>
      </widget>

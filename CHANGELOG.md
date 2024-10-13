@@ -10,6 +10,23 @@ Unreleased
 
 -->
 
+## 1.0.0 - 2024-10-11
+
+### Bugs fixes 🐛
+
+* fix(qchat): use mp3 instead of ogg by @gounux in <https://github.com/geotribu/qtribu/pull/198>
+
+### Features and enhancements 🎉
+
+* improve(qchat): play sound only on mention by @gounux in <https://github.com/geotribu/qtribu/pull/199>
+* update(ui): move misc groupbox to bottom in settings dialog by @Guts in <https://github.com/geotribu/qtribu/pull/205>
+* UI: display avatars right into combobox by @Guts in <https://github.com/geotribu/qtribu/pull/206>
+* update(i18n): refine translation to prepare next stable release by @Guts in <https://github.com/geotribu/qtribu/pull/207>
+
+### Tooling 🔧
+
+* update(ci): rm deprecated `set-output` command by @Guts in <https://github.com/geotribu/qtribu/pull/203>
+
 ## 1.0.0-beta3 - 2024-09-27
 
 ### Bugs fixes 🐛
