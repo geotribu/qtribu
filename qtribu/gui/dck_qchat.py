@@ -95,8 +95,8 @@ class QChatWidget(QgsDockWidget):
         )
 
         # list users signal listener
-        self.bltn_list_users.pressed.connect(self.on_list_users_button_clicked)
-        self.bltn_list_users.setIcon(
+        self.btn_list_users.pressed.connect(self.on_list_users_button_clicked)
+        self.btn_list_users.setIcon(
             QIcon(QgsApplication.iconPath("processingResult.svg"))
         )
 
@@ -293,7 +293,7 @@ Rooms:
         self.btn_connect.setText(self.tr("Disconnect"))
         self.lbl_status.setText("Connected")
         self.grb_room.setTitle(self.tr("Room: {room}").format(room=room))
-        self.grb_qchat.setEnabled(True)
+        self.btn_list_users.setEnabled(True)
         self.grb_user.setEnabled(True)
         self.current_room = room
         self.connected = True
@@ -325,7 +325,7 @@ Rooms:
         self.lbl_status.setText("Disconnected")
         self.grb_room.setTitle(self.tr("Room"))
         self.grb_qchat.setTitle(self.tr("QChat"))
-        self.grb_qchat.setEnabled(False)
+        self.btn_list_users.setEnabled(False)
         self.grb_user.setEnabled(False)
         self.connected = False
         if close_ws:
