@@ -94,6 +94,12 @@ class QChatWidget(QgsDockWidget):
             self.on_custom_context_menu_requested
         )
 
+        # list users signal listener
+        self.btn_list_users.pressed.connect(self.on_list_users_button_clicked)
+        self.btn_list_users.setIcon(
+            QIcon(QgsApplication.iconPath("processingResult.svg"))
+        )
+
         # clear chat signal listener
         self.btn_clear_chat.pressed.connect(self.on_clear_chat_button_clicked)
         self.btn_clear_chat.setIcon(
@@ -287,6 +293,7 @@ Rooms:
         self.btn_connect.setText(self.tr("Disconnect"))
         self.lbl_status.setText("Connected")
         self.grb_room.setTitle(self.tr("Room: {room}").format(room=room))
+        self.btn_list_users.setEnabled(True)
         self.grb_user.setEnabled(True)
         self.current_room = room
         self.connected = True
@@ -295,6 +302,14 @@ Rooms:
             self.add_admin_message(
                 self.tr("Connected to room '{room}'").format(room=room)
             )
+
+        # send newcomer message to websocket
+        if not self.settings.qchat_incognito_mode:
+            message = {
+                "author": INTERNAL_MESSAGE_AUTHOR,
+                "newcomer": self.settings.author_nickname,
+            }
+            self.ws_client.sendTextMessage(json.dumps(message))
 
     def disconnect_from_room(self, log: bool = True, close_ws: bool = True) -> None:
         """
@@ -310,6 +325,7 @@ Rooms:
         self.lbl_status.setText("Disconnected")
         self.grb_room.setTitle(self.tr("Room"))
         self.grb_qchat.setTitle(self.tr("QChat"))
+        self.btn_list_users.setEnabled(False)
         self.grb_user.setEnabled(False)
         self.connected = False
         if close_ws:
@@ -415,6 +431,43 @@ Rooms:
                 )
             )
             self.log(message=f"Internal message received: {nb_users} users in room")
+        if (
+            "newcomer" in message
+            and self.settings.qchat_display_admin_messages
+            and message["newcomer"] != self.settings.author_nickname
+        ):
+            newcomer = message["newcomer"]
+            self.add_admin_message(
+                self.tr("{newcomer} has joined the room").format(newcomer=newcomer)
+            )
+        if (
+            "exiter" in message
+            and self.settings.qchat_display_admin_messages
+            and message["exiter"] != self.settings.author_nickname
+        ):
+            exiter = message["exiter"]
+            self.add_admin_message(
+                self.tr("{newcomer} has left the room").format(newcomer=exiter)
+            )
+        if (
+            "liker_author" in message
+            and "liked_author" in message
+            and message["liked_author"] == self.settings.author_nickname
+        ):
+            self.log(
+                message=self.tr('{liker_author} liked your message "{message}"').format(
+                    liker_author=message["liker_author"], message=message["message"]
+                ),
+                application=self.tr("QChat"),
+                log_level=Qgis.Success,
+                push=PlgOptionsManager().get_plg_settings().notify_push_info,
+                duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
+            )
+            # play a notification sound if enabled
+            if self.settings.qchat_play_sounds:
+                play_resource_sound(
+                    self.settings.qchat_ring_tone, self.settings.qchat_sound_volume
+                )
 
     def on_message_double_clicked(self, item: QTreeWidgetItem, column: int) -> None:
         """
@@ -425,6 +478,19 @@ Rooms:
         self.lne_message.setText(f"{text}@{author} ")
         self.lne_message.setFocus()
 
+    def on_like_message(self, liked_author: str, message: str) -> None:
+        """
+        Action called when the "Like message" action is triggered
+        This may happen on right-click on a message
+        """
+        internal_message = {
+            "author": INTERNAL_MESSAGE_AUTHOR,
+            "message": message,
+            "liker_author": self.settings.author_nickname,
+            "liked_author": liked_author,
+        }
+        self.ws_client.sendTextMessage(json.dumps(internal_message))
+
     def on_custom_context_menu_requested(self, point: QPoint) -> None:
         """
         Action called when right clicking on a chat message
@@ -434,6 +500,31 @@ Rooms:
         message = item.text(2)
 
         menu = QMenu(self.tr("QChat Menu"), self)
+
+        if (
+            author != self.settings.author_nickname
+            and author != ADMIN_MESSAGES_NICKNAME
+        ):
+            # like message action
+            like_action = QAction(
+                QgsApplication.getThemeIcon("mActionInOverview.svg"),
+                self.tr("Like message"),
+            )
+            like_action.triggered.connect(
+                partial(self.on_like_message, author, message)
+            )
+            menu.addAction(like_action)
+
+            # mention user action
+            mention_action = QAction(
+                QgsApplication.getThemeIcon("mMessageLogRead.svg"),
+                self.tr("Mention user"),
+            )
+            mention_action.triggered.connect(
+                partial(self.on_message_double_clicked, item, 2)
+            )
+            menu.addAction(mention_action)
+            menu.addSeparator()
 
         # copy message to clipboard action
         copy_action = QAction(
@@ -453,20 +544,6 @@ Rooms:
         hide_action.triggered.connect(partial(self.on_hide_message, item))
         menu.addAction(hide_action)
 
-        # mention user action
-        if (
-            author != self.settings.author_nickname
-            and author != ADMIN_MESSAGES_NICKNAME
-        ):
-            mention_action = QAction(
-                QgsApplication.getThemeIcon("mMessageLogRead.svg"),
-                self.tr("Mention user"),
-            )
-            mention_action.triggered.connect(
-                partial(self.on_message_double_clicked, item, 2)
-            )
-            menu.addAction(mention_action)
-
         menu.exec(QCursor.pos())
 
     def on_copy_message_to_clipboard(self, message: str) -> None:
@@ -481,6 +558,25 @@ Rooms:
         """
         root = self.twg_chat.invisibleRootItem()
         (item.parent() or root).removeChild(item)
+
+    def on_list_users_button_clicked(self) -> None:
+        """
+        Action called when the list users button is clicked
+        """
+        try:
+            users = self.qchat_client.get_registered_users(self.current_room)
+            QMessageBox.information(
+                self,
+                self.tr("Registered users"),
+                self.tr(
+                    """Registered users in room ({room}):
+
+{users}"""
+                ).format(room=self.current_room, users=",".join(users)),
+            )
+        except Exception as exc:
+            self.iface.messageBar().pushCritical(self.tr("QChat error"), str(exc))
+            self.log(message=str(exc), log_level=Qgis.Critical)
 
     def on_clear_chat_button_clicked(self) -> None:
         """
