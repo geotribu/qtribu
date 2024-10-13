@@ -82,3 +82,17 @@ class QChatApiClient:
         )
         data = json.loads(str(response, "UTF8"))
         return data
+
+    def get_registered_users(self, room: str) -> list[str]:
+        """
+        Get registered users in a room with an API HTTP CALL
+        """
+        url = f"{self.instance_uri}/room/{room}/users"
+        response: QByteArray = self.qntwk.get_from_source(
+            headers=HEADERS,
+            url=url,
+            response_expected_content_type=CONTENT_TYPE_JSON,
+            use_cache=False,
+        )
+        data = json.loads(str(response, "UTF8"))
+        return data
