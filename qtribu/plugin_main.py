@@ -4,6 +4,10 @@
     Main plugin module.
 """
 
+import asyncio
+import platform
+from asyncio import QEventLoop
+
 # standard
 from functools import partial
 from pathlib import Path
@@ -18,6 +22,7 @@ from qgis.PyQt.QtWidgets import QAction
 # project
 from qtribu.__about__ import DIR_PLUGIN_ROOT, __icon_path__, __title__, __uri_homepage__
 from qtribu.constants import ICON_ARTICLE, ICON_GEORDP
+from qtribu.gui.dck_qchat_matrix import QChatMatrixWidget
 from qtribu.gui.dlg_contents import GeotribuContentsDialog
 from qtribu.gui.dlg_settings import PlgOptionsFactory
 from qtribu.gui.form_article import ArticleForm
@@ -99,6 +104,7 @@ class GeotribuPlugin:
 
         # -- QChat
         self.qchat_widget = None
+        self.qchat_matrix_widget = None
 
         # -- Actions
         self.action_show_latest_content = QAction(
@@ -144,6 +150,14 @@ class GeotribuPlugin:
         self.action_open_chat.setToolTip(self.tr("QChat"))
         self.action_open_chat.triggered.connect(self.open_chat)
 
+        self.action_open_matrix_chat = QAction(
+            QgsApplication.getThemeIcon("mMessageLog.svg"),
+            self.tr("QChat"),
+            self.iface.mainWindow(),
+        )
+        self.action_open_matrix_chat.setToolTip(self.tr("QChat"))
+        self.action_open_matrix_chat.triggered.connect(self.open_matrix_chat)
+
         self.action_help = QAction(
             QIcon(QgsApplication.iconPath("mActionHelpContents.svg")),
             self.tr("Help"),
@@ -167,6 +181,7 @@ class GeotribuPlugin:
 
         # -- Menu
         self.iface.addPluginToWebMenu(__title__, self.action_open_chat)
+        self.iface.addPluginToWebMenu(__title__, self.action_open_matrix_chat)
         self.iface.addPluginToWebMenu(__title__, self.action_show_latest_content)
         self.iface.addPluginToWebMenu(__title__, self.action_form_rdp_news)
         self.iface.addPluginToWebMenu(__title__, self.action_form_article)
@@ -214,6 +229,7 @@ class GeotribuPlugin:
         # -- Toolbar
         self.toolbar.addAction(self.action_show_latest_content)
         self.toolbar.addAction(self.action_open_chat)
+        self.toolbar.addAction(self.action_open_matrix_chat)
         self.toolbar.addAction(self.action_form_rdp_news)
         self.toolbar.addAction(self.action_form_article)
 
@@ -414,3 +430,33 @@ class GeotribuPlugin:
             )
             self.iface.addDockWidget(int(Qt.RightDockWidgetArea), self.qchat_widget)
         self.qchat_widget.show()
+
+    def open_matrix_chat(self) -> None:
+        if not self.qchat_matrix_widget:
+            self.qchat_matrix_widget = QChatMatrixWidget(
+                iface=self.iface, parent=self.iface.mainWindow()
+            )
+            self.iface.addDockWidget(
+                int(Qt.RightDockWidgetArea), self.qchat_matrix_widget
+            )
+
+        # handle async stuff
+        qgis_app = QgsApplication.instance()
+        event_loop = QEventLoop()
+
+        if platform.system() == "Windows":
+            asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+
+        asyncio.set_event_loop(event_loop)
+
+        app_close_event = asyncio.Event()
+        qgis_app.aboutToQuit.connect(app_close_event.set)
+
+        self.qchat_matrix_widget.show()
+
+        with event_loop:
+            print(asyncio.get_event_loop())
+            print(asyncio.get_event_loop().is_closed())
+            print(asyncio.get_event_loop().is_running())
+            event_loop.run_forever()
+            # event_loop.run_until_complete(app_close_event.wait())
