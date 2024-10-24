@@ -1,5 +1,7 @@
 # standard
 import json
+import os
+import tempfile
 from functools import partial
 from pathlib import Path
 from typing import Any, Optional
@@ -135,6 +137,12 @@ class QChatWidget(QgsDockWidget):
         # send image message signal listener
         self.btn_send_image.pressed.connect(self.on_send_image_button_clicked)
         self.btn_send_image.setIcon(
+            QIcon(QgsApplication.iconPath("mActionAddImage.svg"))
+        )
+
+        # send QGIS screenshot message signal listener
+        self.btn_send_screenshot.pressed.connect(self.on_send_screenshot_button_clicked)
+        self.btn_send_screenshot.setIcon(
             QIcon(QgsApplication.iconPath("mActionAddImage.svg"))
         )
 
@@ -625,6 +633,18 @@ Rooms:
                 pixmap,
             )
             self.twg_chat.addTopLevelItem(item)
+
+    def on_send_screenshot_button_clicked(self) -> None:
+        sc_fp = os.path.join(tempfile.gettempdir(), "qgis_screenshot.png")
+        self.iface.mapCanvas().saveAsImage(sc_fp)
+        pixmap = QPixmap(sc_fp)
+        item = self.create_image_item(
+            QTime.currentTime(),
+            self.settings.author_nickname,
+            self.settings.author_avatar,
+            pixmap,
+        )
+        self.twg_chat.addTopLevelItem(item)
 
     def add_admin_message(self, message: str) -> None:
         """
