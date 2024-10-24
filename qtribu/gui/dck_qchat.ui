@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="cursor">
-   <cursorShape>PointingHandCursor</cursorShape>
+   <cursorShape>ArrowCursor</cursorShape>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
@@ -313,6 +313,9 @@
        </item>
        <item row="7" column="1">
         <widget class="QPushButton" name="btn_send_screenshot">
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
          <property name="text">
           <string>Send QGIS screenshot</string>
          </property>

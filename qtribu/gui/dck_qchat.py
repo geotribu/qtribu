@@ -108,6 +108,7 @@ class QChatWidget(QgsDockWidget):
                 self.tr("Message"),
             ]
         )
+        self.twg_chat.itemClicked.connect(self.on_message_clicked)
         self.twg_chat.itemDoubleClicked.connect(self.on_message_double_clicked)
         self.twg_chat.setContextMenuPolicy(Qt.CustomContextMenu)
         self.twg_chat.customContextMenuRequested.connect(
@@ -466,21 +467,12 @@ Rooms:
             )
             self.log(message=f"Internal message received: {nb_users} users in room")
 
-    def on_message_double_clicked(self, item: QTreeWidgetItem, column: int) -> None:
+    def on_message_clicked(self, item: QTreeWidgetItem, column: int) -> None:
         """
-        Action called when double clicking on a chat message
+        Action called when clicking on a chat message
         """
-
         author = item.text(1)
         widget = self.twg_chat.itemWidget(item, 2)
-        # do nothing if double click on admin message
-        if author == ADMIN_MESSAGES_NICKNAME:
-            return
-        # if double click on date or author -> mention author
-        if column <= 1 or not widget:
-            text = self.lne_message.text()
-            self.lne_message.setText(f"{text}@{author} ")
-            self.lne_message.setFocus()
         # if there is a widget (QLabel) usually,
         # it means that there is an image
         # -> display the image in a new window
@@ -497,6 +489,18 @@ Rooms:
             dialog.setLayout(layout)
             dialog.setModal(True)
             dialog.show()
+
+    def on_message_double_clicked(self, item: QTreeWidgetItem, column: int) -> None:
+        """
+        Action called when double clicking on a chat message
+        """
+        author = item.text(1)
+        # do nothing if double click on admin message
+        if author == ADMIN_MESSAGES_NICKNAME:
+            return
+        text = self.lne_message.text()
+        self.lne_message.setText(f"{text}@{author} ")
+        self.lne_message.setFocus()
 
     def on_custom_context_menu_requested(self, point: QPoint) -> None:
         """
