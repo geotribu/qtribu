@@ -112,6 +112,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
             settings.qchat_instance_uri = instance[0:-1]
         else:
             settings.qchat_instance_uri = instance
+        settings.qchat_auto_reconnect = self.ckb_auto_reconnect.isChecked()
         settings.qchat_activate_cheatcode = self.ckb_cheatcodes.isChecked()
         settings.qchat_display_admin_messages = (
             self.ckb_display_admin_messages.isChecked()
@@ -159,6 +160,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
             self.cbb_qchat_instance_uri.setCurrentIndex(instance_index)
         else:
             self.cbb_qchat_instance_uri.setCurrentText(settings.qchat_instance_uri)
+        self.ckb_auto_reconnect.setChecked(settings.qchat_auto_reconnect)
         self.ckb_cheatcodes.setChecked(settings.qchat_activate_cheatcode)
         self.ckb_display_admin_messages.setChecked(
             settings.qchat_display_admin_messages
