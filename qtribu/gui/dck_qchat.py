@@ -607,8 +607,23 @@ Rooms:
             caption=self.tr("Select images to send to the chat"),
             filter="Images (*.png *.jpg *.jpeg)",
         )
-        for f in files[0]:
-            item = self.create_image_item_from_path(f)
+        for fp in files[0]:
+
+            # build QPixmap from file path:
+            # pixmap = QPixmap(fp)
+
+            # build QPixmap with bytes:
+            with open(fp, "rb") as file:
+                data = file.read()
+            pixmap = QPixmap()
+            pixmap.loadFromData(data)
+
+            item = self.create_image_item(
+                QTime.currentTime(),
+                self.settings.author_nickname,
+                self.settings.author_avatar,
+                pixmap,
+            )
             self.twg_chat.addTopLevelItem(item)
 
     def add_admin_message(self, message: str) -> None:
@@ -653,21 +668,19 @@ Rooms:
                 item.setBackground(i, QBrush(QColor(background_color)))
         return item
 
-    def create_image_item_from_path(self, img_path: str) -> QTreeWidgetItem:
+    def create_image_item(
+        self, time: QTime, author: str, avatar: Optional[str], pixmap: QPixmap
+    ) -> QTreeWidgetItem:
         item = QTreeWidgetItem(self.twg_chat)
-        item.setText(0, QTime.currentTime().toString())
-        item.setText(1, self.settings.author_nickname)
+        item.setText(0, time.toString())
+        item.setText(1, author)
         if self.settings.qchat_show_avatars:
-            item.setIcon(1, QIcon(QgsApplication.iconPath(self.settings.author_avatar)))
-        pixmap = QPixmap(img_path)
+            item.setIcon(1, QIcon(QgsApplication.iconPath(avatar)))
         label = QLabel(self.twg_chat)
         label.setPixmap(pixmap)
         item.treeWidget().setItemWidget(item, 2, label)
         item.setSizeHint(2, pixmap.size())
         return item
-
-    def create_image_item_from_bytes(self, image: bytes) -> QTreeWidgetItem:
-        pass
 
     def on_widget_closed(self) -> None:
         """
