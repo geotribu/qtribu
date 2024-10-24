@@ -115,6 +115,12 @@ class QChatWidget(QgsDockWidget):
             self.on_custom_context_menu_requested
         )
 
+        # list users signal listener
+        self.btn_list_users.pressed.connect(self.on_list_users_button_clicked)
+        self.btn_list_users.setIcon(
+            QIcon(QgsApplication.iconPath("processingResult.svg"))
+        )
+
         # clear chat signal listener
         self.btn_clear_chat.pressed.connect(self.on_clear_chat_button_clicked)
         self.btn_clear_chat.setIcon(
@@ -330,6 +336,7 @@ Rooms:
         self.btn_connect.setText(self.tr("Disconnect"))
         self.lbl_status.setText("Connected")
         self.grb_room.setTitle(self.tr("Room: {room}").format(room=room))
+        self.btn_list_users.setEnabled(True)
         self.grb_user.setEnabled(True)
         self.current_room = room
 
@@ -347,6 +354,14 @@ Rooms:
                 self.tr("Connected to room '{room}'").format(room=room)
             )
 
+        # send newcomer message to websocket
+        if not self.settings.qchat_incognito_mode:
+            message = {
+                "author": INTERNAL_MESSAGE_AUTHOR,
+                "newcomer": self.settings.author_nickname,
+            }
+            self.ws_client.sendTextMessage(json.dumps(message))
+
     def disconnect_from_room(self, log: bool = True, close_ws: bool = True) -> None:
         """
         Disconnect widget from the current room
@@ -361,6 +376,7 @@ Rooms:
         self.lbl_status.setText("Disconnected")
         self.grb_room.setTitle(self.tr("Room"))
         self.grb_qchat.setTitle(self.tr("QChat"))
+        self.btn_list_users.setEnabled(False)
         self.grb_user.setEnabled(False)
         self.connected = False
         if close_ws:
@@ -466,6 +482,24 @@ Rooms:
                 )
             )
             self.log(message=f"Internal message received: {nb_users} users in room")
+        if (
+            "newcomer" in message
+            and self.settings.qchat_display_admin_messages
+            and message["newcomer"] != self.settings.author_nickname
+        ):
+            newcomer = message["newcomer"]
+            self.add_admin_message(
+                self.tr("{newcomer} has joined the room").format(newcomer=newcomer)
+            )
+        if (
+            "exiter" in message
+            and self.settings.qchat_display_admin_messages
+            and message["exiter"] != self.settings.author_nickname
+        ):
+            exiter = message["exiter"]
+            self.add_admin_message(
+                self.tr("{newcomer} has left the room").format(newcomer=exiter)
+            )
 
     def on_message_clicked(self, item: QTreeWidgetItem, column: int) -> None:
         """
@@ -558,6 +592,25 @@ Rooms:
         """
         root = self.twg_chat.invisibleRootItem()
         (item.parent() or root).removeChild(item)
+
+    def on_list_users_button_clicked(self) -> None:
+        """
+        Action called when the list users button is clicked
+        """
+        try:
+            users = self.qchat_client.get_registered_users(self.current_room)
+            QMessageBox.information(
+                self,
+                self.tr("Registered users"),
+                self.tr(
+                    """Registered users in room ({room}):
+
+{users}"""
+                ).format(room=self.current_room, users=",".join(users)),
+            )
+        except Exception as exc:
+            self.iface.messageBar().pushCritical(self.tr("QChat error"), str(exc))
+            self.log(message=str(exc), log_level=Qgis.Critical)
 
     def on_clear_chat_button_clicked(self) -> None:
         """

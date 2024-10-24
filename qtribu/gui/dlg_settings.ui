@@ -42,8 +42,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>875</width>
-        <height>577</height>
+        <width>877</width>
+        <height>579</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -389,13 +389,32 @@
            <layout class="QHBoxLayout" name="hly_misc">
             <item>
              <widget class="QCheckBox" name="ckb_show_avatars">
+              <property name="toolTip">
+               <string extracomment="Show avatr besides a QChat message"/>
+              </property>
               <property name="text">
                <string>Show avatars</string>
               </property>
              </widget>
             </item>
             <item>
+             <widget class="QCheckBox" name="ckb_incognito_mode">
+              <property name="toolTip">
+               <string extracomment="Register to the server so that other know you are connected"/>
+              </property>
+              <property name="text">
+               <string>Incognito mode</string>
+              </property>
+              <property name="checked">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QCheckBox" name="ckb_display_admin_messages">
+              <property name="toolTip">
+               <string extracomment="Display connections and disconnections messages"/>
+              </property>
               <property name="text">
                <string>Display admin messages</string>
               </property>
@@ -403,6 +422,9 @@
             </item>
             <item>
              <widget class="QCheckBox" name="ckb_cheatcodes">
+              <property name="toolTip">
+               <string extracomment=";)"/>
+              </property>
               <property name="text">
                <string>Activate cheatcodes</string>
               </property>
