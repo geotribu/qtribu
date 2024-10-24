@@ -373,6 +373,16 @@
               </property>
              </widget>
             </item>
+            <item>
+             <widget class="QCheckBox" name="ckb_auto_reconnect">
+              <property name="toolTip">
+               <string extracomment="Auto-reconnect the QChat when QGIS starts"/>
+              </property>
+              <property name="text">
+               <string>Automatically reconnect</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
           <item>

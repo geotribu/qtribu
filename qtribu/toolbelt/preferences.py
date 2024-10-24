@@ -38,6 +38,8 @@ class PlgSettingsStructure:
 
     # QChat
     qchat_instance_uri: str = "https://gischat.geotribu.net"
+    qchat_auto_reconnect: bool = True
+    qchat_auto_reconnect_room: str = None
     qchat_activate_cheatcode: bool = True
     qchat_display_admin_messages: bool = False
     qchat_show_avatars: bool = True
