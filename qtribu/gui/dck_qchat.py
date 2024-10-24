@@ -1,5 +1,7 @@
 # standard
 import json
+import os
+import tempfile
 from functools import partial
 from pathlib import Path
 from typing import Any, Optional
@@ -10,8 +12,18 @@ from qgis.core import Qgis, QgsApplication
 from qgis.gui import QgisInterface, QgsDockWidget
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import QPoint, Qt, QTime, QUrl
-from qgis.PyQt.QtGui import QBrush, QColor, QCursor, QIcon
-from qgis.PyQt.QtWidgets import QAction, QMenu, QMessageBox, QTreeWidgetItem, QWidget
+from qgis.PyQt.QtGui import QBrush, QColor, QCursor, QIcon, QPixmap
+from qgis.PyQt.QtWidgets import (
+    QAction,
+    QDialog,
+    QFileDialog,
+    QLabel,
+    QMenu,
+    QMessageBox,
+    QTreeWidgetItem,
+    QVBoxLayout,
+    QWidget,
+)
 
 from qtribu.__about__ import __title__
 from qtribu.constants import (
@@ -96,6 +108,7 @@ class QChatWidget(QgsDockWidget):
                 self.tr("Message"),
             ]
         )
+        self.twg_chat.itemClicked.connect(self.on_message_clicked)
         self.twg_chat.itemDoubleClicked.connect(self.on_message_double_clicked)
         self.twg_chat.setContextMenuPolicy(Qt.CustomContextMenu)
         self.twg_chat.customContextMenuRequested.connect(
@@ -126,6 +139,18 @@ class QChatWidget(QgsDockWidget):
         self.btn_send.pressed.connect(self.on_send_button_clicked)
         self.btn_send.setIcon(
             QIcon(QgsApplication.iconPath("mActionDoubleArrowRight.svg"))
+        )
+
+        # send image message signal listener
+        self.btn_send_image.pressed.connect(self.on_send_image_button_clicked)
+        self.btn_send_image.setIcon(
+            QIcon(QgsApplication.iconPath("mActionAddImage.svg"))
+        )
+
+        # send QGIS screenshot message signal listener
+        self.btn_send_screenshot.pressed.connect(self.on_send_screenshot_button_clicked)
+        self.btn_send_screenshot.setIcon(
+            QIcon(QgsApplication.iconPath("mActionAddImage.svg"))
         )
 
     @property
@@ -323,6 +348,7 @@ Rooms:
 
         self.connected = True
         self.log(message=f"Websocket connected to room {room}")
+        self.twg_chat.clear()
         if self.settings.qchat_display_admin_messages:
             self.add_admin_message(
                 self.tr("Connected to room '{room}'").format(room=room)
@@ -475,12 +501,38 @@ Rooms:
                 self.tr("{newcomer} has left the room").format(newcomer=exiter)
             )
 
+    def on_message_clicked(self, item: QTreeWidgetItem, column: int) -> None:
+        """
+        Action called when clicking on a chat message
+        """
+        author = item.text(1)
+        widget = self.twg_chat.itemWidget(item, 2)
+        # if there is a widget (QLabel) usually,
+        # it means that there is an image
+        # -> display the image in a new window
+        if column == 2 and widget:
+            pixmap = widget.pixmap()
+            dialog = QDialog(self)
+            dialog.setWindowTitle(
+                self.tr("QChat image sent by {author}").format(author=author)
+            )
+            layout = QVBoxLayout()
+            label = QLabel()
+            label.setPixmap(pixmap)
+            layout.addWidget(label)
+            dialog.setLayout(layout)
+            dialog.setModal(True)
+            dialog.show()
+
     def on_message_double_clicked(self, item: QTreeWidgetItem, column: int) -> None:
         """
         Action called when double clicking on a chat message
         """
-        text = self.lne_message.text()
         author = item.text(1)
+        # do nothing if double click on admin message
+        if author == ADMIN_MESSAGES_NICKNAME:
+            return
+        text = self.lne_message.text()
         self.lne_message.setText(f"{text}@{author} ")
         self.lne_message.setFocus()
 
@@ -614,6 +666,43 @@ Rooms:
         self.ws_client.sendTextMessage(json.dumps(message))
         self.lne_message.setText("")
 
+    def on_send_image_button_clicked(self) -> None:
+        files = QFileDialog.getOpenFileNames(
+            parent=self,
+            caption=self.tr("Select images to send to the chat"),
+            filter="Images (*.png *.jpg *.jpeg)",
+        )
+        for fp in files[0]:
+
+            # build QPixmap from file path:
+            # pixmap = QPixmap(fp)
+
+            # build QPixmap with bytes:
+            with open(fp, "rb") as file:
+                data = file.read()
+            pixmap = QPixmap()
+            pixmap.loadFromData(data)
+
+            item = self.create_image_item(
+                QTime.currentTime(),
+                self.settings.author_nickname,
+                self.settings.author_avatar,
+                pixmap,
+            )
+            self.twg_chat.addTopLevelItem(item)
+
+    def on_send_screenshot_button_clicked(self) -> None:
+        sc_fp = os.path.join(tempfile.gettempdir(), "qgis_screenshot.png")
+        self.iface.mapCanvas().saveAsImage(sc_fp)
+        pixmap = QPixmap(sc_fp)
+        item = self.create_image_item(
+            QTime.currentTime(),
+            self.settings.author_nickname,
+            self.settings.author_avatar,
+            pixmap,
+        )
+        self.twg_chat.addTopLevelItem(item)
+
     def add_admin_message(self, message: str) -> None:
         """
         Adds an admin message to QTreeWidget chat
@@ -654,6 +743,20 @@ Rooms:
         if background_color:
             for i in range(len(item_data)):
                 item.setBackground(i, QBrush(QColor(background_color)))
+        return item
+
+    def create_image_item(
+        self, time: QTime, author: str, avatar: Optional[str], pixmap: QPixmap
+    ) -> QTreeWidgetItem:
+        item = QTreeWidgetItem(self.twg_chat)
+        item.setText(0, time.toString())
+        item.setText(1, author)
+        if self.settings.qchat_show_avatars:
+            item.setIcon(1, QIcon(QgsApplication.iconPath(avatar)))
+        label = QLabel(self.twg_chat)
+        label.setPixmap(pixmap)
+        item.treeWidget().setItemWidget(item, 2, label)
+        item.setSizeHint(2, pixmap.size())
         return item
 
     def on_widget_closed(self) -> None:
