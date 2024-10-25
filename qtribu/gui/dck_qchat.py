@@ -1,4 +1,5 @@
 # standard
+import base64
 import os
 import tempfile
 from functools import partial
@@ -466,7 +467,16 @@ Rooms:
         self.twg_chat.scrollToItem(item)
 
     def on_image_message_received(self, message: QChatImageMessage) -> None:
-        QMessageBox.information(self, "Image message received", str(message))
+        pixmap = QPixmap()
+        data = base64.b64decode(message.image_data)
+        pixmap.loadFromData(data)
+        item = self.create_image_item(
+            QTime.currentTime(),
+            self.settings.author_nickname,
+            self.settings.author_avatar,
+            pixmap,
+        )
+        self.twg_chat.addTopLevelItem(item)
 
     def on_nb_users_message_received(self, message: QChatNbUsersMessage) -> None:
         self.grb_qchat.setTitle(
@@ -730,14 +740,15 @@ Rooms:
     def on_send_screenshot_button_clicked(self) -> None:
         sc_fp = os.path.join(tempfile.gettempdir(), "qgis_screenshot.png")
         self.iface.mapCanvas().saveAsImage(sc_fp)
-        pixmap = QPixmap(sc_fp)
-        item = self.create_image_item(
-            QTime.currentTime(),
-            self.settings.author_nickname,
-            self.settings.author_avatar,
-            pixmap,
-        )
-        self.twg_chat.addTopLevelItem(item)
+        with open(sc_fp, "rb") as file:
+            data = file.read()
+            message = QChatImageMessage(
+                type="image",
+                author=self.settings.author_nickname,
+                avatar=self.settings.author_avatar,
+                image_data=base64.b64encode(data).decode("utf-8"),
+            )
+            self.qchat_ws.send_message(message)
 
     def add_admin_message(self, message: str) -> None:
         """

@@ -18,7 +18,7 @@ class QChatTextMessage(QChatMessage):
 class QChatImageMessage(QChatMessage):
     author: str
     avatar: Optional[str]
-    image_data: bytes
+    image_data: str
 
 
 @dataclass(init=True, frozen=True)
