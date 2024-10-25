@@ -474,6 +474,25 @@ Rooms:
             self.add_admin_message(
                 self.tr("{newcomer} has left the room").format(newcomer=exiter)
             )
+        if (
+            "liker_author" in message
+            and "liked_author" in message
+            and message["liked_author"] == self.settings.author_nickname
+        ):
+            self.log(
+                message=self.tr('{liker_author} liked your message "{message}"').format(
+                    liker_author=message["liker_author"], message=message["message"]
+                ),
+                application=self.tr("QChat"),
+                log_level=Qgis.Success,
+                push=PlgOptionsManager().get_plg_settings().notify_push_info,
+                duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
+            )
+            # play a notification sound if enabled
+            if self.settings.qchat_play_sounds:
+                play_resource_sound(
+                    self.settings.qchat_ring_tone, self.settings.qchat_sound_volume
+                )
 
     def on_message_double_clicked(self, item: QTreeWidgetItem, column: int) -> None:
         """
@@ -484,6 +503,19 @@ Rooms:
         self.lne_message.setText(f"{text}@{author} ")
         self.lne_message.setFocus()
 
+    def on_like_message(self, liked_author: str, message: str) -> None:
+        """
+        Action called when the "Like message" action is triggered
+        This may happen on right-click on a message
+        """
+        internal_message = {
+            "author": INTERNAL_MESSAGE_AUTHOR,
+            "message": message,
+            "liker_author": self.settings.author_nickname,
+            "liked_author": liked_author,
+        }
+        self.ws_client.sendTextMessage(json.dumps(internal_message))
+
     def on_custom_context_menu_requested(self, point: QPoint) -> None:
         """
         Action called when right clicking on a chat message
@@ -493,6 +525,31 @@ Rooms:
         message = item.text(2)
 
         menu = QMenu(self.tr("QChat Menu"), self)
+
+        if (
+            author != self.settings.author_nickname
+            and author != ADMIN_MESSAGES_NICKNAME
+        ):
+            # like message action
+            like_action = QAction(
+                QgsApplication.getThemeIcon("mActionInOverview.svg"),
+                self.tr("Like message"),
+            )
+            like_action.triggered.connect(
+                partial(self.on_like_message, author, message)
+            )
+            menu.addAction(like_action)
+
+            # mention user action
+            mention_action = QAction(
+                QgsApplication.getThemeIcon("mMessageLogRead.svg"),
+                self.tr("Mention user"),
+            )
+            mention_action.triggered.connect(
+                partial(self.on_message_double_clicked, item, 2)
+            )
+            menu.addAction(mention_action)
+            menu.addSeparator()
 
         # copy message to clipboard action
         copy_action = QAction(
@@ -511,20 +568,6 @@ Rooms:
         )
         hide_action.triggered.connect(partial(self.on_hide_message, item))
         menu.addAction(hide_action)
-
-        # mention user action
-        if (
-            author != self.settings.author_nickname
-            and author != ADMIN_MESSAGES_NICKNAME
-        ):
-            mention_action = QAction(
-                QgsApplication.getThemeIcon("mMessageLogRead.svg"),
-                self.tr("Mention user"),
-            )
-            mention_action.triggered.connect(
-                partial(self.on_message_double_clicked, item, 2)
-            )
-            menu.addAction(mention_action)
 
         menu.exec(QCursor.pos())
 
