@@ -713,29 +713,27 @@ Rooms:
         self.lne_message.setText("")
 
     def on_send_image_button_clicked(self) -> None:
+        """
+        Action called when the send image button is clicked
+        """
+
+        # select some image files on disk
         files = QFileDialog.getOpenFileNames(
             parent=self,
             caption=self.tr("Select images to send to the chat"),
             filter="Images (*.png *.jpg *.jpeg)",
         )
         for fp in files[0]:
-
-            # build QPixmap from file path:
-            # pixmap = QPixmap(fp)
-
-            # build QPixmap with bytes:
+            # send the image through the websocket
             with open(fp, "rb") as file:
                 data = file.read()
-            pixmap = QPixmap()
-            pixmap.loadFromData(data)
-
-            item = self.create_image_item(
-                QTime.currentTime(),
-                self.settings.author_nickname,
-                self.settings.author_avatar,
-                pixmap,
-            )
-            self.twg_chat.addTopLevelItem(item)
+                message = QChatImageMessage(
+                    type="image",
+                    author=self.settings.author_nickname,
+                    avatar=self.settings.author_avatar,
+                    image_data=base64.b64encode(data).decode("utf-8"),
+                )
+                self.qchat_ws.send_message(message)
 
     def on_send_screenshot_button_clicked(self) -> None:
         sc_fp = os.path.join(tempfile.gettempdir(), "qgis_screenshot.png")
