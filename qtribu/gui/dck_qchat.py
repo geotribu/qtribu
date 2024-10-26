@@ -11,8 +11,8 @@ from PyQt5 import QtWebSockets  # noqa QGS103
 from qgis.core import Qgis, QgsApplication
 from qgis.gui import QgisInterface, QgsDockWidget
 from qgis.PyQt import uic
-from qgis.PyQt.QtCore import QPoint, Qt, QTime
-from qgis.PyQt.QtGui import QBrush, QColor, QCursor, QIcon, QPixmap
+from qgis.PyQt.QtCore import QPoint, Qt
+from qgis.PyQt.QtGui import QCursor, QIcon
 from qgis.PyQt.QtWidgets import (
     QAction,
     QDialog,
@@ -27,7 +27,6 @@ from qgis.PyQt.QtWidgets import (
 
 from qtribu.__about__ import __title__
 from qtribu.constants import (
-    ADMIN_MESSAGES_AVATAR,
     ADMIN_MESSAGES_NICKNAME,
     CHEATCODE_10OCLOCK,
     CHEATCODE_DIZZY,
@@ -35,6 +34,11 @@ from qtribu.constants import (
     CHEATCODE_QGIS_PRO_LICENSE,
     CHEATCODES,
     QCHAT_NICKNAME_MINLENGTH,
+)
+from qtribu.gui.qchat_tree_widget_items import (
+    QChatAdminTreeWidgetItem,
+    QChatImageTreeWidgetItem,
+    QChatTextTreeWidgetItem,
 )
 from qtribu.logic.qchat_api_client import QChatApiClient
 from qtribu.logic.qchat_messages import (
@@ -426,15 +430,11 @@ Rooms:
         if message.text in CHEATCODES:
             return
 
+        item = QChatTextTreeWidgetItem(self.twg_chat, message)
+
         # check if message mentions current user
         words = message.text.split(" ")
         if f"@{self.settings.author_nickname}" in words or "@all" in words:
-            item = self.create_message_item(
-                message.author,
-                message.avatar,
-                message.text,
-                foreground_color=self.settings.qchat_color_mention,
-            )
             if message.author != self.settings.author_nickname:
                 self.log(
                     message=self.tr(
@@ -453,19 +453,7 @@ Rooms:
                     play_resource_sound(
                         self.settings.qchat_ring_tone, self.settings.qchat_sound_volume
                     )
-        elif message.author == self.settings.author_nickname:
-            item = self.create_message_item(
-                message.author,
-                message.avatar,
-                message.text,
-                foreground_color=self.settings.qchat_color_self,
-            )
-        else:
-            item = self.create_message_item(
-                message.author,
-                message.avatar,
-                message.text,
-            )
+
         self.twg_chat.addTopLevelItem(item)
         self.twg_chat.scrollToItem(item)
 
@@ -473,20 +461,9 @@ Rooms:
         """
         Launched when an image message is received from the websocket
         """
-        pixmap = QPixmap()
-        data = base64.b64decode(message.image_data)
-        pixmap.loadFromData(data)
-        item = self.create_image_item(
-            QTime.currentTime(),
-            message.author,
-            message.avatar,
-            pixmap,
-        )
-        # set foreground color if sent by user
-        if message.author == self.settings.author_nickname:
-            for i in range(2):
-                item.setForeground(i, QBrush(QColor(self.settings.qchat_color_self)))
+        item = QChatImageTreeWidgetItem(self.twg_chat, message)
         self.twg_chat.addTopLevelItem(item)
+        self.twg_chat.scrollToItem(item)
 
     def on_nb_users_message_received(self, message: QChatNbUsersMessage) -> None:
         """
@@ -770,61 +747,13 @@ Rooms:
             )
             self.qchat_ws.send_message(message)
 
-    def add_admin_message(self, message: str) -> None:
+    def add_admin_message(self, text: str) -> None:
         """
         Adds an admin message to QTreeWidget chat
         """
-        item = self.create_message_item(
-            ADMIN_MESSAGES_NICKNAME,
-            ADMIN_MESSAGES_AVATAR,
-            message,
-            foreground_color=self.settings.qchat_color_admin,
-        )
+        item = QChatAdminTreeWidgetItem(self.twg_chat, text)
         self.twg_chat.addTopLevelItem(item)
         self.twg_chat.scrollToItem(item)
-
-    def create_message_item(
-        self,
-        author: str,
-        avatar: Optional[str],
-        message: str,
-        foreground_color: str = None,
-        background_color: str = None,
-    ) -> QTreeWidgetItem:
-        """
-        Creates a QTreeWidgetItem for adding to QTreeWidget chat
-        Optionally with foreground / background colors given as hexa string
-        """
-        item_data = [
-            QTime.currentTime().toString(),
-            author,
-            message,
-        ]
-        item = QTreeWidgetItem(item_data)
-        if self.settings.qchat_show_avatars and avatar:
-            item.setIcon(1, QIcon(QgsApplication.iconPath(avatar)))
-        item.setToolTip(2, message)
-        if foreground_color:
-            for i in range(len(item_data)):
-                item.setForeground(i, QBrush(QColor(foreground_color)))
-        if background_color:
-            for i in range(len(item_data)):
-                item.setBackground(i, QBrush(QColor(background_color)))
-        return item
-
-    def create_image_item(
-        self, time: QTime, author: str, avatar: Optional[str], pixmap: QPixmap
-    ) -> QTreeWidgetItem:
-        item = QTreeWidgetItem(self.twg_chat)
-        item.setText(0, time.toString())
-        item.setText(1, author)
-        if self.settings.qchat_show_avatars:
-            item.setIcon(1, QIcon(QgsApplication.iconPath(avatar)))
-        label = QLabel(self.twg_chat)
-        label.setPixmap(pixmap)
-        item.treeWidget().setItemWidget(item, 2, label)
-        item.setSizeHint(2, pixmap.size())
-        return item
 
     def on_widget_closed(self) -> None:
         """
