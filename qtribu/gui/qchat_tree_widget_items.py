@@ -4,7 +4,13 @@ from typing import Optional
 from qgis.core import QgsApplication
 from qgis.PyQt.QtCore import QTime
 from qgis.PyQt.QtGui import QBrush, QColor, QIcon, QPixmap
-from qgis.PyQt.QtWidgets import QLabel, QTreeWidget, QTreeWidgetItem
+from qgis.PyQt.QtWidgets import (
+    QDialog,
+    QLabel,
+    QTreeWidget,
+    QTreeWidgetItem,
+    QVBoxLayout,
+)
 
 from qtribu.constants import ADMIN_MESSAGES_AVATAR, ADMIN_MESSAGES_NICKNAME
 from qtribu.logic.qchat_messages import QChatImageMessage, QChatTextMessage
@@ -48,6 +54,13 @@ class QChatTreeWidgetItem(QTreeWidgetItem):
         self.setForeground(AUTHOR_COLUM, fg_color)
         self.setForeground(MESSAGE_COLUMN, fg_color)
 
+    def on_click(self, column: int) -> None:
+        """
+        Triggered when simple clicking on the item
+        Empty because this is the expected behaviour
+        """
+        pass
+
 
 class QChatAdminTreeWidgetItem(QChatTreeWidgetItem):
     def __init__(self, parent: QTreeWidget, text: str):
@@ -88,10 +101,22 @@ class QChatImageTreeWidgetItem(QChatTreeWidgetItem):
         if message.author == self.settings.author_nickname:
             self.set_foreground_color(self.settings.qchat_color_self)
 
-        pixmap = QPixmap()
+        self.pixmap = QPixmap()
         data = base64.b64decode(message.image_data)
-        pixmap.loadFromData(data)
+        self.pixmap.loadFromData(data)
         label = QLabel(self.parent())
-        label.setPixmap(pixmap)
+        label.setPixmap(self.pixmap)
         self.treeWidget().setItemWidget(self, MESSAGE_COLUMN, label)
-        self.setSizeHint(MESSAGE_COLUMN, pixmap.size())
+        self.setSizeHint(MESSAGE_COLUMN, self.pixmap.size())
+
+    def on_click(self, column: int) -> None:
+        if column == MESSAGE_COLUMN:
+            dialog = QDialog(self.treeWidget())
+            dialog.setWindowTitle(f"QChat image {self.message.author}")
+            layout = QVBoxLayout()
+            label = QLabel()
+            label.setPixmap(self.pixmap)
+            layout.addWidget(label)
+            dialog.setLayout(layout)
+            dialog.setModal(True)
+            dialog.show()

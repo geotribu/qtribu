@@ -15,13 +15,10 @@ from qgis.PyQt.QtCore import QPoint, Qt
 from qgis.PyQt.QtGui import QCursor, QIcon
 from qgis.PyQt.QtWidgets import (
     QAction,
-    QDialog,
     QFileDialog,
-    QLabel,
     QMenu,
     QMessageBox,
     QTreeWidgetItem,
-    QVBoxLayout,
     QWidget,
 )
 
@@ -528,35 +525,25 @@ Rooms:
         """
         Action called when clicking on a chat message
         """
-        author = item.text(1)
-        widget = self.twg_chat.itemWidget(item, 2)
-        # if there is a widget (QLabel) usually,
-        # it means that there is an image
-        # -> display the image in a new window
-        if column == 2 and widget:
-            pixmap = widget.pixmap()
-            dialog = QDialog(self)
-            dialog.setWindowTitle(
-                self.tr("QChat image sent by {author}").format(author=author)
-            )
-            layout = QVBoxLayout()
-            label = QLabel()
-            label.setPixmap(pixmap)
-            layout.addWidget(label)
-            dialog.setLayout(layout)
-            dialog.setModal(True)
-            dialog.show()
+        item.on_click(column)
+        if type(item) is QChatImageTreeWidgetItem:
+            QMessageBox.warning(self, "lol", "biglol")
 
     def on_message_double_clicked(self, item: QTreeWidgetItem, column: int) -> None:
         """
         Action called when double clicking on a chat message
         """
-        author = item.text(1)
+        author = item.author
         # do nothing if double click on admin message
-        if author == ADMIN_MESSAGES_NICKNAME:
+        if author == ADMIN_MESSAGES_NICKNAME or author == self.settings.author_nickname:
             return
         text = self.lne_message.text()
         self.lne_message.setText(f"{text}@{author} ")
+        self.lne_message.setFocus()
+
+    def mention_user(self, user: str) -> None:
+        text = self.lne_message.text()
+        self.lne_message.setText(f"{text}@{user} ")
         self.lne_message.setFocus()
 
     def on_like_message(self, liked_author: str, msg: str) -> None:
