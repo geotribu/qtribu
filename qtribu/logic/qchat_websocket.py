@@ -29,6 +29,9 @@ class EnhancedJSONEncoder(JSONEncoder):
 
 
 class QChatWebsocket(QObject):
+    """
+    Websocket wrapper for handling the QChat communications and messages
+    """
 
     def __init__(self):
         super().__init__()
@@ -44,6 +47,7 @@ class QChatWebsocket(QObject):
     disconnected = pyqtSignal()
     error = pyqtSignal(int)
 
+    # QChat message signals
     text_message_received = pyqtSignal(QChatTextMessage)
     image_message_received = pyqtSignal(QChatImageMessage)
     nb_users_message_received = pyqtSignal(QChatNbUsersMessage)
@@ -52,6 +56,11 @@ class QChatWebsocket(QObject):
     like_message_received = pyqtSignal(QChatLikeMessage)
 
     def open(self, qchat_instance_uri: str, room: str) -> None:
+        """
+        Opens a websocket to a QChat instance
+        :param qchat_instance_uri: URI of the QChat instance to connect to
+        :param room: room to connect to
+        """
         protocol, domain = qchat_instance_uri.split("://")
         ws_protocol = "wss" if protocol == "https" else "ws"
         ws_instance_url = f"{ws_protocol}://{domain}"
@@ -60,16 +69,29 @@ class QChatWebsocket(QObject):
         self.ws_client.connected.connect(self.connected.emit)
 
     def close(self) -> None:
+        """
+        Closes a websocket connection
+        """
         self.ws_client.connected.disconnect()
         self.ws_client.close()
 
     def send_message(self, message: QChatMessage) -> None:
+        """
+        Sends a QChat message to the websocket
+        """
         self.ws_client.sendTextMessage(json.dumps(message, cls=EnhancedJSONEncoder))
 
     def error_string(self) -> str:
+        """
+        Returns the websocket error string if there is any
+        """
         return self.ws_client.errorString()
 
     def on_message_received(self, text: str) -> None:
+        """
+        Launched when a text message is received from the websocket
+        :param text: text message received, should be a jsonified string
+        """
         message = json.loads(text)
         msg_type = message["type"]
         if msg_type == "text":

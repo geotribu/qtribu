@@ -413,6 +413,9 @@ Rooms:
     # region websocket message received
 
     def on_text_message_received(self, message: QChatTextMessage) -> None:
+        """
+        Launched when a text message is received from the websocket
+        """
         # check if a cheatcode is activated
         if self.settings.qchat_activate_cheatcode:
             activated = self.check_cheatcode(message.text)
@@ -467,6 +470,9 @@ Rooms:
         self.twg_chat.scrollToItem(item)
 
     def on_image_message_received(self, message: QChatImageMessage) -> None:
+        """
+        Launched when an image message is received from the websocket
+        """
         pixmap = QPixmap()
         data = base64.b64decode(message.image_data)
         pixmap.loadFromData(data)
@@ -483,6 +489,9 @@ Rooms:
         self.twg_chat.addTopLevelItem(item)
 
     def on_nb_users_message_received(self, message: QChatNbUsersMessage) -> None:
+        """
+        Launched when a nb_users message is received from the websocket
+        """
         self.grb_qchat.setTitle(
             self.tr("QChat - {nb_users} {user_txt}").format(
                 nb_users=message.nb_users,
@@ -491,6 +500,9 @@ Rooms:
         )
 
     def on_newcomer_message_received(self, message: QChatNewcomerMessage) -> None:
+        """
+        Launched when a newcomer message is received from the websocket
+        """
         if (
             self.settings.qchat_display_admin_messages
             and message.newcomer != self.settings.author_nickname
@@ -502,6 +514,9 @@ Rooms:
             )
 
     def on_exiter_message_received(self, message: QChatExiterMessage) -> None:
+        """
+        Launched when an exiter message is received from the websocket
+        """
         if (
             self.settings.qchat_display_admin_messages
             and message.exiter != self.settings.author_nickname
@@ -511,6 +526,9 @@ Rooms:
             )
 
     def on_like_message_received(self, message: QChatLikeMessage) -> None:
+        """
+        Launched when a like message is received from the websocket
+        """
         if message.liked_author == self.settings.author_nickname:
             self.log(
                 message=self.tr("{liker_author} liked your message: {message}").format(
