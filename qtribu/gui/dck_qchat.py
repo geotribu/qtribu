@@ -476,6 +476,10 @@ Rooms:
             message.avatar,
             pixmap,
         )
+        # set foreground color if sent by user
+        if message.author == self.settings.author_nickname:
+            for i in range(2):
+                item.setForeground(i, QBrush(QColor(self.settings.qchat_color_self)))
         self.twg_chat.addTopLevelItem(item)
 
     def on_nb_users_message_received(self, message: QChatNbUsersMessage) -> None:
