@@ -472,8 +472,8 @@ Rooms:
         pixmap.loadFromData(data)
         item = self.create_image_item(
             QTime.currentTime(),
-            self.settings.author_nickname,
-            self.settings.author_avatar,
+            message.author,
+            message.avatar,
             pixmap,
         )
         self.twg_chat.addTopLevelItem(item)
