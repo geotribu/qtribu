@@ -526,8 +526,6 @@ Rooms:
         Action called when clicking on a chat message
         """
         item.on_click(column)
-        if type(item) is QChatImageTreeWidgetItem:
-            QMessageBox.warning(self, "lol", "biglol")
 
     def on_message_double_clicked(self, item: QTreeWidgetItem, column: int) -> None:
         """
@@ -539,11 +537,6 @@ Rooms:
             return
         text = self.lne_message.text()
         self.lne_message.setText(f"{text}@{author} ")
-        self.lne_message.setFocus()
-
-    def mention_user(self, user: str) -> None:
-        text = self.lne_message.text()
-        self.lne_message.setText(f"{text}@{user} ")
         self.lne_message.setFocus()
 
     def on_like_message(self, liked_author: str, msg: str) -> None:
@@ -564,26 +557,22 @@ Rooms:
         Action called when right clicking on a chat message
         """
         item = self.twg_chat.itemAt(point)
-        author = item.text(1)
-        message = item.text(2)
 
         menu = QMenu(self.tr("QChat Menu"), self)
 
-        if (
-            author != self.settings.author_nickname
-            and author != ADMIN_MESSAGES_NICKNAME
-        ):
-            # like message action
+        # like message action if possible
+        if item.can_be_liked:
             like_action = QAction(
                 QgsApplication.getThemeIcon("mActionInOverview.svg"),
                 self.tr("Like message"),
             )
             like_action.triggered.connect(
-                partial(self.on_like_message, author, message)
+                partial(self.on_like_message, item.author, item.liked_message)
             )
             menu.addAction(like_action)
 
-            # mention user action
+        # mention author action if possible
+        if item.can_be_mentioned:
             mention_action = QAction(
                 QgsApplication.getThemeIcon("mMessageLogRead.svg"),
                 self.tr("Mention user"),
@@ -592,17 +581,15 @@ Rooms:
                 partial(self.on_message_double_clicked, item, 2)
             )
             menu.addAction(mention_action)
-            menu.addSeparator()
 
-        # copy message to clipboard action
-        copy_action = QAction(
-            QgsApplication.getThemeIcon("mActionEditCopy.svg"),
-            self.tr("Copy message to clipboard"),
-        )
-        copy_action.triggered.connect(
-            partial(self.on_copy_message_to_clipboard, message)
-        )
-        menu.addAction(copy_action)
+        # copy message to clipboard action if possible
+        if item.can_be_copied_to_clipboard:
+            copy_action = QAction(
+                QgsApplication.getThemeIcon("mActionEditCopy.svg"),
+                self.tr("Copy message to clipboard"),
+            )
+            copy_action.triggered.connect(item.copy_to_clipboard)
+            menu.addAction(copy_action)
 
         # hide message action
         hide_action = QAction(
@@ -613,12 +600,6 @@ Rooms:
         menu.addAction(hide_action)
 
         menu.exec(QCursor.pos())
-
-    def on_copy_message_to_clipboard(self, message: str) -> None:
-        """
-        Action called when copy to clipboard menu action is triggered
-        """
-        QgsApplication.instance().clipboard().setText(message)
 
     def on_hide_message(self, item: QTreeWidgetItem) -> None:
         """

@@ -58,6 +58,42 @@ class QChatTreeWidgetItem(QTreeWidgetItem):
         """
         Triggered when simple clicking on the item
         Empty because this is the expected behaviour
+        :param column: column that has been clicked
+        """
+        pass
+
+    @property
+    def can_be_liked(self) -> bool:
+        """
+        Returns if the item can be liked
+        """
+        return self.author != self.settings.author_nickname
+
+    @property
+    def liked_message(self) -> str:
+        """
+        Returns the text message that was liked
+        """
+        pass
+
+    @property
+    def can_be_mentioned(self) -> bool:
+        """
+        Returns if the item can be mentioned
+        """
+        return self.author != self.settings.author_nickname
+
+    @property
+    def can_be_copied_to_clipboard(self) -> bool:
+        """
+        Returns if the item can be copied to clipboard
+        """
+        return False
+
+    def copy_to_clipboard(self) -> None:
+        """
+        Performs action of copying message to clipboard
+        If the can_be_copied_to_clipboard is enabled ofc
         """
         pass
 
@@ -72,6 +108,14 @@ class QChatAdminTreeWidgetItem(QChatTreeWidgetItem):
         self.setText(MESSAGE_COLUMN, text)
         self.setToolTip(MESSAGE_COLUMN, text)
         self.set_foreground_color(self.settings.qchat_color_admin)
+
+    @property
+    def can_be_liked(self) -> bool:
+        return False
+
+    @property
+    def can_be_mentioned(self) -> bool:
+        return False
 
 
 class QChatTextTreeWidgetItem(QChatTreeWidgetItem):
@@ -89,6 +133,17 @@ class QChatTextTreeWidgetItem(QChatTreeWidgetItem):
         # set foreground color if sent by user
         if message.author == self.settings.author_nickname:
             self.set_foreground_color(self.settings.qchat_color_self)
+
+    @property
+    def liked_message(self) -> str:
+        return self.message.text
+
+    @property
+    def can_be_copied_to_clipboard(self) -> bool:
+        return True
+
+    def copy_to_clipboard(self) -> None:
+        QgsApplication.instance().clipboard().setPixmap(self.message.text)
 
 
 class QChatImageTreeWidgetItem(QChatTreeWidgetItem):
@@ -120,3 +175,14 @@ class QChatImageTreeWidgetItem(QChatTreeWidgetItem):
             dialog.setLayout(layout)
             dialog.setModal(True)
             dialog.show()
+
+    @property
+    def liked_message(self) -> str:
+        return "image"
+
+    @property
+    def can_be_copied_to_clipboard(self) -> bool:
+        return True
+
+    def copy_to_clipboard(self) -> None:
+        QgsApplication.instance().clipboard().setPixmap(self.pixmap)
