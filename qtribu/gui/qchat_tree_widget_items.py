@@ -206,6 +206,7 @@ class QChatGeojsonTreeWidgetItem(QChatTreeWidgetItem):
         self.message = message
         self.init_time_and_author()
         self.setText(MESSAGE_COLUMN, self.liked_message)
+        self.setToolTip(MESSAGE_COLUMN, self.liked_message)
 
         # set foreground color if sent by user
         if message.author == self.settings.author_nickname:
