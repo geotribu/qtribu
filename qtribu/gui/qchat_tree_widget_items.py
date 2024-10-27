@@ -230,7 +230,7 @@ class QChatGeojsonTreeWidgetItem(QChatTreeWidgetItem):
         layer_name = self.message.layer_name
         nb_features = len(self.message.geojson["features"])
         crs = self.message.crs_authid
-        return f"<'{layer_name}' layer: #{nb_features} features using CRS {crs}>"
+        return f'<layer "{layer_name}": {nb_features} features, CRS={crs}>'
 
     @property
     def can_be_copied_to_clipboard(self) -> bool:
