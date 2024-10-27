@@ -1,5 +1,6 @@
 # standard
 import base64
+import json
 import os
 import tempfile
 from functools import partial
@@ -8,7 +9,7 @@ from typing import Optional
 
 # PyQGIS
 from PyQt5 import QtWebSockets  # noqa QGS103
-from qgis.core import Qgis, QgsApplication
+from qgis.core import Qgis, QgsApplication, QgsJsonExporter, QgsMapLayer
 from qgis.gui import QgisInterface, QgsDockWidget
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import QPoint, Qt
@@ -33,13 +34,16 @@ from qtribu.constants import (
     QCHAT_NICKNAME_MINLENGTH,
 )
 from qtribu.gui.qchat_tree_widget_items import (
+    MESSAGE_COLUMN,
     QChatAdminTreeWidgetItem,
+    QChatGeojsonTreeWidgetItem,
     QChatImageTreeWidgetItem,
     QChatTextTreeWidgetItem,
 )
 from qtribu.logic.qchat_api_client import QChatApiClient
 from qtribu.logic.qchat_messages import (
     QChatExiterMessage,
+    QChatGeojsonMessage,
     QChatImageMessage,
     QChatLikeMessage,
     QChatNbUsersMessage,
@@ -149,6 +153,7 @@ class QChatWidget(QgsDockWidget):
         )
         self.qchat_ws.exiter_message_received.connect(self.on_exiter_message_received)
         self.qchat_ws.like_message_received.connect(self.on_like_message_received)
+        self.qchat_ws.geojson_message_received.connect(self.on_geojson_message_received)
 
         # send message signal listener
         self.lne_message.returnPressed.connect(self.on_send_button_clicked)
@@ -215,6 +220,11 @@ class QChatWidget(QgsDockWidget):
             self.current_room = MARKER_VALUE
 
         self.cbb_room.currentIndexChanged.connect(self.on_room_changed)
+
+        # context menu on vector layer for sending as geojson in QChat
+        self.iface.layerTreeView().contextMenuAboutToShow.connect(
+            self.generate_qaction_send_geojson_layer
+        )
 
         # auto reconnect to room if needed
         if self.auto_reconnect_room:
@@ -519,6 +529,14 @@ Rooms:
                     self.settings.qchat_ring_tone, self.settings.qchat_sound_volume
                 )
 
+    def on_geojson_message_received(self, message: QChatGeojsonMessage) -> None:
+        """
+        Launched when a geojson message is received from the websocket
+        """
+        item = QChatGeojsonTreeWidgetItem(self.twg_chat, message)
+        self.twg_chat.addTopLevelItem(item)
+        self.twg_chat.scrollToItem(item)
+
     # endregion
 
     def on_message_clicked(self, item: QTreeWidgetItem, column: int) -> None:
@@ -559,6 +577,17 @@ Rooms:
         item = self.twg_chat.itemAt(point)
 
         menu = QMenu(self.tr("QChat Menu"), self)
+
+        # if this is a geojson
+        if type(item) is QChatGeojsonTreeWidgetItem:
+            load_geojson_action = QAction(
+                QgsApplication.getThemeIcon("mActionAddLayer.svg"),
+                self.tr("Load geojson in QGIS"),
+            )
+            load_geojson_action.triggered.connect(
+                partial(item.on_click, MESSAGE_COLUMN)
+            )
+            menu.addAction(load_geojson_action)
 
         # like message action if possible
         if item.can_be_liked:
@@ -732,6 +761,11 @@ Rooms:
         self.cbb_room.currentIndexChanged.disconnect()
         self.initialized = False
 
+        # remove context menu on vector layer for sending as geojson in QChat
+        self.iface.layerTreeView().contextMenuAboutToShow.disconnect(
+            self.generate_qaction_send_geojson_layer
+        )
+
     def check_cheatcode(self, text: str) -> bool:
         """
         Checks if a received message contains a cheatcode
@@ -783,3 +817,61 @@ Visit the website ?
         return_value = msg_box.exec()
         if return_value == QMessageBox.Yes:
             open_url_in_webviewer("https://qgis.org/funding/donate/", "qgis.org")
+
+    def generate_qaction_send_geojson_layer(self, menu: QMenu) -> None:
+        menu.addSeparator()
+        send_geojson_action = QAction(
+            QgsApplication.getThemeIcon("mMessageLog.svg"),
+            self.tr("Send on QChat"),
+            self.iface.mainWindow(),
+        )
+        send_geojson_action.triggered.connect(self.on_send_layer_to_qchat)
+        menu.addAction(send_geojson_action)
+
+    def on_send_layer_to_qchat(self) -> None:
+        if not self.connected:
+            self.log(
+                message=self.tr(
+                    "Not connected to QChat. Please connect to a room first"
+                ),
+                application=self.tr("QChat"),
+                log_level=Qgis.Critical,
+                push=PlgOptionsManager().get_plg_settings().notify_push_info,
+                duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
+            )
+            return
+        layer = self.iface.activeLayer()
+        if not layer:
+            self.log(
+                message=self.tr("No active layer in current QGIS project"),
+                application=self.tr("QChat"),
+                log_level=Qgis.Critical,
+                push=PlgOptionsManager().get_plg_settings().notify_push_info,
+                duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
+            )
+            return
+        if layer.type() != QgsMapLayer.VectorLayer:
+            self.log(
+                message=self.tr("Only vector layers can be sent on QChat"),
+                application=self.tr("QChat"),
+                log_level=Qgis.Critical,
+                push=PlgOptionsManager().get_plg_settings().notify_push_info,
+                duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
+            )
+            return
+
+        exporter = QgsJsonExporter(layer)
+        exporter.setSourceCrs(layer.crs())
+        exporter.setDestinationCrs(layer.crs())
+        exporter.setTransformGeometries(True)
+        geojson_str = exporter.exportFeatures(layer.getFeatures())
+        message = QChatGeojsonMessage(
+            type="geojson",
+            author=self.settings.author_nickname,
+            avatar=self.settings.author_avatar,
+            layer_name=layer.name(),
+            crs_wkt=layer.crs().toWkt(),
+            crs_authid=layer.crs().authid(),
+            geojson=json.loads(geojson_str),
+        )
+        self.qchat_ws.send_message(message)
