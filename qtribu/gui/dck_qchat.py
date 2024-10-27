@@ -49,6 +49,7 @@ from qtribu.logic.qchat_messages import (
     QChatNbUsersMessage,
     QChatNewcomerMessage,
     QChatTextMessage,
+    QChatUncompliantMessage,
 )
 from qtribu.logic.qchat_websocket import QChatWebsocket
 from qtribu.tasks.dizzy import DizzyTask
@@ -143,6 +144,9 @@ class QChatWidget(QgsDockWidget):
         # initialize websocket client
         self.qchat_ws = QChatWebsocket()
         self.qchat_ws.error.connect(self.on_ws_error)
+        self.qchat_ws.uncompliant_message_received.connect(
+            self.on_uncompliant_message_received
+        )
         self.qchat_ws.text_message_received.connect(self.on_text_message_received)
         self.qchat_ws.image_message_received.connect(self.on_image_message_received)
         self.qchat_ws.nb_users_message_received.connect(
@@ -422,6 +426,17 @@ Rooms:
         )
 
     # region websocket message received
+
+    def on_uncompliant_message_received(self, message: QChatUncompliantMessage) -> None:
+        self.log(
+            message=self.tr("Uncompliant message: {reason}").format(
+                reason=message.reason
+            ),
+            application=self.tr("QChat"),
+            log_level=Qgis.Critical,
+            push=PlgOptionsManager().get_plg_settings().notify_push_info,
+            duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
+        )
 
     def on_text_message_received(self, message: QChatTextMessage) -> None:
         """

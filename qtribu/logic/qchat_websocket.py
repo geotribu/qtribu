@@ -14,6 +14,7 @@ from qtribu.logic.qchat_messages import (
     QChatNbUsersMessage,
     QChatNewcomerMessage,
     QChatTextMessage,
+    QChatUncompliantMessage,
 )
 from qtribu.toolbelt import PlgLogger
 
@@ -49,6 +50,7 @@ class QChatWebsocket(QObject):
     error = pyqtSignal(int)
 
     # QChat message signals
+    uncompliant_message_received = pyqtSignal(QChatUncompliantMessage)
     text_message_received = pyqtSignal(QChatTextMessage)
     image_message_received = pyqtSignal(QChatImageMessage)
     nb_users_message_received = pyqtSignal(QChatNbUsersMessage)
@@ -96,7 +98,9 @@ class QChatWebsocket(QObject):
         """
         message = json.loads(text)
         msg_type = message["type"]
-        if msg_type == "text":
+        if msg_type == "uncompliant":
+            self.uncompliant_message_received.emit(QChatUncompliantMessage(**message))
+        elif msg_type == "text":
             self.text_message_received.emit(QChatTextMessage(**message))
         elif msg_type == "image":
             self.image_message_received.emit(QChatImageMessage(**message))

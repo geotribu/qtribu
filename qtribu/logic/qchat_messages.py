@@ -8,6 +8,11 @@ class QChatMessage:
 
 
 @dataclass(init=True, frozen=True)
+class QChatUncompliantMessage(QChatMessage):
+    reason: str
+
+
+@dataclass(init=True, frozen=True)
 class QChatTextMessage(QChatMessage):
     author: str
     avatar: Optional[str]
