@@ -196,7 +196,6 @@ QCHAT_NICKNAME_MINLENGTH: int = 3
 ADMIN_MESSAGES_NICKNAME: str = "admin"
 ADMIN_MESSAGES_AVATAR: str = "mIconWarning.svg"
 ERROR_MESSAGES_COLOR: str = "#ff0000"
-INTERNAL_MESSAGE_AUTHOR: str = "internal"
 QCHAT_USER_AVATARS: dict[str, str] = {
     "Arrow Up": "mActionArrowUp.svg",
     "Calculate": "mActionCalculateField.svg",
@@ -221,14 +220,12 @@ QCHAT_USER_AVATARS: dict[str, str] = {
 
 # QChat cheatcodes
 CHEATCODE_DIZZY: str = "givemesomecheese"
-CHEATCODE_DONTCRYBABY: str = "dontcrybaby"
 CHEATCODE_IAMAROBOT: str = "iamarobot"
 CHEATCODE_10OCLOCK: str = "its10oclock"
 CHEATCODE_QGIS_PRO_LICENSE: str = "qgisprolicense"
 
 CHEATCODES = [
     CHEATCODE_DIZZY,
-    CHEATCODE_DONTCRYBABY,
     CHEATCODE_IAMAROBOT,
     CHEATCODE_10OCLOCK,
     CHEATCODE_QGIS_PRO_LICENSE,
