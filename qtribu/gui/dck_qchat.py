@@ -178,6 +178,18 @@ class QChatWidget(QgsDockWidget):
             QIcon(QgsApplication.iconPath("mActionAddImage.svg"))
         )
 
+        # send extent message signa listener
+        self.btn_send_extent.pressed.connect(self.on_send_extent_button_clicked)
+        self.btn_send_extent.setIcon(
+            QIcon(QgsApplication.iconPath("mActionViewExtentInCanvas.svg"))
+        )
+
+        # send CRS message signa listener
+        self.btn_send_crs.pressed.connect(self.on_send_crs_button_clicked)
+        self.btn_send_crs.setIcon(
+            QIcon(QgsApplication.iconPath("mActionSetProjection.svg"))
+        )
+
     @property
     def settings(self) -> PlgSettingsStructure:
         return self.plg_settings.get_plg_settings()
@@ -187,7 +199,9 @@ class QChatWidget(QgsDockWidget):
         self.grb_instance.setTitle(
             self.tr("Instance: {uri}").format(uri=self.settings.qchat_instance_uri)
         )
-        self.lbl_nickname.setText(self.settings.author_nickname)
+        self.grb_user.setTitle(
+            self.tr("User: {nickname}").format(nickname=self.settings.author_nickname)
+        )
         self.btn_send.setIcon(
             QIcon(QgsApplication.iconPath(self.settings.author_avatar))
         )
@@ -360,8 +374,7 @@ Rooms:
         Action called when websocket is connected to a room
         """
         self.btn_connect.setText(self.tr("Disconnect"))
-        self.lbl_status.setText("Connected")
-        self.grb_room.setTitle(self.tr("Room: {room}").format(room=room))
+        self.grb_room.setTitle(self.tr("Room ({room}) - connected").format(room=room))
         self.btn_list_users.setEnabled(True)
         self.grb_user.setEnabled(True)
         self.current_room = room
@@ -397,7 +410,7 @@ Rooms:
                 ),
             )
         self.btn_connect.setText(self.tr("Connect"))
-        self.lbl_status.setText("Disconnected")
+        self.grb_room.setTitle(self.tr("Room - disconnected"))
         self.grb_room.setTitle(self.tr("Room"))
         self.grb_qchat.setTitle(self.tr("QChat"))
         self.btn_list_users.setEnabled(False)
@@ -747,6 +760,10 @@ Rooms:
                 self.qchat_ws.send_message(message)
 
     def on_send_screenshot_button_clicked(self) -> None:
+        """
+        Action called when the Send QGIS screenshot button is clicked
+        """
+
         sc_fp = os.path.join(tempfile.gettempdir(), "qgis_screenshot.png")
         self.iface.mapCanvas().saveAsImage(sc_fp)
         with open(sc_fp, "rb") as file:
@@ -758,6 +775,20 @@ Rooms:
                 image_data=base64.b64encode(data).decode("utf-8"),
             )
             self.qchat_ws.send_message(message)
+
+    def on_send_extent_button_clicked(self) -> None:
+        """
+        Action called when the Send extent button is clicked
+        """
+        QMessageBox.critical(
+            self, self.tr("Send extent"), self.tr("Not implemented yet")
+        )
+
+    def on_send_crs_button_clicked(self) -> None:
+        """
+        Action called when the Send CRS button is clicked
+        """
+        QMessageBox.critical(self, self.tr("Send CRS"), self.tr("Not implemented yet"))
 
     def add_admin_message(self, text: str) -> None:
         """
