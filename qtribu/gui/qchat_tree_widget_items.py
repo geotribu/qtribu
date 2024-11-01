@@ -1,7 +1,15 @@
 import base64
+import json
+import os
+import tempfile
 from typing import Optional
 
-from qgis.core import QgsApplication
+from qgis.core import (
+    QgsApplication,
+    QgsCoordinateReferenceSystem,
+    QgsProject,
+    QgsVectorLayer,
+)
 from qgis.PyQt.QtCore import QTime
 from qgis.PyQt.QtGui import QBrush, QColor, QIcon, QPixmap
 from qgis.PyQt.QtWidgets import (
@@ -13,7 +21,11 @@ from qgis.PyQt.QtWidgets import (
 )
 
 from qtribu.constants import ADMIN_MESSAGES_AVATAR, ADMIN_MESSAGES_NICKNAME
-from qtribu.logic.qchat_messages import QChatImageMessage, QChatTextMessage
+from qtribu.logic.qchat_messages import (
+    QChatGeojsonMessage,
+    QChatImageMessage,
+    QChatTextMessage,
+)
 from qtribu.toolbelt import PlgOptionsManager
 from qtribu.toolbelt.preferences import PlgSettingsStructure
 
@@ -143,7 +155,7 @@ class QChatTextTreeWidgetItem(QChatTreeWidgetItem):
         return True
 
     def copy_to_clipboard(self) -> None:
-        QgsApplication.instance().clipboard().setPixmap(self.message.text)
+        QgsApplication.instance().clipboard().setText(self.message.text)
 
 
 class QChatImageTreeWidgetItem(QChatTreeWidgetItem):
@@ -186,3 +198,43 @@ class QChatImageTreeWidgetItem(QChatTreeWidgetItem):
 
     def copy_to_clipboard(self) -> None:
         QgsApplication.instance().clipboard().setPixmap(self.pixmap)
+
+
+class QChatGeojsonTreeWidgetItem(QChatTreeWidgetItem):
+    def __init__(self, parent: QTreeWidget, message: QChatGeojsonMessage):
+        super().__init__(parent, QTime.currentTime(), message.author, message.avatar)
+        self.message = message
+        self.init_time_and_author()
+        self.setText(MESSAGE_COLUMN, self.liked_message)
+        self.setToolTip(MESSAGE_COLUMN, self.liked_message)
+
+        # set foreground color if sent by user
+        if message.author == self.settings.author_nickname:
+            self.set_foreground_color(self.settings.qchat_color_self)
+
+    def on_click(self, column: int) -> None:
+        if column == MESSAGE_COLUMN:
+            # save geojson to temp file
+            save_path = os.path.join(
+                tempfile.gettempdir(), f"{self.message.layer_name}.geojson"
+            )
+            with open(save_path, "w") as file:
+                json.dump(self.message.geojson, file)
+            # load geojson file into QGIS
+            layer = QgsVectorLayer(save_path, self.message.layer_name, "ogr")
+            layer.setCrs(QgsCoordinateReferenceSystem.fromWkt(self.message.crs_wkt))
+            QgsProject.instance().addMapLayer(layer)
+
+    @property
+    def liked_message(self) -> str:
+        layer_name = self.message.layer_name
+        nb_features = len(self.message.geojson["features"])
+        crs = self.message.crs_authid
+        return f'<layer "{layer_name}": {nb_features} features, CRS={crs}>'
+
+    @property
+    def can_be_copied_to_clipboard(self) -> bool:
+        return True
+
+    def copy_to_clipboard(self) -> None:
+        QgsApplication.instance().clipboard().setText(json.dumps(self.message.geojson))

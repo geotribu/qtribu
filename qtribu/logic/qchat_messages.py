@@ -8,6 +8,11 @@ class QChatMessage:
 
 
 @dataclass(init=True, frozen=True)
+class QChatUncompliantMessage(QChatMessage):
+    reason: str
+
+
+@dataclass(init=True, frozen=True)
 class QChatTextMessage(QChatMessage):
     author: str
     avatar: Optional[str]
@@ -41,3 +46,13 @@ class QChatLikeMessage(QChatMessage):
     liker_author: str
     liked_author: str
     message: str
+
+
+@dataclass(init=True, frozen=True)
+class QChatGeojsonMessage(QChatMessage):
+    author: str
+    avatar: Optional[str]
+    layer_name: str
+    crs_wkt: str
+    crs_authid: str
+    geojson: dict
