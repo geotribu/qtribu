@@ -1,17 +1,29 @@
 # standard
-import json
+import base64
+import os
+import tempfile
 from functools import partial
 from pathlib import Path
-from typing import Any, Optional
+from typing import Optional
 
 # PyQGIS
 from PyQt5 import QtWebSockets  # noqa QGS103
 from qgis.core import Qgis, QgsApplication
 from qgis.gui import QgisInterface, QgsDockWidget
 from qgis.PyQt import uic
-from qgis.PyQt.QtCore import QPoint, Qt, QTime, QUrl
-from qgis.PyQt.QtGui import QBrush, QColor, QCursor, QIcon
-from qgis.PyQt.QtWidgets import QAction, QMenu, QMessageBox, QTreeWidgetItem, QWidget
+from qgis.PyQt.QtCore import QPoint, Qt, QTime
+from qgis.PyQt.QtGui import QBrush, QColor, QCursor, QIcon, QPixmap
+from qgis.PyQt.QtWidgets import (
+    QAction,
+    QDialog,
+    QFileDialog,
+    QLabel,
+    QMenu,
+    QMessageBox,
+    QTreeWidgetItem,
+    QVBoxLayout,
+    QWidget,
+)
 
 from qtribu.__about__ import __title__
 from qtribu.constants import (
@@ -19,14 +31,21 @@ from qtribu.constants import (
     ADMIN_MESSAGES_NICKNAME,
     CHEATCODE_10OCLOCK,
     CHEATCODE_DIZZY,
-    CHEATCODE_DONTCRYBABY,
     CHEATCODE_IAMAROBOT,
     CHEATCODE_QGIS_PRO_LICENSE,
     CHEATCODES,
-    INTERNAL_MESSAGE_AUTHOR,
     QCHAT_NICKNAME_MINLENGTH,
 )
-from qtribu.logic.qchat_client import QChatApiClient
+from qtribu.logic.qchat_api_client import QChatApiClient
+from qtribu.logic.qchat_messages import (
+    QChatExiterMessage,
+    QChatImageMessage,
+    QChatLikeMessage,
+    QChatNbUsersMessage,
+    QChatNewcomerMessage,
+    QChatTextMessage,
+)
+from qtribu.logic.qchat_websocket import QChatWebsocket
 from qtribu.tasks.dizzy import DizzyTask
 
 # plugin
@@ -44,7 +63,8 @@ class QChatWidget(QgsDockWidget):
     connected: bool = False
     current_room: Optional[str] = None
 
-    qchat_client = QChatApiClient
+    qchat_client: QChatApiClient
+    qchat_ws: QChatWebsocket
 
     def __init__(
         self,
@@ -96,6 +116,7 @@ class QChatWidget(QgsDockWidget):
                 self.tr("Message"),
             ]
         )
+        self.twg_chat.itemClicked.connect(self.on_message_clicked)
         self.twg_chat.itemDoubleClicked.connect(self.on_message_double_clicked)
         self.twg_chat.setContextMenuPolicy(Qt.CustomContextMenu)
         self.twg_chat.customContextMenuRequested.connect(
@@ -115,17 +136,36 @@ class QChatWidget(QgsDockWidget):
         )
 
         # initialize websocket client
-        self.ws_client = QtWebSockets.QWebSocket(
-            "", QtWebSockets.QWebSocketProtocol.Version13, None
+        self.qchat_ws = QChatWebsocket()
+        self.qchat_ws.error.connect(self.on_ws_error)
+        self.qchat_ws.text_message_received.connect(self.on_text_message_received)
+        self.qchat_ws.image_message_received.connect(self.on_image_message_received)
+        self.qchat_ws.nb_users_message_received.connect(
+            self.on_nb_users_message_received
         )
-        self.ws_client.error.connect(self.on_ws_error)
-        self.ws_client.textMessageReceived.connect(self.on_ws_message_received)
+        self.qchat_ws.newcomer_message_received.connect(
+            self.on_newcomer_message_received
+        )
+        self.qchat_ws.exiter_message_received.connect(self.on_exiter_message_received)
+        self.qchat_ws.like_message_received.connect(self.on_like_message_received)
 
         # send message signal listener
         self.lne_message.returnPressed.connect(self.on_send_button_clicked)
         self.btn_send.pressed.connect(self.on_send_button_clicked)
         self.btn_send.setIcon(
             QIcon(QgsApplication.iconPath("mActionDoubleArrowRight.svg"))
+        )
+
+        # send image message signal listener
+        self.btn_send_image.pressed.connect(self.on_send_image_button_clicked)
+        self.btn_send_image.setIcon(
+            QIcon(QgsApplication.iconPath("mActionAddImage.svg"))
+        )
+
+        # send QGIS screenshot message signal listener
+        self.btn_send_screenshot.pressed.connect(self.on_send_screenshot_button_clicked)
+        self.btn_send_screenshot.setIcon(
+            QIcon(QgsApplication.iconPath("mActionAddImage.svg"))
         )
 
     @property
@@ -297,12 +337,8 @@ Rooms:
         """
         Connect widget to a specific room
         """
-        protocol, domain = self.settings.qchat_instance_uri.split("://")
-        ws_protocol = "wss" if protocol == "https" else "ws"
-        ws_instance_url = f"{ws_protocol}://{domain}"
-        ws_url = f"{ws_instance_url}/room/{room}/ws"
-        self.ws_client.open(QUrl(ws_url))
-        self.ws_client.connected.connect(partial(self.on_ws_connected, room))
+        self.qchat_ws.open(self.settings.qchat_instance_uri, room)
+        self.qchat_ws.connected.connect(partial(self.on_ws_connected, room))
 
     def on_ws_connected(self, room: str) -> None:
         """
@@ -322,7 +358,7 @@ Rooms:
             self.plg_settings.save_from_object(settings)
 
         self.connected = True
-        self.log(message=f"Websocket connected to room {room}")
+        self.twg_chat.clear()
         if self.settings.qchat_display_admin_messages:
             self.add_admin_message(
                 self.tr("Connected to room '{room}'").format(room=room)
@@ -330,11 +366,10 @@ Rooms:
 
         # send newcomer message to websocket
         if not self.settings.qchat_incognito_mode:
-            message = {
-                "author": INTERNAL_MESSAGE_AUTHOR,
-                "newcomer": self.settings.author_nickname,
-            }
-            self.ws_client.sendTextMessage(json.dumps(message))
+            message = QChatNewcomerMessage(
+                type="newcomer", newcomer=self.settings.author_nickname
+            )
+            self.qchat_ws.send_message(message)
 
     def disconnect_from_room(self, log: bool = True, close_ws: bool = True) -> None:
         """
@@ -354,8 +389,8 @@ Rooms:
         self.grb_user.setEnabled(False)
         self.connected = False
         if close_ws:
-            self.ws_client.connected.disconnect()
-            self.ws_client.close()
+            self.qchat_ws.connected.disconnect()
+            self.qchat_ws.close()
 
     def on_ws_disconnected(self) -> None:
         """
@@ -369,51 +404,42 @@ Rooms:
         Action called when an error appears on the websocket
         """
         if self.settings.qchat_display_admin_messages:
-            self.add_admin_message(self.ws_client.errorString())
+            self.add_admin_message(self.qchat_ws.error_string())
         self.log(
-            message=f"{error_code}: {self.ws_client.errorString()}",
+            message=f"{error_code}: {self.qchat_ws.error_string()}",
             log_level=Qgis.Critical,
         )
 
-    def on_ws_message_received(self, message: str) -> None:
+    # region websocket message received
+
+    def on_text_message_received(self, message: QChatTextMessage) -> None:
         """
-        Action called when a message is received from the websocket
+        Launched when a text message is received from the websocket
         """
-        message = json.loads(message)
-
-        # check if this is an internal message
-        if message["author"] == INTERNAL_MESSAGE_AUTHOR:
-            self.handle_internal_message(message)
-            return
-
-        self.log(
-            message=f"Message received: [{message['author']}]: '{message['message']}'"
-        )
-
         # check if a cheatcode is activated
         if self.settings.qchat_activate_cheatcode:
-            activated = self.check_cheatcode(message)
+            activated = self.check_cheatcode(message.text)
             if activated:
                 return
 
-        # do not display cheatcodes
-        if message["message"] in CHEATCODES:
+        # do not display cheatcodes even if not activated
+        if message.text in CHEATCODES:
             return
 
         # check if message mentions current user
-        words = message["message"].split(" ")
+        words = message.text.split(" ")
         if f"@{self.settings.author_nickname}" in words or "@all" in words:
             item = self.create_message_item(
-                message["author"],
-                message["avatar"],
-                message["message"],
+                message.author,
+                message.avatar,
+                message.text,
                 foreground_color=self.settings.qchat_color_mention,
             )
-            if message["author"] != self.settings.author_nickname:
+            if message.author != self.settings.author_nickname:
                 self.log(
                     message=self.tr(
                         "You were mentionned by {sender}: {message}"
-                    ).format(sender=message["author"], message=message["message"]),
+                    ).format(sender=message.author, message=message.text),
                     application=self.tr("QChat"),
                     log_level=Qgis.Info,
                     push=PlgOptionsManager().get_plg_settings().notify_push_info,
@@ -427,61 +453,86 @@ Rooms:
                     play_resource_sound(
                         self.settings.qchat_ring_tone, self.settings.qchat_sound_volume
                     )
-        elif message["author"] == self.settings.author_nickname:
+        elif message.author == self.settings.author_nickname:
             item = self.create_message_item(
-                message["author"],
-                message["avatar"],
-                message["message"],
+                message.author,
+                message.avatar,
+                message.text,
                 foreground_color=self.settings.qchat_color_self,
             )
         else:
             item = self.create_message_item(
-                message["author"],
-                message["avatar"],
-                message["message"],
+                message.author,
+                message.avatar,
+                message.text,
             )
         self.twg_chat.addTopLevelItem(item)
         self.twg_chat.scrollToItem(item)
 
-    def handle_internal_message(self, message: dict[str, Any]) -> None:
+    def on_image_message_received(self, message: QChatImageMessage) -> None:
         """
-        Handle an internal message, spotted by its author
+        Launched when an image message is received from the websocket
         """
-        if "nb_users" in message:
-            nb_users = message["nb_users"]
-            self.grb_qchat.setTitle(
-                self.tr("QChat - {nb_users} {user_txt}").format(
-                    nb_users=nb_users,
-                    user_txt=self.tr("user") if nb_users <= 1 else self.tr("users"),
+        pixmap = QPixmap()
+        data = base64.b64decode(message.image_data)
+        pixmap.loadFromData(data)
+        item = self.create_image_item(
+            QTime.currentTime(),
+            message.author,
+            message.avatar,
+            pixmap,
+        )
+        # set foreground color if sent by user
+        if message.author == self.settings.author_nickname:
+            for i in range(2):
+                item.setForeground(i, QBrush(QColor(self.settings.qchat_color_self)))
+        self.twg_chat.addTopLevelItem(item)
+
+    def on_nb_users_message_received(self, message: QChatNbUsersMessage) -> None:
+        """
+        Launched when a nb_users message is received from the websocket
+        """
+        self.grb_qchat.setTitle(
+            self.tr("QChat - {nb_users} {user_txt}").format(
+                nb_users=message.nb_users,
+                user_txt=self.tr("user") if message.nb_users <= 1 else self.tr("users"),
+            )
+        )
+
+    def on_newcomer_message_received(self, message: QChatNewcomerMessage) -> None:
+        """
+        Launched when a newcomer message is received from the websocket
+        """
+        if (
+            self.settings.qchat_display_admin_messages
+            and message.newcomer != self.settings.author_nickname
+        ):
+            self.add_admin_message(
+                self.tr("{newcomer} has joined the room").format(
+                    newcomer=message.newcomer
                 )
             )
-            self.log(message=f"Internal message received: {nb_users} users in room")
+
+    def on_exiter_message_received(self, message: QChatExiterMessage) -> None:
+        """
+        Launched when an exiter message is received from the websocket
+        """
         if (
-            "newcomer" in message
-            and self.settings.qchat_display_admin_messages
-            and message["newcomer"] != self.settings.author_nickname
+            self.settings.qchat_display_admin_messages
+            and message.exiter != self.settings.author_nickname
         ):
-            newcomer = message["newcomer"]
             self.add_admin_message(
-                self.tr("{newcomer} has joined the room").format(newcomer=newcomer)
+                self.tr("{exiter} has left the room").format(exiter=message.exiter)
             )
-        if (
-            "exiter" in message
-            and self.settings.qchat_display_admin_messages
-            and message["exiter"] != self.settings.author_nickname
-        ):
-            exiter = message["exiter"]
-            self.add_admin_message(
-                self.tr("{newcomer} has left the room").format(newcomer=exiter)
-            )
-        if (
-            "liker_author" in message
-            and "liked_author" in message
-            and message["liked_author"] == self.settings.author_nickname
-        ):
+
+    def on_like_message_received(self, message: QChatLikeMessage) -> None:
+        """
+        Launched when a like message is received from the websocket
+        """
+        if message.liked_author == self.settings.author_nickname:
             self.log(
-                message=self.tr('{liker_author} liked your message "{message}"').format(
-                    liker_author=message["liker_author"], message=message["message"]
+                message=self.tr("{liker_author} liked your message: {message}").format(
+                    liker_author=message.liker_author, message=message.message
                 ),
                 application=self.tr("QChat"),
                 log_level=Qgis.Success,
@@ -494,27 +545,55 @@ Rooms:
                     self.settings.qchat_ring_tone, self.settings.qchat_sound_volume
                 )
 
+    # endregion
+
+    def on_message_clicked(self, item: QTreeWidgetItem, column: int) -> None:
+        """
+        Action called when clicking on a chat message
+        """
+        author = item.text(1)
+        widget = self.twg_chat.itemWidget(item, 2)
+        # if there is a widget (QLabel) usually,
+        # it means that there is an image
+        # -> display the image in a new window
+        if column == 2 and widget:
+            pixmap = widget.pixmap()
+            dialog = QDialog(self)
+            dialog.setWindowTitle(
+                self.tr("QChat image sent by {author}").format(author=author)
+            )
+            layout = QVBoxLayout()
+            label = QLabel()
+            label.setPixmap(pixmap)
+            layout.addWidget(label)
+            dialog.setLayout(layout)
+            dialog.setModal(True)
+            dialog.show()
+
     def on_message_double_clicked(self, item: QTreeWidgetItem, column: int) -> None:
         """
         Action called when double clicking on a chat message
         """
-        text = self.lne_message.text()
         author = item.text(1)
+        # do nothing if double click on admin message
+        if author == ADMIN_MESSAGES_NICKNAME:
+            return
+        text = self.lne_message.text()
         self.lne_message.setText(f"{text}@{author} ")
         self.lne_message.setFocus()
 
-    def on_like_message(self, liked_author: str, message: str) -> None:
+    def on_like_message(self, liked_author: str, msg: str) -> None:
         """
         Action called when the "Like message" action is triggered
         This may happen on right-click on a message
         """
-        internal_message = {
-            "author": INTERNAL_MESSAGE_AUTHOR,
-            "message": message,
-            "liker_author": self.settings.author_nickname,
-            "liked_author": liked_author,
-        }
-        self.ws_client.sendTextMessage(json.dumps(internal_message))
+        message = QChatLikeMessage(
+            type="like",
+            liker_author=self.settings.author_nickname,
+            liked_author=liked_author,
+            message=msg,
+        )
+        self.qchat_ws.send_message(message)
 
     def on_custom_context_menu_requested(self, point: QPoint) -> None:
         """
@@ -649,13 +728,47 @@ Rooms:
             return
 
         # send message to websocket
-        message = {
-            "message": message_text.strip(),
-            "author": nickname,
-            "avatar": avatar,
-        }
-        self.ws_client.sendTextMessage(json.dumps(message))
+        message = QChatTextMessage(
+            type="text", author=nickname, avatar=avatar, text=message_text.strip()
+        )
+        self.qchat_ws.send_message(message)
         self.lne_message.setText("")
+
+    def on_send_image_button_clicked(self) -> None:
+        """
+        Action called when the send image button is clicked
+        """
+
+        # select some image files on disk
+        files = QFileDialog.getOpenFileNames(
+            parent=self,
+            caption=self.tr("Select images to send to the chat"),
+            filter="Images (*.png *.jpg *.jpeg)",
+        )
+        for fp in files[0]:
+            # send the image through the websocket
+            with open(fp, "rb") as file:
+                data = file.read()
+                message = QChatImageMessage(
+                    type="image",
+                    author=self.settings.author_nickname,
+                    avatar=self.settings.author_avatar,
+                    image_data=base64.b64encode(data).decode("utf-8"),
+                )
+                self.qchat_ws.send_message(message)
+
+    def on_send_screenshot_button_clicked(self) -> None:
+        sc_fp = os.path.join(tempfile.gettempdir(), "qgis_screenshot.png")
+        self.iface.mapCanvas().saveAsImage(sc_fp)
+        with open(sc_fp, "rb") as file:
+            data = file.read()
+            message = QChatImageMessage(
+                type="image",
+                author=self.settings.author_nickname,
+                avatar=self.settings.author_avatar,
+                image_data=base64.b64encode(data).decode("utf-8"),
+            )
+            self.qchat_ws.send_message(message)
 
     def add_admin_message(self, message: str) -> None:
         """
@@ -699,6 +812,20 @@ Rooms:
                 item.setBackground(i, QBrush(QColor(background_color)))
         return item
 
+    def create_image_item(
+        self, time: QTime, author: str, avatar: Optional[str], pixmap: QPixmap
+    ) -> QTreeWidgetItem:
+        item = QTreeWidgetItem(self.twg_chat)
+        item.setText(0, time.toString())
+        item.setText(1, author)
+        if self.settings.qchat_show_avatars:
+            item.setIcon(1, QIcon(QgsApplication.iconPath(avatar)))
+        label = QLabel(self.twg_chat)
+        label.setPixmap(pixmap)
+        item.treeWidget().setItemWidget(item, 2, label)
+        item.setSizeHint(2, pixmap.size())
+        return item
+
     def on_widget_closed(self) -> None:
         """
         Action called when the widget is closed
@@ -708,22 +835,20 @@ Rooms:
         self.cbb_room.currentIndexChanged.disconnect()
         self.initialized = False
 
-    def check_cheatcode(self, message: dict[str, str]) -> bool:
+    def check_cheatcode(self, text: str) -> bool:
         """
         Checks if a received message contains a cheatcode
         Does action if necessary
         Returns true if a cheatcode has been activated
         """
-        msg = message["message"]
-
         # make QGIS shuffle for a few seconds
-        if msg == CHEATCODE_DIZZY:
+        if text == CHEATCODE_DIZZY:
             task = DizzyTask(f"Cheatcode activation: {CHEATCODE_DIZZY}", self.iface)
             self.task_manager.addTask(task)
             return True
 
         # QGIS pro license expiration message
-        if msg == CHEATCODE_QGIS_PRO_LICENSE:
+        if text == CHEATCODE_QGIS_PRO_LICENSE:
             self.log(
                 message=self.tr("Your QGIS Pro license is about to expire"),
                 application=self.tr("QGIS Pro"),
@@ -737,8 +862,8 @@ Rooms:
             return True
         # play sounds
         if self.settings.qchat_play_sounds:
-            if msg in [CHEATCODE_DONTCRYBABY, CHEATCODE_IAMAROBOT, CHEATCODE_10OCLOCK]:
-                play_resource_sound(msg, self.settings.qchat_sound_volume)
+            if text in [CHEATCODE_IAMAROBOT, CHEATCODE_10OCLOCK]:
+                play_resource_sound(text, self.settings.qchat_sound_volume)
                 return True
         return False
 
