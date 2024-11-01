@@ -11,23 +11,19 @@ from PyQt5 import QtWebSockets  # noqa QGS103
 from qgis.core import Qgis, QgsApplication
 from qgis.gui import QgisInterface, QgsDockWidget
 from qgis.PyQt import uic
-from qgis.PyQt.QtCore import QPoint, Qt, QTime
-from qgis.PyQt.QtGui import QBrush, QColor, QCursor, QIcon, QPixmap
+from qgis.PyQt.QtCore import QPoint, Qt
+from qgis.PyQt.QtGui import QCursor, QIcon
 from qgis.PyQt.QtWidgets import (
     QAction,
-    QDialog,
     QFileDialog,
-    QLabel,
     QMenu,
     QMessageBox,
     QTreeWidgetItem,
-    QVBoxLayout,
     QWidget,
 )
 
 from qtribu.__about__ import __title__
 from qtribu.constants import (
-    ADMIN_MESSAGES_AVATAR,
     ADMIN_MESSAGES_NICKNAME,
     CHEATCODE_10OCLOCK,
     CHEATCODE_DIZZY,
@@ -35,6 +31,11 @@ from qtribu.constants import (
     CHEATCODE_QGIS_PRO_LICENSE,
     CHEATCODES,
     QCHAT_NICKNAME_MINLENGTH,
+)
+from qtribu.gui.qchat_tree_widget_items import (
+    QChatAdminTreeWidgetItem,
+    QChatImageTreeWidgetItem,
+    QChatTextTreeWidgetItem,
 )
 from qtribu.logic.qchat_api_client import QChatApiClient
 from qtribu.logic.qchat_messages import (
@@ -426,15 +427,11 @@ Rooms:
         if message.text in CHEATCODES:
             return
 
+        item = QChatTextTreeWidgetItem(self.twg_chat, message)
+
         # check if message mentions current user
         words = message.text.split(" ")
         if f"@{self.settings.author_nickname}" in words or "@all" in words:
-            item = self.create_message_item(
-                message.author,
-                message.avatar,
-                message.text,
-                foreground_color=self.settings.qchat_color_mention,
-            )
             if message.author != self.settings.author_nickname:
                 self.log(
                     message=self.tr(
@@ -453,19 +450,7 @@ Rooms:
                     play_resource_sound(
                         self.settings.qchat_ring_tone, self.settings.qchat_sound_volume
                     )
-        elif message.author == self.settings.author_nickname:
-            item = self.create_message_item(
-                message.author,
-                message.avatar,
-                message.text,
-                foreground_color=self.settings.qchat_color_self,
-            )
-        else:
-            item = self.create_message_item(
-                message.author,
-                message.avatar,
-                message.text,
-            )
+
         self.twg_chat.addTopLevelItem(item)
         self.twg_chat.scrollToItem(item)
 
@@ -473,20 +458,9 @@ Rooms:
         """
         Launched when an image message is received from the websocket
         """
-        pixmap = QPixmap()
-        data = base64.b64decode(message.image_data)
-        pixmap.loadFromData(data)
-        item = self.create_image_item(
-            QTime.currentTime(),
-            message.author,
-            message.avatar,
-            pixmap,
-        )
-        # set foreground color if sent by user
-        if message.author == self.settings.author_nickname:
-            for i in range(2):
-                item.setForeground(i, QBrush(QColor(self.settings.qchat_color_self)))
+        item = QChatImageTreeWidgetItem(self.twg_chat, message)
         self.twg_chat.addTopLevelItem(item)
+        self.twg_chat.scrollToItem(item)
 
     def on_nb_users_message_received(self, message: QChatNbUsersMessage) -> None:
         """
@@ -551,32 +525,15 @@ Rooms:
         """
         Action called when clicking on a chat message
         """
-        author = item.text(1)
-        widget = self.twg_chat.itemWidget(item, 2)
-        # if there is a widget (QLabel) usually,
-        # it means that there is an image
-        # -> display the image in a new window
-        if column == 2 and widget:
-            pixmap = widget.pixmap()
-            dialog = QDialog(self)
-            dialog.setWindowTitle(
-                self.tr("QChat image sent by {author}").format(author=author)
-            )
-            layout = QVBoxLayout()
-            label = QLabel()
-            label.setPixmap(pixmap)
-            layout.addWidget(label)
-            dialog.setLayout(layout)
-            dialog.setModal(True)
-            dialog.show()
+        item.on_click(column)
 
     def on_message_double_clicked(self, item: QTreeWidgetItem, column: int) -> None:
         """
         Action called when double clicking on a chat message
         """
-        author = item.text(1)
+        author = item.author
         # do nothing if double click on admin message
-        if author == ADMIN_MESSAGES_NICKNAME:
+        if author == ADMIN_MESSAGES_NICKNAME or author == self.settings.author_nickname:
             return
         text = self.lne_message.text()
         self.lne_message.setText(f"{text}@{author} ")
@@ -600,26 +557,22 @@ Rooms:
         Action called when right clicking on a chat message
         """
         item = self.twg_chat.itemAt(point)
-        author = item.text(1)
-        message = item.text(2)
 
         menu = QMenu(self.tr("QChat Menu"), self)
 
-        if (
-            author != self.settings.author_nickname
-            and author != ADMIN_MESSAGES_NICKNAME
-        ):
-            # like message action
+        # like message action if possible
+        if item.can_be_liked:
             like_action = QAction(
                 QgsApplication.getThemeIcon("mActionInOverview.svg"),
                 self.tr("Like message"),
             )
             like_action.triggered.connect(
-                partial(self.on_like_message, author, message)
+                partial(self.on_like_message, item.author, item.liked_message)
             )
             menu.addAction(like_action)
 
-            # mention user action
+        # mention author action if possible
+        if item.can_be_mentioned:
             mention_action = QAction(
                 QgsApplication.getThemeIcon("mMessageLogRead.svg"),
                 self.tr("Mention user"),
@@ -628,17 +581,15 @@ Rooms:
                 partial(self.on_message_double_clicked, item, 2)
             )
             menu.addAction(mention_action)
-            menu.addSeparator()
 
-        # copy message to clipboard action
-        copy_action = QAction(
-            QgsApplication.getThemeIcon("mActionEditCopy.svg"),
-            self.tr("Copy message to clipboard"),
-        )
-        copy_action.triggered.connect(
-            partial(self.on_copy_message_to_clipboard, message)
-        )
-        menu.addAction(copy_action)
+        # copy message to clipboard action if possible
+        if item.can_be_copied_to_clipboard:
+            copy_action = QAction(
+                QgsApplication.getThemeIcon("mActionEditCopy.svg"),
+                self.tr("Copy message to clipboard"),
+            )
+            copy_action.triggered.connect(item.copy_to_clipboard)
+            menu.addAction(copy_action)
 
         # hide message action
         hide_action = QAction(
@@ -649,12 +600,6 @@ Rooms:
         menu.addAction(hide_action)
 
         menu.exec(QCursor.pos())
-
-    def on_copy_message_to_clipboard(self, message: str) -> None:
-        """
-        Action called when copy to clipboard menu action is triggered
-        """
-        QgsApplication.instance().clipboard().setText(message)
 
     def on_hide_message(self, item: QTreeWidgetItem) -> None:
         """
@@ -770,61 +715,13 @@ Rooms:
             )
             self.qchat_ws.send_message(message)
 
-    def add_admin_message(self, message: str) -> None:
+    def add_admin_message(self, text: str) -> None:
         """
         Adds an admin message to QTreeWidget chat
         """
-        item = self.create_message_item(
-            ADMIN_MESSAGES_NICKNAME,
-            ADMIN_MESSAGES_AVATAR,
-            message,
-            foreground_color=self.settings.qchat_color_admin,
-        )
+        item = QChatAdminTreeWidgetItem(self.twg_chat, text)
         self.twg_chat.addTopLevelItem(item)
         self.twg_chat.scrollToItem(item)
-
-    def create_message_item(
-        self,
-        author: str,
-        avatar: Optional[str],
-        message: str,
-        foreground_color: str = None,
-        background_color: str = None,
-    ) -> QTreeWidgetItem:
-        """
-        Creates a QTreeWidgetItem for adding to QTreeWidget chat
-        Optionally with foreground / background colors given as hexa string
-        """
-        item_data = [
-            QTime.currentTime().toString(),
-            author,
-            message,
-        ]
-        item = QTreeWidgetItem(item_data)
-        if self.settings.qchat_show_avatars and avatar:
-            item.setIcon(1, QIcon(QgsApplication.iconPath(avatar)))
-        item.setToolTip(2, message)
-        if foreground_color:
-            for i in range(len(item_data)):
-                item.setForeground(i, QBrush(QColor(foreground_color)))
-        if background_color:
-            for i in range(len(item_data)):
-                item.setBackground(i, QBrush(QColor(background_color)))
-        return item
-
-    def create_image_item(
-        self, time: QTime, author: str, avatar: Optional[str], pixmap: QPixmap
-    ) -> QTreeWidgetItem:
-        item = QTreeWidgetItem(self.twg_chat)
-        item.setText(0, time.toString())
-        item.setText(1, author)
-        if self.settings.qchat_show_avatars:
-            item.setIcon(1, QIcon(QgsApplication.iconPath(avatar)))
-        label = QLabel(self.twg_chat)
-        label.setPixmap(pixmap)
-        item.treeWidget().setItemWidget(item, 2, label)
-        item.setSizeHint(2, pixmap.size())
-        return item
 
     def on_widget_closed(self) -> None:
         """
