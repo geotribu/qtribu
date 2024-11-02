@@ -51,7 +51,7 @@
     <item>
      <widget class="QgsCollapsibleGroupBox" name="grb_instance">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -91,28 +91,58 @@
      </widget>
     </item>
     <item>
-     <widget class="QgsCollapsibleGroupBox" name="grb_room">
+     <widget class="QgsCollapsibleGroupBox" name="grb_qchat">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
-      <property name="title">
-       <string>Room</string>
+      <property name="sizeIncrement">
+       <size>
+        <width>0</width>
+        <height>1</height>
+       </size>
       </property>
-      <layout class="QFormLayout" name="formLayout_2">
-       <item row="0" column="0">
-        <widget class="QLabel" name="lbl_room">
-         <property name="text">
-          <string>Room:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="baseSize">
+       <size>
+        <width>0</width>
+        <height>1</height>
+       </size>
+      </property>
+      <property name="title">
+       <string notr="true">QChat</string>
+      </property>
+      <property name="collapsed">
+       <bool>false</bool>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <layout class="QHBoxLayout" name="hly_room">
+         <item>
+          <widget class="QLabel" name="lbl_room">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Room:</string>
+           </property>
+          </widget>
+         </item>
          <item>
           <widget class="QComboBox" name="cbb_room">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="currentText">
             <string notr="true"/>
            </property>
@@ -155,39 +185,6 @@
          </item>
         </layout>
        </item>
-      </layout>
-     </widget>
-    </item>
-    <item>
-     <widget class="QgsCollapsibleGroupBox" name="grb_qchat">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="sizeIncrement">
-       <size>
-        <width>0</width>
-        <height>1</height>
-       </size>
-      </property>
-      <property name="baseSize">
-       <size>
-        <width>0</width>
-        <height>1</height>
-       </size>
-      </property>
-      <property name="title">
-       <string notr="true">QChat</string>
-      </property>
-      <property name="collapsed">
-       <bool>false</bool>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
         <widget class="QTreeWidget" name="twg_chat">
          <property name="uniformRowHeights">
@@ -228,12 +225,19 @@
        <item>
         <layout class="QHBoxLayout" name="hly_qchat_buttons">
          <item>
+          <widget class="QCheckBox" name="ckb_autoscroll">
+           <property name="text">
+            <string>Autoscroll to last message</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QPushButton" name="btn_clear_chat">
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="text">
-            <string>Clear</string>
+            <string>Clear chat</string>
            </property>
           </widget>
          </item>

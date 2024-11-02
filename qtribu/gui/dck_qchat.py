@@ -135,6 +135,8 @@ class QChatWidget(QgsDockWidget):
             QIcon(QgsApplication.iconPath("processingResult.svg"))
         )
 
+        self.ckb_autoscroll.setChecked(True)
+
         # clear chat signal listener
         self.btn_clear_chat.pressed.connect(self.on_clear_chat_button_clicked)
         self.btn_clear_chat.setIcon(
@@ -178,13 +180,13 @@ class QChatWidget(QgsDockWidget):
             QIcon(QgsApplication.iconPath("mActionAddImage.svg"))
         )
 
-        # send extent message signa listener
+        # send extent message signal listener
         self.btn_send_extent.pressed.connect(self.on_send_extent_button_clicked)
         self.btn_send_extent.setIcon(
             QIcon(QgsApplication.iconPath("mActionViewExtentInCanvas.svg"))
         )
 
-        # send CRS message signa listener
+        # send CRS message signal listener
         self.btn_send_crs.pressed.connect(self.on_send_crs_button_clicked)
         self.btn_send_crs.setIcon(
             QIcon(QgsApplication.iconPath("mActionSetProjection.svg"))
@@ -374,7 +376,6 @@ Rooms:
         Action called when websocket is connected to a room
         """
         self.btn_connect.setText(self.tr("Disconnect"))
-        self.grb_room.setTitle(self.tr("Room ({room}) - connected").format(room=room))
         self.btn_list_users.setEnabled(True)
         self.grb_user.setEnabled(True)
         self.current_room = room
@@ -410,8 +411,6 @@ Rooms:
                 ),
             )
         self.btn_connect.setText(self.tr("Connect"))
-        self.grb_room.setTitle(self.tr("Room - disconnected"))
-        self.grb_room.setTitle(self.tr("Room"))
         self.grb_qchat.setTitle(self.tr("QChat"))
         self.btn_list_users.setEnabled(False)
         self.grb_user.setEnabled(False)
@@ -505,7 +504,8 @@ Rooms:
         Launched when a nb_users message is received from the websocket
         """
         self.grb_qchat.setTitle(
-            self.tr("QChat - {nb_users} {user_txt}").format(
+            self.tr("QChat - room: {room} - {nb_users} {user_txt}").format(
+                room=self.current_room,
                 nb_users=message.nb_users,
                 user_txt=self.tr("user") if message.nb_users <= 1 else self.tr("users"),
             )
