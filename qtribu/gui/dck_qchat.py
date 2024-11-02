@@ -488,16 +488,14 @@ Rooms:
                         self.settings.qchat_ring_tone, self.settings.qchat_sound_volume
                     )
 
-        self.twg_chat.addTopLevelItem(item)
-        self.twg_chat.scrollToItem(item)
+        self.add_tree_widget_item(item)
 
     def on_image_message_received(self, message: QChatImageMessage) -> None:
         """
         Launched when an image message is received from the websocket
         """
         item = QChatImageTreeWidgetItem(self.twg_chat, message)
-        self.twg_chat.addTopLevelItem(item)
-        self.twg_chat.scrollToItem(item)
+        self.add_tree_widget_item(item)
 
     def on_nb_users_message_received(self, message: QChatNbUsersMessage) -> None:
         """
@@ -562,8 +560,7 @@ Rooms:
         Launched when a geojson message is received from the websocket
         """
         item = QChatGeojsonTreeWidgetItem(self.twg_chat, message)
-        self.twg_chat.addTopLevelItem(item)
-        self.twg_chat.scrollToItem(item)
+        self.add_tree_widget_item(item)
 
     # endregion
 
@@ -795,8 +792,12 @@ Rooms:
         Adds an admin message to QTreeWidget chat
         """
         item = QChatAdminTreeWidgetItem(self.twg_chat, text)
+        self.add_tree_widget_item(item)
+
+    def add_tree_widget_item(self, item: QTreeWidgetItem) -> None:
         self.twg_chat.addTopLevelItem(item)
-        self.twg_chat.scrollToItem(item)
+        if self.ckb_autoscroll.isChecked():
+            self.twg_chat.scrollToItem(item)
 
     def on_widget_closed(self) -> None:
         """
