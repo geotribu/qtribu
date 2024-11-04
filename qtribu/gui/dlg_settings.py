@@ -24,7 +24,7 @@ from qtribu.__about__ import (
     __uri_tracker__,
     __version__,
 )
-from qtribu.logic.qchat_client import QChatApiClient
+from qtribu.logic.qchat_api_client import QChatApiClient
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
 from qtribu.toolbelt.commons import open_url_in_browser, play_resource_sound
 from qtribu.toolbelt.preferences import PlgSettingsStructure
