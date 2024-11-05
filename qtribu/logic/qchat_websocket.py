@@ -3,6 +3,7 @@ import json
 from json import JSONEncoder
 
 from PyQt5 import QtWebSockets  # noqa QGS103
+from qgis.core import Qgis
 from qgis.PyQt.QtCore import QObject, QUrl, pyqtSignal
 
 from qtribu.constants import (
@@ -107,6 +108,12 @@ class QChatWebsocket(QObject):
         :param text: text message received, should be a jsonified string
         """
         message = json.loads(text)
+        if "type" not in message:
+            self.log(
+                message="No 'type' key in received message. Please make sure your configured instance is running gischat v>=2.0.0",
+                log_level=Qgis.Critical,
+            )
+            return
         msg_type = message["type"]
         if msg_type == QCHAT_MESSAGE_TYPE_UNCOMPLIANT:
             self.uncompliant_message_received.emit(QChatUncompliantMessage(**message))
