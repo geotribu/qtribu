@@ -434,8 +434,8 @@ Rooms:
             ),
             application=self.tr("QChat"),
             log_level=Qgis.Critical,
-            push=PlgOptionsManager().get_plg_settings().notify_push_info,
-            duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
+            push=self.settings.notify_push_info,
+            duration=self.settings.notify_push_duration,
         )
 
     def on_text_message_received(self, message: QChatTextMessage) -> None:
@@ -464,10 +464,8 @@ Rooms:
                     ).format(sender=message.author, message=message.text),
                     application=self.tr("QChat"),
                     log_level=Qgis.Info,
-                    push=PlgOptionsManager().get_plg_settings().notify_push_info,
-                    duration=PlgOptionsManager()
-                    .get_plg_settings()
-                    .notify_push_duration,
+                    push=self.settings.notify_push_info,
+                    duration=self.settings.notify_push_duration,
                 )
 
                 # check if a notification sound should be played
@@ -535,8 +533,8 @@ Rooms:
                 ),
                 application=self.tr("QChat"),
                 log_level=Qgis.Success,
-                push=PlgOptionsManager().get_plg_settings().notify_push_info,
-                duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
+                push=self.settings.notify_push_info,
+                duration=self.settings.notify_push_duration,
             )
             # play a notification sound if enabled
             if self.settings.qchat_play_sounds:
@@ -691,8 +689,8 @@ Rooms:
             self.log(
                 message=self.tr("Nickname not set : please open settings and set it"),
                 log_level=Qgis.Warning,
-                push=PlgOptionsManager().get_plg_settings().notify_push_info,
-                duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
+                push=self.settings.notify_push_info,
+                duration=self.settings.notify_push_duration,
                 button=True,
                 button_label=self.tr("Open Settings"),
                 button_connect=self.on_settings_button_clicked,
@@ -705,8 +703,8 @@ Rooms:
                     "Nickname too short : must be at least 3 characters. Please open settings and set it"
                 ),
                 log_level=Qgis.Warning,
-                push=PlgOptionsManager().get_plg_settings().notify_push_info,
-                duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
+                push=self.settings.notify_push_info,
+                duration=self.settings.notify_push_duration,
                 button=True,
                 button_label=self.tr("Open Settings"),
                 button_connect=self.on_settings_button_clicked,
@@ -799,8 +797,8 @@ Rooms:
                 message=self.tr("Your QGIS Pro license is about to expire"),
                 application=self.tr("QGIS Pro"),
                 log_level=Qgis.Warning,
-                push=PlgOptionsManager().get_plg_settings().notify_push_info,
-                duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
+                push=self.settings.notify_push_info,
+                duration=self.settings.notify_push_duration,
                 button=True,
                 button_label=self.tr("Click here to renew it"),
                 button_connect=self.on_renew_clicked,
@@ -851,8 +849,8 @@ Visit the website ?
                 ),
                 application=self.tr("QChat"),
                 log_level=Qgis.Critical,
-                push=PlgOptionsManager().get_plg_settings().notify_push_info,
-                duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
+                push=self.settings.notify_push_info,
+                duration=self.settings.notify_push_duration,
             )
             return
         layer = self.iface.activeLayer()
@@ -861,8 +859,8 @@ Visit the website ?
                 message=self.tr("No active layer in current QGIS project"),
                 application=self.tr("QChat"),
                 log_level=Qgis.Critical,
-                push=PlgOptionsManager().get_plg_settings().notify_push_info,
-                duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
+                push=self.settings.notify_push_info,
+                duration=self.settings.notify_push_duration,
             )
             return
         if layer.type() != QgsMapLayer.VectorLayer:
@@ -870,8 +868,8 @@ Visit the website ?
                 message=self.tr("Only vector layers can be sent on QChat"),
                 application=self.tr("QChat"),
                 log_level=Qgis.Critical,
-                push=PlgOptionsManager().get_plg_settings().notify_push_info,
-                duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
+                push=self.settings.notify_push_info,
+                duration=self.settings.notify_push_duration,
             )
             return
 
