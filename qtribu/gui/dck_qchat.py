@@ -31,6 +31,11 @@ from qtribu.constants import (
     CHEATCODE_IAMAROBOT,
     CHEATCODE_QGIS_PRO_LICENSE,
     CHEATCODES,
+    QCHAT_MESSAGE_TYPE_GEOJSON,
+    QCHAT_MESSAGE_TYPE_IMAGE,
+    QCHAT_MESSAGE_TYPE_LIKE,
+    QCHAT_MESSAGE_TYPE_NEWCOMER,
+    QCHAT_MESSAGE_TYPE_TEXT,
     QCHAT_NICKNAME_MINLENGTH,
 )
 from qtribu.gui.qchat_tree_widget_items import (
@@ -382,7 +387,7 @@ Rooms:
         # send newcomer message to websocket
         if not self.settings.qchat_incognito_mode:
             message = QChatNewcomerMessage(
-                type="newcomer", newcomer=self.settings.author_nickname
+                type=QCHAT_MESSAGE_TYPE_NEWCOMER, newcomer=self.settings.author_nickname
             )
             self.qchat_ws.send_message(message)
 
@@ -576,7 +581,7 @@ Rooms:
         This may happen on right-click on a message
         """
         message = QChatLikeMessage(
-            type="like",
+            type=QCHAT_MESSAGE_TYPE_LIKE,
             liker_author=self.settings.author_nickname,
             liked_author=liked_author,
             message=msg,
@@ -716,7 +721,10 @@ Rooms:
 
         # send message to websocket
         message = QChatTextMessage(
-            type="text", author=nickname, avatar=avatar, text=message_text.strip()
+            type=QCHAT_MESSAGE_TYPE_TEXT,
+            author=nickname,
+            avatar=avatar,
+            text=message_text.strip(),
         )
         self.qchat_ws.send_message(message)
         self.lne_message.setText("")
@@ -737,7 +745,7 @@ Rooms:
             with open(fp, "rb") as file:
                 data = file.read()
                 message = QChatImageMessage(
-                    type="image",
+                    type=QCHAT_MESSAGE_TYPE_IMAGE,
                     author=self.settings.author_nickname,
                     avatar=self.settings.author_avatar,
                     image_data=base64.b64encode(data).decode("utf-8"),
@@ -750,7 +758,7 @@ Rooms:
         with open(sc_fp, "rb") as file:
             data = file.read()
             message = QChatImageMessage(
-                type="image",
+                type=QCHAT_MESSAGE_TYPE_IMAGE,
                 author=self.settings.author_nickname,
                 avatar=self.settings.author_avatar,
                 image_data=base64.b64encode(data).decode("utf-8"),
@@ -879,7 +887,7 @@ Visit the website ?
         exporter.setTransformGeometries(True)
         geojson_str = exporter.exportFeatures(layer.getFeatures())
         message = QChatGeojsonMessage(
-            type="geojson",
+            type=QCHAT_MESSAGE_TYPE_GEOJSON,
             author=self.settings.author_nickname,
             avatar=self.settings.author_avatar,
             layer_name=layer.name(),
