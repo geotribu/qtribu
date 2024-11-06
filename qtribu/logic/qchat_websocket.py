@@ -3,8 +3,19 @@ import json
 from json import JSONEncoder
 
 from PyQt5 import QtWebSockets  # noqa QGS103
+from qgis.core import Qgis
 from qgis.PyQt.QtCore import QObject, QUrl, pyqtSignal
 
+from qtribu.constants import (
+    QCHAT_MESSAGE_TYPE_EXITER,
+    QCHAT_MESSAGE_TYPE_GEOJSON,
+    QCHAT_MESSAGE_TYPE_IMAGE,
+    QCHAT_MESSAGE_TYPE_LIKE,
+    QCHAT_MESSAGE_TYPE_NB_USERS,
+    QCHAT_MESSAGE_TYPE_NEWCOMER,
+    QCHAT_MESSAGE_TYPE_TEXT,
+    QCHAT_MESSAGE_TYPE_UNCOMPLIANT,
+)
 from qtribu.logic.qchat_messages import (
     QChatExiterMessage,
     QChatGeojsonMessage,
@@ -97,20 +108,26 @@ class QChatWebsocket(QObject):
         :param text: text message received, should be a jsonified string
         """
         message = json.loads(text)
+        if "type" not in message:
+            self.log(
+                message="No 'type' key in received message. Please make sure your configured instance is running gischat v>=2.0.0",
+                log_level=Qgis.Critical,
+            )
+            return
         msg_type = message["type"]
-        if msg_type == "uncompliant":
+        if msg_type == QCHAT_MESSAGE_TYPE_UNCOMPLIANT:
             self.uncompliant_message_received.emit(QChatUncompliantMessage(**message))
-        elif msg_type == "text":
+        elif msg_type == QCHAT_MESSAGE_TYPE_TEXT:
             self.text_message_received.emit(QChatTextMessage(**message))
-        elif msg_type == "image":
+        elif msg_type == QCHAT_MESSAGE_TYPE_IMAGE:
             self.image_message_received.emit(QChatImageMessage(**message))
-        elif msg_type == "nb_users":
+        elif msg_type == QCHAT_MESSAGE_TYPE_NB_USERS:
             self.nb_users_message_received.emit(QChatNbUsersMessage(**message))
-        elif msg_type == "newcomer":
+        elif msg_type == QCHAT_MESSAGE_TYPE_NEWCOMER:
             self.newcomer_message_received.emit(QChatNewcomerMessage(**message))
-        elif msg_type == "exiter":
+        elif msg_type == QCHAT_MESSAGE_TYPE_EXITER:
             self.exiter_message_received.emit(QChatExiterMessage(**message))
-        elif msg_type == "like":
+        elif msg_type == QCHAT_MESSAGE_TYPE_LIKE:
             self.like_message_received.emit(QChatLikeMessage(**message))
-        elif msg_type == "geojson":
+        elif msg_type == QCHAT_MESSAGE_TYPE_GEOJSON:
             self.geojson_message_received.emit(QChatGeojsonMessage(**message))

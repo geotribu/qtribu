@@ -31,6 +31,11 @@ from qtribu.constants import (
     CHEATCODE_IAMAROBOT,
     CHEATCODE_QGIS_PRO_LICENSE,
     CHEATCODES,
+    QCHAT_MESSAGE_TYPE_GEOJSON,
+    QCHAT_MESSAGE_TYPE_IMAGE,
+    QCHAT_MESSAGE_TYPE_LIKE,
+    QCHAT_MESSAGE_TYPE_NEWCOMER,
+    QCHAT_MESSAGE_TYPE_TEXT,
     QCHAT_NICKNAME_MINLENGTH,
 )
 from qtribu.gui.qchat_tree_widget_items import (
@@ -396,7 +401,7 @@ Rooms:
         # send newcomer message to websocket
         if not self.settings.qchat_incognito_mode:
             message = QChatNewcomerMessage(
-                type="newcomer", newcomer=self.settings.author_nickname
+                type=QCHAT_MESSAGE_TYPE_NEWCOMER, newcomer=self.settings.author_nickname
             )
             self.qchat_ws.send_message(message)
 
@@ -446,8 +451,8 @@ Rooms:
             ),
             application=self.tr("QChat"),
             log_level=Qgis.Critical,
-            push=PlgOptionsManager().get_plg_settings().notify_push_info,
-            duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
+            push=self.settings.notify_push_info,
+            duration=self.settings.notify_push_duration,
         )
 
     def on_text_message_received(self, message: QChatTextMessage) -> None:
@@ -476,10 +481,8 @@ Rooms:
                     ).format(sender=message.author, message=message.text),
                     application=self.tr("QChat"),
                     log_level=Qgis.Info,
-                    push=PlgOptionsManager().get_plg_settings().notify_push_info,
-                    duration=PlgOptionsManager()
-                    .get_plg_settings()
-                    .notify_push_duration,
+                    push=self.settings.notify_push_info,
+                    duration=self.settings.notify_push_duration,
                 )
 
                 # check if a notification sound should be played
@@ -546,8 +549,8 @@ Rooms:
                 ),
                 application=self.tr("QChat"),
                 log_level=Qgis.Success,
-                push=PlgOptionsManager().get_plg_settings().notify_push_info,
-                duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
+                push=self.settings.notify_push_info,
+                duration=self.settings.notify_push_duration,
             )
             # play a notification sound if enabled
             if self.settings.qchat_play_sounds:
@@ -588,7 +591,7 @@ Rooms:
         This may happen on right-click on a message
         """
         message = QChatLikeMessage(
-            type="like",
+            type=QCHAT_MESSAGE_TYPE_LIKE,
             liker_author=self.settings.author_nickname,
             liked_author=liked_author,
             message=msg,
@@ -701,8 +704,8 @@ Rooms:
             self.log(
                 message=self.tr("Nickname not set : please open settings and set it"),
                 log_level=Qgis.Warning,
-                push=PlgOptionsManager().get_plg_settings().notify_push_info,
-                duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
+                push=self.settings.notify_push_info,
+                duration=self.settings.notify_push_duration,
                 button=True,
                 button_label=self.tr("Open Settings"),
                 button_connect=self.on_settings_button_clicked,
@@ -715,8 +718,8 @@ Rooms:
                     "Nickname too short : must be at least 3 characters. Please open settings and set it"
                 ),
                 log_level=Qgis.Warning,
-                push=PlgOptionsManager().get_plg_settings().notify_push_info,
-                duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
+                push=self.settings.notify_push_info,
+                duration=self.settings.notify_push_duration,
                 button=True,
                 button_label=self.tr("Open Settings"),
                 button_connect=self.on_settings_button_clicked,
@@ -728,7 +731,10 @@ Rooms:
 
         # send message to websocket
         message = QChatTextMessage(
-            type="text", author=nickname, avatar=avatar, text=message_text.strip()
+            type=QCHAT_MESSAGE_TYPE_TEXT,
+            author=nickname,
+            avatar=avatar,
+            text=message_text.strip(),
         )
         self.qchat_ws.send_message(message)
         self.lne_message.setText("")
@@ -749,7 +755,7 @@ Rooms:
             with open(fp, "rb") as file:
                 data = file.read()
                 message = QChatImageMessage(
-                    type="image",
+                    type=QCHAT_MESSAGE_TYPE_IMAGE,
                     author=self.settings.author_nickname,
                     avatar=self.settings.author_avatar,
                     image_data=base64.b64encode(data).decode("utf-8"),
@@ -766,7 +772,7 @@ Rooms:
         with open(sc_fp, "rb") as file:
             data = file.read()
             message = QChatImageMessage(
-                type="image",
+                type=QCHAT_MESSAGE_TYPE_IMAGE,
                 author=self.settings.author_nickname,
                 avatar=self.settings.author_avatar,
                 image_data=base64.b64encode(data).decode("utf-8"),
@@ -831,8 +837,8 @@ Rooms:
                 message=self.tr("Your QGIS Pro license is about to expire"),
                 application=self.tr("QGIS Pro"),
                 log_level=Qgis.Warning,
-                push=PlgOptionsManager().get_plg_settings().notify_push_info,
-                duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
+                push=self.settings.notify_push_info,
+                duration=self.settings.notify_push_duration,
                 button=True,
                 button_label=self.tr("Click here to renew it"),
                 button_connect=self.on_renew_clicked,
@@ -883,8 +889,8 @@ Visit the website ?
                 ),
                 application=self.tr("QChat"),
                 log_level=Qgis.Critical,
-                push=PlgOptionsManager().get_plg_settings().notify_push_info,
-                duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
+                push=self.settings.notify_push_info,
+                duration=self.settings.notify_push_duration,
             )
             return
         layer = self.iface.activeLayer()
@@ -893,8 +899,8 @@ Visit the website ?
                 message=self.tr("No active layer in current QGIS project"),
                 application=self.tr("QChat"),
                 log_level=Qgis.Critical,
-                push=PlgOptionsManager().get_plg_settings().notify_push_info,
-                duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
+                push=self.settings.notify_push_info,
+                duration=self.settings.notify_push_duration,
             )
             return
         if layer.type() != QgsMapLayer.VectorLayer:
@@ -902,8 +908,8 @@ Visit the website ?
                 message=self.tr("Only vector layers can be sent on QChat"),
                 application=self.tr("QChat"),
                 log_level=Qgis.Critical,
-                push=PlgOptionsManager().get_plg_settings().notify_push_info,
-                duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
+                push=self.settings.notify_push_info,
+                duration=self.settings.notify_push_duration,
             )
             return
 
@@ -913,7 +919,7 @@ Visit the website ?
         exporter.setTransformGeometries(True)
         geojson_str = exporter.exportFeatures(layer.getFeatures())
         message = QChatGeojsonMessage(
-            type="geojson",
+            type=QCHAT_MESSAGE_TYPE_GEOJSON,
             author=self.settings.author_nickname,
             avatar=self.settings.author_avatar,
             layer_name=layer.name(),
