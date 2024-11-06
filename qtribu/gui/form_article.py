@@ -62,9 +62,13 @@ class ArticleForm(QDialog):
                 "https://contribuer.geotribu.fr/articles/workflow/",
             )
         )
-        self.btn_box.button(QDialogButtonBox.Ok).clicked.connect(self.on_btn_submit)
-        self.btn_box.button(QDialogButtonBox.Ok).setDefault(True)
-        self.btn_box.button(QDialogButtonBox.Ok).setText(self.tr("Submit"))
+        self.btn_box.button(QDialogButtonBox.StandardButton.Ok).clicked.connect(
+            self.on_btn_submit
+        )
+        self.btn_box.button(QDialogButtonBox.StandardButton.Ok).setDefault(True)
+        self.btn_box.button(QDialogButtonBox.StandardButton.Ok).setText(
+            self.tr("Submit")
+        )
 
     def check_required_fields(self) -> bool:
         invalid_fields = []
