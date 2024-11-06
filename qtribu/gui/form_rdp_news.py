@@ -93,9 +93,13 @@ class RdpNewsForm(QDialog):
                 "https://contribuer.geotribu.fr/rdp/add_news/",
             )
         )
-        self.btn_box.button(QDialogButtonBox.Ok).clicked.connect(self.on_btn_submit)
-        self.btn_box.button(QDialogButtonBox.Ok).setDefault(True)
-        self.btn_box.button(QDialogButtonBox.Ok).setText(self.tr("Submit"))
+        self.btn_box.button(QDialogButtonBox.StandardButton.Ok).clicked.connect(
+            self.on_btn_submit
+        )
+        self.btn_box.button(QDialogButtonBox.StandardButton.Ok).setDefault(True)
+        self.btn_box.button(QDialogButtonBox.StandardButton.Ok).setText(
+            self.tr("Submit")
+        )
 
     def cbb_icon_populate(self) -> None:
         """Populate combobox of news icons."""

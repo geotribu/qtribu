@@ -969,7 +969,7 @@ Rooms:
     def on_renew_clicked(self) -> None:
         msg_box = QMessageBox()
         msg_box.setWindowTitle("QGIS")
-        msg_box.setIcon(QMessageBox.Information)
+        msg_box.setIcon(QMessageBox.Icon.Information)
         msg_box.setText(
             self.tr(
                 """No... it was a joke!
@@ -981,9 +981,9 @@ Visit the website ?
 """
             )
         )
-        msg_box.setStandardButtons(QMessageBox.Yes)
+        msg_box.setStandardButtons(QMessageBox.StandardButton.Yes)
         return_value = msg_box.exec()
-        if return_value == QMessageBox.Yes:
+        if return_value == QMessageBox.StandardButton.Yes:
             open_url_in_webviewer("https://qgis.org/funding/donate/", "qgis.org")
 
     def generate_qaction_send_geojson_layer(self, menu: QMenu) -> None:
@@ -1018,7 +1018,7 @@ Visit the website ?
                 duration=self.settings.notify_push_duration,
             )
             return
-        if layer.type() != QgsMapLayer.VectorLayer:
+        if layer.type() != QgsMapLayer.LayerType.VectorLayer:
             self.log(
                 message=self.tr("Only vector layers can be sent on QChat"),
                 application=self.tr("QChat"),
