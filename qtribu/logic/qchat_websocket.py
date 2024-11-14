@@ -7,6 +7,7 @@ from qgis.core import Qgis
 from qgis.PyQt.QtCore import QObject, QUrl, pyqtSignal
 
 from qtribu.constants import (
+    QCHAT_MESSAGE_TYPE_CRS,
     QCHAT_MESSAGE_TYPE_EXITER,
     QCHAT_MESSAGE_TYPE_GEOJSON,
     QCHAT_MESSAGE_TYPE_IMAGE,
@@ -17,6 +18,7 @@ from qtribu.constants import (
     QCHAT_MESSAGE_TYPE_UNCOMPLIANT,
 )
 from qtribu.logic.qchat_messages import (
+    QChatCrsMessage,
     QChatExiterMessage,
     QChatGeojsonMessage,
     QChatImageMessage,
@@ -69,6 +71,7 @@ class QChatWebsocket(QObject):
     exiter_message_received = pyqtSignal(QChatExiterMessage)
     like_message_received = pyqtSignal(QChatLikeMessage)
     geojson_message_received = pyqtSignal(QChatGeojsonMessage)
+    crs_message_received = pyqtSignal(QChatCrsMessage)
 
     def open(self, qchat_instance_uri: str, room: str) -> None:
         """
@@ -131,3 +134,5 @@ class QChatWebsocket(QObject):
             self.like_message_received.emit(QChatLikeMessage(**message))
         elif msg_type == QCHAT_MESSAGE_TYPE_GEOJSON:
             self.geojson_message_received.emit(QChatGeojsonMessage(**message))
+        elif msg_type == QCHAT_MESSAGE_TYPE_CRS:
+            self.crs_message_received.emit(QChatCrsMessage(**message))

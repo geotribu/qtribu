@@ -9,7 +9,7 @@ from typing import Optional
 
 # PyQGIS
 from PyQt5 import QtWebSockets  # noqa QGS103
-from qgis.core import Qgis, QgsApplication, QgsJsonExporter, QgsMapLayer
+from qgis.core import Qgis, QgsApplication, QgsJsonExporter, QgsMapLayer, QgsProject
 from qgis.gui import QgisInterface, QgsDockWidget
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import QPoint, Qt
@@ -31,6 +31,7 @@ from qtribu.constants import (
     CHEATCODE_IAMAROBOT,
     CHEATCODE_QGIS_PRO_LICENSE,
     CHEATCODES,
+    QCHAT_MESSAGE_TYPE_CRS,
     QCHAT_MESSAGE_TYPE_GEOJSON,
     QCHAT_MESSAGE_TYPE_IMAGE,
     QCHAT_MESSAGE_TYPE_LIKE,
@@ -41,12 +42,14 @@ from qtribu.constants import (
 from qtribu.gui.qchat_tree_widget_items import (
     MESSAGE_COLUMN,
     QChatAdminTreeWidgetItem,
+    QChatCrsTreeWidgetItem,
     QChatGeojsonTreeWidgetItem,
     QChatImageTreeWidgetItem,
     QChatTextTreeWidgetItem,
 )
 from qtribu.logic.qchat_api_client import QChatApiClient
 from qtribu.logic.qchat_messages import (
+    QChatCrsMessage,
     QChatExiterMessage,
     QChatGeojsonMessage,
     QChatImageMessage,
@@ -165,6 +168,7 @@ class QChatWidget(QgsDockWidget):
         self.qchat_ws.exiter_message_received.connect(self.on_exiter_message_received)
         self.qchat_ws.like_message_received.connect(self.on_like_message_received)
         self.qchat_ws.geojson_message_received.connect(self.on_geojson_message_received)
+        self.qchat_ws.crs_message_received.connect(self.on_crs_message_received)
 
         # send message signal listener
         self.lne_message.returnPressed.connect(self.on_send_button_clicked)
@@ -565,6 +569,13 @@ Rooms:
         item = QChatGeojsonTreeWidgetItem(self.twg_chat, message)
         self.add_tree_widget_item(item)
 
+    def on_crs_message_received(self, message: QChatCrsMessage) -> None:
+        """
+        Launched when a CRS message is received from the websocket
+        """
+        item = QChatCrsTreeWidgetItem(self.twg_chat, message)
+        self.add_tree_widget_item(item)
+
     # endregion
 
     def on_message_clicked(self, item: QTreeWidgetItem, column: int) -> None:
@@ -606,16 +617,25 @@ Rooms:
 
         menu = QMenu(self.tr("QChat Menu"), self)
 
-        # if this is a geojson
+        # if this is a geojson message
         if type(item) is QChatGeojsonTreeWidgetItem:
             load_geojson_action = QAction(
                 QgsApplication.getThemeIcon("mActionAddLayer.svg"),
-                self.tr("Load geojson in QGIS"),
+                self.tr("Load layer in QGIS"),
             )
             load_geojson_action.triggered.connect(
                 partial(item.on_click, MESSAGE_COLUMN)
             )
             menu.addAction(load_geojson_action)
+
+        # if this is a crs message
+        if type(item) is QChatCrsTreeWidgetItem:
+            set_crs_action = QAction(
+                QgsApplication.getThemeIcon("mActionSetProjection.svg"),
+                self.tr("Set current project CRS"),
+            )
+            set_crs_action.triggered.connect(partial(item.on_click, MESSAGE_COLUMN))
+            menu.addAction(set_crs_action)
 
         # like message action if possible
         if item.can_be_liked:
@@ -791,7 +811,15 @@ Rooms:
         """
         Action called when the Send CRS button is clicked
         """
-        QMessageBox.critical(self, self.tr("Send CRS"), self.tr("Not implemented yet"))
+        crs = QgsProject.instance().crs()
+        message = QChatCrsMessage(
+            type=QCHAT_MESSAGE_TYPE_CRS,
+            author=self.settings.author_nickname,
+            avatar=self.settings.author_avatar,
+            crs_wkt=crs.toWkt(),
+            crs_authid=crs.authid(),
+        )
+        self.qchat_ws.send_message(message)
 
     def add_admin_message(self, text: str) -> None:
         """
