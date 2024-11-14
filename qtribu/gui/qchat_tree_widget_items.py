@@ -22,6 +22,7 @@ from qgis.PyQt.QtWidgets import (
 
 from qtribu.constants import ADMIN_MESSAGES_AVATAR, ADMIN_MESSAGES_NICKNAME
 from qtribu.logic.qchat_messages import (
+    QChatCrsMessage,
     QChatGeojsonMessage,
     QChatImageMessage,
     QChatTextMessage,
@@ -238,3 +239,33 @@ class QChatGeojsonTreeWidgetItem(QChatTreeWidgetItem):
 
     def copy_to_clipboard(self) -> None:
         QgsApplication.instance().clipboard().setText(json.dumps(self.message.geojson))
+
+
+class QChatCrsTreeWidgetItem(QChatTreeWidgetItem):
+    def __init__(self, parent: QTreeWidget, message: QChatCrsMessage):
+        super().__init__(parent, QTime.currentTime(), message.author, message.avatar)
+        self.message = message
+        self.init_time_and_author()
+        self.setText(MESSAGE_COLUMN, self.liked_message)
+        self.setToolTip(MESSAGE_COLUMN, self.liked_message)
+
+        # set foreground color if sent by user
+        if message.author == self.settings.author_nickname:
+            self.set_foreground_color(self.settings.qchat_color_self)
+
+    def on_click(self, column: int) -> None:
+        if column == MESSAGE_COLUMN:
+            # set current QGIS project CRS to the message one
+            crs = QgsCoordinateReferenceSystem.fromWkt(self.message.crs_wkt)
+            QgsProject.instance().setCrs(crs)
+
+    @property
+    def liked_message(self) -> str:
+        return f"<CRS {self.message.crs_authid}>"
+
+    @property
+    def can_be_copied_to_clipboard(self) -> bool:
+        return True
+
+    def copy_to_clipboard(self) -> None:
+        QgsApplication.instance().clipboard().setText(json.dumps(self.message.crs_wkt))
