@@ -7,9 +7,13 @@ from typing import Optional
 from qgis.core import (
     QgsApplication,
     QgsCoordinateReferenceSystem,
+    QgsCoordinateTransform,
+    QgsPointXY,
     QgsProject,
+    QgsRectangle,
     QgsVectorLayer,
 )
+from qgis.gui import QgsMapCanvas
 from qgis.PyQt.QtCore import QTime
 from qgis.PyQt.QtGui import QBrush, QColor, QIcon, QPixmap
 from qgis.PyQt.QtWidgets import (
@@ -22,6 +26,7 @@ from qgis.PyQt.QtWidgets import (
 
 from qtribu.constants import ADMIN_MESSAGES_AVATAR, ADMIN_MESSAGES_NICKNAME
 from qtribu.logic.qchat_messages import (
+    QChatBboxMessage,
     QChatCrsMessage,
     QChatGeojsonMessage,
     QChatImageMessage,
@@ -268,4 +273,49 @@ class QChatCrsTreeWidgetItem(QChatTreeWidgetItem):
         return True
 
     def copy_to_clipboard(self) -> None:
-        QgsApplication.instance().clipboard().setText(json.dumps(self.message.crs_wkt))
+        QgsApplication.instance().clipboard().setText(self.message.crs_wkt)
+
+
+class QChatBboxTreeWidgetItem(QChatTreeWidgetItem):
+    def __init__(
+        self, parent: QTreeWidget, message: QChatBboxMessage, canvas: QgsMapCanvas
+    ):
+        super().__init__(parent, QTime.currentTime(), message.author, message.avatar)
+        self.message = message
+        self.canvas = canvas
+        self.init_time_and_author()
+        self.setText(MESSAGE_COLUMN, self.liked_message)
+        self.setToolTip(MESSAGE_COLUMN, self.liked_message)
+
+        # set foreground color if sent by user
+        if message.author == self.settings.author_nickname:
+            self.set_foreground_color(self.settings.qchat_color_self)
+
+    def on_click(self, column: int) -> None:
+        if column == MESSAGE_COLUMN:
+            # set current canvas extent to the received one
+            project = QgsProject.instance()
+            tr = QgsCoordinateTransform(
+                QgsCoordinateReferenceSystem(self.message.crs_wkt),
+                project.crs(),
+                project,
+            )
+            rect = QgsRectangle(
+                tr.transform(QgsPointXY(self.message.xmin, self.message.ymin)),
+                tr.transform(QgsPointXY(self.message.xmax, self.message.ymax)),
+            )
+            self.canvas.setExtent(rect)
+            self.canvas.refresh()
+
+    @property
+    def liked_message(self) -> str:
+        msg = f"[{self.message.xmin} {self.message.ymin}, {self.message.xmax} {self.message.ymax}]"
+        return f"<BBOX {self.message.crs_authid}: {msg}>"
+
+    @property
+    def can_be_copied_to_clipboard(self) -> bool:
+        return True
+
+    def copy_to_clipboard(self) -> None:
+        msg = f"[{self.message.xmin} {self.message.ymin}, {self.message.xmax} {self.message.ymax}]"
+        QgsApplication.instance().clipboard().setText(msg)

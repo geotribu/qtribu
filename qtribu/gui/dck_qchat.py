@@ -31,6 +31,7 @@ from qtribu.constants import (
     CHEATCODE_IAMAROBOT,
     CHEATCODE_QGIS_PRO_LICENSE,
     CHEATCODES,
+    QCHAT_MESSAGE_TYPE_BBOX,
     QCHAT_MESSAGE_TYPE_CRS,
     QCHAT_MESSAGE_TYPE_GEOJSON,
     QCHAT_MESSAGE_TYPE_IMAGE,
@@ -42,6 +43,7 @@ from qtribu.constants import (
 from qtribu.gui.qchat_tree_widget_items import (
     MESSAGE_COLUMN,
     QChatAdminTreeWidgetItem,
+    QChatBboxTreeWidgetItem,
     QChatCrsTreeWidgetItem,
     QChatGeojsonTreeWidgetItem,
     QChatImageTreeWidgetItem,
@@ -49,6 +51,7 @@ from qtribu.gui.qchat_tree_widget_items import (
 )
 from qtribu.logic.qchat_api_client import QChatApiClient
 from qtribu.logic.qchat_messages import (
+    QChatBboxMessage,
     QChatCrsMessage,
     QChatExiterMessage,
     QChatGeojsonMessage,
@@ -169,6 +172,7 @@ class QChatWidget(QgsDockWidget):
         self.qchat_ws.like_message_received.connect(self.on_like_message_received)
         self.qchat_ws.geojson_message_received.connect(self.on_geojson_message_received)
         self.qchat_ws.crs_message_received.connect(self.on_crs_message_received)
+        self.qchat_ws.bbox_message_received.connect(self.on_bbox_message_received)
 
         # send message signal listener
         self.lne_message.returnPressed.connect(self.on_send_button_clicked)
@@ -190,7 +194,7 @@ class QChatWidget(QgsDockWidget):
         )
 
         # send extent message signal listener
-        self.btn_send_extent.pressed.connect(self.on_send_extent_button_clicked)
+        self.btn_send_extent.pressed.connect(self.on_send_bbox_button_clicked)
         self.btn_send_extent.setIcon(
             QIcon(QgsApplication.iconPath("mActionViewExtentInCanvas.svg"))
         )
@@ -576,6 +580,13 @@ Rooms:
         item = QChatCrsTreeWidgetItem(self.twg_chat, message)
         self.add_tree_widget_item(item)
 
+    def on_bbox_message_received(self, message: QChatBboxMessage) -> None:
+        """
+        Launched when a BBOX message is received from the websocket
+        """
+        item = QChatBboxTreeWidgetItem(self.twg_chat, message, self.iface.mapCanvas())
+        self.add_tree_widget_item(item)
+
     # endregion
 
     def on_message_clicked(self, item: QTreeWidgetItem, column: int) -> None:
@@ -636,6 +647,15 @@ Rooms:
             )
             set_crs_action.triggered.connect(partial(item.on_click, MESSAGE_COLUMN))
             menu.addAction(set_crs_action)
+
+        # if this is a bbox message
+        if type(item) is QChatBboxTreeWidgetItem:
+            set_bbox_action = QAction(
+                QgsApplication.getThemeIcon("mActionViewExtentInCanvas.svg"),
+                self.tr("Set current extent"),
+            )
+            set_bbox_action.triggered.connect(partial(item.on_click, MESSAGE_COLUMN))
+            menu.addAction(set_bbox_action)
 
         # like message action if possible
         if item.can_be_liked:
@@ -799,13 +819,24 @@ Rooms:
             )
             self.qchat_ws.send_message(message)
 
-    def on_send_extent_button_clicked(self) -> None:
+    def on_send_bbox_button_clicked(self) -> None:
         """
         Action called when the Send extent button is clicked
         """
-        QMessageBox.critical(
-            self, self.tr("Send extent"), self.tr("Not implemented yet")
+        crs = QgsProject.instance().crs()
+        rect = self.iface.mapCanvas().extent()
+        message = QChatBboxMessage(
+            type=QCHAT_MESSAGE_TYPE_BBOX,
+            author=self.settings.author_nickname,
+            avatar=self.settings.author_avatar,
+            crs_wkt=crs.toWkt(),
+            crs_authid=crs.authid(),
+            xmin=rect.xMinimum(),
+            xmax=rect.xMaximum(),
+            ymin=rect.yMinimum(),
+            ymax=rect.yMaximum(),
         )
+        self.qchat_ws.send_message(message)
 
     def on_send_crs_button_clicked(self) -> None:
         """

@@ -325,6 +325,9 @@
          </item>
          <item>
           <widget class="QPushButton" name="btn_send_extent">
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
            <property name="text">
             <string>Send Extent</string>
            </property>
@@ -332,6 +335,9 @@
          </item>
          <item>
           <widget class="QPushButton" name="btn_send_crs">
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
            <property name="text">
             <string>Send CRS</string>
            </property>
