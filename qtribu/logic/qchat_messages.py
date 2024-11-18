@@ -64,3 +64,15 @@ class QChatCrsMessage(QChatMessage):
     avatar: Optional[str]
     crs_wkt: str
     crs_authid: str
+
+
+@dataclass(init=True, frozen=True)
+class QChatBboxMessage(QChatMessage):
+    author: str
+    avatar: Optional[str]
+    crs_wkt: str
+    crs_authid: str
+    xmin: float
+    xmax: float
+    ymin: float
+    ymax: float
