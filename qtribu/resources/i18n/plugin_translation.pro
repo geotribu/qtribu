@@ -12,7 +12,8 @@ SOURCES= ../../plugin_main.py \
     ../../gui/form_article.py \
     ../../gui/form_rdp_news.py \
     ../../gui/wdg_authoring.py \
-    ../../logic/qchat_client.py \
+    ../../logic/qchat_api_client.py \
+    ../../logic/qchat_websocket.py \
     ../../logic/splash_changer.py \
     ../../logic/web_viewer.py \
     ../../logic/news_feed/json_feed.py \
