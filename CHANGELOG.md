@@ -10,6 +10,27 @@ Unreleased
 
 -->
 
+## 1.1.0 - 2024-11-19
+
+### Features and enhancements 🎉
+
+* feature(qchat): auto-reconnect to last room when QGIS starts by @gounux in https://github.com/geotribu/qtribu/pull/209
+* feature(qchat): handle users registration by @gounux in https://github.com/geotribu/qtribu/pull/200
+* feature(qchat): like message by @gounux in https://github.com/geotribu/qtribu/pull/210
+* feature(qchat): re-arrange websocket message to allow image communications by @gounux in https://github.com/geotribu/qtribu/pull/211
+* refactor(qchat): use custom tree widget items by @gounux in https://github.com/geotribu/qtribu/pull/212
+* feature(qchat): send a geojson layer through websocket by @gounux in https://github.com/geotribu/qtribu/pull/213
+* refactor(qchat): use self.settings instead of PlgOptionsManager by @gounux in https://github.com/geotribu/qtribu/pull/217
+* ui(qchat): vertically optimize the QChat widget by @gounux in https://github.com/geotribu/qtribu/pull/216
+* feature(qchat): send and receive a crs message by @gounux in https://github.com/geotribu/qtribu/pull/219
+* feature(qchat): send and receive a bbox message by @gounux in https://github.com/geotribu/qtribu/pull/220
+* trad(qchat): add QChat fr translations by @gounux in https://github.com/geotribu/qtribu/pull/222
+* ui(qchat): set fixed height for an image chat item by @gounux in https://github.com/geotribu/qtribu/pull/221
+
+### Bugs fixes 🐛
+
+* fix(qchat): add type key check when receiving a message by @gounux in https://github.com/geotribu/qtribu/pull/218
+
 ## 1.0.0 - 2024-10-11
 
 ### Bugs fixes 🐛
