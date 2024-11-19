@@ -185,17 +185,17 @@
 <context>
     <name>ConfigOptionsPage</name>
     <message>
-        <location filename="../../gui/dlg_settings.py" line="253"/>
+        <location filename="../../gui/dlg_settings.py" line="257"/>
         <source>Read history has been reset.</source>
         <translation>L&apos;historique de lecture a été réinitialisé.</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.py" line="190"/>
+        <location filename="../../gui/dlg_settings.py" line="194"/>
         <source>Instance rules</source>
         <translation>Règles de l&apos;instance</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.py" line="190"/>
+        <location filename="../../gui/dlg_settings.py" line="194"/>
         <source>Instance rules ({instance_url}):
 
 {rules}
@@ -214,7 +214,7 @@ Longueur min d&apos;un pseudo: {min_nickname_length}
 Longueur max d&apos;un pseudo: {max_nickname_length}</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.py" line="227"/>
+        <location filename="../../gui/dlg_settings.py" line="231"/>
         <source>Registered instances</source>
         <translation>Instances connues</translation>
     </message>
@@ -245,7 +245,7 @@ Longueur max d&apos;un pseudo: {max_nickname_length}</translation>
 <context>
     <name>GeotribuPlugin</name>
     <message>
-        <location filename="../../plugin_main.py" line="311"/>
+        <location filename="../../plugin_main.py" line="323"/>
         <source>Newest article</source>
         <translation>Afficher le dernier article</translation>
     </message>
@@ -285,7 +285,7 @@ Longueur max d&apos;un pseudo: {max_nickname_length}</translation>
         <translation>Proposer une news pour la GeoRDP</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="317"/>
+        <location filename="../../plugin_main.py" line="329"/>
         <source>Michel, we&apos;ve got a problem: {err}</source>
         <translation></translation>
     </message>
@@ -320,17 +320,17 @@ Longueur max d&apos;un pseudo: {max_nickname_length}</translation>
         <translation>La lecture du flux RSS a planté. Trace: {err}</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="332"/>
+        <location filename="../../plugin_main.py" line="344"/>
         <source>Error importing some of dependencies. Related functions have been disabled.</source>
         <translation>Erreur lors de l&apos;import de certaines dépendances. Les fonctionnalités liées ont été désactivées.</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="350"/>
+        <location filename="../../plugin_main.py" line="362"/>
         <source>Plugin disabled. Please install all dependencies and then restart QGIS. Refer to the documentation for more information.</source>
         <translation>Extension désactivée. Veuillez installer toutes les dépendances puis redémarrer QGIS. Pour plus d&apos;informations, se référer à la documentation.</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="357"/>
+        <location filename="../../plugin_main.py" line="369"/>
         <source>Dependencies satisfied</source>
         <translation>Dépendances satisfaites</translation>
     </message>
@@ -343,79 +343,79 @@ Longueur max d&apos;un pseudo: {max_nickname_length}</translation>
         <translation type="obsolete">QChat</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.ui" line="57"/>
+        <location filename="../../gui/dck_qchat.ui" line="60"/>
         <source>Instance</source>
         <translation>Instance</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.ui" line="68"/>
+        <location filename="../../gui/dck_qchat.ui" line="71"/>
         <source>Rules</source>
         <translation>Règles</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.ui" line="78"/>
+        <location filename="../../gui/dck_qchat.ui" line="81"/>
         <source>Check instance status</source>
         <translation>Vérifier statut de l&apos;instance</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.ui" line="81"/>
+        <location filename="../../gui/dck_qchat.ui" line="84"/>
         <source>Status</source>
         <translation>Statut</translation>
     </message>
     <message>
         <location filename="../../gui/dck_qchat.ui" line="99"/>
         <source>Room</source>
-        <translation>Room</translation>
+        <translation type="obsolete">Room</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.ui" line="105"/>
+        <location filename="../../gui/dck_qchat.ui" line="134"/>
         <source>Room:</source>
         <translation>Room:</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.ui" line="130"/>
+        <location filename="../../gui/dck_qchat.ui" line="182"/>
         <source>Connect</source>
         <translation>Se connecter</translation>
     </message>
     <message>
         <location filename="../../gui/dck_qchat.ui" line="139"/>
         <source>Status:</source>
-        <translation>Statut:</translation>
+        <translation type="obsolete">Statut:</translation>
     </message>
     <message>
         <location filename="../../gui/dck_qchat.ui" line="146"/>
         <source>Not connected</source>
-        <translation>Déconnecté e</translation>
+        <translation type="obsolete">Déconnecté e</translation>
     </message>
     <message>
         <location filename="../../gui/dck_qchat.ui" line="223"/>
         <source>Clear</source>
-        <translation>Vider</translation>
+        <translation type="obsolete">Vider</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.ui" line="254"/>
+        <location filename="../../gui/dck_qchat.ui" line="273"/>
         <source>User</source>
         <translation>Utilisateur/rice</translation>
     </message>
     <message>
         <location filename="../../gui/dck_qchat.ui" line="260"/>
         <source>Nickname:</source>
-        <translation>Pseudo:</translation>
+        <translation type="obsolete">Pseudo:</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.ui" line="267"/>
+        <location filename="../../gui/dck_qchat.ui" line="281"/>
         <source>Message:</source>
         <translation>Message:</translation>
     </message>
     <message>
         <location filename="../../gui/dck_qchat.ui" line="277"/>
         <source>Send message</source>
-        <translation>Envoyer message</translation>
+        <translation type="obsolete">Envoyer message</translation>
     </message>
     <message>
         <location filename="../../gui/dck_qchat.ui" line="287"/>
         <source>Nickname set in QTribu&apos;s plugin settings</source>
-        <translation>Pseudo renseigné dans les réglages du plugin QTribu</translation>
+        <translation type="obsolete">Pseudo renseigné dans les réglages du plugin QTribu</translation>
     </message>
     <message>
         <location filename="../../gui/dck_qchat.ui" line="283"/>
@@ -423,9 +423,49 @@ Longueur max d&apos;un pseudo: {max_nickname_length}</translation>
         <translation type="obsolete">Pseudo</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.ui" line="310"/>
+        <location filename="../../gui/dck_qchat.ui" line="357"/>
         <source>Settings</source>
         <translation>Réglages</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.ui" line="166"/>
+        <source>List users</source>
+        <translation>Lister les utilisateur/ices</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.ui" line="230"/>
+        <source>Autoscroll to last message</source>
+        <translation>Scroller automatiquement au dernier message</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.ui" line="240"/>
+        <source>Clear chat</source>
+        <translation>Vider le chat</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.ui" line="298"/>
+        <source>Send</source>
+        <translation>Envoyer</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.ui" line="312"/>
+        <source>Send Image</source>
+        <translation>Envoyer une image</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.ui" line="322"/>
+        <source>Send QGIS screenshot</source>
+        <translation>Envoyer screenshot QGIS</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.ui" line="332"/>
+        <source>Send Extent</source>
+        <translation>Envoyer emprise</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.ui" line="342"/>
+        <source>Send CRS</source>
+        <translation>Envoyer SCR</translation>
     </message>
 </context>
 <context>
@@ -774,32 +814,32 @@ Si c&apos;est le cas, ne pas cocher et donner des précisions en commentaire.</t
         <translation>Activer la notification push</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="596"/>
+        <location filename="../../gui/dlg_settings.ui" line="628"/>
         <source>Miscellaneous</source>
         <translation>Divers</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="617"/>
+        <location filename="../../gui/dlg_settings.ui" line="649"/>
         <source>Enable debug mode.</source>
         <translation>Activer le mode DEBUG.</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="626"/>
+        <location filename="../../gui/dlg_settings.ui" line="658"/>
         <source>Debug mode (degraded performances)</source>
         <translation>Mode DEBUG (performances dégradées)</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="670"/>
+        <location filename="../../gui/dlg_settings.ui" line="702"/>
         <source>Version used to save settings:</source>
         <translation>Version des paramètres :</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="689"/>
+        <location filename="../../gui/dlg_settings.ui" line="721"/>
         <source>Report an issue</source>
         <translation>Créer un ticket</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="712"/>
+        <location filename="../../gui/dlg_settings.ui" line="744"/>
         <source>Help</source>
         <translation>Aide en ligne</translation>
     </message>
@@ -829,7 +869,7 @@ Si c&apos;est le cas, ne pas cocher et donner des précisions en commentaire.</t
         <translation>Accepter une fois pour toutes la licence de publication</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="734"/>
+        <location filename="../../gui/dlg_settings.ui" line="766"/>
         <source>Reset to factory defaults</source>
         <translation>Réinitialise les paramètres à leur valeur par défaut</translation>
     </message>
@@ -864,49 +904,59 @@ Si c&apos;est le cas, ne pas cocher et donner des précisions en commentaire.</t
         <translation>Découvrir des instances</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="383"/>
+        <location filename="../../gui/dlg_settings.ui" line="396"/>
         <source>Show avatars</source>
         <translation>Montrer les avatars</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="390"/>
+        <location filename="../../gui/dlg_settings.ui" line="419"/>
         <source>Display admin messages</source>
         <translation>Afficher les messages d&apos;admin</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="397"/>
+        <location filename="../../gui/dlg_settings.ui" line="429"/>
         <source>Activate cheatcodes</source>
         <translation>Activer les cheatcodes</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="408"/>
+        <location filename="../../gui/dlg_settings.ui" line="440"/>
         <source>Play sounds</source>
         <translation>Jouer des sons</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="415"/>
+        <location filename="../../gui/dlg_settings.ui" line="447"/>
         <source>Volume:</source>
         <translation>Volume:</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="438"/>
+        <location filename="../../gui/dlg_settings.ui" line="470"/>
         <source>Notification tone:</source>
         <translation>Son de notification:</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="519"/>
+        <location filename="../../gui/dlg_settings.ui" line="551"/>
         <source>Mention message color:</source>
         <translation>Couleur d&apos;un message de mention:</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="542"/>
+        <location filename="../../gui/dlg_settings.ui" line="574"/>
         <source>Self message color:</source>
         <translation>Couleur d&apos;un message de soi-même:</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="565"/>
+        <location filename="../../gui/dlg_settings.ui" line="597"/>
         <source>Admin message color:</source>
         <translation>Couleur des messages d&apos;admin:</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dlg_settings.ui" line="382"/>
+        <source>Automatically reconnect</source>
+        <translation>Se reconnecter autmatiquement</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dlg_settings.ui" line="406"/>
+        <source>Incognito mode</source>
+        <translation>Mode incognito</translation>
     </message>
 </context>
 <context>
