@@ -39,6 +39,8 @@ TIME_COLUMN = 0
 AUTHOR_COLUM = 1
 MESSAGE_COLUMN = 2
 
+MAX_IMAGE_ITEM_HEIGHT = 24
+
 
 class QChatTreeWidgetItem(QTreeWidgetItem):
     """
@@ -179,8 +181,8 @@ class QChatImageTreeWidgetItem(QChatTreeWidgetItem):
         self.pixmap.loadFromData(data)
         label = QLabel(self.parent())
         label.setPixmap(self.pixmap)
+        label.setMaximumSize(label.sizeHint().width(), MAX_IMAGE_ITEM_HEIGHT)
         self.treeWidget().setItemWidget(self, MESSAGE_COLUMN, label)
-        self.setSizeHint(MESSAGE_COLUMN, self.pixmap.size())
 
     def on_click(self, column: int) -> None:
         if column == MESSAGE_COLUMN:
