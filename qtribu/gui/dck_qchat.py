@@ -755,7 +755,7 @@ Rooms:
         if len(nickname) < QCHAT_NICKNAME_MINLENGTH:
             self.log(
                 message=self.tr(
-                    "Nickname too short : must be at least 3 characters. Please open settings and set it"
+                    "Nickname too short: must be at least 3 characters. Please open settings and set it"
                 ),
                 log_level=Qgis.Warning,
                 push=self.settings.notify_push_info,
@@ -894,7 +894,7 @@ Rooms:
         if text == CHEATCODE_QGIS_PRO_LICENSE:
             self.log(
                 message=self.tr("Your QGIS Pro license is about to expire"),
-                application=self.tr("QGIS Pro"),
+                application="QGIS Pro",
                 log_level=Qgis.Warning,
                 push=self.settings.notify_push_info,
                 duration=self.settings.notify_push_duration,
@@ -912,7 +912,7 @@ Rooms:
 
     def on_renew_clicked(self) -> None:
         msg_box = QMessageBox()
-        msg_box.setWindowTitle(self.tr("QGIS"))
+        msg_box.setWindowTitle("QGIS")
         msg_box.setIcon(QMessageBox.Information)
         msg_box.setText(
             self.tr(
@@ -946,7 +946,7 @@ Visit the website ?
                 message=self.tr(
                     "Not connected to QChat. Please connect to a room first"
                 ),
-                application=self.tr("QChat"),
+                application="QChat",
                 log_level=Qgis.Critical,
                 push=self.settings.notify_push_info,
                 duration=self.settings.notify_push_duration,

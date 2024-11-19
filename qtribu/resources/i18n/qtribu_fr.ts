@@ -338,9 +338,9 @@ Longueur max d&apos;un pseudo: {max_nickname_length}</translation>
 <context>
     <name>QChatWidget</name>
     <message>
-        <location filename="../../gui/dck_qchat.ui" line="167"/>
+        <location filename="../../gui/dck_qchat.py" line="966"/>
         <source>QChat</source>
-        <translation type="obsolete">QChat</translation>
+        <translation>QChat</translation>
     </message>
     <message>
         <location filename="../../gui/dck_qchat.ui" line="60"/>
@@ -373,7 +373,7 @@ Longueur max d&apos;un pseudo: {max_nickname_length}</translation>
         <translation>Room:</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.ui" line="182"/>
+        <location filename="../../gui/dck_qchat.py" line="426"/>
         <source>Connect</source>
         <translation>Se connecter</translation>
     </message>
@@ -418,9 +418,9 @@ Longueur max d&apos;un pseudo: {max_nickname_length}</translation>
         <translation type="obsolete">Pseudo renseigné dans les réglages du plugin QTribu</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.ui" line="283"/>
+        <location filename="../../gui/dck_qchat.py" line="129"/>
         <source>Nickname</source>
-        <translation type="obsolete">Pseudo</translation>
+        <translation>Pseudo</translation>
     </message>
     <message>
         <location filename="../../gui/dck_qchat.ui" line="357"/>
@@ -466,6 +466,245 @@ Longueur max d&apos;un pseudo: {max_nickname_length}</translation>
         <location filename="../../gui/dck_qchat.ui" line="342"/>
         <source>Send CRS</source>
         <translation>Envoyer SCR</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="129"/>
+        <source>Date</source>
+        <translation>Date de publication</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="129"/>
+        <source>Message</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="214"/>
+        <source>Instance: {uri}</source>
+        <translation>URL de l&apos;instance : {uri}</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="217"/>
+        <source>User: {nickname}</source>
+        <translation>Utilisateur : {nickname}</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="724"/>
+        <source>QChat error</source>
+        <translation>Erreur QChat</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="272"/>
+        <source>Instance rules</source>
+        <translation>Règles de l&apos;instance</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="272"/>
+        <source>Instance rules ({instance_url}):
+
+{rules}
+
+Main language: {main_lang}
+Max message length: {max_message_length}
+Min nickname length: {min_nickname_length}
+Max nickname length: {max_nickname_length}</source>
+        <translation>Règles de l&apos;instance ({instance_url}):
+
+{rules}
+
+Langue principale: {main_lang}
+Longueur max d&apos;un message: {max_message_length}
+Longueur min d&apos;un pseudo: {min_nickname_length}
+Longueur max d&apos;un pseudo: {max_nickname_length}</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="515"/>
+        <source>user</source>
+        <translation>Utilisateur/rice</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="304"/>
+        <source>Status: {status}
+
+Rooms:
+
+{rooms_status}</source>
+        <translation>Statut : {status} - Rooms : {room_status}</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="319"/>
+        <source>QChat instance status</source>
+        <translation>Statut de l&apos;instance QChat</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="391"/>
+        <source>Disconnect</source>
+        <translation>Se déconnecter</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="405"/>
+        <source>Connected to room &apos;{room}&apos;</source>
+        <translation>Connecté à la room &apos;{room}&apos;</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="421"/>
+        <source>Disconnected from room &apos;{room}&apos;</source>
+        <translation>Déconnecté(e) de la room &apos;{room}&apos;</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="456"/>
+        <source>Uncompliant message: {reason}</source>
+        <translation>Message non conforme : {reason}</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="486"/>
+        <source>You were mentionned by {sender}: {message}</source>
+        <translation>Vous avez été mentioné(e) par {sender} : {message}</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="515"/>
+        <source>QChat - room: {room} - {nb_users} {user_txt}</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="515"/>
+        <source>users</source>
+        <translation>Utilisateurs/rices</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="531"/>
+        <source>{newcomer} has joined the room</source>
+        <translation>{newcomer} a rejoint la room</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="545"/>
+        <source>{exiter} has left the room</source>
+        <translation>{exiter} a quitté la room</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="554"/>
+        <source>{liker_author} liked your message: {message}</source>
+        <translation>{liker_author} a aimé votre message : {message}</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="629"/>
+        <source>QChat Menu</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="633"/>
+        <source>Load layer in QGIS</source>
+        <translation>Charger les objets partagés dans QGIS</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="644"/>
+        <source>Set current project CRS</source>
+        <translation>Appliquer ce SCR au projet courant</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="653"/>
+        <source>Set current extent</source>
+        <translation>Appliquer à l&apos;étendue courante</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="662"/>
+        <source>Like message</source>
+        <translation>J&apos;aime ce message</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="673"/>
+        <source>Mention user</source>
+        <translation>Mentionner un utilisateur</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="684"/>
+        <source>Copy message to clipboard</source>
+        <translation>Copier un message dans le presse-papiers</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="692"/>
+        <source>Hide message</source>
+        <translation>Masquer un message</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="714"/>
+        <source>Registered users</source>
+        <translation>Utilisateur/ices enregistré/es</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="714"/>
+        <source>Registered users in room ({room}):
+
+{users}</source>
+        <translation>Utilisateur/ices enregistré/es dans la room ({room}) :
+
+{users}</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="744"/>
+        <source>Nickname not set : please open settings and set it</source>
+        <translation>Pseudo non défini. Merci d&apos;ouvrir les réglages pour le définir</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="756"/>
+        <source>Open Settings</source>
+        <translation>Ouvrir les réglages</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="756"/>
+        <source>Nickname too short: must be at least 3 characters. Please open settings and set it</source>
+        <translation>Le pseudo est trop court : il doit contenir au minimum 3 caractères. Merci de le changer dans les réglages</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="788"/>
+        <source>Select images to send to the chat</source>
+        <translation>Sélectionner une image à envoyer sur le tchat</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="895"/>
+        <source>Your QGIS Pro license is about to expire</source>
+        <translation>Votre licence QGIS Pro va bientôt expirer</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="895"/>
+        <source>Click here to renew it</source>
+        <translation>Cliquer ici pour la renouveler</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="917"/>
+        <source>No... it was a joke!
+
+QGIS is Free and Open Source software, forever.
+Free to use, not to make.
+
+Visit the website ?
+</source>
+        <translation>Non, c&apos;était une blague !
+
+QGIS est un logiciel libre et gratuit, à jamais.
+Enfin, gratuit à utiliser, pas à développer ni maintenir.
+
+Aller sur le site web ?
+</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="935"/>
+        <source>Send on QChat</source>
+        <translation>Envoyer sur QChat</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="945"/>
+        <source>Not connected to QChat. Please connect to a room first</source>
+        <translation>Non connecté à QChat. Veuillez d&apos;abord sélectionner une room.</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="957"/>
+        <source>No active layer in current QGIS project</source>
+        <translation>Aucune couche active dans le projet courant</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="966"/>
+        <source>Only vector layers can be sent on QChat</source>
+        <translation>Seulement les couches vectorielles peuvent être envoyées sur QChat</translation>
     </message>
 </context>
 <context>
