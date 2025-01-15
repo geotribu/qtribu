@@ -709,6 +709,15 @@ Rooms:
         """
         Action called when the list users button is clicked
         """
+        if self.settings.qchat_incognito_mode:
+            QMessageBox.warning(
+                self,
+                self.tr("Registered users"),
+                self.tr(
+                    "You're using incognito mode. Please disable it to see registered users."
+                ),
+            )
+            return
         try:
             users = self.qchat_client.get_registered_users(self.current_room)
             QMessageBox.information(
