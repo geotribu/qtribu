@@ -83,6 +83,9 @@ class QChatWidget(QgsDockWidget):
     qchat_client: QChatApiClient
     qchat_ws: QChatWebsocket
 
+    min_author_length: int
+    max_author_length: int
+
     def __init__(
         self,
         iface: QgisInterface,
@@ -237,6 +240,16 @@ class QChatWidget(QgsDockWidget):
         # initialize QChat API client
         self.qchat_client = QChatApiClient(self.settings.qchat_instance_uri)
 
+        # fetch rules for author min/max length
+        try:
+            rules = self.qchat_client.get_rules()
+            self.min_author_length = rules["min_author_length"]
+            self.max_author_length = rules["max_author_length"]
+        except Exception as exc:
+            self.iface.messageBar().pushCritical(self.tr("QChat error"), str(exc))
+            self.min_author_length = 3
+            self.max_author_length = 32
+
         # clear rooms combobox items
         self.cbb_room.clear()  # delete all items from comboBox
 
@@ -346,6 +359,23 @@ Rooms:
         """
         Action called when room index is changed in the room combobox
         """
+        if (
+            not self.min_author_length
+            <= len(self.settings.author_nickname)
+            <= self.max_author_length
+        ):
+            self.log(
+                message=self.tr(
+                    "QChat nickname not set or too short (between {min} and {max} characters). Please open settings to fix it."
+                ).format(min=self.min_author_length, max=self.max_author_length),
+                log_level=Qgis.Warning,
+                push=self.settings.notify_push_info,
+                duration=self.settings.notify_push_duration,
+                button=True,
+                button_label=self.tr("Open Settings"),
+                button_connect=self.on_settings_button_clicked,
+            )
+            return
         old_room = self.current_room
         new_room = self.cbb_room.currentText()
         old_is_marker = old_room != MARKER_VALUE
@@ -372,6 +402,23 @@ Rooms:
         if self.connected:
             self.disconnect_from_room()
         else:
+            if (
+                not self.min_author_length
+                <= len(self.settings.author_nickname)
+                <= self.max_author_length
+            ):
+                self.log(
+                    message=self.tr(
+                        "QChat nickname not set or too short (between {min} and {max} characters). Please open settings to fix it."
+                    ).format(min=self.min_author_length, max=self.max_author_length),
+                    log_level=Qgis.Warning,
+                    push=self.settings.notify_push_info,
+                    duration=self.settings.notify_push_duration,
+                    button=True,
+                    button_label=self.tr("Open Settings"),
+                    button_connect=self.on_settings_button_clicked,
+                )
+                return
             room = self.cbb_room.currentText()
             if room == MARKER_VALUE:
                 return
