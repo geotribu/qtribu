@@ -1037,7 +1037,7 @@ Visit the website ?
         # save and read QML style to and from temp file
         save_style_path = os.path.join(tempfile.gettempdir(), "qchat_layer_style.qml")
         layer.saveNamedStyle(save_style_path, categories=QgsMapLayer.AllStyleCategories)
-        with open(save_style_path, "r") as file:
+        with open(save_style_path, "r", encoding="utf-8") as file:
             qml_style = file.read()
 
         message = QChatGeojsonMessage(

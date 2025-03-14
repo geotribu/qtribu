@@ -234,7 +234,7 @@ class QChatGeojsonTreeWidgetItem(QChatTreeWidgetItem):
             save_style_path = os.path.join(
                 tempfile.gettempdir(), f"{self.message.layer_name}_style.qml"
             )
-            with open(save_style_path, "w") as style_file:
+            with open(save_style_path, "w", encoding="utf-8") as style_file:
                 style_file.write(self.message.style)
 
             # load geojson file into QGIS
