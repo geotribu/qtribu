@@ -8,6 +8,7 @@ from qgis.core import (
     QgsApplication,
     QgsCoordinateReferenceSystem,
     QgsCoordinateTransform,
+    QgsMapLayer,
     QgsPointXY,
     QgsProject,
     QgsRectangle,
@@ -228,9 +229,22 @@ class QChatGeojsonTreeWidgetItem(QChatTreeWidgetItem):
             )
             with open(save_path, "w") as file:
                 json.dump(self.message.geojson, file)
+
+            # save QML style to temp file
+            save_style_path = os.path.join(
+                tempfile.gettempdir(), f"{self.message.layer_name}_style.qml"
+            )
+            with open(save_style_path, "w") as style_file:
+                style_file.write(self.message.style)
+
             # load geojson file into QGIS
             layer = QgsVectorLayer(save_path, self.message.layer_name, "ogr")
             layer.setCrs(QgsCoordinateReferenceSystem.fromWkt(self.message.crs_wkt))
+            layer.loadNamedStyle(
+                save_style_path,
+                loadFromLocalDb=False,
+                categories=QgsMapLayer.AllStyleCategories,
+            )
             QgsProject.instance().addMapLayer(layer)
 
     @property

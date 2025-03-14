@@ -1033,6 +1033,13 @@ Visit the website ?
         exporter.setDestinationCrs(layer.crs())
         exporter.setTransformGeometries(True)
         geojson_str = exporter.exportFeatures(layer.getFeatures())
+
+        # save and read QML style to and from temp file
+        save_style_path = os.path.join(tempfile.gettempdir(), "qchat_layer_style.qml")
+        layer.saveNamedStyle(save_style_path, categories=QgsMapLayer.AllStyleCategories)
+        with open(save_style_path, "r") as file:
+            qml_style = file.read()
+
         message = QChatGeojsonMessage(
             type=QCHAT_MESSAGE_TYPE_GEOJSON,
             author=self.settings.author_nickname,
@@ -1041,5 +1048,6 @@ Visit the website ?
             crs_wkt=layer.crs().toWkt(),
             crs_authid=layer.crs().authid(),
             geojson=json.loads(geojson_str),
+            style=qml_style,
         )
         self.qchat_ws.send_message(message)
