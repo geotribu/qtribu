@@ -1,0 +1,2 @@
+class QChatMessageCanNotBeParsedException(Exception):
+    pass
