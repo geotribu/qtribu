@@ -1,13 +1,14 @@
 import base64
 import json
-import os
 import tempfile
+from pathlib import Path
 from typing import Optional
 
 from qgis.core import (
     QgsApplication,
     QgsCoordinateReferenceSystem,
     QgsCoordinateTransform,
+    QgsMapLayer,
     QgsPointXY,
     QgsProject,
     QgsRectangle,
@@ -223,14 +224,27 @@ class QChatGeojsonTreeWidgetItem(QChatTreeWidgetItem):
     def on_click(self, column: int) -> None:
         if column == MESSAGE_COLUMN:
             # save geojson to temp file
-            save_path = os.path.join(
-                tempfile.gettempdir(), f"{self.message.layer_name}.geojson"
+            save_path = (
+                Path(tempfile.gettempdir()) / f"{self.message.layer_name}.geojson"
             )
             with open(save_path, "w") as file:
                 json.dump(self.message.geojson, file)
+
+            # save QML style to temp file
+            save_style_path = (
+                Path(tempfile.gettempdir()) / f"{self.message.layer_name}_style.qml"
+            )
+            with open(save_style_path, "w", encoding="utf-8") as style_file:
+                style_file.write(self.message.style)
+
             # load geojson file into QGIS
-            layer = QgsVectorLayer(save_path, self.message.layer_name, "ogr")
+            layer = QgsVectorLayer(str(save_path), self.message.layer_name, "ogr")
             layer.setCrs(QgsCoordinateReferenceSystem.fromWkt(self.message.crs_wkt))
+            layer.loadNamedStyle(
+                str(save_style_path),
+                loadFromLocalDb=False,
+                categories=QgsMapLayer.AllStyleCategories,
+            )
             QgsProject.instance().addMapLayer(layer)
 
     @property

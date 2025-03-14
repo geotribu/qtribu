@@ -56,6 +56,7 @@ class QChatGeojsonMessage(QChatMessage):
     crs_wkt: str
     crs_authid: str
     geojson: dict
+    style: Optional[str]
 
 
 @dataclass(init=True, frozen=True)

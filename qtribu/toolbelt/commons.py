@@ -1,5 +1,5 @@
 # standard
-import os
+from pathlib import Path
 
 # 3rd party
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer  # noqa QGS103
@@ -61,7 +61,7 @@ def play_resource_sound(resource: str, volume: int) -> None:
     The file_name param must be the name (without extension) of a .mp3 audio file inside resources/sounds folder
     """
     file_path = str(DIR_PLUGIN_ROOT / f"resources/sounds/{resource}.mp3")
-    if not os.path.exists(file_path):
+    if not Path(file_path).is_file():
         raise FileNotFoundError(
             f"File '{resource}.wav' not found in resources/sounds folder"
         )
