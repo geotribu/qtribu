@@ -1,7 +1,6 @@
 # standard
 import base64
 import json
-import os
 import tempfile
 from functools import partial
 from pathlib import Path
@@ -863,8 +862,8 @@ Rooms:
         Action called when the Send QGIS screenshot button is clicked
         """
 
-        sc_fp = os.path.join(tempfile.gettempdir(), "qgis_screenshot.png")
-        self.iface.mapCanvas().saveAsImage(sc_fp)
+        sc_fp = Path(tempfile.gettempdir()) / "qgis_screenshot.png"
+        self.iface.mapCanvas().saveAsImage(str(sc_fp))
         with open(sc_fp, "rb") as file:
             data = file.read()
             message = QChatImageMessage(
@@ -1035,8 +1034,10 @@ Visit the website ?
         geojson_str = exporter.exportFeatures(layer.getFeatures())
 
         # save and read QML style to and from temp file
-        save_style_path = os.path.join(tempfile.gettempdir(), "qchat_layer_style.qml")
-        layer.saveNamedStyle(save_style_path, categories=QgsMapLayer.AllStyleCategories)
+        save_style_path = Path(tempfile.gettempdir()) / "qchat_layer_style.qml"
+        layer.saveNamedStyle(
+            str(save_style_path), categories=QgsMapLayer.AllStyleCategories
+        )
         with open(save_style_path, "r", encoding="utf-8") as file:
             qml_style = file.read()
 
