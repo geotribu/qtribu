@@ -47,18 +47,20 @@ jobs:
           flake8 ${{ env.PROJECT_FOLDER }} --count --exit-zero --statistics
 
   qt6-check:
-    name: PyQt6
+    name: PyQt6 6️⃣
     runs-on: ubuntu-latest
-    container:
-      image: registry.gitlab.com/oslandia/qgis/pyqgis-4-checker/pyqgis-qt-checker:latest
     steps:
       - name: Get source code
         uses: actions/checkout@v4
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Check PyQt5 to PyQt6 compatibility
         run: |
-          # Exécuter la conversion avec des options plus complètes
-          pyqt5_to_pyqt6.py --logfile pyqt6_checker.log ${{ env.PROJECT_FOLDER }}/
+          docker run --rm -v ${{ github.workspace }}:/home/pyqgisdev/ \
+            registry.gitlab.com/oslandia/qgis/pyqgis-4-checker/pyqgis-qt-checker:latest \
+            pyqt5_to_pyqt6.py --logfile /home/pyqgisdev/pyqt6_checker.log .
 
       - name: Upload converted files
         uses: actions/upload-artifact@v4
