@@ -54,7 +54,7 @@ jobs:
       volumes:
         - /tmp/.X11-unix:/tmp/.X11-unix
         - ${{ github.workspace }}:/home/pyqgisdev/
-      options: --user pyqgisdev
+      options: --user root
     steps:
       - name: https://github.com/actions/checkout/issues/1720
         run: |
