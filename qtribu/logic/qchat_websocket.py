@@ -120,24 +120,34 @@ class QChatWebsocket(QObject):
                 log_level=Qgis.Critical,
             )
             return
-        msg_type = message["type"]
-        if msg_type == QCHAT_MESSAGE_TYPE_UNCOMPLIANT:
-            self.uncompliant_message_received.emit(QChatUncompliantMessage(**message))
-        elif msg_type == QCHAT_MESSAGE_TYPE_TEXT:
-            self.text_message_received.emit(QChatTextMessage(**message))
-        elif msg_type == QCHAT_MESSAGE_TYPE_IMAGE:
-            self.image_message_received.emit(QChatImageMessage(**message))
-        elif msg_type == QCHAT_MESSAGE_TYPE_NB_USERS:
-            self.nb_users_message_received.emit(QChatNbUsersMessage(**message))
-        elif msg_type == QCHAT_MESSAGE_TYPE_NEWCOMER:
-            self.newcomer_message_received.emit(QChatNewcomerMessage(**message))
-        elif msg_type == QCHAT_MESSAGE_TYPE_EXITER:
-            self.exiter_message_received.emit(QChatExiterMessage(**message))
-        elif msg_type == QCHAT_MESSAGE_TYPE_LIKE:
-            self.like_message_received.emit(QChatLikeMessage(**message))
-        elif msg_type == QCHAT_MESSAGE_TYPE_GEOJSON:
-            self.geojson_message_received.emit(QChatGeojsonMessage(**message))
-        elif msg_type == QCHAT_MESSAGE_TYPE_CRS:
-            self.crs_message_received.emit(QChatCrsMessage(**message))
-        elif msg_type == QCHAT_MESSAGE_TYPE_BBOX:
-            self.bbox_message_received.emit(QChatBboxMessage(**message))
+        try:
+            msg_type = message["type"]
+            if msg_type == QCHAT_MESSAGE_TYPE_UNCOMPLIANT:
+                self.uncompliant_message_received.emit(
+                    QChatUncompliantMessage(**message)
+                )
+            elif msg_type == QCHAT_MESSAGE_TYPE_TEXT:
+                self.text_message_received.emit(QChatTextMessage(**message))
+            elif msg_type == QCHAT_MESSAGE_TYPE_IMAGE:
+                self.image_message_received.emit(QChatImageMessage(**message))
+            elif msg_type == QCHAT_MESSAGE_TYPE_NB_USERS:
+                self.nb_users_message_received.emit(QChatNbUsersMessage(**message))
+            elif msg_type == QCHAT_MESSAGE_TYPE_NEWCOMER:
+                self.newcomer_message_received.emit(QChatNewcomerMessage(**message))
+            elif msg_type == QCHAT_MESSAGE_TYPE_EXITER:
+                self.exiter_message_received.emit(QChatExiterMessage(**message))
+            elif msg_type == QCHAT_MESSAGE_TYPE_LIKE:
+                self.like_message_received.emit(QChatLikeMessage(**message))
+            elif msg_type == QCHAT_MESSAGE_TYPE_GEOJSON:
+                self.geojson_message_received.emit(QChatGeojsonMessage(**message))
+            elif msg_type == QCHAT_MESSAGE_TYPE_CRS:
+                self.crs_message_received.emit(QChatCrsMessage(**message))
+            elif msg_type == QCHAT_MESSAGE_TYPE_BBOX:
+                self.bbox_message_received.emit(QChatBboxMessage(**message))
+        except KeyError:
+            message = QChatUncompliantMessage(
+                reason=self.tr(
+                    "Unintelligible message received. Please make sure you are using the latest plugin version."
+                )
+            )
+            self.uncompliant_message_received.emit(message)
