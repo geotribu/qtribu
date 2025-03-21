@@ -59,14 +59,14 @@ jobs:
       - name: Get source code
         uses: actions/checkout@v4
 
-      - name: Check PyQt5 to PyQt6 compatibility
+      - name: Check PyQt5 to PyQt6 compatibility.
         run: |
-          # Exécuter la conversion avec des options plus complètes
           pyqt5_to_pyqt6.py --logfile pyqt6_checker.log ${{ env.PROJECT_FOLDER }}/
 
-      - name: Upload converted files
+      - name: Upload script report if script fails
         uses: actions/upload-artifact@v4
+        if: ${{ failure() }}
         with:
-          name: qt6-converted-files
+          name: pyqt6-checker-error-report
           path: pyqt6_checker.log
           retention-days: 7
