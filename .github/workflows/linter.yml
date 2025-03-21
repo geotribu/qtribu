@@ -56,6 +56,10 @@ jobs:
         - ${{ github.workspace }}:/home/pyqgisdev/
       options: --user pyqgisdev
     steps:
+      - name: https://github.com/actions/checkout/issues/1720
+        run: |
+          chmod -R u+rwX .
+
       - name: Get source code
         uses: actions/checkout@v4
 
