@@ -146,7 +146,7 @@ class NetworkRequestsManager:
                     req.setRawHeader(k, v)
             else:
                 req.setHeader(
-                    QNetworkRequest.UserAgentHeader,
+                    QNetworkRequest.KnownHeaders.UserAgentHeader,
                     bytes(f"{__title__}/{__version__}", "utf8"),
                 )
 
@@ -156,7 +156,7 @@ class NetworkRequestsManager:
             )
 
             # check if request is fine
-            if req_status != QgsBlockingNetworkRequest.NoError:
+            if req_status != QgsBlockingNetworkRequest.ErrorCode.NoError:
                 self.log(
                     message=self.ntwk_requester.errorMessage(), log_level=2, push=1
                 )
@@ -209,7 +209,7 @@ class NetworkRequestsManager:
         )
         file_downloader.downloadExited.connect(loop.quit)
         file_downloader.startDownload()
-        loop.exec_()
+        loop.exec()
 
         self.log(
             message=f"Download of {remote_url} to {local_path} succeedeed", log_level=3

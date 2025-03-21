@@ -63,7 +63,9 @@ class RdpNewsForm(QDialog):
         for rdp_category in GEORDP_NEWS_CATEGORIES:
             self.cbb_category.addItem(rdp_category.name, rdp_category)
             self.cbb_category.setItemData(
-                rdp_category.order - 1, rdp_category.description, Qt.ToolTipRole
+                rdp_category.order - 1,
+                rdp_category.description,
+                Qt.ItemDataRole.ToolTipRole,
             )
 
         # icon combobox
@@ -93,9 +95,13 @@ class RdpNewsForm(QDialog):
                 "https://contribuer.geotribu.fr/rdp/add_news/",
             )
         )
-        self.btn_box.button(QDialogButtonBox.Ok).clicked.connect(self.on_btn_submit)
-        self.btn_box.button(QDialogButtonBox.Ok).setDefault(True)
-        self.btn_box.button(QDialogButtonBox.Ok).setText(self.tr("Submit"))
+        self.btn_box.button(QDialogButtonBox.StandardButton.Ok).clicked.connect(
+            self.on_btn_submit
+        )
+        self.btn_box.button(QDialogButtonBox.StandardButton.Ok).setDefault(True)
+        self.btn_box.button(QDialogButtonBox.StandardButton.Ok).setText(
+            self.tr("Submit")
+        )
 
     def cbb_icon_populate(self) -> None:
         """Populate combobox of news icons."""
@@ -122,7 +128,7 @@ class RdpNewsForm(QDialog):
             self.cbb_icon.setItemData(
                 GEORDP_NEWS_ICONS.index(rdp_icon) + 1,
                 rdp_icon.description,
-                Qt.ToolTipRole,
+                Qt.ItemDataRole.ToolTipRole,
             )
 
         # restore current index

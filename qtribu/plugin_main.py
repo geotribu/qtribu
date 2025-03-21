@@ -277,7 +277,7 @@ class GeotribuPlugin:
                 message=self.tr(
                     f"Unable to insert latest item within QGIS news feed. Trace: {err}"
                 ),
-                log_level=Qgis.Critical,
+                log_level=Qgis.MessageLevel.Critical,
                 push=True,
             )
             return
@@ -291,7 +291,9 @@ class GeotribuPlugin:
                     parent=self.iface.mainWindow(),
                     auto_reconnect_room=settings.qchat_auto_reconnect_room,
                 )
-                self.iface.addDockWidget(int(Qt.RightDockWidgetArea), self.qchat_widget)
+                self.iface.addDockWidget(
+                    int(Qt.DockWidgetArea.RightDockWidgetArea), self.qchat_widget
+                )
             self.qchat_widget.show()
 
     def tr(self, message: str) -> str:
@@ -424,5 +426,7 @@ class GeotribuPlugin:
             self.qchat_widget = QChatWidget(
                 iface=self.iface, parent=self.iface.mainWindow()
             )
-            self.iface.addDockWidget(int(Qt.RightDockWidgetArea), self.qchat_widget)
+            self.iface.addDockWidget(
+                int(Qt.DockWidgetArea.RightDockWidgetArea), self.qchat_widget
+            )
         self.qchat_widget.show()

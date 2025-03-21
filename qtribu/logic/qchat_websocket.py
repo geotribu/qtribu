@@ -117,7 +117,7 @@ class QChatWebsocket(QObject):
         if "type" not in message:
             self.log(
                 message="No 'type' key in received message. Please make sure your configured instance is running gischat v>=2.0.0",
-                log_level=Qgis.Critical,
+                log_level=Qgis.MessageLevel.Critical,
             )
             return
         msg_type = message["type"]
