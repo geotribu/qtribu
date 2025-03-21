@@ -45,3 +45,24 @@ jobs:
           flake8 ${{ env.PROJECT_FOLDER }} --count --select=E9,F63,F7,F82 --show-source --statistics
           # exit-zero treats all errors as warnings.
           flake8 ${{ env.PROJECT_FOLDER }} --count --exit-zero --statistics
+
+  qt6-check:
+    name: PyQt6
+    runs-on: ubuntu-latest
+    container:
+      image: registry.gitlab.com/oslandia/qgis/pyqgis-4-checker/pyqgis-qt-checker:latest
+    steps:
+      - name: Get source code
+        uses: actions/checkout@v4
+
+      - name: Check PyQt5 to PyQt6 compatibility
+        run: |
+          # Exécuter la conversion avec des options plus complètes
+          pyqt5_to_pyqt6.py --logfile pyqt6_checker.log ${{ env.PROJECT_FOLDER }}/
+
+      - name: Upload converted files
+        uses: actions/upload-artifact@v4
+        with:
+          name: qt6-conversion-log
+          path: pyqt6_checker.log
+          retention-days: 7
