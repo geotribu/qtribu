@@ -54,6 +54,7 @@ jobs:
       volumes:
         - /tmp/.X11-unix:/tmp/.X11-unix
         - ${{ github.workspace }}:/home/pyqgisdev/
+      options: --user pyqgisdev
     steps:
       - name: Get source code
         uses: actions/checkout@v4
