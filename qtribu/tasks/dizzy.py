@@ -17,7 +17,7 @@ class DizzyTask(QgsTask):
         max_offset: int = 12,
         max_angle: int = 6,
     ):
-        super().__init__(description, QgsTask.CanCancel)
+        super().__init__(description, QgsTask.Flag.CanCancel)
         self.iface = iface
         self.duration = duration
         self.refresh = refresh

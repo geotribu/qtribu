@@ -16,12 +16,12 @@ req_status = qntwk_req.get(
 )
 
 print(isinstance(req_status, QgsBlockingNetworkRequest.ErrorCode))
-print(req_status == QgsBlockingNetworkRequest.NoError)
+print(req_status == QgsBlockingNetworkRequest.ErrorCode.NoError)
 print(req_status == 0)
 print(qntwk_req.errorMessage() == "")
 
 
-if req_status != QgsBlockingNetworkRequest.NoError:
+if req_status != QgsBlockingNetworkRequest.ErrorCode.NoError:
     print("Et meeeeeeeerde")
     print(qntwk_req.errorMessage())
 

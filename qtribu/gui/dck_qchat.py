@@ -137,7 +137,7 @@ class QChatWidget(QgsDockWidget):
         )
         self.twg_chat.itemClicked.connect(self.on_message_clicked)
         self.twg_chat.itemDoubleClicked.connect(self.on_message_double_clicked)
-        self.twg_chat.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.twg_chat.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
         self.twg_chat.customContextMenuRequested.connect(
             self.on_custom_context_menu_requested
         )
@@ -260,7 +260,7 @@ class QChatWidget(QgsDockWidget):
                 self.cbb_room.addItem(room)
         except Exception as exc:
             self.iface.messageBar().pushCritical(self.tr("QChat error"), str(exc))
-            self.log(message=str(exc), log_level=Qgis.Critical)
+            self.log(message=str(exc), log_level=Qgis.MessageLevel.Critical)
         finally:
             self.current_room = MARKER_VALUE
 
@@ -304,7 +304,7 @@ Max nickname length: {max_nickname_length}"""
             )
         except Exception as exc:
             self.iface.messageBar().pushCritical(self.tr("QChat error"), str(exc))
-            self.log(message=str(exc), log_level=Qgis.Critical)
+            self.log(message=str(exc), log_level=Qgis.MessageLevel.Critical)
 
     def on_status_button_clicked(self) -> None:
         """
@@ -330,7 +330,7 @@ Rooms:
             )
             QMessageBox.information(self, self.tr("QChat instance status"), text)
         except Exception as exc:
-            self.log(message=str(exc), log_level=Qgis.Critical)
+            self.log(message=str(exc), log_level=Qgis.MessageLevel.Critical)
 
     def on_settings_button_clicked(self) -> None:
         """
@@ -367,7 +367,7 @@ Rooms:
                 message=self.tr(
                     "QChat nickname not set or too short (between {min} and {max} characters). Please open settings to fix it."
                 ).format(min=self.min_author_length, max=self.max_author_length),
-                log_level=Qgis.Warning,
+                log_level=Qgis.MessageLevel.Warning,
                 push=self.settings.notify_push_info,
                 duration=self.settings.notify_push_duration,
                 button=True,
@@ -410,7 +410,7 @@ Rooms:
                     message=self.tr(
                         "QChat nickname not set or too short (between {min} and {max} characters). Please open settings to fix it."
                     ).format(min=self.min_author_length, max=self.max_author_length),
-                    log_level=Qgis.Warning,
+                    log_level=Qgis.MessageLevel.Warning,
                     push=self.settings.notify_push_info,
                     duration=self.settings.notify_push_duration,
                     button=True,
@@ -493,7 +493,7 @@ Rooms:
             self.add_admin_message(self.qchat_ws.error_string())
         self.log(
             message=f"{error_code}: {self.qchat_ws.error_string()}",
-            log_level=Qgis.Critical,
+            log_level=Qgis.MessageLevel.Critical,
         )
 
     # region websocket message received
@@ -504,7 +504,7 @@ Rooms:
                 reason=message.reason
             ),
             application=self.tr("QChat"),
-            log_level=Qgis.Critical,
+            log_level=Qgis.MessageLevel.Critical,
             push=self.settings.notify_push_info,
             duration=self.settings.notify_push_duration,
         )
@@ -534,7 +534,7 @@ Rooms:
                         "You were mentionned by {sender}: {message}"
                     ).format(sender=message.author, message=message.text),
                     application=self.tr("QChat"),
-                    log_level=Qgis.Info,
+                    log_level=Qgis.MessageLevel.Info,
                     push=self.settings.notify_push_info,
                     duration=self.settings.notify_push_duration,
                 )
@@ -602,7 +602,7 @@ Rooms:
                     liker_author=message.liker_author, message=message.message
                 ),
                 application=self.tr("QChat"),
-                log_level=Qgis.Success,
+                log_level=Qgis.MessageLevel.Success,
                 push=self.settings.notify_push_info,
                 duration=self.settings.notify_push_duration,
             )
@@ -777,7 +777,7 @@ Rooms:
             )
         except Exception as exc:
             self.iface.messageBar().pushCritical(self.tr("QChat error"), str(exc))
-            self.log(message=str(exc), log_level=Qgis.Critical)
+            self.log(message=str(exc), log_level=Qgis.MessageLevel.Critical)
 
     def on_clear_chat_button_clicked(self) -> None:
         """
@@ -798,7 +798,7 @@ Rooms:
         if not nickname:
             self.log(
                 message=self.tr("Nickname not set : please open settings and set it"),
-                log_level=Qgis.Warning,
+                log_level=Qgis.MessageLevel.Warning,
                 push=self.settings.notify_push_info,
                 duration=self.settings.notify_push_duration,
                 button=True,
@@ -812,7 +812,7 @@ Rooms:
                 message=self.tr(
                     "Nickname too short: must be at least 3 characters. Please open settings and set it"
                 ),
-                log_level=Qgis.Warning,
+                log_level=Qgis.MessageLevel.Warning,
                 push=self.settings.notify_push_info,
                 duration=self.settings.notify_push_duration,
                 button=True,
@@ -950,7 +950,7 @@ Rooms:
             self.log(
                 message=self.tr("Your QGIS Pro license is about to expire"),
                 application="QGIS Pro",
-                log_level=Qgis.Warning,
+                log_level=Qgis.MessageLevel.Warning,
                 push=self.settings.notify_push_info,
                 duration=self.settings.notify_push_duration,
                 button=True,
@@ -1002,7 +1002,7 @@ Visit the website ?
                     "Not connected to QChat. Please connect to a room first"
                 ),
                 application="QChat",
-                log_level=Qgis.Critical,
+                log_level=Qgis.MessageLevel.Critical,
                 push=self.settings.notify_push_info,
                 duration=self.settings.notify_push_duration,
             )
@@ -1012,7 +1012,7 @@ Visit the website ?
             self.log(
                 message=self.tr("No active layer in current QGIS project"),
                 application=self.tr("QChat"),
-                log_level=Qgis.Critical,
+                log_level=Qgis.MessageLevel.Critical,
                 push=self.settings.notify_push_info,
                 duration=self.settings.notify_push_duration,
             )
@@ -1021,7 +1021,7 @@ Visit the website ?
             self.log(
                 message=self.tr("Only vector layers can be sent on QChat"),
                 application=self.tr("QChat"),
-                log_level=Qgis.Critical,
+                log_level=Qgis.MessageLevel.Critical,
                 push=self.settings.notify_push_info,
                 duration=self.settings.notify_push_duration,
             )
