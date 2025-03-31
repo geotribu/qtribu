@@ -3,6 +3,7 @@
 # PyQGIS
 from qgis.core import QgsBlockingNetworkRequest
 from qgis.PyQt.Qt import QByteArray, QUrl
+from qgis.PyQt.QtCore import Qt
 from qgis.PyQt.QtNetwork import QNetworkRequest
 
 from qtribu.logic import RssMiniReader
