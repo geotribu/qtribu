@@ -61,6 +61,7 @@ jobs:
 
       - name: Check PyQt5 to PyQt6 compatibility.
         run: |
+          pyqt5_to_pyqt6.py --dry_run ${{ env.PROJECT_FOLDER }}/
           pyqt5_to_pyqt6.py --logfile pyqt6_checker.log ${{ env.PROJECT_FOLDER }}/
 
       - name: Upload script report if script fails
