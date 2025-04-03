@@ -4,10 +4,10 @@
 import logging
 from functools import partial
 from logging.handlers import RotatingFileHandler
-from typing import Callable, Optional
+from typing import Callable, Literal, Optional, Union
 
 # PyQGIS
-from qgis.core import QgsMessageLog, QgsMessageOutput
+from qgis.core import Qgis, QgsMessageLog, QgsMessageOutput
 from qgis.gui import QgsMessageBar
 from qgis.PyQt.QtWidgets import QPushButton, QWidget
 from qgis.utils import iface
@@ -28,7 +28,9 @@ class PlgLogger(logging.Handler):
     def log(
         message: str,
         application: str = __title__,
-        log_level: int = 0,
+        log_level: Union[Qgis.MessageLevel, Literal[0, 1, 2, 3, 4]] = Qgis.MessageLevel(
+            0
+        ),
         push: bool = False,
         duration: Optional[int] = None,
         # widget
@@ -48,9 +50,12 @@ class PlgLogger(logging.Handler):
         :param application: name of the application sending the message. \
         Defaults to __about__.__title__
         :type application: str, optional
-        :param log_level: message level. Possible values: 0 (info), 1 (warning), \
-        2 (critical), 3 (success), 4 (none - grey). Defaults to 0 (info)
-        :type log_level: int, optional
+        :param log_level: message level. Possible values: any values of enum \
+            `Qgis.MessageLevel`. For legacy purposes, it's also possible to pass \
+            corresponding integers but it's not recommended anymore. Legacy values: \
+            0 (info), 1 (warning), 2 (critical), 3 (success), 4 (none - grey). Defaults \
+            to Qgis.MessageLevel(0) (info)
+        :type log_level: Union[Qgis.MessageLevel, Literal[0, 1, 2, 3, 4]], optional
         :param push: also display the message in the QGIS message bar in addition to \
         the log, defaults to False
         :type push: bool, optional
@@ -79,6 +84,22 @@ class PlgLogger(logging.Handler):
 
         .. code-block:: python
 
+            # using enums from Qgis:
+            # Qgis.Info, Qgis.Warning, Qgis.Critical, Qgis.Success, Qgis.NoLevel
+            from qgis.core import Qgis
+
+            log(message="Plugin loaded - INFO", log_level=Qgis.Info, push=False)
+            log(
+                message="Something went wrong but it's not blocking",
+                log_level=Qgis.Warning
+            )
+            log(
+                message="Plugin failed to load - CRITICAL",
+                log_level=Qgis.MessageLevel(2),
+                push=True
+            )
+            
+            # LEGACY - using integers:
             log(message="Plugin loaded - INFO", log_level=0, push=False)
             log(message="Plugin loaded - WARNING", log_level=1, push=1, duration=5)
             log(message="Plugin loaded - ERROR", log_level=2, push=1, duration=0)
@@ -99,20 +120,15 @@ class PlgLogger(logging.Handler):
                 button_more_text=detailed_error_message
             )
             log(message="Plugin loaded - TEST", log_level=4, push=0)
-
-            # also works using enums from Qgis:
-            # Qgis.Info, Qgis.Warning, Qgis.Critical, Qgis.Success, Qgis.NoLevel
-            from qgis.core import Qgis
-            log(
-                message="Something went wrong but it's not blocking",
-                log_level=Qgis.Warning
-            )
-
         """
         # if not debug mode and not push, let's ignore INFO, SUCCESS and TEST
         debug_mode = plg_prefs_hdlr.PlgOptionsManager.get_plg_settings().debug_mode
         if not debug_mode and not push and (log_level < 1 or log_level > 2):
             return
+
+        # if log_level is an int, convert it to Qgis.MessageLevel
+        if isinstance(log_level, int):
+            log_level = Qgis.MessageLevel(log_level)
 
         # ensure message is a string
         if not isinstance(message, str):
@@ -155,7 +171,7 @@ class PlgLogger(logging.Handler):
                 if button_connect:
                     widget_button.clicked.connect(button_connect)
                 else:
-                    mini_dlg = QgsMessageOutput.createMessageOutput()
+                    mini_dlg: QgsMessageOutput = QgsMessageOutput.createMessageOutput()
                     mini_dlg.setTitle(application)
                     mini_dlg.setMessage(
                         f"{message}\n{button_more_text}",
