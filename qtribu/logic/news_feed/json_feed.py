@@ -1,13 +1,12 @@
 #! python3  # noqa: E265
 
 """
-    JSON Feed wrapper.
+JSON Feed wrapper.
 """
 
 # ############################################################################
 # ########## Imports ###############
 # ##################################
-
 
 import json
 from datetime import datetime
@@ -67,7 +66,6 @@ class JsonFeedClient:
             and (datetime.now() - self.last_fetch_date).total_seconds()
             > FETCH_UPDATE_INTERVAL_SECONDS
         ):
-
             response: QByteArray = self.qntwk.get_from_source(
                 headers=HEADERS,
                 url=self.url,

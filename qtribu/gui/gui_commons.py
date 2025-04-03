@@ -1,9 +1,8 @@
 #! python3  # noqa: E265
 
 """
-    Common GUI utils.
+Common GUI utils.
 """
-
 
 # PyQGIS
 from qgis.PyQt.QtCore import QRegularExpression

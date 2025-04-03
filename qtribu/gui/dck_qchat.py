@@ -75,7 +75,6 @@ MARKER_VALUE = "---"
 
 
 class QChatWidget(QgsDockWidget):
-
     initialized: bool = False
     connected: bool = False
     current_room: Optional[str] = None
