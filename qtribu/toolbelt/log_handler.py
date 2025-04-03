@@ -91,7 +91,7 @@ class PlgLogger(logging.Handler):
             log(message="Plugin loaded - INFO", log_level=Qgis.MessageLevel.Info, push=False)
             log(
                 message="Something went wrong but it's not blocking",
-                log_level=Qgis.Warning
+                log_level=Qgis.MessageLevel.Warning
             )
             log(
                 message="Plugin failed to load - CRITICAL",
