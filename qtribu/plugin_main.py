@@ -292,7 +292,7 @@ class GeotribuPlugin:
                     auto_reconnect_room=settings.qchat_auto_reconnect_room,
                 )
                 self.iface.addDockWidget(
-                    int(Qt.DockWidgetArea.RightDockWidgetArea), self.qchat_widget
+                    Qt.DockWidgetArea.RightDockWidgetArea, self.qchat_widget
                 )
             self.qchat_widget.show()
 
@@ -425,6 +425,6 @@ class GeotribuPlugin:
                 iface=self.iface, parent=self.iface.mainWindow()
             )
             self.iface.addDockWidget(
-                int(Qt.DockWidgetArea.RightDockWidgetArea), self.qchat_widget
+                Qt.DockWidgetArea.RightDockWidgetArea, self.qchat_widget
             )
         self.qchat_widget.show()

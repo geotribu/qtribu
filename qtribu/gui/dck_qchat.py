@@ -8,7 +8,6 @@ from pathlib import Path
 from typing import Optional
 
 # PyQGIS
-from PyQt5 import QtWebSockets  # noqa QGS103
 from qgis.core import Qgis, QgsApplication, QgsJsonExporter, QgsMapLayer, QgsProject
 from qgis.gui import QgisInterface, QgsDockWidget
 from qgis.PyQt import uic
@@ -23,6 +22,7 @@ from qgis.PyQt.QtWidgets import (
     QWidget,
 )
 
+# plugin
 from qtribu.__about__ import __title__
 from qtribu.constants import (
     ADMIN_MESSAGES_NICKNAME,
@@ -64,8 +64,6 @@ from qtribu.logic.qchat_messages import (
 )
 from qtribu.logic.qchat_websocket import QChatWebsocket
 from qtribu.tasks.dizzy import DizzyTask
-
-# plugin
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
 from qtribu.toolbelt.commons import open_url_in_webviewer, play_resource_sound
 from qtribu.toolbelt.preferences import PlgSettingsStructure
@@ -88,8 +86,8 @@ class QChatWidget(QgsDockWidget):
     def __init__(
         self,
         iface: QgisInterface,
-        parent: QWidget = None,
-        auto_reconnect_room: str = None,
+        parent: Optional[QWidget] = None,
+        auto_reconnect_room: Optional[str] = None,
     ):
         """QWidget to see and post messages on chat
 
