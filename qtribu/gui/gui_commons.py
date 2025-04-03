@@ -21,13 +21,13 @@ QVAL_ALPHANUMX = QRegularExpressionValidator(_alphanumx_qreg)
 # emails
 _email_qreg = QRegularExpression(
     "\\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}\\b",
-    QRegularExpression.CaseInsensitiveOption,
+    QRegularExpression.PatternOption.CaseInsensitiveOption,
 )
 QVAL_EMAIL = QRegularExpressionValidator(_email_qreg)
 
 # URL
 _url_qreg = QRegularExpression(
     r"^https?://(?:[-\w.\/]|(?:%[\da-fA-F]{2}))+",
-    QRegularExpression.UseUnicodePropertiesOption,
+    QRegularExpression.PatternOption.UseUnicodePropertiesOption,
 )
 QVAL_URL = QRegularExpressionValidator(_url_qreg)

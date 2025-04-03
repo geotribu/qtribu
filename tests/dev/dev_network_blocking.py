@@ -3,6 +3,7 @@
 # PyQGIS
 from qgis.core import QgsBlockingNetworkRequest
 from qgis.PyQt.Qt import QByteArray, QUrl
+from qgis.PyQt.QtCore import Qt
 from qgis.PyQt.QtNetwork import QNetworkRequest
 
 from qtribu.logic import RssMiniReader
@@ -16,12 +17,12 @@ req_status = qntwk_req.get(
 )
 
 print(isinstance(req_status, QgsBlockingNetworkRequest.ErrorCode))
-print(req_status == QgsBlockingNetworkRequest.NoError)
+print(req_status == QgsBlockingNetworkRequest.ErrorCode.NoError)
 print(req_status == 0)
 print(qntwk_req.errorMessage() == "")
 
 
-if req_status != QgsBlockingNetworkRequest.NoError:
+if req_status != QgsBlockingNetworkRequest.ErrorCode.NoError:
     print("Et meeeeeeeerde")
     print(qntwk_req.errorMessage())
 

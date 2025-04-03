@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Optional, Union
 
 # PyQGIS
+from qgis.core import Qgis
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QDialog, QDialogButtonBox, QWidget
 
@@ -62,9 +63,13 @@ class ArticleForm(QDialog):
                 "https://contribuer.geotribu.fr/articles/workflow/",
             )
         )
-        self.btn_box.button(QDialogButtonBox.Ok).clicked.connect(self.on_btn_submit)
-        self.btn_box.button(QDialogButtonBox.Ok).setDefault(True)
-        self.btn_box.button(QDialogButtonBox.Ok).setText(self.tr("Submit"))
+        self.btn_box.button(QDialogButtonBox.StandardButton.Ok).clicked.connect(
+            self.on_btn_submit
+        )
+        self.btn_box.button(QDialogButtonBox.StandardButton.Ok).setDefault(True)
+        self.btn_box.button(QDialogButtonBox.StandardButton.Ok).setText(
+            self.tr("Submit")
+        )
 
     def check_required_fields(self) -> bool:
         invalid_fields = []
@@ -121,7 +126,7 @@ class ArticleForm(QDialog):
                 parent_location=self,
                 message=self.tr("Some of required fields are incorrectly filled."),
                 push=True,
-                log_level=2,
+                log_level=Qgis.MessageLevel.Critical,
                 duration=20,
                 button=True,
                 button_label=self.tr("See details..."),
@@ -169,7 +174,7 @@ class ArticleForm(QDialog):
         if url_opened:
             self.log(
                 message=self.tr("Issue form URL opened in default system web browser."),
-                log_level=4,
+                log_level=Qgis.MessageLevel.NoLevel,
             )
             super().accept()
             return True
@@ -182,6 +187,6 @@ class ArticleForm(QDialog):
                 ),
                 push=True,
                 duration=10,
-                log_level=2,
+                log_level=Qgis.MessageLevel.Critical,
             )
             return False
