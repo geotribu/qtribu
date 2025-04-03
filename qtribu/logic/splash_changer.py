@@ -2,7 +2,7 @@
 
 
 """
-    QGIS Splash changer.
+QGIS Splash changer.
 """
 
 # ############################################################################
@@ -16,7 +16,7 @@ from os import sep  # required since pathlib strips trailing whitespace
 from pathlib import Path
 
 # pyqgis
-from qgis.core import QgsApplication, QgsSettings
+from qgis.core import Qgis, QgsApplication, QgsSettings
 from qgis.PyQt.QtCore import QCoreApplication
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction
@@ -51,7 +51,7 @@ class SplashChanger:
         ).replace("'", "")
         self.log(
             message=f"DEBUG - Folder to look for splash screen: {self.plugin_splash_folder}",
-            log_level=4,
+            log_level=Qgis.NoLevel,
         )
 
         # configuration files

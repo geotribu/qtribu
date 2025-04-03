@@ -1,7 +1,7 @@
 #! python3  # noqa: E265
 
 """
-    Plugin settings.
+Plugin settings.
 """
 
 # standard
@@ -9,7 +9,7 @@ from dataclasses import asdict, dataclass, fields
 from pathlib import Path
 
 # PyQGIS
-from qgis.core import QgsSettings
+from qgis.core import Qgis, QgsSettings
 
 # package
 import qtribu.toolbelt.log_handler as log_hdlr
@@ -136,7 +136,7 @@ class PlgOptionsManager:
                 message="Bad settings key. Must be one of: {}".format(
                     ",".join(PlgSettingsStructure._fields)
                 ),
-                log_level=1,
+                log_level=Qgis.Warning,
             )
             return None
 
@@ -173,7 +173,7 @@ class PlgOptionsManager:
                 message="Bad settings key: {}. Must be one of: {}".format(
                     key, ",".join(PlgSettingsStructure._fields)
                 ),
-                log_level=2,
+                log_level=Qgis.Critical,
             )
             return False
 

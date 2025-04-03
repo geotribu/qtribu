@@ -13,7 +13,7 @@ from typing import Optional, Union
 from urllib.parse import urlparse
 
 # PyQGIS
-from qgis.core import QgsApplication
+from qgis.core import Qgis, QgsApplication
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import Qt
 from qgis.PyQt.QtGui import QIcon
@@ -237,7 +237,7 @@ class RdpNewsForm(QDialog):
                 parent_location=self,
                 message=self.tr("Some of required fields are incorrectly filled."),
                 push=True,
-                log_level=2,
+                log_level=Qgis.Critical,
                 duration=20,
                 button=True,
                 button_label=self.tr("See details..."),
@@ -286,7 +286,7 @@ class RdpNewsForm(QDialog):
         if url_opened:
             self.log(
                 message=self.tr("Issue form URL opened in default system web browser."),
-                log_level=4,
+                log_level=Qgis.NoLevel,
             )
             super().accept()
             return True
@@ -299,6 +299,6 @@ class RdpNewsForm(QDialog):
                 ),
                 push=True,
                 duration=10,
-                log_level=2,
+                log_level=Qgis.Critical,
             )
             return False

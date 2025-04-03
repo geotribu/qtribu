@@ -1,7 +1,7 @@
 #! python3  # noqa: E265
 
 """
-    Perform network request.
+Perform network request.
 """
 
 # ############################################################################
@@ -16,7 +16,7 @@ from typing import Optional, Union
 from urllib.parse import urlparse, urlunparse
 
 # PyQGIS
-from qgis.core import QgsBlockingNetworkRequest, QgsFileDownloader
+from qgis.core import Qgis, QgsBlockingNetworkRequest, QgsFileDownloader
 from qgis.PyQt.QtCore import QByteArray, QCoreApplication, QEventLoop, QUrl
 from qgis.PyQt.QtNetwork import QNetworkRequest
 
@@ -158,7 +158,9 @@ class NetworkRequestsManager:
             # check if request is fine
             if req_status != QgsBlockingNetworkRequest.ErrorCode.NoError:
                 self.log(
-                    message=self.ntwk_requester.errorMessage(), log_level=2, push=1
+                    message=self.ntwk_requester.errorMessage(),
+                    log_level=Qgis.Critical,
+                    push=1,
                 )
                 raise ConnectionError(self.ntwk_requester.errorMessage())
 
@@ -180,7 +182,7 @@ class NetworkRequestsManager:
         except Exception as err:
             err_msg = f"Houston, we've got a problem: {err}"
             logger.error(err_msg)
-            self.log(message=err_msg, log_level=2, push=True)
+            self.log(message=err_msg, log_level=Qgis.Critical, push=True)
 
     def download_file_to(self, remote_url: str, local_path: Union[Path, str]) -> str:
         """Download a file from a remote web server accessible through HTTP.
