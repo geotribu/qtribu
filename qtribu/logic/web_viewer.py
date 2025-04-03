@@ -14,6 +14,7 @@ import logging
 from typing import Optional
 
 # PyQGIS
+from qgis.core import Qgis
 from qgis.PyQt.QtCore import QCoreApplication, Qt
 from qgis.PyQt.QtGui import QDesktopServices
 from qgis.PyQt.QtWidgets import QVBoxLayout, QWidget
@@ -82,7 +83,7 @@ class WebViewer:
         except Exception as err:
             self.log(
                 message=self.tr(message=f"Michel, we've got a problem: {err}"),
-                log_level=2,
+                log_level=Qgis.Critical,
                 push=True,
             )
 

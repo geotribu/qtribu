@@ -2,6 +2,7 @@
 import os
 
 # 3rd party
+from qgis.core import Qgis
 from qgis.PyQt.QtCore import QT_VERSION_STR, QUrl
 from qgis.PyQt.QtGui import QDesktopServices
 
@@ -55,7 +56,7 @@ def open_url_in_webviewer(url: str, window_title: str) -> None:
             message="The embedded webviewer is not avaible, probably because "
             "of unfilled system dependencies (QtWebEngine). Using default system "
             "browser as fallback.",
-            log_level=2,
+            log_level=Qgis.Critical,
         )
         open_url_in_browser(url=url)
 
