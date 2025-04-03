@@ -98,7 +98,7 @@ class PlgLogger(logging.Handler):
                 log_level=Qgis.MessageLevel(2),
                 push=True
             )
-            
+
             # LEGACY - using integers:
             log(message="Plugin loaded - INFO", log_level=0, push=False)
             log(message="Plugin loaded - WARNING", log_level=1, push=1, duration=5)
