@@ -126,7 +126,7 @@ class ArticleForm(QDialog):
                 parent_location=self,
                 message=self.tr("Some of required fields are incorrectly filled."),
                 push=True,
-                log_level=Qgis.Critical,
+                log_level=Qgis.MessageLevel.Critical,
                 duration=20,
                 button=True,
                 button_label=self.tr("See details..."),
@@ -174,7 +174,7 @@ class ArticleForm(QDialog):
         if url_opened:
             self.log(
                 message=self.tr("Issue form URL opened in default system web browser."),
-                log_level=Qgis.NoLevel,
+                log_level=Qgis.MessageLevel.NoLevel,
             )
             super().accept()
             return True
@@ -187,6 +187,6 @@ class ArticleForm(QDialog):
                 ),
                 push=True,
                 duration=10,
-                log_level=Qgis.Critical,
+                log_level=Qgis.MessageLevel.Critical,
             )
             return False

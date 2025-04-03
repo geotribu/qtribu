@@ -28,9 +28,9 @@ class PlgLogger(logging.Handler):
     def log(
         message: str,
         application: str = __title__,
-        log_level: Union[Qgis.MessageLevel, Literal[0, 1, 2, 3, 4]] = Qgis.MessageLevel(
-            0
-        ),
+        log_level: Union[
+            Qgis.MessageLevel, Literal[0, 1, 2, 3, 4]
+        ] = Qgis.MessageLevel.Info,
         push: bool = False,
         duration: Optional[int] = None,
         # widget
@@ -85,7 +85,7 @@ class PlgLogger(logging.Handler):
         .. code-block:: python
 
             # using enums from Qgis:
-            # Qgis.Info, Qgis.Warning, Qgis.Critical, Qgis.Success, Qgis.NoLevel
+            # Qgis.Info, Qgis.MessageLevel.Warning, Qgis.MessageLevel.Critical, Qgis.MessageLevel.Success, Qgis.MessageLevel.NoLevel
             from qgis.core import Qgis
 
             log(message="Plugin loaded - INFO", log_level=Qgis.MessageLevel.Info, push=False)

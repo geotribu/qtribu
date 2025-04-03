@@ -136,7 +136,7 @@ class PlgOptionsManager:
                 message="Bad settings key. Must be one of: {}".format(
                     ",".join(PlgSettingsStructure._fields)
                 ),
-                log_level=Qgis.Warning,
+                log_level=Qgis.MessageLevel.Warning,
             )
             return None
 
@@ -173,7 +173,7 @@ class PlgOptionsManager:
                 message="Bad settings key: {}. Must be one of: {}".format(
                     key, ",".join(PlgSettingsStructure._fields)
                 ),
-                log_level=Qgis.Critical,
+                log_level=Qgis.MessageLevel.Critical,
             )
             return False
 

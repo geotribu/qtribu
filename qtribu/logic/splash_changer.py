@@ -51,7 +51,7 @@ class SplashChanger:
         ).replace("'", "")
         self.log(
             message=f"DEBUG - Folder to look for splash screen: {self.plugin_splash_folder}",
-            log_level=Qgis.NoLevel,
+            log_level=Qgis.MessageLevel.NoLevel,
         )
 
         # configuration files

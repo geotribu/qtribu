@@ -70,12 +70,12 @@ class GeotribuPlugin:
             QCoreApplication.installTranslator(self.translator)
             self.log(
                 message=f"Translation loaded from file: {self.locale}, {locale_path}",
-                log_level=Qgis.NoLevel,
+                log_level=Qgis.MessageLevel.NoLevel,
             )
         else:
             self.log(
                 message=f"Translation file does not exist: {self.locale}, {locale_path}",
-                log_level=Qgis.Warning,
+                log_level=Qgis.MessageLevel.Warning,
             )
 
         # sub-modules
@@ -264,7 +264,7 @@ class GeotribuPlugin:
         except Exception as err:
             self.log(
                 message=self.tr(f"Reading the RSS feed failed. Trace: {err}"),
-                log_level=Qgis.Critical,
+                log_level=Qgis.MessageLevel.Critical,
                 push=True,
             )
             return
@@ -330,7 +330,7 @@ class GeotribuPlugin:
         except Exception as err:
             self.log(
                 message=self.tr(f"Michel, we've got a problem: {err}"),
-                log_level=Qgis.Critical,
+                log_level=Qgis.MessageLevel.Critical,
                 push=True,
             )
             raise err
@@ -348,7 +348,7 @@ class GeotribuPlugin:
                     "Error importing some of dependencies. "
                     "Related functions have been disabled."
                 ),
-                log_level=Qgis.Critical,
+                log_level=Qgis.MessageLevel.Critical,
                 push=True,
                 duration=0,
                 button=True,

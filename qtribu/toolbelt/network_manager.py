@@ -159,7 +159,7 @@ class NetworkRequestsManager:
             if req_status != QgsBlockingNetworkRequest.ErrorCode.NoError:
                 self.log(
                     message=self.ntwk_requester.errorMessage(),
-                    log_level=Qgis.Critical,
+                    log_level=Qgis.MessageLevel.Critical,
                     push=1,
                 )
                 raise ConnectionError(self.ntwk_requester.errorMessage())
@@ -182,7 +182,7 @@ class NetworkRequestsManager:
         except Exception as err:
             err_msg = f"Houston, we've got a problem: {err}"
             logger.error(err_msg)
-            self.log(message=err_msg, log_level=Qgis.Critical, push=True)
+            self.log(message=err_msg, log_level=Qgis.MessageLevel.Critical, push=True)
 
     def download_file_to(self, remote_url: str, local_path: Union[Path, str]) -> str:
         """Download a file from a remote web server accessible through HTTP.

@@ -83,7 +83,7 @@ class WebViewer:
         except Exception as err:
             self.log(
                 message=self.tr(message=f"Michel, we've got a problem: {err}"),
-                log_level=Qgis.Critical,
+                log_level=Qgis.MessageLevel.Critical,
                 push=True,
             )
 
