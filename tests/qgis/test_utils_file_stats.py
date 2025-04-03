@@ -1,15 +1,14 @@
 #! python3  # noqa E265
 
 """
-    Usage from the repo root folder:
+Usage from the repo root folder:
 
-    .. code-block:: bash
-        # for whole tests
-        python -m unittest tests.unit.test_utils_file_stats
-        # for specific test
-        python -m unittest tests.unit.test_utils_file_stats.TestUtilsFileStats.test_created_file_is_not_expired
+.. code-block:: bash
+    # for whole tests
+    python -m unittest tests.unit.test_utils_file_stats
+    # for specific test
+    python -m unittest tests.unit.test_utils_file_stats.TestUtilsFileStats.test_created_file_is_not_expired
 """
-
 
 # standard library
 import unittest
