@@ -312,8 +312,6 @@ class GeotribuPlugin:
         try:
             if not self.rss_reader.latest_item:
                 self.post_ui_init()
-            rss_item = self.rss_reader.latest_item
-            open_url_in_webviewer(url=rss_item.url, window_title=rss_item.title)
 
             # save latest RSS item displayed
             open_url_in_webviewer(
