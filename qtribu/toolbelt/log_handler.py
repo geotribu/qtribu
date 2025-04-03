@@ -88,7 +88,7 @@ class PlgLogger(logging.Handler):
             # Qgis.Info, Qgis.Warning, Qgis.Critical, Qgis.Success, Qgis.NoLevel
             from qgis.core import Qgis
 
-            log(message="Plugin loaded - INFO", log_level=Qgis.Info, push=False)
+            log(message="Plugin loaded - INFO", log_level=Qgis.MessageLevel.Info, push=False)
             log(
                 message="Something went wrong but it's not blocking",
                 log_level=Qgis.Warning
