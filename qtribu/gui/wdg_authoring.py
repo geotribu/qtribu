@@ -56,7 +56,7 @@ class AuthoringWidget(QWidget):
                 message="Avatar {} has not been found among available one: {}".format(
                     settings.author_avatar, ", ".join(QCHAT_USER_AVATARS.values())
                 ),
-                log_level=Qgis.Warning,
+                log_level=Qgis.MessageLevel.Warning,
                 push=True,
             )
             self.cbb_qchat_avatar.setCurrentIndex(4)

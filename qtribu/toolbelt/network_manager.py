@@ -16,7 +16,7 @@ from typing import Optional, Union
 from urllib.parse import urlparse, urlunparse
 
 # PyQGIS
-from qgis.core import QgsBlockingNetworkRequest, QgsFileDownloader
+from qgis.core import Qgis, QgsBlockingNetworkRequest, QgsFileDownloader
 from qgis.PyQt.QtCore import QByteArray, QCoreApplication, QEventLoop, QUrl
 from qgis.PyQt.QtNetwork import QNetworkRequest
 
@@ -146,7 +146,7 @@ class NetworkRequestsManager:
                     req.setRawHeader(k, v)
             else:
                 req.setHeader(
-                    QNetworkRequest.UserAgentHeader,
+                    QNetworkRequest.KnownHeaders.UserAgentHeader,
                     bytes(f"{__title__}/{__version__}", "utf8"),
                 )
 
@@ -156,9 +156,11 @@ class NetworkRequestsManager:
             )
 
             # check if request is fine
-            if req_status != QgsBlockingNetworkRequest.NoError:
+            if req_status != QgsBlockingNetworkRequest.ErrorCode.NoError:
                 self.log(
-                    message=self.ntwk_requester.errorMessage(), log_level=2, push=1
+                    message=self.ntwk_requester.errorMessage(),
+                    log_level=Qgis.MessageLevel.Critical,
+                    push=1,
                 )
                 raise ConnectionError(self.ntwk_requester.errorMessage())
 
@@ -180,7 +182,7 @@ class NetworkRequestsManager:
         except Exception as err:
             err_msg = f"Houston, we've got a problem: {err}"
             logger.error(err_msg)
-            self.log(message=err_msg, log_level=2, push=True)
+            self.log(message=err_msg, log_level=Qgis.MessageLevel.Critical, push=True)
 
     def download_file_to(self, remote_url: str, local_path: Union[Path, str]) -> str:
         """Download a file from a remote web server accessible through HTTP.
@@ -209,7 +211,7 @@ class NetworkRequestsManager:
         )
         file_downloader.downloadExited.connect(loop.quit)
         file_downloader.startDownload()
-        loop.exec_()
+        loop.exec()
 
         self.log(
             message=f"Download of {remote_url} to {local_path} succeedeed", log_level=3
