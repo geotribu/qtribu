@@ -2,7 +2,7 @@
 
 
 """
-    Minimalist RSS reader.
+Minimalist RSS reader.
 """
 
 # ############################################################################
@@ -77,7 +77,7 @@ class RssMiniReader:
                         self.local_feed_filepath
                     )
                 ),
-                log_level=Qgis.Critical,
+                log_level=Qgis.MessageLevel.Critical,
             )
             return
 
@@ -86,7 +86,10 @@ class RssMiniReader:
 
         # check if a new item has been published since last check
         if not self.has_new_content:
-            self.log(message="No new item found in RSS feed.", log_level=Qgis.NoLevel)
+            self.log(
+                message="No new item found in RSS feed.",
+                log_level=Qgis.MessageLevel.NoLevel,
+            )
             return
         # notify
         if isinstance(self.latest_item, RssItem):
@@ -96,7 +99,7 @@ class RssMiniReader:
                     self.tr("New content published:"),
                     latest_item.title,
                 ),
-                log_level=Qgis.Success,
+                log_level=Qgis.MessageLevel.Success,
                 push=PlgOptionsManager().get_plg_settings().notify_push_info,
                 duration=PlgOptionsManager().get_plg_settings().notify_push_duration,
                 button=True,
@@ -131,12 +134,12 @@ class RssMiniReader:
             self.log(
                 message=f"The remote RSS feed ({self.plg_settings.rss_source}) has been "
                 f"downloaded to {self.local_feed_filepath}",
-                log_level=Qgis.Info,
+                log_level=Qgis.MessageLevel.Info,
             )
             return True
         self.log(
             message=f"A fresh local RSS feed already exists: {self.local_feed_filepath}",
-            log_level=Qgis.Info,
+            log_level=Qgis.MessageLevel.Info,
         )
         return False
 
@@ -157,7 +160,7 @@ class RssMiniReader:
                         message="Item ignored because unmatches the include pattern: {}".format(
                             item.find("title").text
                         ),
-                        log_level=Qgis.NoLevel,
+                        log_level=Qgis.MessageLevel.NoLevel,
                     )
                     continue
 
@@ -189,7 +192,7 @@ class RssMiniReader:
                     item_idx = items.index(item)
 
                 err_msg = f"Feed item {item_idx} triggers an error. Trace: {err}"
-                self.log(message=err_msg, log_level=Qgis.Critical)
+                self.log(message=err_msg, log_level=Qgis.MessageLevel.Critical)
 
         # store feed items as attribute and return it
         self.FEED_ITEMS = feed_items
@@ -265,7 +268,7 @@ class RssMiniReader:
         if not plg_settings.integration_qgis_news_feed:
             self.log(
                 message="The QGIS news feed integration is disabled. Abort!",
-                log_level=Qgis.NoLevel,
+                log_level=Qgis.MessageLevel.NoLevel,
             )
             return False
 
@@ -278,7 +281,7 @@ class RssMiniReader:
         qsettings.setValue(
             key=f"news-feed/items/httpsfeedqgisorg/entries/items/{item_id}/title",
             value=f"[Geotribu] {latest_geotribu_article.title}",
-            section=QgsSettings.App,
+            section=QgsSettings.Section.App,
         )
         qsettings.setValue(
             key=f"news-feed/items/httpsfeedqgisorg/entries/items/{item_id}/content",
@@ -287,17 +290,17 @@ class RssMiniReader:
             + f"{', '.join(latest_geotribu_article.authors)}</p><p><small>"
             + self.tr("Keywords: ")
             + f"{', '.join(latest_geotribu_article.categories)}</small></p>",
-            section=QgsSettings.App,
+            section=QgsSettings.Section.App,
         )
         qsettings.setValue(
             key=f"news-feed/items/httpsfeedqgisorg/entries/items/{item_id}/image-url",
             value=latest_geotribu_article.image_url,
-            section=QgsSettings.App,
+            section=QgsSettings.Section.App,
         )
         qsettings.setValue(
             key=f"news-feed/items/httpsfeedqgisorg/entries/items/{item_id}/link",
             value=latest_geotribu_article.url,
-            section=QgsSettings.App,
+            section=QgsSettings.Section.App,
         )
 
         qsettings.sync()
@@ -305,7 +308,7 @@ class RssMiniReader:
         self.log(
             message=f"Latest Geotribu content inserted in QGIS news feed: "
             f"{latest_geotribu_article.title}",
-            log_level=Qgis.Info,
+            log_level=Qgis.MessageLevel.Info,
         )
 
         return True

@@ -1,7 +1,7 @@
 #! python3  # noqa: E265
 
 """
-    Main plugin module.
+Main plugin module.
 """
 
 # standard
@@ -70,12 +70,12 @@ class GeotribuPlugin:
             QCoreApplication.installTranslator(self.translator)
             self.log(
                 message=f"Translation loaded from file: {self.locale}, {locale_path}",
-                log_level=4,
+                log_level=Qgis.MessageLevel.NoLevel,
             )
         else:
             self.log(
                 message=f"Translation file does not exist: {self.locale}, {locale_path}",
-                log_level=1,
+                log_level=Qgis.MessageLevel.Warning,
             )
 
         # sub-modules
@@ -264,7 +264,7 @@ class GeotribuPlugin:
         except Exception as err:
             self.log(
                 message=self.tr(f"Reading the RSS feed failed. Trace: {err}"),
-                log_level=2,
+                log_level=Qgis.MessageLevel.Critical,
                 push=True,
             )
             return
@@ -277,7 +277,7 @@ class GeotribuPlugin:
                 message=self.tr(
                     f"Unable to insert latest item within QGIS news feed. Trace: {err}"
                 ),
-                log_level=Qgis.Critical,
+                log_level=Qgis.MessageLevel.Critical,
                 push=True,
             )
             return
@@ -291,7 +291,9 @@ class GeotribuPlugin:
                     parent=self.iface.mainWindow(),
                     auto_reconnect_room=settings.qchat_auto_reconnect_room,
                 )
-                self.iface.addDockWidget(int(Qt.RightDockWidgetArea), self.qchat_widget)
+                self.iface.addDockWidget(
+                    Qt.DockWidgetArea.RightDockWidgetArea, self.qchat_widget
+                )
             self.qchat_widget.show()
 
     def tr(self, message: str) -> str:
@@ -310,8 +312,6 @@ class GeotribuPlugin:
         try:
             if not self.rss_reader.latest_item:
                 self.post_ui_init()
-            rss_item = self.rss_reader.latest_item
-            open_url_in_webviewer(url=rss_item.url, window_title=rss_item.title)
 
             # save latest RSS item displayed
             open_url_in_webviewer(
@@ -328,7 +328,7 @@ class GeotribuPlugin:
         except Exception as err:
             self.log(
                 message=self.tr(f"Michel, we've got a problem: {err}"),
-                log_level=2,
+                log_level=Qgis.MessageLevel.Critical,
                 push=True,
             )
             raise err
@@ -346,7 +346,7 @@ class GeotribuPlugin:
                     "Error importing some of dependencies. "
                     "Related functions have been disabled."
                 ),
-                log_level=2,
+                log_level=Qgis.MessageLevel.Critical,
                 push=True,
                 duration=0,
                 button=True,
@@ -424,5 +424,7 @@ class GeotribuPlugin:
             self.qchat_widget = QChatWidget(
                 iface=self.iface, parent=self.iface.mainWindow()
             )
-            self.iface.addDockWidget(int(Qt.RightDockWidgetArea), self.qchat_widget)
+            self.iface.addDockWidget(
+                Qt.DockWidgetArea.RightDockWidgetArea, self.qchat_widget
+            )
         self.qchat_widget.show()

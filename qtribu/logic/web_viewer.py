@@ -2,7 +2,7 @@
 
 
 """
-    Minimalist RSS reader.
+Minimalist RSS reader.
 """
 
 # ############################################################################
@@ -14,12 +14,13 @@ import logging
 from typing import Optional
 
 # PyQGIS
+from qgis.core import Qgis
 from qgis.PyQt.QtCore import QCoreApplication, Qt
 from qgis.PyQt.QtGui import QDesktopServices
 from qgis.PyQt.QtWidgets import QVBoxLayout, QWidget
 
 try:
-    QCoreApplication.setAttribute(Qt.AA_ShareOpenGLContexts)
+    QCoreApplication.setAttribute(Qt.ApplicationAttribute.AA_ShareOpenGLContexts)
     from qgis.PyQt.QtWebEngineWidgets import QWebEngineView as QWebView
 except Exception:
     from qgis.PyQt.QtWebKitWidgets import QWebView
@@ -67,7 +68,7 @@ class WebViewer:
                 vlayout.addWidget(web)
                 self.wdg_web.setLayout(vlayout)
                 self.wdg_web.setWindowTitle(self.tr("Last article from Geotribu"))
-                self.wdg_web.setWindowModality(Qt.WindowModal)
+                self.wdg_web.setWindowModality(Qt.WindowModality.WindowModal)
                 self.wdg_web.show()
                 self.wdg_web.resize(1000, 600)
 
@@ -82,7 +83,7 @@ class WebViewer:
         except Exception as err:
             self.log(
                 message=self.tr(message=f"Michel, we've got a problem: {err}"),
-                log_level=2,
+                log_level=Qgis.MessageLevel.Critical,
                 push=True,
             )
 

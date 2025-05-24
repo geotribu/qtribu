@@ -2,9 +2,10 @@
 
 from qgis.core import QgsNewsFeedParser, QgsSettings
 from qgis.PyQt.Qt import QUrl
+from qgis.PyQt.QtCore import Qt
 
 FEED_URL = "http://localhost:8000"
-#FEED_URL = "https://raw.githubusercontent.com/elpaso/qgis-feed/master/qgisfeedproject/qgisfeed/fixtures/qgisfeed.json"
+# FEED_URL = "https://raw.githubusercontent.com/elpaso/qgis-feed/master/qgisfeedproject/qgisfeed/fixtures/qgisfeed.json"
 
 fifeed = QgsNewsFeedParser(QUrl(FEED_URL))
 

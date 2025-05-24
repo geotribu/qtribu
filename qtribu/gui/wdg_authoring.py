@@ -48,7 +48,6 @@ class AuthoringWidget(QWidget):
 
         # retrieve avatar amon values
         if settings.author_avatar in QCHAT_USER_AVATARS.values():
-
             self.cbb_qchat_avatar.setCurrentIndex(
                 list(QCHAT_USER_AVATARS.values()).index(settings.author_avatar)
             )
@@ -57,7 +56,7 @@ class AuthoringWidget(QWidget):
                 message="Avatar {} has not been found among available one: {}".format(
                     settings.author_avatar, ", ".join(QCHAT_USER_AVATARS.values())
                 ),
-                log_level=Qgis.Warning,
+                log_level=Qgis.MessageLevel.Warning,
                 push=True,
             )
             self.cbb_qchat_avatar.setCurrentIndex(4)
@@ -101,7 +100,6 @@ class AuthoringWidget(QWidget):
 
         # populate
         for avatar_description, avatar_path in QCHAT_USER_AVATARS.items():
-
             # avatar
             self.cbb_qchat_avatar.addItem(
                 QIcon(QgsApplication.iconPath(avatar_path)),
