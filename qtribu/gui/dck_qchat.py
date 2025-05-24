@@ -46,6 +46,7 @@ from qtribu.gui.qchat_tree_widget_items import (
     QChatCrsTreeWidgetItem,
     QChatGeojsonTreeWidgetItem,
     QChatImageTreeWidgetItem,
+    QChatPositionTreeWidgetItem,
     QChatTextTreeWidgetItem,
 )
 from qtribu.logic.qchat_api_client import QChatApiClient
@@ -58,6 +59,7 @@ from qtribu.logic.qchat_messages import (
     QChatLikeMessage,
     QChatNbUsersMessage,
     QChatNewcomerMessage,
+    QChatPositionMessage,
     QChatTextMessage,
     QChatUncompliantMessage,
 )
@@ -172,6 +174,9 @@ class QChatWidget(QgsDockWidget):
         self.qchat_ws.geojson_message_received.connect(self.on_geojson_message_received)
         self.qchat_ws.crs_message_received.connect(self.on_crs_message_received)
         self.qchat_ws.bbox_message_received.connect(self.on_bbox_message_received)
+        self.qchat_ws.position_message_received.connect(
+            self.on_position_message_received
+        )
 
         # send message signal listener
         self.lne_message.returnPressed.connect(self.on_send_button_clicked)
@@ -628,6 +633,15 @@ Rooms:
         Launched when a BBOX message is received from the websocket
         """
         item = QChatBboxTreeWidgetItem(self.twg_chat, message, self.iface.mapCanvas())
+        self.add_tree_widget_item(item)
+
+    def on_position_message_received(self, message: QChatPositionMessage) -> None:
+        """
+        Launched when a POSITION message is received from the websocket
+        """
+        item = QChatPositionTreeWidgetItem(
+            self.twg_chat, message, self.iface.mapCanvas()
+        )
         self.add_tree_widget_item(item)
 
     # endregion

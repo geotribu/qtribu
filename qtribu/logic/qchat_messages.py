@@ -77,3 +77,13 @@ class QChatBboxMessage(QChatMessage):
     xmax: float
     ymin: float
     ymax: float
+
+
+@dataclass(init=True, frozen=True)
+class QChatPositionMessage(QChatMessage):
+    author: str
+    avatar: Optional[str]
+    crs_wkt: str
+    crs_authid: str
+    x: float
+    y: float
