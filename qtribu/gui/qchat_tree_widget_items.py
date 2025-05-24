@@ -243,7 +243,7 @@ class QChatGeojsonTreeWidgetItem(QChatTreeWidgetItem):
             layer.loadNamedStyle(
                 str(save_style_path),
                 loadFromLocalDb=False,
-                categories=QgsMapLayer.AllStyleCategories,
+                categories=QgsMapLayer.StyleCategory.AllStyleCategories,
             )
             QgsProject.instance().addMapLayer(layer)
 
