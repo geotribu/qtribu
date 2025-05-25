@@ -4,7 +4,7 @@
 <context>
     <name>ArticleForm</name>
     <message>
-        <location filename="../../gui/form_article.py" line="76"/>
+        <location filename="../../gui/form_article.py" line="81"/>
         <source>- A title is required, with at least 3 characters.
 </source>
         <translation>- Un titre est requis, avec 3 caractères minimum.
@@ -32,74 +32,74 @@
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="100"/>
+        <location filename="../../gui/form_article.py" line="105"/>
         <source>- For attribution purpose, author&apos;s firstname is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, le prénom de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="107"/>
+        <location filename="../../gui/form_article.py" line="112"/>
         <source>- For attribution purpose, author&apos;s lastname is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, le nom de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="114"/>
+        <location filename="../../gui/form_article.py" line="119"/>
         <source>- For attribution purpose, author&apos;s email is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, l&apos;email de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="120"/>
+        <location filename="../../gui/form_article.py" line="125"/>
         <source>Some of required fields are incorrectly filled.</source>
         <translation>Certains champs requis ne sont pas correctement renseignés.</translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="120"/>
+        <location filename="../../gui/form_article.py" line="125"/>
         <source>See details...</source>
         <translation>Voir les détails...</translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="120"/>
+        <location filename="../../gui/form_article.py" line="125"/>
         <source>Fields in bold must be filled. Missing fields:
 </source>
         <translation>Les champs dont le nom est en gras sont requis. Champs incorrects :
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="67"/>
+        <location filename="../../gui/form_article.py" line="70"/>
         <source>Submit</source>
         <translation>Envoyer</translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="83"/>
+        <location filename="../../gui/form_article.py" line="88"/>
         <source>- The description is not long enough (10 characters at least).
 </source>
         <translation>- La description doit faire au moins 10 caractères.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="170"/>
+        <location filename="../../gui/form_article.py" line="175"/>
         <source>Issue form URL opened in default system web browser.</source>
         <translation>Le formulaire prérempli a été ouvert dans le navigateur web par défaut du système.</translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="177"/>
+        <location filename="../../gui/form_article.py" line="182"/>
         <source>Opening issue form URL in default system web browser failed. Check if there is any special characters in form fields and try again.</source>
         <translation>L&apos;ouverture de l&apos;URL par le navigateur par défaut du système a échoué. Vérifier qu&apos;il n&apos;y a pas de caractère trop spécial dans les champs renseignés et réessayer.</translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="90"/>
+        <location filename="../../gui/form_article.py" line="95"/>
         <source>- Date has to be filled.
 </source>
         <translation>- Une date de publication est requise.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="150"/>
+        <location filename="../../gui/form_article.py" line="155"/>
         <source>Prefilled with </source>
         <translation>Prérempli avec </translation>
     </message>
@@ -245,17 +245,17 @@ Longueur max d&apos;un pseudo: {max_nickname_length}</translation>
 <context>
     <name>GeotribuPlugin</name>
     <message>
-        <location filename="../../plugin_main.py" line="323"/>
+        <location filename="../../plugin_main.py" line="338"/>
         <source>Newest article</source>
         <translation>Afficher le dernier article</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="147"/>
+        <location filename="../../plugin_main.py" line="160"/>
         <source>Help</source>
         <translation>Aide en ligne</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="156"/>
+        <location filename="../../plugin_main.py" line="169"/>
         <source>Settings</source>
         <translation>Réglages</translation>
     </message>
@@ -265,17 +265,17 @@ Longueur max d&apos;un pseudo: {max_nickname_length}</translation>
         <translation type="obsolete">Nouveau contenu publié :</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="190"/>
+        <location filename="../../plugin_main.py" line="204"/>
         <source>QGIS forum on GeoRezo</source>
         <translation>Forum QGIS sur GeoRezo</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="179"/>
+        <location filename="../../plugin_main.py" line="193"/>
         <source>Geotribu website</source>
         <translation>Site Geotribu</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="200"/>
+        <location filename="../../plugin_main.py" line="214"/>
         <source>OSGeo France</source>
         <translation>OSGeo FR</translation>
     </message>
@@ -285,12 +285,12 @@ Longueur max d&apos;un pseudo: {max_nickname_length}</translation>
         <translation>Proposer une news pour la GeoRDP</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="329"/>
+        <location filename="../../plugin_main.py" line="344"/>
         <source>Michel, we&apos;ve got a problem: {err}</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="276"/>
+        <location filename="../../plugin_main.py" line="291"/>
         <source>Unable to insert latest item within QGIS news feed. Trace: {err}</source>
         <translation>Impossible d&apos;insérer le dernier contenu publié dans le fil d&apos;actualité de QGIS. Trace : {err}</translation>
     </message>
@@ -315,30 +315,43 @@ Longueur max d&apos;un pseudo: {max_nickname_length}</translation>
         <translation>QChat</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="265"/>
+        <location filename="../../plugin_main.py" line="280"/>
         <source>Reading the RSS feed failed. Trace: {err}</source>
         <translation>La lecture du flux RSS a planté. Trace: {err}</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="344"/>
+        <location filename="../../plugin_main.py" line="359"/>
         <source>Error importing some of dependencies. Related functions have been disabled.</source>
         <translation>Erreur lors de l&apos;import de certaines dépendances. Les fonctionnalités liées ont été désactivées.</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="362"/>
+        <location filename="../../plugin_main.py" line="377"/>
         <source>Plugin disabled. Please install all dependencies and then restart QGIS. Refer to the documentation for more information.</source>
         <translation>Extension désactivée. Veuillez installer toutes les dépendances puis redémarrer QGIS. Pour plus d&apos;informations, se référer à la documentation.</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="369"/>
+        <location filename="../../plugin_main.py" line="384"/>
         <source>Dependencies satisfied</source>
         <translation>Dépendances satisfaites</translation>
+    </message>
+    <message>
+        <location filename="../../plugin_main.py" line="152"/>
+        <source>QChat in QField</source>
+        <translation>QChat dans QField</translation>
+    </message>
+</context>
+<context>
+    <name>QChatWebsocket</name>
+    <message>
+        <location filename="../../logic/qchat_websocket.py" line="161"/>
+        <source>Unintelligible message received. Please make sure you are using the latest plugin version. (type={type})</source>
+        <translation>Message incompréhensible reçu. Assuez-vous que vous utilisez la dernière version du plugin. (type={type})</translation>
     </message>
 </context>
 <context>
     <name>QChatWidget</name>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="966"/>
+        <location filename="../../gui/dck_qchat.py" line="1018"/>
         <source>QChat</source>
         <translation>QChat</translation>
     </message>
@@ -373,7 +386,7 @@ Longueur max d&apos;un pseudo: {max_nickname_length}</translation>
         <translation>Room:</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="426"/>
+        <location filename="../../gui/dck_qchat.py" line="469"/>
         <source>Connect</source>
         <translation>Se connecter</translation>
     </message>
@@ -418,7 +431,7 @@ Longueur max d&apos;un pseudo: {max_nickname_length}</translation>
         <translation type="obsolete">Pseudo renseigné dans les réglages du plugin QTribu</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="129"/>
+        <location filename="../../gui/dck_qchat.py" line="128"/>
         <source>Nickname</source>
         <translation>Pseudo</translation>
     </message>
@@ -468,37 +481,37 @@ Longueur max d&apos;un pseudo: {max_nickname_length}</translation>
         <translation>Envoyer SCR</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="129"/>
+        <location filename="../../gui/dck_qchat.py" line="128"/>
         <source>Date</source>
         <translation>Date de publication</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="129"/>
+        <location filename="../../gui/dck_qchat.py" line="128"/>
         <source>Message</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="214"/>
+        <location filename="../../gui/dck_qchat.py" line="213"/>
         <source>Instance: {uri}</source>
         <translation>URL de l&apos;instance : {uri}</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="217"/>
+        <location filename="../../gui/dck_qchat.py" line="216"/>
         <source>User: {nickname}</source>
         <translation>Utilisateur : {nickname}</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="724"/>
+        <location filename="../../gui/dck_qchat.py" line="776"/>
         <source>QChat error</source>
         <translation>Erreur QChat</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="272"/>
+        <location filename="../../gui/dck_qchat.py" line="281"/>
         <source>Instance rules</source>
         <translation>Règles de l&apos;instance</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="272"/>
+        <location filename="../../gui/dck_qchat.py" line="281"/>
         <source>Instance rules ({instance_url}):
 
 {rules}
@@ -517,12 +530,12 @@ Longueur min d&apos;un pseudo: {min_nickname_length}
 Longueur max d&apos;un pseudo: {max_nickname_length}</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="515"/>
+        <location filename="../../gui/dck_qchat.py" line="558"/>
         <source>user</source>
         <translation>Utilisateur/rice</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="304"/>
+        <location filename="../../gui/dck_qchat.py" line="313"/>
         <source>Status: {status}
 
 Rooms:
@@ -531,107 +544,107 @@ Rooms:
         <translation>Statut : {status} - Rooms : {room_status}</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="319"/>
+        <location filename="../../gui/dck_qchat.py" line="328"/>
         <source>QChat instance status</source>
         <translation>Statut de l&apos;instance QChat</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="391"/>
+        <location filename="../../gui/dck_qchat.py" line="434"/>
         <source>Disconnect</source>
         <translation>Se déconnecter</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="405"/>
+        <location filename="../../gui/dck_qchat.py" line="448"/>
         <source>Connected to room &apos;{room}&apos;</source>
         <translation>Connecté à la room &apos;{room}&apos;</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="421"/>
+        <location filename="../../gui/dck_qchat.py" line="464"/>
         <source>Disconnected from room &apos;{room}&apos;</source>
         <translation>Déconnecté(e) de la room &apos;{room}&apos;</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="456"/>
+        <location filename="../../gui/dck_qchat.py" line="499"/>
         <source>Uncompliant message: {reason}</source>
         <translation>Message non conforme : {reason}</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="486"/>
+        <location filename="../../gui/dck_qchat.py" line="529"/>
         <source>You were mentionned by {sender}: {message}</source>
         <translation>Vous avez été mentioné(e) par {sender} : {message}</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="515"/>
+        <location filename="../../gui/dck_qchat.py" line="558"/>
         <source>QChat - room: {room} - {nb_users} {user_txt}</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="515"/>
+        <location filename="../../gui/dck_qchat.py" line="558"/>
         <source>users</source>
         <translation>Utilisateurs/rices</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="531"/>
+        <location filename="../../gui/dck_qchat.py" line="574"/>
         <source>{newcomer} has joined the room</source>
         <translation>{newcomer} a rejoint la room</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="545"/>
+        <location filename="../../gui/dck_qchat.py" line="588"/>
         <source>{exiter} has left the room</source>
         <translation>{exiter} a quitté la room</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="554"/>
+        <location filename="../../gui/dck_qchat.py" line="597"/>
         <source>{liker_author} liked your message: {message}</source>
         <translation>{liker_author} a aimé votre message : {message}</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="629"/>
+        <location filename="../../gui/dck_qchat.py" line="672"/>
         <source>QChat Menu</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="633"/>
+        <location filename="../../gui/dck_qchat.py" line="676"/>
         <source>Load layer in QGIS</source>
         <translation>Charger les objets partagés dans QGIS</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="644"/>
+        <location filename="../../gui/dck_qchat.py" line="687"/>
         <source>Set current project CRS</source>
         <translation>Appliquer ce SCR au projet courant</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="653"/>
+        <location filename="../../gui/dck_qchat.py" line="696"/>
         <source>Set current extent</source>
         <translation>Appliquer à l&apos;étendue courante</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="662"/>
+        <location filename="../../gui/dck_qchat.py" line="705"/>
         <source>Like message</source>
         <translation>J&apos;aime ce message</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="673"/>
+        <location filename="../../gui/dck_qchat.py" line="716"/>
         <source>Mention user</source>
         <translation>Mentionner un utilisateur</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="684"/>
+        <location filename="../../gui/dck_qchat.py" line="727"/>
         <source>Copy message to clipboard</source>
         <translation>Copier un message dans le presse-papiers</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="692"/>
+        <location filename="../../gui/dck_qchat.py" line="735"/>
         <source>Hide message</source>
         <translation>Masquer un message</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="714"/>
+        <location filename="../../gui/dck_qchat.py" line="766"/>
         <source>Registered users</source>
         <translation>Utilisateur/ices enregistré/es</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="714"/>
+        <location filename="../../gui/dck_qchat.py" line="766"/>
         <source>Registered users in room ({room}):
 
 {users}</source>
@@ -640,37 +653,37 @@ Rooms:
 {users}</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="744"/>
+        <location filename="../../gui/dck_qchat.py" line="796"/>
         <source>Nickname not set : please open settings and set it</source>
         <translation>Pseudo non défini. Merci d&apos;ouvrir les réglages pour le définir</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="756"/>
+        <location filename="../../gui/dck_qchat.py" line="808"/>
         <source>Open Settings</source>
         <translation>Ouvrir les réglages</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="756"/>
+        <location filename="../../gui/dck_qchat.py" line="808"/>
         <source>Nickname too short: must be at least 3 characters. Please open settings and set it</source>
         <translation>Le pseudo est trop court : il doit contenir au minimum 3 caractères. Merci de le changer dans les réglages</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="788"/>
+        <location filename="../../gui/dck_qchat.py" line="840"/>
         <source>Select images to send to the chat</source>
         <translation>Sélectionner une image à envoyer sur le tchat</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="895"/>
+        <location filename="../../gui/dck_qchat.py" line="947"/>
         <source>Your QGIS Pro license is about to expire</source>
         <translation>Votre licence QGIS Pro va bientôt expirer</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="895"/>
+        <location filename="../../gui/dck_qchat.py" line="947"/>
         <source>Click here to renew it</source>
         <translation>Cliquer ici pour la renouveler</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="917"/>
+        <location filename="../../gui/dck_qchat.py" line="969"/>
         <source>No... it was a joke!
 
 QGIS is Free and Open Source software, forever.
@@ -687,111 +700,121 @@ Aller sur le site web ?
 </translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="935"/>
+        <location filename="../../gui/dck_qchat.py" line="987"/>
         <source>Send on QChat</source>
         <translation>Envoyer sur QChat</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="945"/>
+        <location filename="../../gui/dck_qchat.py" line="997"/>
         <source>Not connected to QChat. Please connect to a room first</source>
         <translation>Non connecté à QChat. Veuillez d&apos;abord sélectionner une room.</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="957"/>
+        <location filename="../../gui/dck_qchat.py" line="1009"/>
         <source>No active layer in current QGIS project</source>
         <translation>Aucune couche active dans le projet courant</translation>
     </message>
     <message>
-        <location filename="../../gui/dck_qchat.py" line="966"/>
+        <location filename="../../gui/dck_qchat.py" line="1018"/>
         <source>Only vector layers can be sent on QChat</source>
         <translation>Seulement les couches vectorielles peuvent être envoyées sur QChat</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="406"/>
+        <source>QChat nickname not set or too short (between {min} and {max} characters). Please open settings to fix it.</source>
+        <translation>Pseudo QChat non renseigné ou trop court (entre {min} et {max} caractères). Veuillez ouvrir les paramètres pour régler ça.</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dck_qchat.py" line="756"/>
+        <source>You&apos;re using incognito mode. Please disable it to see registered users.</source>
+        <translation>Vous utilisez le mode incognitor. Il faut le désactiver pour voir les utilisateur/rices enregistré/es.</translation>
     </message>
 </context>
 <context>
     <name>RdpNewsForm</name>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="186"/>
+        <location filename="../../gui/form_rdp_news.py" line="192"/>
         <source>- A category is required.
 </source>
         <translation>- Une catégorie est requise.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="191"/>
+        <location filename="../../gui/form_rdp_news.py" line="197"/>
         <source>- A title is required, with at least 3 characters.
 </source>
         <translation>- Un titre est requis, avec 3 caractères minimum.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="205"/>
+        <location filename="../../gui/form_rdp_news.py" line="211"/>
         <source>- License must be accepted.
 </source>
         <translation>- La licence doit être acceptée.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="210"/>
+        <location filename="../../gui/form_rdp_news.py" line="216"/>
         <source>- For attribution purpose, author&apos;s firstname is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, le prénom de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="217"/>
+        <location filename="../../gui/form_rdp_news.py" line="223"/>
         <source>- For attribution purpose, author&apos;s lastname is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, le nom de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="224"/>
+        <location filename="../../gui/form_rdp_news.py" line="230"/>
         <source>- For attribution purpose, author&apos;s email is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, l&apos;email de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="230"/>
+        <location filename="../../gui/form_rdp_news.py" line="236"/>
         <source>Some of required fields are incorrectly filled.</source>
         <translation>Certains champs requis ne sont pas correctement renseignés.</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="230"/>
+        <location filename="../../gui/form_rdp_news.py" line="236"/>
         <source>See details...</source>
         <translation>Voir les détails...</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="230"/>
+        <location filename="../../gui/form_rdp_news.py" line="236"/>
         <source>Fields in bold must be filled. Missing fields:
 </source>
         <translation>Les champs dont le nom est en gras sont requis. Champs incorrects :
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="98"/>
+        <location filename="../../gui/form_rdp_news.py" line="102"/>
         <source>Submit</source>
         <translation>Envoyer</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="198"/>
+        <location filename="../../gui/form_rdp_news.py" line="204"/>
         <source>- News is not long enough (25 characters at least).
 </source>
         <translation>- Le contenu de la news doit faire au moins 25 caractères.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="281"/>
+        <location filename="../../gui/form_rdp_news.py" line="287"/>
         <source>Issue form URL opened in default system web browser.</source>
         <translation>Le formulaire prérempli a été ouvert dans le navigateur web par défaut du système.</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="288"/>
+        <location filename="../../gui/form_rdp_news.py" line="294"/>
         <source>Opening issue form URL in default system web browser failed. Check if there is any special characters in form fields and try again.</source>
         <translation>L&apos;ouverture de l&apos;URL par le navigateur par défaut du système a échoué. Vérifier qu&apos;il n&apos;y a pas de caractère trop spécial dans les champs renseignés et réessayer.</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="260"/>
+        <location filename="../../gui/form_rdp_news.py" line="266"/>
         <source>Prefilled with </source>
         <translation>Prérempli avec </translation>
     </message>
@@ -799,12 +822,12 @@ Aller sur le site web ?
 <context>
     <name>RssMiniReader</name>
     <message>
-        <location filename="../../logic/news_feed/rss_reader.py" line="283"/>
+        <location filename="../../logic/news_feed/rss_reader.py" line="286"/>
         <source>Author(s): </source>
         <translation>Auteurs/ices : </translation>
     </message>
     <message>
-        <location filename="../../logic/news_feed/rss_reader.py" line="283"/>
+        <location filename="../../logic/news_feed/rss_reader.py" line="286"/>
         <source>Keywords: </source>
         <translation>Mots-clés : </translation>
     </message>
@@ -814,12 +837,12 @@ Aller sur le site web ?
         <translation>Le flux RSS n&apos;est pas disponible localement: {}. Les fonctionnalités liées à la lecture du RSS sont donc désactivées.</translation>
     </message>
     <message>
-        <location filename="../../logic/news_feed/rss_reader.py" line="94"/>
+        <location filename="../../logic/news_feed/rss_reader.py" line="97"/>
         <source>New content published:</source>
         <translation>Nouveau contenu publié :</translation>
     </message>
     <message>
-        <location filename="../../logic/news_feed/rss_reader.py" line="94"/>
+        <location filename="../../logic/news_feed/rss_reader.py" line="97"/>
         <source>Read it!</source>
         <translation>Lire!</translation>
     </message>
@@ -860,12 +883,12 @@ Aller sur le site web ?
 <context>
     <name>WebViewer</name>
     <message>
-        <location filename="../../logic/web_viewer.py" line="69"/>
+        <location filename="../../logic/web_viewer.py" line="70"/>
         <source>Last article from Geotribu</source>
         <translation>Dernier article sur Geotribu</translation>
     </message>
     <message>
-        <location filename="../../logic/web_viewer.py" line="77"/>
+        <location filename="../../logic/web_viewer.py" line="78"/>
         <source>Last article from Geotribu loaded and displayed.</source>
         <translation>Le dernier article de Geotribu a été chargé et affiché.</translation>
     </message>
