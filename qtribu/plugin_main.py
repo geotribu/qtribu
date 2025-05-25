@@ -144,6 +144,19 @@ class GeotribuPlugin:
         self.action_open_chat.setToolTip(self.tr("QChat"))
         self.action_open_chat.triggered.connect(self.open_chat)
 
+        self.action_open_qfield_qchat = QAction(
+            QIcon(str(DIR_PLUGIN_ROOT / "resources/images/qfield.svg")),
+            self.tr("QChat in QField"),
+            self.iface.mainWindow(),
+        )
+        self.action_open_qfield_qchat.setToolTip(self.tr("QChat in QField"))
+        self.action_open_qfield_qchat.triggered.connect(
+            partial(
+                open_url_in_browser,
+                "https://github.com/geotribu/qchat-qfield-plugin",
+            )
+        )
+
         self.action_help = QAction(
             QIcon(QgsApplication.iconPath("mActionHelpContents.svg")),
             self.tr("Help"),
@@ -167,6 +180,7 @@ class GeotribuPlugin:
 
         # -- Menu
         self.iface.addPluginToWebMenu(__title__, self.action_open_chat)
+        self.iface.addPluginToWebMenu(__title__, self.action_open_qfield_qchat)
         self.iface.addPluginToWebMenu(__title__, self.action_show_latest_content)
         self.iface.addPluginToWebMenu(__title__, self.action_form_rdp_news)
         self.iface.addPluginToWebMenu(__title__, self.action_form_article)
@@ -235,6 +249,7 @@ class GeotribuPlugin:
         self.iface.removePluginWebMenu(__title__, self.action_form_rdp_news)
         self.iface.removePluginWebMenu(__title__, self.action_show_latest_content)
         self.iface.removePluginWebMenu(__title__, self.action_open_chat)
+        self.iface.removePluginWebMenu(__title__, self.action_open_qfield_qchat)
         self.iface.removePluginWebMenu(__title__, self.action_settings)
         self.iface.removePluginWebMenu(__title__, self.action_splash)
 
