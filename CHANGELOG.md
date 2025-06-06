@@ -12,27 +12,16 @@ Unreleased
 
 ## 1.2.0 - 2025-06-06
 
-### Bugs fixes 🐛
-
 * fix(qchat): disallow connection when no nickname set by @gounux in https://github.com/geotribu/qtribu/pull/228
-
-### Features and enhancements 🎉
-
 * fix(qchat): allow to see registered users only if self registered by @gounux in https://github.com/geotribu/qtribu/pull/227
 * Tooling: extend ruff git hooks by @Guts in https://github.com/geotribu/qtribu/pull/237
 * Packaging : make QTribu compatible with qt6 by @Guts in https://github.com/geotribu/qtribu/pull/208
 * feature(qchat): share QML style when sending geojson vector in ws by @gounux in https://github.com/geotribu/qtribu/pull/235
 * ui(qtribu): add QChat in QField web menu action by @gounux in https://github.com/geotribu/qtribu/pull/239
-
-### Other Changes
-
 * update(project): switch from MIT to GPL2+ license by @Guts in https://github.com/geotribu/qtribu/pull/236
 * Add new translations by @gounux in https://github.com/geotribu/qtribu/pull/242
 
-
 ## 1.1.0 - 2024-11-19
-
-### Features and enhancements 🎉
 
 * feature(qchat): auto-reconnect to last room when QGIS starts by @gounux in <https://github.com/geotribu/qtribu/pull/209>
 * feature(qchat): handle users registration by @gounux in <https://github.com/geotribu/qtribu/pull/200>
@@ -46,118 +35,68 @@ Unreleased
 * feature(qchat): send and receive a bbox message by @gounux in <https://github.com/geotribu/qtribu/pull/220>
 * trad(qchat): add QChat fr translations by @gounux in <https://github.com/geotribu/qtribu/pull/222>
 * ui(qchat): set fixed height for an image chat item by @gounux in <https://github.com/geotribu/qtribu/pull/221>
-
-### Bugs fixes 🐛
-
 * fix(qchat): add type key check when receiving a message by @gounux in <https://github.com/geotribu/qtribu/pull/218>
 
 ## 1.0.0 - 2024-10-11
 
-### Bugs fixes 🐛
-
 * fix(qchat): use mp3 instead of ogg by @gounux in <https://github.com/geotribu/qtribu/pull/198>
-
-### Features and enhancements 🎉
-
 * improve(qchat): play sound only on mention by @gounux in <https://github.com/geotribu/qtribu/pull/199>
 * update(ui): move misc groupbox to bottom in settings dialog by @Guts in <https://github.com/geotribu/qtribu/pull/205>
 * UI: display avatars right into combobox by @Guts in <https://github.com/geotribu/qtribu/pull/206>
 * update(i18n): refine translation to prepare next stable release by @Guts in <https://github.com/geotribu/qtribu/pull/207>
-
-### Tooling 🔧
-
 * update(ci): rm deprecated `set-output` command by @Guts in <https://github.com/geotribu/qtribu/pull/203>
 
 ## 1.0.0 - 2024-10-11
 
-### Bugs fixes 🐛
-
 * fix(qchat): use mp3 instead of ogg by @gounux in <https://github.com/geotribu/qtribu/pull/198>
-
-### Features and enhancements 🎉
-
 * improve(qchat): play sound only on mention by @gounux in <https://github.com/geotribu/qtribu/pull/199>
 * update(ui): move misc groupbox to bottom in settings dialog by @Guts in <https://github.com/geotribu/qtribu/pull/205>
 * UI: display avatars right into combobox by @Guts in <https://github.com/geotribu/qtribu/pull/206>
 * update(i18n): refine translation to prepare next stable release by @Guts in <https://github.com/geotribu/qtribu/pull/207>
-
-### Tooling 🔧
-
 * update(ci): rm deprecated `set-output` command by @Guts in <https://github.com/geotribu/qtribu/pull/203>
 
 ## 1.0.0-beta3 - 2024-09-27
-
-### Bugs fixes 🐛
 
 * fix(init): remove QChat import outside try/except by @Guts in <https://github.com/geotribu/qtribu/pull/196>
 * fix(qchat): no notification on self message mention by @gounux in <https://github.com/geotribu/qtribu/pull/197>
 
 ## 1.0.0-beta2 - 2024-09-07
 
-### Tooling 🔧
-
 * update(ci): switch to geotribu user as releases publisher to plugins.qgis.org and use a toiken instead of raw OSGeo password
-
-## Other changes
-
 * update(packaging): add French description by @Guts in <https://github.com/geotribu/qtribu/pull/194>
 * update(packaging): add Guilhem as plugin contributor @gounux in <https://github.com/geotribu/qtribu/pull/193>
 
 ## 1.0.0-beta1 - 2024-09-07
-
-### Features and enhancements 🎉
 
 * feature: qchat by @gounux in <https://github.com/geotribu/qtribu/pull/182>
 * feature: put settings in QScrollArea by @gounux in <https://github.com/geotribu/qtribu/pull/190>
 
 ## 0.18.0 - 2024-08-25
 
-### Bugs fixes 🐛
-
 * fix(web_viewer): switch from QtWebKit to QtWebEngine by @lbartoletti in <https://github.com/geotribu/qtribu/pull/186>
-
-### Features and enhancements 🎉
-
 * refacto(rss): remove unused rss reader subclasses by @Guts in <https://github.com/geotribu/qtribu/pull/184>
 * Feature: add application folder by @Guts in <https://github.com/geotribu/qtribu/pull/187>
 * refactor(rss): move RSS reader to its own folder by @Guts in <https://github.com/geotribu/qtribu/pull/188>
-
-## New Contributors
-
 * @lbartoletti made their first contribution in <https://github.com/geotribu/qtribu/pull/186>
 
 ## 0.17.3 - 2024-06-28
-
-### Tooling 🔧
 
 * fix(ci): copy LICENSE file since it's mandatory on official repository by @Guts in <https://github.com/geotribu/qtribu/pull/180>
 
 ## 0.17.2 - 2024-06-28
 
-### Features and enhancements 🎉
-
 * Retirer tri des colonnes by @gounux in <https://github.com/geotribu/qtribu/pull/177>
-
-### Documentation 📖
-
 * Doc: packaging by @gounux in <https://github.com/geotribu/qtribu/pull/178>
 
 ## 0.17.1 - 2024-05-01
 
-### Bugs fixes 🐛
-
 * fix(form-rdp): LOCAL_CDN_PATH was unreachable by @Guts in <https://github.com/geotribu/qtribu/pull/172>
 * UI : corrige les étiquettes copiées/collées du formulaire RDP dans le formulaire article by @Guts in <https://github.com/geotribu/qtribu/pull/174>
 * UI : corrige l'autopreview by @Guts in <https://github.com/geotribu/qtribu/pull/176>
-
-### Features and enhancements 🎉
-
 * ui(authoring): supprime la taille minimum pour améliorer l'intégration du widget authoring by @Guts in <https://github.com/geotribu/qtribu/pull/173>
 * UI : améliore le redimensionnement automatique des formulaires de soumission by @Guts in <https://github.com/geotribu/qtribu/pull/175>
 
 ## 0.17.0 - 2024-05-01
-
-### Features and enhancements 🎉
 
 * Fenêtre contenus Geotribu by @gounux in <https://github.com/geotribu/qtribu/pull/157>
 * feature(logs): permet de personnaliser la fenêtre dans laquelle afficher le message de log by @Guts in <https://github.com/geotribu/qtribu/pull/161>
@@ -170,64 +109,35 @@ Unreleased
 * UI : ajoute une toolbar dédiée au plugin by @Guts in <https://github.com/geotribu/qtribu/pull/169>
 * feature(forms): connecte le formulaire d'article au formulaire GitHub by @Guts in <https://github.com/geotribu/qtribu/pull/170>
 * UI: changer couleur des logos article et geordp by @gounux in <https://github.com/geotribu/qtribu/pull/171>
-
-### Other Changes
-
 * fix(webviewer): setWindowsTitle was failing when default browser is s… by @Guts in <https://github.com/geotribu/qtribu/pull/166>
-
-### New Contributors
-
 * @gounux made their first contribution in <https://github.com/geotribu/qtribu/pull/157>
 
 ----
 
 ## 0.16.0 - 2024-03-13
 
-### Bugs fixes 🐛
 
 * ci: fix i18n compilation by @Guts in <https://github.com/geotribu/qtribu/pull/156>
-
-### Features and enhancements 🎉
-
 * QtWebKitWidgets is no longer available by @kikislater in <https://github.com/geotribu/qtribu/pull/99>
 * ui: regroupe les liens vers les sites FR de référence dans le menu Aide de QGIS by @Guts in <https://github.com/geotribu/qtribu/pull/153>
 * Fonctionnalité : intègre le dernier contenu publié dans le fil d'actualité de QGIS by @Guts in <https://github.com/geotribu/qtribu/pull/154>
 * ui: MAJ les traductions by @Guts in <https://github.com/geotribu/qtribu/pull/155>
-
-### Tooling 🔧
-
 * docs: use modern GitHub Actions based workflow by @Guts in <https://github.com/geotribu/qtribu/pull/146>
 * ci: upgrade autolabeler to v5 by @Guts in <https://github.com/geotribu/qtribu/pull/149>
 * ci: fix qgis tests by @Guts in <https://github.com/geotribu/qtribu/pull/150>
-
-### Documentation 📖
-
 * docs: add sitemap by @Guts in <https://github.com/geotribu/qtribu/pull/147>
-
-### Other Changes
-
 * Outillage: MAJ les dépendances de dév, la config VS Code et les git hooks by @Guts in <https://github.com/geotribu/qtribu/pull/144>
 * packaging: pin minimal version of qgis-plugin-ci by @Guts in <https://github.com/geotribu/qtribu/pull/145>
 * tooling: add SonarCloud config and badge by @Guts in <https://github.com/geotribu/qtribu/pull/148>
 * test: replace semver by packaging by @Guts in <https://github.com/geotribu/qtribu/pull/151>
-
-### New Contributors
-
 * @kikislater made their first contribution in <https://github.com/geotribu/qtribu/pull/99>
 
-----
-
 ## 0.15.0 - 2023-08-08
-
-### Features and enhancements 🎉
 
 * Formulaire de soumission de news pour les GeoRDP by @Guts in <https://github.com/geotribu/qtribu/pull/84>
 * Simplifie le chargement des QgsSettings du plugin dans l'objet des préférences by @Guts in <https://github.com/geotribu/qtribu/pull/91>
 * Ajoute un bouton pour réinitialiser les paramètres à leurs valeurs par défaut by @Guts in <https://github.com/geotribu/qtribu/pull/93>
 * Change l'URL du site Geotribu by @Guts in <https://github.com/geotribu/qtribu/pull/127>
-
-### Tooling 🔧
-
 * Change to a maintained job to create release by @Guts in <https://github.com/geotribu/qtribu/pull/92>
 * CI: use ubuntu-latest (22.04) and fix qt5 install by @Guts in <https://github.com/geotribu/qtribu/pull/111>
 * Add ruff and pyupgrade as git hooks by @Guts in <https://github.com/geotribu/qtribu/pull/112>
@@ -338,20 +248,20 @@ Unreleased
 * préférences : menu réglages, intégration des options à l'interface de QGIS
 * ajout d'une option pour choisir dans quel navigateur internet ouvrir les pages : celui intégré à QGIS ou le navigateur par défaut de l'utilisateur/ice
 
-## [0.2.1] - 2021-03-04
+## 0.2.1 - 2021-03-04
 
 * correction d'un import d'un futur module pas encore inclus
 
-## [0.2.0] - 2021-03-04
+## 0.2.0 - 2021-03-04
 
 * ajout du raccourci vers l'aide en ligne
 * déplacement du menu du plugin dans la catégorie "Web"
 
-## [0.1.1] - 2021-03-03
+## 0.1.1 - 2021-03-03
 
 * correction d'un bug avec les versions de Python inférieures à 3.8
 
-## [0.1.0] - 2021-02-28
+## 0.1.0 - 2021-02-28
 
 * première version !
 * structure du dépôt et outillage de base (modularité, traduction, linter, documentation, packaging...)
