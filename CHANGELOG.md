@@ -10,6 +10,26 @@ Unreleased
 
 -->
 
+## 1.2.0 - 2025-06-06
+
+### Bugs fixes 🐛
+
+* fix(qchat): disallow connection when no nickname set by @gounux in https://github.com/geotribu/qtribu/pull/228
+
+### Features and enhancements 🎉
+
+* fix(qchat): allow to see registered users only if self registered by @gounux in https://github.com/geotribu/qtribu/pull/227
+* Tooling: extend ruff git hooks by @Guts in https://github.com/geotribu/qtribu/pull/237
+* Packaging : make QTribu compatible with qt6 by @Guts in https://github.com/geotribu/qtribu/pull/208
+* feature(qchat): share QML style when sending geojson vector in ws by @gounux in https://github.com/geotribu/qtribu/pull/235
+* ui(qtribu): add QChat in QField web menu action by @gounux in https://github.com/geotribu/qtribu/pull/239
+
+### Other Changes
+
+* update(project): switch from MIT to GPL2+ license by @Guts in https://github.com/geotribu/qtribu/pull/236
+* Add new translations by @gounux in https://github.com/geotribu/qtribu/pull/242
+
+
 ## 1.1.0 - 2024-11-19
 
 ### Features and enhancements 🎉
