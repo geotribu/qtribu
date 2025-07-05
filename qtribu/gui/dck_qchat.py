@@ -36,6 +36,7 @@ from qtribu.constants import (
     QCHAT_MESSAGE_TYPE_IMAGE,
     QCHAT_MESSAGE_TYPE_LIKE,
     QCHAT_MESSAGE_TYPE_NEWCOMER,
+    QCHAT_MESSAGE_TYPE_POSITION,
     QCHAT_MESSAGE_TYPE_TEXT,
     QCHAT_NICKNAME_MINLENGTH,
 )
@@ -271,6 +272,13 @@ class QChatWidget(QgsDockWidget):
         # context menu on vector layer for sending as geojson in QChat
         self.iface.layerTreeView().contextMenuAboutToShow.connect(
             self.generate_qaction_send_geojson_layer
+        )
+
+        # context menu on right-click on the canvas for sending position in QChat
+        map_canvas = self.iface.mapCanvas()
+        map_canvas.setContextMenuPolicy(Qt.CustomContextMenu)
+        map_canvas.customContextMenuRequested.connect(
+            self.custom_qchat_position_context_menu
         )
 
         # auto reconnect to room if needed
@@ -1003,10 +1011,59 @@ Visit the website ?
             self.tr("Send on QChat"),
             self.iface.mainWindow(),
         )
-        send_geojson_action.triggered.connect(self.on_send_layer_to_qchat)
+        send_geojson_action.triggered.connect(self.on_send_geojson_layer_to_qchat)
         menu.addAction(send_geojson_action)
 
-    def on_send_layer_to_qchat(self) -> None:
+    def custom_qchat_position_context_menu(self, point: QPoint) -> None:
+        # TODO: find a way to get the existing context menu,
+        # that is being displayed on a right-click in the canvas.
+        # Rather than creating a new menu, which basically makes
+        # this menu being displayed after the previous one is closed.
+        menu = QMenu()
+
+        send_position_action = QAction(
+            QgsApplication.getThemeIcon("mMessageLog.svg"),
+            self.tr("Send position on QChat"),
+            menu,
+        )
+        send_position_action.triggered.connect(
+            lambda: self.on_send_position_to_qchat(point)
+        )
+        menu.addAction(send_position_action)
+
+        menu.exec_(self.iface.mapCanvas().mapToGlobal(point))
+
+    def on_send_position_to_qchat(self, point: QPoint) -> None:
+        if not self.connected:
+            self.log(
+                message=self.tr(
+                    "Not connected to QChat. Please connect to a room first"
+                ),
+                application="QChat",
+                log_level=Qgis.MessageLevel.Critical,
+                push=self.settings.notify_push_info,
+                duration=self.settings.notify_push_duration,
+            )
+            return
+
+        map_point = (
+            self.iface.mapCanvas()
+            .getCoordinateTransform()
+            .toMapCoordinates(point.x(), point.y())
+        )
+
+        message = QChatPositionMessage(
+            type=QCHAT_MESSAGE_TYPE_POSITION,
+            author=self.settings.author_nickname,
+            avatar=self.settings.author_avatar,
+            crs_wkt="TODO",
+            crs_authid="TODO",
+            x=map_point.x(),
+            y=map_point.y(),
+        )
+        self.qchat_ws.send_message(message)
+
+    def on_send_geojson_layer_to_qchat(self) -> None:
         if not self.connected:
             self.log(
                 message=self.tr(
