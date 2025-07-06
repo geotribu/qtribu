@@ -53,7 +53,7 @@ class GeotribuImage:
 # Objects
 GEORDP_NEWS_CATEGORIES: tuple = (
     RdpNewsCategory(
-        name="Sorties de la semaine",
+        name="Sorties récentes",
         description="Pour relayer les nouveautés dans les outils de la "
         "géomatique. Attention, il ne s'agit pas de paraphraser les notes de version "
         "ou les communiqués de presse, mais d'apporter une valeur ajoutée personnelle.",
