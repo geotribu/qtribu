@@ -9,12 +9,11 @@ from functools import partial
 from pathlib import Path
 
 # PyQGIS
-from qgis.core import Qgis, QgsApplication
+from qgis.core import QgsApplication
 from qgis.gui import QgsOptionsPageWidget, QgsOptionsWidgetFactory
 from qgis.PyQt import uic
-from qgis.PyQt.QtCore import Qt
-from qgis.PyQt.QtGui import QColor, QIcon
-from qgis.PyQt.QtWidgets import QButtonGroup, QMessageBox
+from qgis.PyQt.QtGui import QIcon
+from qgis.PyQt.QtWidgets import QButtonGroup
 
 # project
 from qtribu.__about__ import (
@@ -24,9 +23,8 @@ from qtribu.__about__ import (
     __uri_tracker__,
     __version__,
 )
-from qtribu.logic.qchat_api_client import QChatApiClient
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
-from qtribu.toolbelt.commons import open_url_in_browser, play_resource_sound
+from qtribu.toolbelt.commons import open_url_in_browser
 from qtribu.toolbelt.preferences import PlgSettingsStructure
 
 # ############################################################################
@@ -61,13 +59,6 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         self.opt_browser_group.addButton(self.opt_browser_qt, 1)
         self.opt_browser_group.addButton(self.opt_browser_os, 2)
 
-        # disabled this for instances with port in URL
-        # self.lne_qchat_instance_uri.setValidator(QVAL_URL)
-        self.btn_rules.pressed.connect(self.show_instance_rules)
-        self.btn_rules.setIcon(QIcon(QgsApplication.iconPath("processingResult.svg")))
-        self.btn_discover.pressed.connect(self.discover_instances)
-        self.btn_discover.setIcon(QIcon(QgsApplication.iconPath("mIconListView.svg")))
-
         # customization
         self.btn_help.setIcon(QIcon(QgsApplication.iconPath("mActionHelpContents.svg")))
         self.btn_help.pressed.connect(partial(open_url_in_browser, __uri_homepage__))
@@ -90,9 +81,6 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         # load previously saved settings
         self.load_settings()
 
-        # play sound on ringtone changed
-        self.cbb_ring_tone.currentIndexChanged.connect(self.on_ring_tone_changed)
-
     def apply(self):
         """Called to permanently apply the settings shown in the options page (e.g. \
         save them to QgsSettings objects). This is usually called when the options \
@@ -105,26 +93,6 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         settings.notify_push_duration = self.sbx_notif_duration.value()
         settings.integration_qgis_news_feed = self.chb_integration_news_feed.isChecked()
         settings.license_global_accept = self.chb_license_global_accept.isChecked()
-
-        # qchat
-        instance = self.cbb_qchat_instance_uri.currentText()
-        if instance.endswith("/"):
-            settings.qchat_instance_uri = instance[0:-1]
-        else:
-            settings.qchat_instance_uri = instance
-        settings.qchat_auto_reconnect = self.ckb_auto_reconnect.isChecked()
-        settings.qchat_activate_cheatcode = self.ckb_cheatcodes.isChecked()
-        settings.qchat_display_admin_messages = (
-            self.ckb_display_admin_messages.isChecked()
-        )
-        settings.qchat_show_avatars = self.ckb_show_avatars.isChecked()
-        settings.qchat_incognito_mode = self.ckb_incognito_mode.isChecked()
-        settings.qchat_play_sounds = self.ckb_play_sounds.isChecked()
-        settings.qchat_sound_volume = self.hsl_sound_volume.value()
-        settings.qchat_ring_tone = self.cbb_ring_tone.currentText()
-        settings.qchat_color_mention = self.cbt_color_mention.color().name()
-        settings.qchat_color_self = self.cbt_color_self.color().name()
-        settings.qchat_color_admin = self.cbt_color_admin.color().name()
 
         # misc
         settings.debug_mode = self.opt_debug.isChecked()
@@ -153,96 +121,9 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         self.chb_integration_news_feed.setChecked(settings.integration_qgis_news_feed)
         self.chb_license_global_accept.setChecked(settings.license_global_accept)
 
-        # qchat
-        instance_index = self.cbb_qchat_instance_uri.findText(
-            settings.qchat_instance_uri, Qt.MatchFlag.MatchFixedString
-        )
-        if instance_index >= 0:
-            self.cbb_qchat_instance_uri.setCurrentIndex(instance_index)
-        else:
-            self.cbb_qchat_instance_uri.setCurrentText(settings.qchat_instance_uri)
-        self.ckb_auto_reconnect.setChecked(settings.qchat_auto_reconnect)
-        self.ckb_cheatcodes.setChecked(settings.qchat_activate_cheatcode)
-        self.ckb_display_admin_messages.setChecked(
-            settings.qchat_display_admin_messages
-        )
-        self.ckb_show_avatars.setChecked(settings.qchat_show_avatars)
-        self.ckb_incognito_mode.setChecked(settings.qchat_incognito_mode)
-        self.ckb_play_sounds.setChecked(settings.qchat_play_sounds)
-        self.hsl_sound_volume.setValue(settings.qchat_sound_volume)
-        beep_index = self.cbb_ring_tone.findText(
-            settings.qchat_ring_tone, Qt.MatchFlag.MatchFixedString
-        )
-        if beep_index >= 0:
-            self.cbb_ring_tone.setCurrentIndex(beep_index)
-        self.cbt_color_mention.setColor(QColor(settings.qchat_color_mention))
-        self.cbt_color_self.setColor(QColor(settings.qchat_color_self))
-        self.cbt_color_admin.setColor(QColor(settings.qchat_color_admin))
-
         # misc
         self.opt_debug.setChecked(settings.debug_mode)
         self.lbl_version_saved_value.setText(settings.version)
-
-    def show_instance_rules(self) -> None:
-        """
-        Action called when clicking on the "Instance rules" button
-        """
-        instance_url = self.cbb_qchat_instance_uri.currentText()
-        try:
-            client = QChatApiClient(instance_url)
-            rules = client.get_rules()
-            QMessageBox.information(
-                self,
-                self.tr("Instance rules"),
-                self.tr(
-                    """Instance rules ({instance_url}):
-
-{rules}
-
-Main language: {main_lang}
-Max message length: {max_message_length}
-Min nickname length: {min_nickname_length}
-Max nickname length: {max_nickname_length}"""
-                ).format(
-                    instance_url=instance_url,
-                    rules=rules["rules"],
-                    main_lang=rules["main_lang"],
-                    max_message_length=rules["max_message_length"],
-                    min_nickname_length=rules["min_author_length"],
-                    max_nickname_length=rules["max_author_length"],
-                ),
-            )
-        except Exception as e:
-            self.log(message=str(e), log_level=Qgis.MessageLevel.Critical)
-
-    def discover_instances(self) -> None:
-        """
-        Action called when clicking on the "Discover instances" button
-        """
-        try:
-            client = QChatApiClient(self.cbb_qchat_instance_uri.currentText())
-            instances = client.get_registered_instances()
-            msg = ""
-            for lang, lang_instances in instances.items():
-                msg += f"[{lang}]:\n"
-                for li in lang_instances:
-                    msg += f"- {li}\n"
-                msg += "\n"
-            QMessageBox.information(
-                self,
-                self.tr("Registered instances"),
-                msg,
-            )
-        except Exception as e:
-            self.log(message=str(e), log_level=Qgis.MessageLevel.Critical)
-
-    def on_ring_tone_changed(self) -> None:
-        """
-        Action called when ringtone value is changed
-        """
-        play_resource_sound(
-            self.cbb_ring_tone.currentText(), self.hsl_sound_volume.value()
-        )
 
     def reset_read_history(self):
         """Set latest_content_guid to None."""
