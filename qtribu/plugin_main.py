@@ -11,8 +11,8 @@ from pathlib import Path
 # PyQGIS
 from qgis.core import Qgis, QgsApplication, QgsSettings
 from qgis.gui import QgisInterface
-from qgis.PyQt.QtCore import QCoreApplication, QLocale, Qt, QTranslator, QUrl
-from qgis.PyQt.QtGui import QDesktopServices, QIcon
+from qgis.PyQt.QtCore import QCoreApplication, QLocale, QTranslator
+from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction
 
 # project
@@ -26,15 +26,6 @@ from qtribu.logic.news_feed.rss_reader import RssMiniReader
 from qtribu.logic.splash_changer import SplashChanger
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
 from qtribu.toolbelt.commons import open_url_in_browser, open_url_in_webviewer
-
-# conditional imports
-try:
-    from qtribu.gui.dck_qchat import QChatWidget
-
-    EXTERNAL_DEPENDENCIES_AVAILABLE: bool = True
-except ImportError:
-    EXTERNAL_DEPENDENCIES_AVAILABLE: bool = False
-
 
 # ############################################################################
 # ########## Classes ###############
@@ -144,19 +135,6 @@ class GeotribuPlugin:
         self.action_open_chat.setToolTip(self.tr("QChat"))
         self.action_open_chat.triggered.connect(self.open_chat)
 
-        self.action_open_qfield_qchat = QAction(
-            QIcon(str(DIR_PLUGIN_ROOT / "resources/images/qfield.svg")),
-            self.tr("QChat in QField"),
-            self.iface.mainWindow(),
-        )
-        self.action_open_qfield_qchat.setToolTip(self.tr("QChat in QField"))
-        self.action_open_qfield_qchat.triggered.connect(
-            partial(
-                open_url_in_browser,
-                "https://github.com/geotribu/qchat-qfield-plugin",
-            )
-        )
-
         self.action_help = QAction(
             QIcon(QgsApplication.iconPath("mActionHelpContents.svg")),
             self.tr("Help"),
@@ -180,7 +158,6 @@ class GeotribuPlugin:
 
         # -- Menu
         self.iface.addPluginToWebMenu(__title__, self.action_open_chat)
-        self.iface.addPluginToWebMenu(__title__, self.action_open_qfield_qchat)
         self.iface.addPluginToWebMenu(__title__, self.action_show_latest_content)
         self.iface.addPluginToWebMenu(__title__, self.action_form_rdp_news)
         self.iface.addPluginToWebMenu(__title__, self.action_form_article)
@@ -238,9 +215,6 @@ class GeotribuPlugin:
         )
         self.iface.initializationCompleted.connect(self.post_ui_init)
 
-        if not self.check_dependencies():
-            return
-
     def unload(self):
         """Cleans up when plugin is disabled/uninstalled."""
         # -- Clean up menu
@@ -249,7 +223,6 @@ class GeotribuPlugin:
         self.iface.removePluginWebMenu(__title__, self.action_form_rdp_news)
         self.iface.removePluginWebMenu(__title__, self.action_show_latest_content)
         self.iface.removePluginWebMenu(__title__, self.action_open_chat)
-        self.iface.removePluginWebMenu(__title__, self.action_open_qfield_qchat)
         self.iface.removePluginWebMenu(__title__, self.action_settings)
         self.iface.removePluginWebMenu(__title__, self.action_splash)
 
@@ -297,20 +270,6 @@ class GeotribuPlugin:
             )
             return
 
-        # auto reconnect to room if needed
-        settings = PlgOptionsManager().get_plg_settings()
-        if settings.qchat_auto_reconnect and settings.qchat_auto_reconnect_room:
-            if not self.qchat_widget:
-                self.qchat_widget = QChatWidget(
-                    iface=self.iface,
-                    parent=self.iface.mainWindow(),
-                    auto_reconnect_room=settings.qchat_auto_reconnect_room,
-                )
-                self.iface.addDockWidget(
-                    Qt.DockWidgetArea.RightDockWidgetArea, self.qchat_widget
-                )
-            self.qchat_widget.show()
-
     def tr(self, message: str) -> str:
         """Get the translation for a string using Qt translation API.
 
@@ -347,42 +306,6 @@ class GeotribuPlugin:
                 push=True,
             )
             raise err
-
-    def check_dependencies(self) -> bool:
-        """Check if all dependencies are satisfied. If not, warn the user and disable plugin.
-
-        :return: dependencies status
-        :rtype: bool
-        """
-        # if import failed
-        if not EXTERNAL_DEPENDENCIES_AVAILABLE:
-            self.log(
-                message=self.tr(
-                    "Error importing some of dependencies. "
-                    "Related functions have been disabled."
-                ),
-                log_level=Qgis.MessageLevel.Critical,
-                push=True,
-                duration=0,
-                button=True,
-                button_connect=partial(
-                    QDesktopServices.openUrl,
-                    QUrl(f"{__uri_homepage__}installation.html"),
-                ),
-            )
-            # disable plugin widgets
-            self.action_open_chat.setEnabled(False)
-
-            # add tooltip over menu
-            msg_disable = self.tr(
-                "Plugin disabled. Please install all dependencies and then restart QGIS."
-                " Refer to the documentation for more information."
-            )
-            self.action_open_chat.setToolTip(msg_disable)
-            return False
-        else:
-            self.log(message=self.tr("Dependencies satisfied"), log_level=3)
-            return True
 
     def open_contents(self) -> None:
         """Action to open contents dialog"""
@@ -436,10 +359,4 @@ class GeotribuPlugin:
 
     def open_chat(self) -> None:
         if not self.qchat_widget:
-            self.qchat_widget = QChatWidget(
-                iface=self.iface, parent=self.iface.mainWindow()
-            )
-            self.iface.addDockWidget(
-                Qt.DockWidgetArea.RightDockWidgetArea, self.qchat_widget
-            )
-        self.qchat_widget.show()
+            pass
