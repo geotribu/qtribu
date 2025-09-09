@@ -43,5 +43,9 @@
     },
     "yaml.schemas": {
         "https://json.schemastore.org/github-workflow.json": ".github/workflows/*.yml"
+    },
+    "sonarlint.connectedMode.project": {
+        "connectionId": "geotribu",
+        "projectKey": "geotribu_qtribu"
     }
 }
