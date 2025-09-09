@@ -12,6 +12,7 @@ See: https://packaging.python.org/guides/single-sourcing-package-version/
 from configparser import ConfigParser
 from datetime import date
 from pathlib import Path
+from typing import Optional
 
 # ############################################################################
 # ########## Globals ###############
@@ -67,6 +68,11 @@ __keywords__ = [
     t.strip() for t in __plugin_md__.get("general").get("repository").split("tags")
 ]
 __license__ = "MIT"
+__plugin_dependencies__: list[Optional[str]] = [
+    dep.strip()
+    for dep in __plugin_md__.get("general").get("plugin_dependencies", "").split(",")
+    if dep.strip()
+]
 __summary__ = "{}\n{}".format(
     __plugin_md__.get("general").get("description"),
     __plugin_md__.get("general").get("about"),
@@ -108,3 +114,4 @@ if __name__ == "__main__":
         )
     )
     print(__title_clean__)
+    print(f"Depends on other plugins: {__plugin_dependencies__}")

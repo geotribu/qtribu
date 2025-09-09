@@ -47,6 +47,7 @@ class TestPluginMetadata(unittest.TestCase):
         self.assertIsInstance(__about__.__email__, str)
         self.assertIsInstance(__about__.__keywords__, list)
         self.assertIsInstance(__about__.__license__, str)
+        self.assertIsInstance(__about__.__plugin_dependencies__, list)
         self.assertIsInstance(__about__.__summary__, str)
         self.assertIsInstance(__about__.__title__, str)
         self.assertIsInstance(__about__.__title_clean__, str)
