@@ -10,16 +10,23 @@ Unreleased
 
 -->
 
+## 1.3.0 - 2025-09-10
+
+* remove(qchat): bye bye QChat, have a good life by your own by @Guts in <https://github.com/geotribu/qtribu/pull/252>
+* update(i18n): remove QChat texts and extend translation tooling by @Guts in <https://github.com/geotribu/qtribu/pull/253>
+* template(rdp): renommage rubrique geordp by @gounux in <https://github.com/geotribu/qtribu/pull/246>
+* update(tooling): add SonarQube config for VS Code by @Guts in <https://github.com/geotribu/qtribu/pull/251>
+
 ## 1.2.0 - 2025-06-06
 
-* fix(qchat): disallow connection when no nickname set by @gounux in https://github.com/geotribu/qtribu/pull/228
-* fix(qchat): allow to see registered users only if self registered by @gounux in https://github.com/geotribu/qtribu/pull/227
-* Tooling: extend ruff git hooks by @Guts in https://github.com/geotribu/qtribu/pull/237
-* Packaging : make QTribu compatible with qt6 by @Guts in https://github.com/geotribu/qtribu/pull/208
-* feature(qchat): share QML style when sending geojson vector in ws by @gounux in https://github.com/geotribu/qtribu/pull/235
-* ui(qtribu): add QChat in QField web menu action by @gounux in https://github.com/geotribu/qtribu/pull/239
-* update(project): switch from MIT to GPL2+ license by @Guts in https://github.com/geotribu/qtribu/pull/236
-* Add new translations by @gounux in https://github.com/geotribu/qtribu/pull/242
+* fix(qchat): disallow connection when no nickname set by @gounux in <https://github.com/geotribu/qtribu/pull/228>
+* fix(qchat): allow to see registered users only if self registered by @gounux in <https://github.com/geotribu/qtribu/pull/227>
+* Tooling: extend ruff git hooks by @Guts in <https://github.com/geotribu/qtribu/pull/237>
+* Packaging : make QTribu compatible with qt6 by @Guts in <https://github.com/geotribu/qtribu/pull/208>
+* feature(qchat): share QML style when sending geojson vector in ws by @gounux in <https://github.com/geotribu/qtribu/pull/235>
+* ui(qtribu): add QChat in QField web menu action by @gounux in <https://github.com/geotribu/qtribu/pull/239>
+* update(project): switch from MIT to GPL2+ license by @Guts in <https://github.com/geotribu/qtribu/pull/236>
+* Add new translations by @gounux in <https://github.com/geotribu/qtribu/pull/242>
 
 ## 1.1.0 - 2024-11-19
 
@@ -115,7 +122,6 @@ Unreleased
 ----
 
 ## 0.16.0 - 2024-03-13
-
 
 * ci: fix i18n compilation by @Guts in <https://github.com/geotribu/qtribu/pull/156>
 * QtWebKitWidgets is no longer available by @kikislater in <https://github.com/geotribu/qtribu/pull/99>
