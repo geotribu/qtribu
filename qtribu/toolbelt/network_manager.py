@@ -87,29 +87,6 @@ class NetworkRequestsManager:
         """
         return QUrl(self.add_utm_to_url(url))
 
-    def build_request(self, url: Optional[QUrl] = None) -> QNetworkRequest:
-        """Build request object using plugin settings.
-
-        :return: network request object.
-        :rtype: QNetworkRequest
-        """
-        # if URL is not specified, let's use the default one
-        if not url:
-            url = self.build_url()
-
-        # create network object
-        qreq = QNetworkRequest(url=url)
-
-        # headers
-        headers = {
-            b"Accept": bytes(self.plg_settings.http_content_type, "utf8"),
-            b"User-Agent": bytes(self.plg_settings.http_user_agent, "utf8"),
-        }
-        for k, v in headers.items():
-            qreq.setRawHeader(k, v)
-
-        return qreq
-
     def get_from_source(
         self,
         url: Optional[str] = None,
