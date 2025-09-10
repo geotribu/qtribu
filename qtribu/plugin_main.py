@@ -81,15 +81,12 @@ class GeotribuPlugin:
         self.iface.registerOptionsWidgetFactory(self.options_factory)
 
         # toolbar
-        self.toolbar = self.iface.addToolBar(name=self.tr("Geotribu toolbar"))
+        self.qtribu_toolbar = self.iface.addToolBar(name=self.tr("Geotribu toolbar"))
 
         # -- Forms
         self.form_article = None
         self.form_contents = None
         self.form_rdp_news = None
-
-        # -- QChat
-        self.qchat_widget = None
 
         # -- Actions
         self.action_show_latest_content = QAction(
@@ -127,14 +124,6 @@ class GeotribuPlugin:
         self.action_form_article.setToolTip(self.tr("Submit an article"))
         self.action_form_article.triggered.connect(self.open_form_article)
 
-        self.action_open_chat = QAction(
-            QgsApplication.getThemeIcon("mMessageLog.svg"),
-            self.tr("QChat"),
-            self.iface.mainWindow(),
-        )
-        self.action_open_chat.setToolTip(self.tr("QChat"))
-        self.action_open_chat.triggered.connect(self.open_chat)
-
         self.action_help = QAction(
             QIcon(QgsApplication.iconPath("mActionHelpContents.svg")),
             self.tr("Help"),
@@ -157,7 +146,6 @@ class GeotribuPlugin:
         self.action_splash.triggered.connect(self.splash_chgr.switch)
 
         # -- Menu
-        self.iface.addPluginToWebMenu(__title__, self.action_open_chat)
         self.iface.addPluginToWebMenu(__title__, self.action_show_latest_content)
         self.iface.addPluginToWebMenu(__title__, self.action_form_rdp_news)
         self.iface.addPluginToWebMenu(__title__, self.action_form_article)
@@ -203,10 +191,9 @@ class GeotribuPlugin:
         self.iface.helpMenu().addAction(self.action_osgeofr)
 
         # -- Toolbar
-        self.toolbar.addAction(self.action_show_latest_content)
-        self.toolbar.addAction(self.action_open_chat)
-        self.toolbar.addAction(self.action_form_rdp_news)
-        self.toolbar.addAction(self.action_form_article)
+        self.qtribu_toolbar.addAction(self.action_show_latest_content)
+        self.qtribu_toolbar.addAction(self.action_form_rdp_news)
+        self.qtribu_toolbar.addAction(self.action_form_article)
 
         # -- Post UI initialization
         self.rss_reader = RssMiniReader(
@@ -231,8 +218,7 @@ class GeotribuPlugin:
         self.iface.pluginHelpMenu().removeAction(self.action_osgeofr)
 
         # -- Clean up toolbar
-        del self.toolbar
-        del self.qchat_widget
+        del self.qtribu_toolbar
 
         # -- Clean up preferences panel in QGIS settings
         self.iface.unregisterOptionsWidgetFactory(self.options_factory)
@@ -240,7 +226,6 @@ class GeotribuPlugin:
         # remove actions
         del self.action_help
         del self.action_georezo
-        del self.action_open_chat
 
     def post_ui_init(self):
         """Run after plugin's UI has been initialized.
@@ -356,7 +341,3 @@ class GeotribuPlugin:
             # clean up
             self.form_rdp_news.deleteLater()
             self.form_rdp_news = None
-
-    def open_chat(self) -> None:
-        if not self.qchat_widget:
-            pass

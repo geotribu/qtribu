@@ -26,3 +26,5 @@ supportsQt6=True
 # versionnement
 version=1.2.0
 changelog=
+
+plugin_dependencies=QChat

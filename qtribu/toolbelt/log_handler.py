@@ -3,7 +3,6 @@
 # standard library
 import logging
 from functools import partial
-from logging.handlers import RotatingFileHandler
 from typing import Callable, Literal, Optional, Union
 
 # PyQGIS
@@ -14,7 +13,7 @@ from qgis.utils import iface
 
 # project package
 import qtribu.toolbelt.preferences as plg_prefs_hdlr
-from qtribu.__about__ import DIR_PLUGIN_ROOT, __title__, __title_clean__
+from qtribu.__about__ import __title__
 
 # ############################################################################
 # ########## Classes ###############
@@ -192,29 +191,3 @@ class PlgLogger(logging.Handler):
                     level=log_level,
                     duration=duration,
                 )
-
-    def set_logger(self):
-        # create logger
-        logger = logging.getLogger(__title_clean__)
-        logging.captureWarnings(True)
-        log_form = logging.Formatter(
-            "%(asctime)s || %(levelname)s "
-            "|| %(module)s - %(lineno)d ||"
-            " %(funcName)s || %(message)s"
-        )
-
-        # if debug, add rotating file
-        debug_mode = plg_prefs_hdlr.PlgOptionsManager.get_plg_settings().debug_mode
-        if debug_mode:
-            log_level = logging.DEBUG
-            logfile_path = DIR_PLUGIN_ROOT / f"log_{__title_clean__}.log"
-            logfile = RotatingFileHandler(logfile_path, "a", 5000000, 1)
-            logfile.setLevel(log_level)
-            logfile.setFormatter(log_form)
-            logger.addHandler(logfile)
-        else:
-            log_level = logging.WARNING
-
-        logger.setLevel(log_level)
-
-        return logger
