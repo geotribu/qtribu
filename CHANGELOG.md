@@ -10,6 +10,11 @@ Unreleased
 
 -->
 
+## 1.3.1 - 2025-09-13
+
+* fix(ui): remove last QChat ref raising unload errors by @Guts in <https://github.com/geotribu/qtribu/pull/256>
+* improve(ui): set toolbar ObjectName to better fit Qt good pratices by @Guts in <https://github.com/geotribu/qtribu/pull/255>
+
 ## 1.3.0 - 2025-09-10
 
 * remove(qchat): bye bye QChat, have a good life by your own by @Guts in <https://github.com/geotribu/qtribu/pull/252>
