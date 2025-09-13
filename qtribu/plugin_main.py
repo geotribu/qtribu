@@ -13,7 +13,7 @@ from qgis.core import Qgis, QgsApplication, QgsSettings
 from qgis.gui import QgisInterface
 from qgis.PyQt.QtCore import QCoreApplication, QLocale, QTranslator
 from qgis.PyQt.QtGui import QIcon
-from qgis.PyQt.QtWidgets import QAction
+from qgis.PyQt.QtWidgets import QAction, QToolBar
 
 # project
 from qtribu.__about__ import DIR_PLUGIN_ROOT, __icon_path__, __title__, __uri_homepage__
@@ -81,7 +81,8 @@ class GeotribuPlugin:
         self.iface.registerOptionsWidgetFactory(self.options_factory)
 
         # toolbar
-        self.qtribu_toolbar = self.iface.addToolBar(name=self.tr("Geotribu toolbar"))
+        self.qtribu_toolbar: QToolBar = self.iface.addToolBar(name="Geotribu")
+        self.qtribu_toolbar.setObjectName("GeotribuToolbar")
 
         # -- Forms
         self.form_article = None
