@@ -8,6 +8,7 @@ repos:
         args:
           - --maxkb=500
       - id: check-case-conflict
+      - id: check-illegal-windows-names
       - id: check-xml
       - id: check-yaml
       - id: detect-private-key
