@@ -27,4 +27,4 @@ supportsQt6=True
 version=1.4.0-DEV
 changelog=
 
-plugin_dependencies=QChat
+plugin_dependencies=QChat==1.1.1
