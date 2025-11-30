@@ -20,7 +20,6 @@ SOURCES =	../../constants.py \
 	../../logic/splash_changer.py \
 	../../logic/web_viewer.py \
 	../../plugin_main.py \
-	../../tasks/dizzy.py \
 	../../toolbelt/application_folder.py \
 	../../toolbelt/commons.py \
 	../../toolbelt/file_stats.py \

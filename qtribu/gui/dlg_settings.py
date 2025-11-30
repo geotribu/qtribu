@@ -23,6 +23,7 @@ from qtribu.__about__ import (
     __uri_tracker__,
     __version__,
 )
+from qtribu.constants import contribution_guides_base_url
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
 from qtribu.toolbelt.commons import open_url_in_browser
 from qtribu.toolbelt.preferences import PlgSettingsStructure
@@ -77,6 +78,20 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
 
         self.btn_reset.setIcon(QIcon(QgsApplication.iconPath("mActionUndo.svg")))
         self.btn_reset.pressed.connect(self.reset_settings)
+
+        # contributing
+        self.btn_license_open.pressed.connect(
+            partial(
+                open_url_in_browser,
+                f"{contribution_guides_base_url}guides/licensing/#licence-par-defaut",
+            )
+        )
+        self.btn_editorial_policy_open.pressed.connect(
+            partial(
+                open_url_in_browser,
+                f"{contribution_guides_base_url}requirements/#ligne-editoriale",
+            )
+        )
 
         # load previously saved settings
         self.load_settings()

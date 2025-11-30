@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>879</width>
-    <height>474</height>
+    <width>702</width>
+    <height>557</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -42,8 +42,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>859</width>
-        <height>454</height>
+        <width>682</width>
+        <height>537</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -100,7 +100,7 @@
           </size>
          </property>
          <property name="title">
-          <string>Features</string>
+          <string>Feed</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
           <item row="4" column="1">
@@ -271,20 +271,7 @@
             </property>
            </widget>
           </item>
-          <item row="6" column="0">
-           <widget class="QCheckBox" name="chb_license_global_accept">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Accept publication license globally</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0">
+          <item row="7" column="0" colspan="2">
            <widget class="QCheckBox" name="chb_integration_news_feed">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -316,7 +303,81 @@
         </widget>
        </item>
        <item>
-        <widget class="AuthoringWidget" name="wdg_author" native="true"/>
+        <widget class="QGroupBox" name="grp_contribution">
+         <property name="title">
+          <string>Contributing</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="0" colspan="2">
+           <widget class="QCheckBox" name="chb_license_global_accept">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Accept publication license globally</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QPushButton" name="btn_license_open">
+            <property name="autoFillBackground">
+             <bool>true</bool>
+            </property>
+            <property name="text">
+             <string>Open GeoRDP publication license</string>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
+            </property>
+            <property name="flat">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QPushButton" name="btn_editorial_policy_open">
+            <property name="autoFillBackground">
+             <bool>true</bool>
+            </property>
+            <property name="text">
+             <string>Open editorial policy</string>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
+            </property>
+            <property name="flat">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="2">
+           <widget class="QCheckBox" name="chb_editorial_policy_accept">
+            <property name="text">
+             <string>I have read and understood the editorial policy</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="3">
+           <widget class="AuthoringWidget" name="wdg_author" native="true"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
        <item>
         <widget class="QGroupBox" name="grp_misc">
@@ -413,12 +474,6 @@
               <height>25</height>
              </size>
             </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>30</height>
-             </size>
-            </property>
             <property name="text">
              <string>Report an issue</string>
             </property>
@@ -436,12 +491,6 @@
               <height>25</height>
              </size>
             </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>30</height>
-             </size>
-            </property>
             <property name="text">
              <string>Help</string>
             </property>
@@ -453,12 +502,6 @@
              <size>
               <width>200</width>
               <height>25</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>1000</width>
-              <height>30</height>
              </size>
             </property>
             <property name="autoFillBackground">
