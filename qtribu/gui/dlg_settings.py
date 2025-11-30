@@ -108,6 +108,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         settings.notify_push_duration = self.sbx_notif_duration.value()
         settings.integration_qgis_news_feed = self.chb_integration_news_feed.isChecked()
         settings.license_global_accept = self.chb_license_global_accept.isChecked()
+        settings.editorial_policy_accept = self.chb_editorial_policy_accept.isChecked()
 
         # misc
         settings.debug_mode = self.opt_debug.isChecked()
@@ -135,6 +136,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         self.sbx_notif_duration.setValue(settings.notify_push_duration)
         self.chb_integration_news_feed.setChecked(settings.integration_qgis_news_feed)
         self.chb_license_global_accept.setChecked(settings.license_global_accept)
+        self.chb_editorial_policy_accept.setChecked(settings.editorial_policy_accept)
 
         # misc
         self.opt_debug.setChecked(settings.debug_mode)
