@@ -18,7 +18,7 @@ from qgis.PyQt.QtWidgets import QDialog, QDialogButtonBox, QWidget
 
 # plugin
 from qtribu.__about__ import __title__, __version__
-from qtribu.constants import ICON_ARTICLE
+from qtribu.constants import ICON_ARTICLE, contribution_guides_base_url
 from qtribu.toolbelt import NetworkRequestsManager, PlgLogger, PlgOptionsManager
 from qtribu.toolbelt.commons import open_url_in_browser
 
@@ -60,7 +60,7 @@ class ArticleForm(QDialog):
         self.btn_box.helpRequested.connect(
             partial(
                 open_url_in_browser,
-                "https://contribuer.geotribu.fr/articles/workflow/",
+                f"{contribution_guides_base_url}articles/workflow/",
             )
         )
         self.btn_box.button(QDialogButtonBox.StandardButton.Ok).clicked.connect(

@@ -21,6 +21,10 @@ ICON_GEORDP = QIcon(str(DIR_PLUGIN_ROOT.joinpath("resources/images/geordp.svg"))
 LOCAL_CDN_PATH: Path = Path().home() / ".geotribu/cdn/"
 
 
+# URLs
+contribution_guides_base_url: str = "https://contribuer.geotribu.fr/"
+
+
 # Classes
 @dataclass
 class RdpNewsCategory:

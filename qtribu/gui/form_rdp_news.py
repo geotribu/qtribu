@@ -27,6 +27,7 @@ from qtribu.constants import (
     ICON_GEORDP,
     LOCAL_CDN_PATH,
     GeotribuImage,
+    contribution_guides_base_url,
 )
 from qtribu.toolbelt import NetworkRequestsManager, PlgLogger, PlgOptionsManager
 from qtribu.toolbelt.commons import open_url_in_browser
@@ -92,7 +93,7 @@ class RdpNewsForm(QDialog):
         self.btn_box.helpRequested.connect(
             partial(
                 open_url_in_browser,
-                "https://contribuer.geotribu.fr/rdp/add_news/",
+                f"{contribution_guides_base_url}rdp/add_news/",
             )
         )
         self.btn_box.button(QDialogButtonBox.StandardButton.Ok).clicked.connect(
