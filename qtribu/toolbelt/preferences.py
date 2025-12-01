@@ -42,6 +42,7 @@ class PlgSettingsStructure:
     notify_push_duration: int = 10
     splash_screen_enabled: bool = False
     license_global_accept: bool = False
+    editorial_policy_accept: bool = False
     integration_qgis_news_feed: bool = True
 
     # network

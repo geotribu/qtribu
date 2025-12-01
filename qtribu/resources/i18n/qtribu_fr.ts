@@ -139,7 +139,7 @@
 <context>
     <name>ConfigOptionsPage</name>
     <message>
-        <location filename="../../gui/dlg_settings.py" line="138"/>
+        <location filename="../../gui/dlg_settings.py" line="155"/>
         <source>Read history has been reset.</source>
         <translation>L&apos;historique de lecture a été réinitialisé.</translation>
     </message>
@@ -170,72 +170,62 @@
 <context>
     <name>GeotribuPlugin</name>
     <message>
-        <location filename="../../plugin_main.py" line="297"/>
+        <location filename="../../plugin_main.py" line="282"/>
         <source>Newest article</source>
         <translation>Afficher le dernier article</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="138"/>
+        <location filename="../../plugin_main.py" line="128"/>
         <source>Help</source>
         <translation>Aide en ligne</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="147"/>
+        <location filename="../../plugin_main.py" line="137"/>
         <source>Settings</source>
         <translation>Réglages</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="181"/>
+        <location filename="../../plugin_main.py" line="170"/>
         <source>QGIS forum on GeoRezo</source>
         <translation>Forum QGIS sur GeoRezo</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="170"/>
+        <location filename="../../plugin_main.py" line="159"/>
         <source>Geotribu website</source>
         <translation>Site Geotribu</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="191"/>
+        <location filename="../../plugin_main.py" line="180"/>
         <source>OSGeo France</source>
         <translation>OSGeo FR</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="117"/>
+        <location filename="../../plugin_main.py" line="115"/>
         <source>Propose a news to the next GeoRDP</source>
         <translation>Proposer une news pour la GeoRDP</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="303"/>
+        <location filename="../../plugin_main.py" line="288"/>
         <source>Michel, we&apos;ve got a problem: {err}</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="264"/>
+        <location filename="../../plugin_main.py" line="249"/>
         <source>Unable to insert latest item within QGIS news feed. Trace: {err}</source>
         <translation>Impossible d&apos;insérer le dernier contenu publié dans le fil d&apos;actualité de QGIS. Trace : {err}</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="109"/>
+        <location filename="../../plugin_main.py" line="107"/>
         <source>Browse latest contents</source>
         <translation>Rechercher dans les contenus</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="127"/>
+        <location filename="../../plugin_main.py" line="125"/>
         <source>Submit an article</source>
         <translation>Proposer un article</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="84"/>
-        <source>Geotribu toolbar</source>
-        <translation>Barre d&apos;outils du plugin Geotribu</translation>
-    </message>
-    <message>
-        <location filename="../../plugin_main.py" line="135"/>
-        <source>QChat</source>
-        <translation>QChat</translation>
-    </message>
-    <message>
-        <location filename="../../plugin_main.py" line="253"/>
+        <location filename="../../plugin_main.py" line="238"/>
         <source>Reading the RSS feed failed. Trace: {err}</source>
         <translation>La lecture du flux RSS a planté. Trace: {err}</translation>
     </message>
@@ -243,88 +233,88 @@
 <context>
     <name>RdpNewsForm</name>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="192"/>
+        <location filename="../../gui/form_rdp_news.py" line="193"/>
         <source>- A category is required.
 </source>
         <translation>- Une catégorie est requise.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="197"/>
+        <location filename="../../gui/form_rdp_news.py" line="198"/>
         <source>- A title is required, with at least 3 characters.
 </source>
         <translation>- Un titre est requis, avec 3 caractères minimum.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="211"/>
+        <location filename="../../gui/form_rdp_news.py" line="212"/>
         <source>- License must be accepted.
 </source>
         <translation>- La licence doit être acceptée.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="216"/>
+        <location filename="../../gui/form_rdp_news.py" line="217"/>
         <source>- For attribution purpose, author&apos;s firstname is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, le prénom de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="223"/>
+        <location filename="../../gui/form_rdp_news.py" line="224"/>
         <source>- For attribution purpose, author&apos;s lastname is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, le nom de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="230"/>
+        <location filename="../../gui/form_rdp_news.py" line="231"/>
         <source>- For attribution purpose, author&apos;s email is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, l&apos;email de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="236"/>
+        <location filename="../../gui/form_rdp_news.py" line="237"/>
         <source>Some of required fields are incorrectly filled.</source>
         <translation>Certains champs requis ne sont pas correctement renseignés.</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="236"/>
+        <location filename="../../gui/form_rdp_news.py" line="237"/>
         <source>See details...</source>
         <translation>Voir les détails...</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="236"/>
+        <location filename="../../gui/form_rdp_news.py" line="237"/>
         <source>Fields in bold must be filled. Missing fields:
 </source>
         <translation>Les champs dont le nom est en gras sont requis. Champs incorrects :
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="102"/>
+        <location filename="../../gui/form_rdp_news.py" line="103"/>
         <source>Submit</source>
         <translation>Envoyer</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="204"/>
+        <location filename="../../gui/form_rdp_news.py" line="205"/>
         <source>- News is not long enough (25 characters at least).
 </source>
         <translation>- Le contenu de la news doit faire au moins 25 caractères.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="287"/>
+        <location filename="../../gui/form_rdp_news.py" line="288"/>
         <source>Issue form URL opened in default system web browser.</source>
         <translation>Le formulaire prérempli a été ouvert dans le navigateur web par défaut du système.</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="294"/>
+        <location filename="../../gui/form_rdp_news.py" line="295"/>
         <source>Opening issue form URL in default system web browser failed. Check if there is any special characters in form fields and try again.</source>
         <translation>L&apos;ouverture de l&apos;URL par le navigateur par défaut du système a échoué. Vérifier qu&apos;il n&apos;y a pas de caractère trop spécial dans les champs renseignés et réessayer.</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="266"/>
+        <location filename="../../gui/form_rdp_news.py" line="267"/>
         <source>Prefilled with </source>
         <translation>Prérempli avec </translation>
     </message>
@@ -541,11 +531,6 @@ Si c&apos;est le cas, ne pas cocher et donner des précisions en commentaire.</t
         <translation>Réglages</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="103"/>
-        <source>Features</source>
-        <translation>Fonctionnalités</translation>
-    </message>
-    <message>
         <location filename="../../gui/dlg_settings.ui" line="267"/>
         <source>Which web browser to use to display articles.</source>
         <translation>Navigateur web à utiliser pour afficher les articles.</translation>
@@ -576,32 +561,32 @@ Si c&apos;est le cas, ne pas cocher et donner des précisions en commentaire.</t
         <translation>Activer la notification push</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="330"/>
+        <location filename="../../gui/dlg_settings.ui" line="391"/>
         <source>Miscellaneous</source>
         <translation>Divers</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="351"/>
+        <location filename="../../gui/dlg_settings.ui" line="412"/>
         <source>Enable debug mode.</source>
         <translation>Activer le mode DEBUG.</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="360"/>
+        <location filename="../../gui/dlg_settings.ui" line="421"/>
         <source>Debug mode (degraded performances)</source>
         <translation>Mode DEBUG (performances dégradées)</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="404"/>
+        <location filename="../../gui/dlg_settings.ui" line="465"/>
         <source>Version used to save settings:</source>
         <translation>Version des paramètres :</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="423"/>
+        <location filename="../../gui/dlg_settings.ui" line="478"/>
         <source>Report an issue</source>
         <translation>Créer un ticket</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="446"/>
+        <location filename="../../gui/dlg_settings.ui" line="495"/>
         <source>Help</source>
         <translation>Aide en ligne</translation>
     </message>
@@ -626,24 +611,49 @@ Si c&apos;est le cas, ne pas cocher et donner des précisions en commentaire.</t
         <translation> secondes</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="283"/>
+        <location filename="../../gui/dlg_settings.ui" line="320"/>
         <source>Accept publication license globally</source>
         <translation>Accepter une fois pour toutes la licence de publication</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="468"/>
+        <location filename="../../gui/dlg_settings.ui" line="511"/>
         <source>Reset to factory defaults</source>
         <translation>Réinitialise les paramètres à leur valeur par défaut</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="302"/>
+        <location filename="../../gui/dlg_settings.ui" line="289"/>
         <source>The only &apos;Show QGIS news feed on welcome page&apos; must be checked in General Settings</source>
         <translation>Les options &amp;quot;Afficher le fil d&apos;actualités QGIS sur la page d&apos;accueil&amp;quot; et &amp;quot;Ouverture de projet et démarrage = la page d&apos;accueil&amp;quot; doivent être activées dans les préférences générales de QGIS</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="305"/>
+        <location filename="../../gui/dlg_settings.ui" line="292"/>
         <source>Insert latest item in QGIS news feed</source>
         <translation>Insérer le dernier contenu publié sur Geotribu dans le fil d&apos;actualités</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dlg_settings.ui" line="103"/>
+        <source>Feed</source>
+        <translation>Intégration des actualités</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dlg_settings.ui" line="308"/>
+        <source>Contributing</source>
+        <translation>Contribuer</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dlg_settings.ui" line="330"/>
+        <source>Open GeoRDP publication license</source>
+        <translation>Consulter la licence par défaut des GeoRDP</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dlg_settings.ui" line="346"/>
+        <source>Open editorial policy</source>
+        <translation>Consulter la charte éditoriale</translation>
+    </message>
+    <message>
+        <location filename="../../gui/dlg_settings.ui" line="359"/>
+        <source>I have read and understood the editorial policy</source>
+        <translation>J&apos;ai lu et compris la charte éditoriale</translation>
     </message>
 </context>
 <context>
