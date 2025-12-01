@@ -10,6 +10,12 @@ Unreleased
 
 -->
 
+## 1.4.0 - 2025-12-01
+
+* Feature: add editorial policy check box by @Guts in <https://github.com/geotribu/qtribu/pull/263>
+* update(tooling): add check-illegal-windows-names git hooks by @Guts in <https://github.com/geotribu/qtribu/pull/260>
+* Packaging: drop support for QGIS < 3.40 by @Guts in <https://github.com/geotribu/qtribu/pull/264>
+
 ## 1.3.1 - 2025-09-13
 
 * fix(ui): remove last QChat ref raising unload errors by @Guts in <https://github.com/geotribu/qtribu/pull/256>

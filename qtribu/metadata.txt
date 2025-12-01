@@ -24,7 +24,7 @@ qgisMaximumVersion=4.10
 supportsQt6=True
 
 # versionnement
-version=1.4.0-DEV
+version=1.5.0-DEV
 changelog=
 
 plugin_dependencies=QChat==1.1.1
