@@ -1,12 +1,11 @@
 #! python3  # noqa: E265
 
-"""
-Main plugin module.
-"""
+"""Main plugin module."""
 
 # standard
 from functools import partial
 from pathlib import Path
+from typing import Optional
 
 # PyQGIS
 from qgis.core import Qgis, QgsApplication, QgsSettings
@@ -73,6 +72,11 @@ class GeotribuPlugin:
         self.rss_reader = None
         self.splash_chgr = SplashChanger(self)
 
+        # -- Forms
+        self.form_article: Optional[ArticleForm] = None
+        self.form_contents: Optional[GeotribuContentsDialog] = None
+        self.form_rdp_news: Optional[RdpNewsForm] = None
+
     def initGui(self):
         """Set up plugin UI elements."""
 
@@ -83,11 +87,6 @@ class GeotribuPlugin:
         # toolbar
         self.qtribu_toolbar: QToolBar = self.iface.addToolBar(name="Geotribu")
         self.qtribu_toolbar.setObjectName("GeotribuToolbar")
-
-        # -- Forms
-        self.form_article = None
-        self.form_contents = None
-        self.form_rdp_news = None
 
         # -- Actions
         self.action_show_latest_content = QAction(
@@ -150,6 +149,7 @@ class GeotribuPlugin:
         self.iface.addPluginToWebMenu(__title__, self.action_show_latest_content)
         self.iface.addPluginToWebMenu(__title__, self.action_form_rdp_news)
         self.iface.addPluginToWebMenu(__title__, self.action_form_article)
+        self.iface.addPluginToWebMenu(__title__, self.action_open_contents)
         self.iface.addPluginToWebMenu(__title__, self.action_splash)
         self.iface.addPluginToWebMenu(__title__, self.action_settings)
         self.iface.addPluginToWebMenu(__title__, self.action_help)
@@ -195,6 +195,7 @@ class GeotribuPlugin:
         self.qtribu_toolbar.addAction(self.action_show_latest_content)
         self.qtribu_toolbar.addAction(self.action_form_rdp_news)
         self.qtribu_toolbar.addAction(self.action_form_article)
+        self.qtribu_toolbar.addAction(self.action_open_contents)
 
         # -- Post UI initialization
         self.rss_reader = RssMiniReader(
@@ -209,6 +210,7 @@ class GeotribuPlugin:
         self.iface.removePluginWebMenu(__title__, self.action_help)
         self.iface.removePluginWebMenu(__title__, self.action_form_article)
         self.iface.removePluginWebMenu(__title__, self.action_form_rdp_news)
+        self.iface.removePluginWebMenu(__title__, self.action_open_contents)
         self.iface.removePluginWebMenu(__title__, self.action_show_latest_content)
         self.iface.removePluginWebMenu(__title__, self.action_settings)
         self.iface.removePluginWebMenu(__title__, self.action_splash)
