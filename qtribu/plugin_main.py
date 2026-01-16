@@ -1,12 +1,11 @@
 #! python3  # noqa: E265
 
-"""
-Main plugin module.
-"""
+"""Main plugin module."""
 
 # standard
 from functools import partial
 from pathlib import Path
+from typing import Optional
 
 # PyQGIS
 from qgis.core import Qgis, QgsApplication, QgsSettings
@@ -73,6 +72,11 @@ class GeotribuPlugin:
         self.rss_reader = None
         self.splash_chgr = SplashChanger(self)
 
+        # -- Forms
+        self.form_article: Optional[ArticleForm] = None
+        self.form_contents: Optional[GeotribuContentsDialog] = None
+        self.form_rdp_news: Optional[RdpNewsForm] = None
+
     def initGui(self):
         """Set up plugin UI elements."""
 
@@ -83,11 +87,6 @@ class GeotribuPlugin:
         # toolbar
         self.qtribu_toolbar: QToolBar = self.iface.addToolBar(name="Geotribu")
         self.qtribu_toolbar.setObjectName("GeotribuToolbar")
-
-        # -- Forms
-        self.form_article = None
-        self.form_contents = None
-        self.form_rdp_news = None
 
         # -- Actions
         self.action_show_latest_content = QAction(
