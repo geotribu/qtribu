@@ -10,6 +10,10 @@ Unreleased
 
 -->
 
+## 1.4.1 - 2026-01-16
+
+* fix(ui): restore contents browser action by @Guts in <https://github.com/geotribu/qtribu/pull/270>
+
 ## 1.4.0 - 2025-12-01
 
 * Feature: add editorial policy check box by @Guts in <https://github.com/geotribu/qtribu/pull/263>
