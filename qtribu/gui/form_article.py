@@ -51,6 +51,7 @@ class ArticleForm(QDialog):
             [
                 "Creative Commons International BY-NC-SA 4.0",
                 "Creative Commons International BY-SA 4.0",
+                "Creative Commons International BY 4.0",
                 "Beerware (Révision 42)",
                 "autre - merci de préciser dans le champ libre en fin de formulaire",
             ]
