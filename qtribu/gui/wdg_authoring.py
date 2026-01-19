@@ -27,7 +27,7 @@ class AuthoringWidget(QWidget):
         self.lne_email.setValidator(QVAL_EMAIL)
         self.lne_github_account.setValidator(QVAL_URL)
         self.lne_linkedin_account.setValidator(QVAL_URL)
-        self.lne_twitter_account.setValidator(QVAL_URL)
+        self.lne_bluesky_account.setValidator(QVAL_URL)
 
         # fill fields from saved settings
         self.load_settings()
@@ -40,7 +40,7 @@ class AuthoringWidget(QWidget):
         self.lne_email.setText(settings.author_email)
         self.lne_github_account.setText(settings.author_github)
         self.lne_linkedin_account.setText(settings.author_linkedin)
-        self.lne_twitter_account.setText(settings.author_twitter)
+        self.lne_bluesky_account.setText(settings.author_bluesky)
         self.lne_mastodon_account.setText(settings.author_mastodon)
 
     def save_settings(self) -> None:
@@ -53,7 +53,7 @@ class AuthoringWidget(QWidget):
         settings.author_email = self.lne_email.text()
         settings.author_github = self.lne_github_account.text()
         settings.author_linkedin = self.lne_linkedin_account.text()
-        settings.author_twitter = self.lne_twitter_account.text()
+        settings.author_bluesky = self.lne_bluesky_account.text()
         settings.author_mastodon = self.lne_mastodon_account.text()
 
         # save it

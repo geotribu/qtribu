@@ -180,19 +180,19 @@
        </widget>
       </item>
       <item row="8" column="0">
-       <widget class="QLabel" name="lbl_twitter_account">
+       <widget class="QLabel" name="lbl_bluesky_account">
         <property name="toolTip">
          <string>Used during broadcasting to credit author.</string>
         </property>
         <property name="text">
-         <string>Twitter account:</string>
+         <string>BlueSky account:</string>
         </property>
        </widget>
       </item>
       <item row="8" column="1">
-       <widget class="QLineEdit" name="lne_twitter_account">
+       <widget class="QLineEdit" name="lne_bluesky_account">
         <property name="placeholderText">
-         <string notr="true">https://twitter.com/geotribu</string>
+         <string notr="true">https://bsky.app/profile/geotribu.bsky.social</string>
         </property>
         <property name="clearButtonEnabled">
          <bool>true</bool>
