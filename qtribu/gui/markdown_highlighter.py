@@ -13,7 +13,6 @@ from qgis.PyQt.QtGui import (
 
 
 class MarkdownHighlighter(QSyntaxHighlighter):
-
     MARKDOWN_KEYS_REGEX = {
         "Bold": re.compile("(?P<delim>\*\*)(?P<text>.+)(?P=delim)"),
         "uBold": re.compile("(?P<delim>__)(?P<text>[^_]{2,})(?P=delim)"),
