@@ -32,7 +32,8 @@ class EditingPolicyWidget(QWidget):
 
     def initGui(self) -> None:
         """Initialize GUI elements."""
-        # populate license combo box
+        # articles: license combo box
+        self.lbl_license_article.setBuddy(self.cbb_license_article)
         self.cbb_license_article.addItems(
             [
                 "Creative Commons International BY-NC-SA 4.0",

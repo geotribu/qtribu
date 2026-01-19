@@ -75,7 +75,7 @@ class ArticleForm(QDialog):
         )
 
         # custom sub-widget
-        self.wdg_editing_compliance.frm_rdp.hide()
+        self.wdg_editing_compliance.chb_license_rdp.setEnabled(False)
         self.wdg_editing_compliance.chb_transparency.setText(
             self.wdg_editing_compliance.chb_transparency.text()
             + self.tr("\n If not, I give some details in the comment area.")

@@ -108,7 +108,8 @@ class RdpNewsForm(QDialog):
         )
 
         # custom sub-widget
-        self.wdg_editing_compliance.frm_articles.hide()
+        self.wdg_editing_compliance.lbl_license_article.setEnabled(False)
+        self.wdg_editing_compliance.cbb_license_article.setEnabled(False)
         self.wdg_editing_compliance.chb_transparency.setText(
             self.wdg_editing_compliance.chb_transparency.text()
             + self.tr("\n If not, I give some details in the comment area.")
