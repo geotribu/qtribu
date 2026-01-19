@@ -14,6 +14,7 @@ from typing import Optional, Union
 # PyQGIS
 from qgis.core import Qgis
 from qgis.PyQt import uic
+from qgis.PyQt.QtCore import QDate
 from qgis.PyQt.QtWidgets import QDialog, QDialogButtonBox, QWidget
 
 # plugin
@@ -77,6 +78,11 @@ class ArticleForm(QDialog):
         self.btn_box.button(QDialogButtonBox.StandardButton.Ok).setText(
             self.tr("Submit")
         )
+
+        # set the minimum proposed date to 2 weeks from
+        today: QDate = QDate.currentDate()
+        min_date: QDate = today.addDays(14)
+        self.dte_proposed_date.setMinimumDate(min_date)
 
     @property
     def issue_form_url(self) -> str:
