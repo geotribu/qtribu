@@ -29,8 +29,22 @@ class AuthoringWidget(QWidget):
         self.lne_linkedin_account.setValidator(QVAL_URL)
         self.lne_bluesky_account.setValidator(QVAL_URL)
 
+        # initialize GUI
+        self.initGui()
+
         # fill fields from saved settings
         self.load_settings()
+
+    def initGui(self) -> None:
+        """Set up plugin UI elements."""
+        # set buddies
+        self.lbl_firstname.setBuddy(self.lne_firstname)
+        self.lbl_lastname.setBuddy(self.lne_lastname)
+        self.lbl_email.setBuddy(self.lne_email)
+        self.lbl_github_account.setBuddy(self.lne_github_account)
+        self.lbl_linkedin_account.setBuddy(self.lne_linkedin_account)
+        self.lbl_bluesky_account.setBuddy(self.lne_bluesky_account)
+        self.lbl_mastodon_account.setBuddy(self.lne_mastodon_account)
 
     def load_settings(self) -> None:
         """Load options from QgsSettings into UI form."""
