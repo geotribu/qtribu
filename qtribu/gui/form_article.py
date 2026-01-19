@@ -18,17 +18,18 @@ from qgis.PyQt.QtWidgets import QDialog, QDialogButtonBox, QWidget
 
 # plugin
 from qtribu.__about__ import __title__, __version__
-from qtribu.constants import ICON_ARTICLE, contribution_guides_base_url
+from qtribu.constants import (
+    ARTICLE_ISSUE_FORM_NAME,
+    ICON_ARTICLE,
+    SOURCE_REPOSITORY_URL,
+    contribution_guides_base_url,
+)
 from qtribu.toolbelt import NetworkRequestsManager, PlgLogger, PlgOptionsManager
 from qtribu.toolbelt.commons import open_url_in_browser
 
 
 class ArticleForm(QDialog):
     """QDialog form to submit an article."""
-
-    ISSUE_FORM_BASE_URL: str = (
-        "https://github.com/geotribu/website/issues/new?template=ARTICLE.yml"
-    )
 
     def __init__(self, parent: Optional[QWidget] = None):
         """Constructor.
@@ -71,6 +72,15 @@ class ArticleForm(QDialog):
         self.btn_box.button(QDialogButtonBox.StandardButton.Ok).setText(
             self.tr("Submit")
         )
+
+    @property
+    def issue_form_url(self) -> str:
+        """Get Github issue form base URL.
+
+        :return: issue form base URL
+        :rtype: str
+        """
+        return f"{SOURCE_REPOSITORY_URL}issues/new?&template={ARTICLE_ISSUE_FORM_NAME}"
 
     def check_required_fields(self) -> bool:
         invalid_fields = []

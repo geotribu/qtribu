@@ -26,6 +26,8 @@ from qtribu.constants import (
     GEORDP_NEWS_ICONS,
     ICON_GEORDP,
     LOCAL_CDN_PATH,
+    RDP_ISSUE_FORM_NAME,
+    SOURCE_REPOSITORY_URL,
     GeotribuImage,
     contribution_guides_base_url,
 )
@@ -35,10 +37,6 @@ from qtribu.toolbelt.commons import open_url_in_browser
 
 class RdpNewsForm(QDialog):
     """QDialog form to submit a news to a next GeoRDP."""
-
-    ISSUE_FORM_BASE_URL: str = (
-        "https://github.com/geotribu/website/issues/new?template=RDP_NEWS.yml"
-    )
 
     def __init__(self, parent: Optional[QWidget] = None):
         """Constructor.
@@ -103,6 +101,15 @@ class RdpNewsForm(QDialog):
         self.btn_box.button(QDialogButtonBox.StandardButton.Ok).setText(
             self.tr("Submit")
         )
+
+    @property
+    def issue_form_url(self) -> str:
+        """Get Github issue form base URL.
+
+        :return: issue form base URL
+        :rtype: str
+        """
+        return f"{SOURCE_REPOSITORY_URL}issues/new?&template={RDP_ISSUE_FORM_NAME}"
 
     def cbb_icon_populate(self) -> None:
         """Populate combobox of news icons."""
