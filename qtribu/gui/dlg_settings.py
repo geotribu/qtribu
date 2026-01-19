@@ -23,7 +23,6 @@ from qtribu.__about__ import (
     __uri_tracker__,
     __version__,
 )
-from qtribu.constants import contribution_guides_base_url
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
 from qtribu.toolbelt.commons import open_url_in_browser
 from qtribu.toolbelt.preferences import PlgSettingsStructure
@@ -79,20 +78,6 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         self.btn_reset.setIcon(QIcon(QgsApplication.iconPath("mActionUndo.svg")))
         self.btn_reset.pressed.connect(self.reset_settings)
 
-        # contributing
-        self.btn_license_open.pressed.connect(
-            partial(
-                open_url_in_browser,
-                f"{contribution_guides_base_url}guides/licensing/#licence-par-defaut",
-            )
-        )
-        self.btn_editorial_policy_open.pressed.connect(
-            partial(
-                open_url_in_browser,
-                f"{contribution_guides_base_url}requirements/#ligne-editoriale",
-            )
-        )
-
         # load previously saved settings
         self.load_settings()
 
@@ -107,8 +92,6 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         settings.notify_push_info = self.opt_notif_push_msg.isChecked()
         settings.notify_push_duration = self.sbx_notif_duration.value()
         settings.integration_qgis_news_feed = self.chb_integration_news_feed.isChecked()
-        settings.license_global_accept = self.chb_license_global_accept.isChecked()
-        settings.editorial_policy_accept = self.chb_editorial_policy_accept.isChecked()
 
         # misc
         settings.debug_mode = self.opt_debug.isChecked()
@@ -119,6 +102,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
 
         # sub widgets
         self.wdg_author.save_settings()
+        self.wdg_editing_compliance.save_settings()
 
         if __debug__:
             self.log(
@@ -135,8 +119,6 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         self.opt_notif_push_msg.setChecked(settings.notify_push_info)
         self.sbx_notif_duration.setValue(settings.notify_push_duration)
         self.chb_integration_news_feed.setChecked(settings.integration_qgis_news_feed)
-        self.chb_license_global_accept.setChecked(settings.license_global_accept)
-        self.chb_editorial_policy_accept.setChecked(settings.editorial_policy_accept)
 
         # misc
         self.opt_debug.setChecked(settings.debug_mode)

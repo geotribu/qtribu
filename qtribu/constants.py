@@ -1,8 +1,6 @@
 #! python3  # noqa: E265
 
-"""
-Plugin constants.
-"""
+"""Plugin constants."""
 
 # standard
 from dataclasses import dataclass

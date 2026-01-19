@@ -308,60 +308,11 @@
           <string>Contributing</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_3">
-          <item row="0" column="0" colspan="2">
-           <widget class="QCheckBox" name="chb_license_global_accept">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Accept publication license globally</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QPushButton" name="btn_license_open">
-            <property name="autoFillBackground">
-             <bool>true</bool>
-            </property>
-            <property name="text">
-             <string>Open GeoRDP publication license</string>
-            </property>
-            <property name="autoDefault">
-             <bool>false</bool>
-            </property>
-            <property name="flat">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="2">
-           <widget class="QPushButton" name="btn_editorial_policy_open">
-            <property name="autoFillBackground">
-             <bool>true</bool>
-            </property>
-            <property name="text">
-             <string>Open editorial policy</string>
-            </property>
-            <property name="autoDefault">
-             <bool>false</bool>
-            </property>
-            <property name="flat">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0" colspan="2">
-           <widget class="QCheckBox" name="chb_editorial_policy_accept">
-            <property name="text">
-             <string>I have read and understood the editorial policy</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0" colspan="3">
+          <item row="2" column="0" colspan="3">
            <widget class="AuthoringWidget" name="wdg_author" native="true"/>
+          </item>
+          <item row="0" column="0" colspan="3">
+           <widget class="EditingPolicyWidget" name="wdg_editing_compliance" native="true"/>
           </item>
          </layout>
         </widget>
@@ -532,6 +483,12 @@
    <class>AuthoringWidget</class>
    <extends>QWidget</extends>
    <header>qtribu.gui.wdg_authoring</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>EditingPolicyWidget</class>
+   <extends>QWidget</extends>
+   <header>qtribu.gui.wdg_editing_compliance</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>705</width>
-    <height>739</height>
+    <width>968</width>
+    <height>823</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -45,8 +45,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>687</width>
-        <height>658</height>
+        <width>950</width>
+        <height>738</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -190,50 +190,22 @@
           <string>Publication</string>
          </property>
          <layout class="QFormLayout" name="formLayout_4">
-          <item row="0" column="0">
-           <widget class="QLabel" name="lbl_license">
-            <property name="font">
-             <font>
-              <pointsize>11</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>License:</string>
-            </property>
-           </widget>
+          <item row="0" column="0" colspan="2">
+           <widget class="EditingPolicyWidget" name="wdg_editing_compliance" native="true"/>
           </item>
-          <item row="2" column="1">
-           <widget class="QPlainTextEdit" name="txt_comment">
-            <property name="maximumBlockCount">
-             <number>300</number>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
+          <item row="1" column="0">
            <widget class="QLabel" name="lbl_comment">
             <property name="text">
              <string>Comment:</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="lbl_transparency">
-            <property name="text">
-             <string>Transparency:</string>
-            </property>
-           </widget>
-          </item>
           <item row="1" column="1">
-           <widget class="QCheckBox" name="chb_transparency">
-            <property name="text">
-             <string>I'm sure that the content fit with editing rules. If not, I give some details in the comment area.</string>
+           <widget class="QPlainTextEdit" name="txt_comment">
+            <property name="maximumBlockCount">
+             <number>300</number>
             </property>
            </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QComboBox" name="cbb_license"/>
           </item>
          </layout>
         </widget>
@@ -297,6 +269,12 @@
    <class>QgsMessageBar</class>
    <extends>QWidget</extends>
    <header>qgsmessagebar.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>EditingPolicyWidget</class>
+   <extends>QWidget</extends>
+   <header>qtribu.gui.wdg_editing_compliance</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

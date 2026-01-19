@@ -31,12 +31,18 @@ from qtribu.constants import (
     GeotribuImage,
     contribution_guides_base_url,
 )
+from qtribu.gui.wdg_authoring import AuthoringWidget
+from qtribu.gui.wdg_editing_compliance import EditingPolicyWidget
 from qtribu.toolbelt import NetworkRequestsManager, PlgLogger, PlgOptionsManager
 from qtribu.toolbelt.commons import open_url_in_browser
 
 
 class RdpNewsForm(QDialog):
     """QDialog form to submit a news to a next GeoRDP."""
+
+    # type hints for sub-widgets
+    wdg_author: AuthoringWidget
+    wdg_editing_compliance: EditingPolicyWidget
 
     def __init__(self, parent: Optional[QWidget] = None):
         """Constructor.
@@ -86,13 +92,6 @@ class RdpNewsForm(QDialog):
 
         self.txt_body.textChanged.connect(self.auto_preview)
 
-        # publication
-        self.chb_license.setChecked(
-            self.plg_settings.get_value_from_key(
-                key="license_global_accept", exp_type=bool
-            )
-        )
-
         # connect standard buttons
         self.btn_box.helpRequested.connect(
             partial(
@@ -106,6 +105,13 @@ class RdpNewsForm(QDialog):
         self.btn_box.button(QDialogButtonBox.StandardButton.Ok).setDefault(True)
         self.btn_box.button(QDialogButtonBox.StandardButton.Ok).setText(
             self.tr("Submit")
+        )
+
+        # custom sub-widget
+        self.wdg_editing_compliance.frm_articles.hide()
+        self.wdg_editing_compliance.chb_transparency.setText(
+            self.wdg_editing_compliance.chb_transparency.text()
+            + self.tr("\n If not, I give some details in the comment area.")
         )
 
     @property
@@ -160,11 +166,11 @@ class RdpNewsForm(QDialog):
                 message=f"Icon doesn't exist locally: {icon_local_path}", log_level=4
             )
             icon_local_path.parent.mkdir(parents=True, exist_ok=True)
-            self.qntwk.download_file(
+            self.qntwk.download_file_to(
                 remote_url=selected_icon.url,
                 local_path=str(icon_local_path.resolve()),
             )
-            # repopulate combobx to get updated items icons
+            # repopulate combobox to get updated items icons
             self.cbb_icon_populate()
 
         self.auto_preview()
@@ -179,7 +185,7 @@ class RdpNewsForm(QDialog):
     def generate_preview(self) -> None:
         """Render news in the preview area."""
         # title
-        md_txt = f"### {self.lne_title.text()}\n"
+        md_txt: str = f"### {self.lne_title.text()}\n"
 
         # icon
         selected_icon: GeotribuImage = self.cbb_icon.currentData()
@@ -197,7 +203,7 @@ class RdpNewsForm(QDialog):
         self.txt_preview.setMarkdown(md_txt)
 
     def check_required_fields(self) -> bool:
-        invalid_fields = []
+        invalid_fields: list[QWidget] = []
         error_message = ""
 
         # check category
@@ -220,8 +226,8 @@ class RdpNewsForm(QDialog):
             )
 
         # check license
-        if not self.chb_license.isChecked():
-            invalid_fields.append(self.chb_license)
+        if not self.wdg_editing_compliance.chb_license_rdp.isChecked():
+            invalid_fields.append(self.wdg_editing_compliance.chb_license_rdp)
             error_message += self.tr("- License must be accepted.\n")
 
         # check author firstname
@@ -277,8 +283,8 @@ class RdpNewsForm(QDialog):
         if not self.check_required_fields():
             return False
 
-        completed_url = (
-            f"{self.ISSUE_FORM_BASE_URL}"
+        completed_url: str = (
+            f"{self.issue_form_url}"
             f"&in_author_name={self.wdg_author.lne_firstname.text()} "
             f"{self.wdg_author.lne_lastname.text()}"
             f"&in_author_mail={self.wdg_author.lne_email.text()}"
@@ -286,7 +292,7 @@ class RdpNewsForm(QDialog):
             f"&in_author_mastodon={self.wdg_author.lne_mastodon_account.text()}"
             f"&in_author_twitter={self.wdg_author.lne_twitter_account.text()}"
             f"&in_author_license=true"
-            f"&cb_author_content_relationship={self.chb_transparency.isChecked()}"
+            f"&cb_author_content_relationship={self.wdg_editing_compliance.chb_transparency.isChecked()}"
             f"&dr_news_category={self.cbb_category.currentText()}"
             f"&in_news_title={self.lne_title.text()}"
             f"&in_news_icon={self.cbb_icon.currentText()}"
@@ -296,7 +302,7 @@ class RdpNewsForm(QDialog):
             f"&title=[GeoRDP] {self.lne_title.text()} - {__title__} {__version__}"
         )
         self.log(message=f"Opening issue form: {completed_url}", log_level=4)
-        url_opened = open_url_in_browser(url=completed_url)
+        url_opened: bool = open_url_in_browser(url=completed_url)
         if url_opened:
             self.log(
                 message=self.tr("Issue form URL opened in default system web browser."),
