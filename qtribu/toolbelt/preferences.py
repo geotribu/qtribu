@@ -57,7 +57,7 @@ class PlgSettingsStructure:
     author_email: str = ""
     author_github: str = ""
     author_linkedin: str = ""
-    author_twitter: str = ""
+    author_bluesky: str = ""
     author_mastodon: str = ""
 
     @property

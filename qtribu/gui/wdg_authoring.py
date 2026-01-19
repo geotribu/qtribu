@@ -27,10 +27,24 @@ class AuthoringWidget(QWidget):
         self.lne_email.setValidator(QVAL_EMAIL)
         self.lne_github_account.setValidator(QVAL_URL)
         self.lne_linkedin_account.setValidator(QVAL_URL)
-        self.lne_twitter_account.setValidator(QVAL_URL)
+        self.lne_bluesky_account.setValidator(QVAL_URL)
+
+        # initialize GUI
+        self.initGui()
 
         # fill fields from saved settings
         self.load_settings()
+
+    def initGui(self) -> None:
+        """Set up plugin UI elements."""
+        # set buddies
+        self.lbl_firstname.setBuddy(self.lne_firstname)
+        self.lbl_lastname.setBuddy(self.lne_lastname)
+        self.lbl_email.setBuddy(self.lne_email)
+        self.lbl_github_account.setBuddy(self.lne_github_account)
+        self.lbl_linkedin_account.setBuddy(self.lne_linkedin_account)
+        self.lbl_bluesky_account.setBuddy(self.lne_bluesky_account)
+        self.lbl_mastodon_account.setBuddy(self.lne_mastodon_account)
 
     def load_settings(self) -> None:
         """Load options from QgsSettings into UI form."""
@@ -40,7 +54,7 @@ class AuthoringWidget(QWidget):
         self.lne_email.setText(settings.author_email)
         self.lne_github_account.setText(settings.author_github)
         self.lne_linkedin_account.setText(settings.author_linkedin)
-        self.lne_twitter_account.setText(settings.author_twitter)
+        self.lne_bluesky_account.setText(settings.author_bluesky)
         self.lne_mastodon_account.setText(settings.author_mastodon)
 
     def save_settings(self) -> None:
@@ -53,7 +67,7 @@ class AuthoringWidget(QWidget):
         settings.author_email = self.lne_email.text()
         settings.author_github = self.lne_github_account.text()
         settings.author_linkedin = self.lne_linkedin_account.text()
-        settings.author_twitter = self.lne_twitter_account.text()
+        settings.author_bluesky = self.lne_bluesky_account.text()
         settings.author_mastodon = self.lne_mastodon_account.text()
 
         # save it

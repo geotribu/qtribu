@@ -4,81 +4,81 @@
 <context>
     <name>ArticleForm</name>
     <message>
-        <location filename="../../gui/form_article.py" line="81"/>
+        <location filename="../../gui/form_article.py" line="82"/>
         <source>- A title is required, with at least 3 characters.
 </source>
         <translation>- Un titre est requis, avec 3 caractères minimum.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="105"/>
+        <location filename="../../gui/form_article.py" line="106"/>
         <source>- For attribution purpose, author&apos;s firstname is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, le prénom de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="112"/>
+        <location filename="../../gui/form_article.py" line="113"/>
         <source>- For attribution purpose, author&apos;s lastname is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, le nom de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="119"/>
+        <location filename="../../gui/form_article.py" line="120"/>
         <source>- For attribution purpose, author&apos;s email is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, l&apos;email de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="125"/>
+        <location filename="../../gui/form_article.py" line="126"/>
         <source>Some of required fields are incorrectly filled.</source>
         <translation>Certains champs requis ne sont pas correctement renseignés.</translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="125"/>
+        <location filename="../../gui/form_article.py" line="126"/>
         <source>See details...</source>
         <translation>Voir les détails...</translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="125"/>
+        <location filename="../../gui/form_article.py" line="126"/>
         <source>Fields in bold must be filled. Missing fields:
 </source>
         <translation>Les champs dont le nom est en gras sont requis. Champs incorrects :
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="70"/>
+        <location filename="../../gui/form_article.py" line="71"/>
         <source>Submit</source>
         <translation>Envoyer</translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="88"/>
+        <location filename="../../gui/form_article.py" line="89"/>
         <source>- The description is not long enough (10 characters at least).
 </source>
         <translation>- La description doit faire au moins 10 caractères.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="175"/>
+        <location filename="../../gui/form_article.py" line="176"/>
         <source>Issue form URL opened in default system web browser.</source>
         <translation>Le formulaire prérempli a été ouvert dans le navigateur web par défaut du système.</translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="182"/>
+        <location filename="../../gui/form_article.py" line="183"/>
         <source>Opening issue form URL in default system web browser failed. Check if there is any special characters in form fields and try again.</source>
         <translation>L&apos;ouverture de l&apos;URL par le navigateur par défaut du système a échoué. Vérifier qu&apos;il n&apos;y a pas de caractère trop spécial dans les champs renseignés et réessayer.</translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="95"/>
+        <location filename="../../gui/form_article.py" line="96"/>
         <source>- Date has to be filled.
 </source>
         <translation>- Une date de publication est requise.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="155"/>
+        <location filename="../../gui/form_article.py" line="156"/>
         <source>Prefilled with </source>
         <translation>Prérempli avec </translation>
     </message>
@@ -127,8 +127,8 @@
     </message>
     <message>
         <location filename="../../gui/wdg_authoring.ui" line="188"/>
-        <source>Twitter account:</source>
-        <translation>Twitter :</translation>
+        <source>BlueSky account:</source>
+        <translation>Bluesky :</translation>
     </message>
     <message>
         <location filename="../../gui/wdg_authoring.ui" line="145"/>
@@ -170,17 +170,17 @@
 <context>
     <name>GeotribuPlugin</name>
     <message>
-        <location filename="../../plugin_main.py" line="282"/>
+        <location filename="../../plugin_main.py" line="284"/>
         <source>Newest article</source>
         <translation>Afficher le dernier article</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="128"/>
+        <location filename="../../plugin_main.py" line="127"/>
         <source>Help</source>
         <translation>Aide en ligne</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="137"/>
+        <location filename="../../plugin_main.py" line="136"/>
         <source>Settings</source>
         <translation>Réglages</translation>
     </message>
@@ -200,32 +200,32 @@
         <translation>OSGeo FR</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="115"/>
+        <location filename="../../plugin_main.py" line="114"/>
         <source>Propose a news to the next GeoRDP</source>
         <translation>Proposer une news pour la GeoRDP</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="288"/>
+        <location filename="../../plugin_main.py" line="290"/>
         <source>Michel, we&apos;ve got a problem: {err}</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="249"/>
+        <location filename="../../plugin_main.py" line="251"/>
         <source>Unable to insert latest item within QGIS news feed. Trace: {err}</source>
         <translation>Impossible d&apos;insérer le dernier contenu publié dans le fil d&apos;actualité de QGIS. Trace : {err}</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="107"/>
+        <location filename="../../plugin_main.py" line="106"/>
         <source>Browse latest contents</source>
         <translation>Rechercher dans les contenus</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="125"/>
+        <location filename="../../plugin_main.py" line="124"/>
         <source>Submit an article</source>
         <translation>Proposer un article</translation>
     </message>
     <message>
-        <location filename="../../plugin_main.py" line="238"/>
+        <location filename="../../plugin_main.py" line="240"/>
         <source>Reading the RSS feed failed. Trace: {err}</source>
         <translation>La lecture du flux RSS a planté. Trace: {err}</translation>
     </message>
