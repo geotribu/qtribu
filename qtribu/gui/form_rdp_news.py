@@ -51,6 +51,12 @@ class RdpNewsForm(QDialog):
         self.plg_settings = PlgOptionsManager()
         self.qntwk = NetworkRequestsManager()
 
+        # initialize GUI
+        self.initGui()
+
+    def initGui(self) -> None:
+        """Initialize GUI elements."""
+
         # custom icon
         self.setWindowIcon(ICON_GEORDP)
 
