@@ -5,7 +5,8 @@ FORMS =	../../gui/dlg_contents.ui \
 	../../gui/dlg_settings.ui \
 	../../gui/form_article.ui \
 	../../gui/form_rdp_news.ui \
-	../../gui/wdg_authoring.ui
+	../../gui/wdg_authoring.ui \
+	../../gui/wdg_editing_compliance.ui
 
 SOURCES =	../../constants.py \
 	../../gui/dlg_contents.py \
@@ -14,6 +15,7 @@ SOURCES =	../../constants.py \
 	../../gui/form_rdp_news.py \
 	../../gui/gui_commons.py \
 	../../gui/wdg_authoring.py \
+	../../gui/wdg_editing_compliance.py \
 	../../logic/news_feed/json_feed.py \
 	../../logic/news_feed/mdl_rss_item.py \
 	../../logic/news_feed/rss_reader.py \
