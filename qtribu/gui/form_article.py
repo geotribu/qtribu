@@ -14,11 +14,19 @@ from typing import Optional, Union
 # PyQGIS
 from qgis.core import Qgis
 from qgis.PyQt import uic
+from qgis.PyQt.QtCore import QDate
 from qgis.PyQt.QtWidgets import QDialog, QDialogButtonBox, QWidget
 
 # plugin
 from qtribu.__about__ import __title__, __version__
-from qtribu.constants import ICON_ARTICLE, contribution_guides_base_url
+from qtribu.constants import (
+    ARTICLE_ISSUE_FORM_NAME,
+    ICON_ARTICLE,
+    SOURCE_REPOSITORY_URL,
+    contribution_guides_base_url,
+)
+from qtribu.gui.wdg_authoring import AuthoringWidget
+from qtribu.gui.wdg_editing_compliance import EditingPolicyWidget
 from qtribu.toolbelt import NetworkRequestsManager, PlgLogger, PlgOptionsManager
 from qtribu.toolbelt.commons import open_url_in_browser
 
@@ -26,9 +34,9 @@ from qtribu.toolbelt.commons import open_url_in_browser
 class ArticleForm(QDialog):
     """QDialog form to submit an article."""
 
-    ISSUE_FORM_BASE_URL: str = (
-        "https://github.com/geotribu/website/issues/new?template=ARTICLE.yml"
-    )
+    # type hints for sub-widgets
+    wdg_author: AuthoringWidget
+    wdg_editing_compliance: EditingPolicyWidget
 
     def __init__(self, parent: Optional[QWidget] = None):
         """Constructor.
@@ -43,19 +51,13 @@ class ArticleForm(QDialog):
         self.plg_settings = PlgOptionsManager()
         self.qntwk = NetworkRequestsManager()
 
+        # initialize GUI
+        self.initGui()
+
+    def initGui(self) -> None:
+        """Initialize GUI elements."""
         # custom icon
         self.setWindowIcon(ICON_ARTICLE)
-
-        # publication
-        self.cbb_license.addItems(
-            [
-                "Creative Commons International BY-NC-SA 4.0",
-                "Creative Commons International BY-SA 4.0",
-                "Creative Commons International BY 4.0",
-                "Beerware (Révision 42)",
-                "autre - merci de préciser dans le champ libre en fin de formulaire",
-            ]
-        )
 
         # connect help button
         self.btn_box.helpRequested.connect(
@@ -71,6 +73,27 @@ class ArticleForm(QDialog):
         self.btn_box.button(QDialogButtonBox.StandardButton.Ok).setText(
             self.tr("Submit")
         )
+
+        # custom sub-widget
+        self.wdg_editing_compliance.chb_license_rdp.setEnabled(False)
+        self.wdg_editing_compliance.chb_transparency.setText(
+            self.wdg_editing_compliance.chb_transparency.text()
+            + self.tr("\n If not, I give some details in the comment area.")
+        )
+
+        # set the minimum proposed date to 2 weeks from
+        today: QDate = QDate.currentDate()
+        min_date: QDate = today.addDays(14)
+        self.dte_proposed_date.setMinimumDate(min_date)
+
+    @property
+    def issue_form_url(self) -> str:
+        """Get Github issue form base URL.
+
+        :return: issue form base URL
+        :rtype: str
+        """
+        return f"{SOURCE_REPOSITORY_URL}issues/new?&template={ARTICLE_ISSUE_FORM_NAME}"
 
     def check_required_fields(self) -> bool:
         invalid_fields = []
@@ -153,8 +176,8 @@ class ArticleForm(QDialog):
         if not self.check_required_fields():
             return False
 
-        completed_url = (
-            f"{self.ISSUE_FORM_BASE_URL}"
+        completed_url: str = (
+            f"{self.issue_form_url}"
             f"&in_author_name={self.wdg_author.lne_firstname.text()} "
             f"{self.wdg_author.lne_lastname.text()}"
             f"&in_author_mail={self.wdg_author.lne_email.text()}"
@@ -162,7 +185,8 @@ class ArticleForm(QDialog):
             f"&in_author_mastodon={self.wdg_author.lne_mastodon_account.text()}"
             f"&in_author_twitter={self.wdg_author.lne_twitter_account.text()}"
             f"&in_author_license=true"
-            f"&cb_author_content_relationship={self.chb_transparency.isChecked()}"
+            f"&cb_author_content_relationship={self.wdg_editing_compliance.chb_transparency.isChecked()}"
+            f"&cb_author_aware_ai_guidelines={self.wdg_editing_compliance.chb_genai_editing_policy.isChecked()}"
             f"&in_art_title={self.lne_title.text()}"
             f"&in_art_date={self.dte_proposed_date.date().toString('dd/MM/yyyy')}"
             f"&tx_art_content={self.txt_description.toPlainText()}"
@@ -171,7 +195,7 @@ class ArticleForm(QDialog):
             f"&title=[Proposition] {self.lne_title.text()} - {__title__} {__version__}"
         )
         self.log(message=f"Opening issue form: {completed_url}", log_level=4)
-        url_opened = open_url_in_browser(url=completed_url)
+        url_opened: bool = open_url_in_browser(url=completed_url)
         if url_opened:
             self.log(
                 message=self.tr("Issue form URL opened in default system web browser."),

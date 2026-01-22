@@ -1,8 +1,6 @@
 #! python3  # noqa: E265
 
-"""
-Plugin constants.
-"""
+"""Plugin constants."""
 
 # standard
 from dataclasses import dataclass
@@ -23,6 +21,9 @@ LOCAL_CDN_PATH: Path = Path().home() / ".geotribu/cdn/"
 
 # URLs
 contribution_guides_base_url: str = "https://contribuer.geotribu.fr/"
+SOURCE_REPOSITORY_URL: str = "https://github.com/geotribu/website/"
+ARTICLE_ISSUE_FORM_NAME: str = "ARTICLE.yml"
+RDP_ISSUE_FORM_NAME: str = "RDP_NEWS.yml"
 
 
 # Classes

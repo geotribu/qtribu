@@ -4,83 +4,90 @@
 <context>
     <name>ArticleForm</name>
     <message>
-        <location filename="../../gui/form_article.py" line="82"/>
+        <location filename="../../gui/form_article.py" line="105"/>
         <source>- A title is required, with at least 3 characters.
 </source>
         <translation>- Un titre est requis, avec 3 caractères minimum.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="106"/>
+        <location filename="../../gui/form_article.py" line="129"/>
         <source>- For attribution purpose, author&apos;s firstname is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, le prénom de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="113"/>
+        <location filename="../../gui/form_article.py" line="136"/>
         <source>- For attribution purpose, author&apos;s lastname is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, le nom de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="120"/>
+        <location filename="../../gui/form_article.py" line="143"/>
         <source>- For attribution purpose, author&apos;s email is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, l&apos;email de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="126"/>
+        <location filename="../../gui/form_article.py" line="149"/>
         <source>Some of required fields are incorrectly filled.</source>
         <translation>Certains champs requis ne sont pas correctement renseignés.</translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="126"/>
+        <location filename="../../gui/form_article.py" line="149"/>
         <source>See details...</source>
         <translation>Voir les détails...</translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="126"/>
+        <location filename="../../gui/form_article.py" line="149"/>
         <source>Fields in bold must be filled. Missing fields:
 </source>
         <translation>Les champs dont le nom est en gras sont requis. Champs incorrects :
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="71"/>
+        <location filename="../../gui/form_article.py" line="73"/>
         <source>Submit</source>
         <translation>Envoyer</translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="89"/>
+        <location filename="../../gui/form_article.py" line="112"/>
         <source>- The description is not long enough (10 characters at least).
 </source>
         <translation>- La description doit faire au moins 10 caractères.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="176"/>
+        <location filename="../../gui/form_article.py" line="200"/>
         <source>Issue form URL opened in default system web browser.</source>
         <translation>Le formulaire prérempli a été ouvert dans le navigateur web par défaut du système.</translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="183"/>
+        <location filename="../../gui/form_article.py" line="207"/>
         <source>Opening issue form URL in default system web browser failed. Check if there is any special characters in form fields and try again.</source>
         <translation>L&apos;ouverture de l&apos;URL par le navigateur par défaut du système a échoué. Vérifier qu&apos;il n&apos;y a pas de caractère trop spécial dans les champs renseignés et réessayer.</translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="96"/>
+        <location filename="../../gui/form_article.py" line="119"/>
         <source>- Date has to be filled.
 </source>
         <translation>- Une date de publication est requise.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.py" line="156"/>
+        <location filename="../../gui/form_article.py" line="179"/>
         <source>Prefilled with </source>
         <translation>Prérempli avec </translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_article.py" line="79"/>
+        <source>
+ If not, I give some details in the comment area.</source>
+        <translation>
+ Si c&apos;est le cas, ne pas cocher et donner des précisions en commentaire.</translation>
     </message>
 </context>
 <context>
@@ -139,9 +146,73 @@
 <context>
     <name>ConfigOptionsPage</name>
     <message>
-        <location filename="../../gui/dlg_settings.py" line="155"/>
+        <location filename="../../gui/dlg_settings.py" line="137"/>
         <source>Read history has been reset.</source>
         <translation>L&apos;historique de lecture a été réinitialisé.</translation>
+    </message>
+</context>
+<context>
+    <name>EditingPolicyWidget</name>
+    <message>
+        <location filename="../../gui/wdg_editing_compliance.ui" line="79"/>
+        <source>Transparency:</source>
+        <translation type="obsolete">Transparence :</translation>
+    </message>
+    <message>
+        <location filename="../../gui/wdg_editing_compliance.ui" line="159"/>
+        <source>Transparency: I&apos;m sure that the content fit with editing rules.</source>
+        <translation>Transparence: ceci n&apos;est pas une publicité ou un simple copié/collé d&apos;un CP etc.</translation>
+    </message>
+    <message>
+        <location filename="../../gui/wdg_editing_compliance.ui" line="58"/>
+        <source>See editing policy</source>
+        <translation>Voir la charte éditoriale</translation>
+    </message>
+    <message>
+        <location filename="../../gui/wdg_editing_compliance.ui" line="78"/>
+        <source>Preferred license for my articles:</source>
+        <translation>Licence préférée pour mes articles :</translation>
+    </message>
+    <message>
+        <location filename="../../gui/wdg_editing_compliance.ui" line="209"/>
+        <source>License for my RDP news:</source>
+        <translation type="obsolete">Licence des GeoRDP :</translation>
+    </message>
+    <message>
+        <location filename="../../gui/wdg_editing_compliance.ui" line="222"/>
+        <source>I accept that my contributed news are published under the CC BY-NC-SA 4.0</source>
+        <translation type="obsolete">J&apos;accepte que mes news soient publiées en CC BY-NC-SA 4.0</translation>
+    </message>
+    <message>
+        <location filename="../../gui/wdg_editing_compliance.ui" line="94"/>
+        <source>Check default and
+available licenses</source>
+        <translation>Voir les licences disponibles</translation>
+    </message>
+    <message>
+        <location filename="../../gui/wdg_editing_compliance.ui" line="288"/>
+        <source>GenAI editing policy:</source>
+        <translation type="obsolete">Charte éditorIAle :</translation>
+    </message>
+    <message>
+        <location filename="../../gui/wdg_editing_compliance.ui" line="143"/>
+        <source>Contributions must be original and not copied and pasted from a prompt, as described in the editing charter.</source>
+        <translation>La contribution doit émaner de votre originalité, et non découler d&apos;un copier / coller issu d&apos;un prompt, comme décrit dans la charte.</translation>
+    </message>
+    <message>
+        <location filename="../../gui/wdg_editing_compliance.ui" line="304"/>
+        <source>I&apos;m aware of the guidelines regarding the use of GenAI for contributions.</source>
+        <translation type="obsolete">Je suis au fait des lignes directrices concernant l&apos;usage de l&apos;IA.</translation>
+    </message>
+    <message>
+        <location filename="../../gui/wdg_editing_compliance.ui" line="127"/>
+        <source>License for my RDP news: I accept that my news are published under the CC BY-NC-SA 4.0</source>
+        <translation>Licence pour les news de GeoRDP : j&apos;accepte que mes news soient publiées en CC BY-NC-SA 4.0</translation>
+    </message>
+    <message>
+        <location filename="../../gui/wdg_editing_compliance.ui" line="146"/>
+        <source>GenAI editing policy: I&apos;m aware of the guidelines regarding the use of GenAI for contributions.</source>
+        <translation>Charte éditorIAle : je suis au fait des lignes directrices concernant l&apos;usage de l&apos;IA.</translation>
     </message>
 </context>
 <context>
@@ -171,15 +242,18 @@
     <name>GeotribuPlugin</name>
     <message>
         <location filename="../../plugin_main.py" line="284"/>
+        <location filename="../../plugin_main.py" line="284"/>
         <source>Newest article</source>
         <translation>Afficher le dernier article</translation>
     </message>
     <message>
         <location filename="../../plugin_main.py" line="127"/>
+        <location filename="../../plugin_main.py" line="127"/>
         <source>Help</source>
         <translation>Aide en ligne</translation>
     </message>
     <message>
+        <location filename="../../plugin_main.py" line="136"/>
         <location filename="../../plugin_main.py" line="136"/>
         <source>Settings</source>
         <translation>Réglages</translation>
@@ -201,30 +275,36 @@
     </message>
     <message>
         <location filename="../../plugin_main.py" line="114"/>
+        <location filename="../../plugin_main.py" line="114"/>
         <source>Propose a news to the next GeoRDP</source>
         <translation>Proposer une news pour la GeoRDP</translation>
     </message>
     <message>
+        <location filename="../../plugin_main.py" line="290"/>
         <location filename="../../plugin_main.py" line="290"/>
         <source>Michel, we&apos;ve got a problem: {err}</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../plugin_main.py" line="251"/>
+        <location filename="../../plugin_main.py" line="251"/>
         <source>Unable to insert latest item within QGIS news feed. Trace: {err}</source>
         <translation>Impossible d&apos;insérer le dernier contenu publié dans le fil d&apos;actualité de QGIS. Trace : {err}</translation>
     </message>
     <message>
+        <location filename="../../plugin_main.py" line="106"/>
         <location filename="../../plugin_main.py" line="106"/>
         <source>Browse latest contents</source>
         <translation>Rechercher dans les contenus</translation>
     </message>
     <message>
         <location filename="../../plugin_main.py" line="124"/>
+        <location filename="../../plugin_main.py" line="124"/>
         <source>Submit an article</source>
         <translation>Proposer un article</translation>
     </message>
     <message>
+        <location filename="../../plugin_main.py" line="240"/>
         <location filename="../../plugin_main.py" line="240"/>
         <source>Reading the RSS feed failed. Trace: {err}</source>
         <translation>La lecture du flux RSS a planté. Trace: {err}</translation>
@@ -233,90 +313,97 @@
 <context>
     <name>RdpNewsForm</name>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="193"/>
+        <location filename="../../gui/form_rdp_news.py" line="213"/>
         <source>- A category is required.
 </source>
         <translation>- Une catégorie est requise.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="198"/>
+        <location filename="../../gui/form_rdp_news.py" line="218"/>
         <source>- A title is required, with at least 3 characters.
 </source>
         <translation>- Un titre est requis, avec 3 caractères minimum.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="212"/>
+        <location filename="../../gui/form_rdp_news.py" line="232"/>
         <source>- License must be accepted.
 </source>
         <translation>- La licence doit être acceptée.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="217"/>
+        <location filename="../../gui/form_rdp_news.py" line="237"/>
         <source>- For attribution purpose, author&apos;s firstname is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, le prénom de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="224"/>
+        <location filename="../../gui/form_rdp_news.py" line="244"/>
         <source>- For attribution purpose, author&apos;s lastname is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, le nom de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="231"/>
+        <location filename="../../gui/form_rdp_news.py" line="251"/>
         <source>- For attribution purpose, author&apos;s email is required.
 </source>
         <translation>- Pour les besoins d&apos;attribution, l&apos;email de l&apos;auteur/e est requis.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="237"/>
+        <location filename="../../gui/form_rdp_news.py" line="257"/>
         <source>Some of required fields are incorrectly filled.</source>
         <translation>Certains champs requis ne sont pas correctement renseignés.</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="237"/>
+        <location filename="../../gui/form_rdp_news.py" line="257"/>
         <source>See details...</source>
         <translation>Voir les détails...</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="237"/>
+        <location filename="../../gui/form_rdp_news.py" line="257"/>
         <source>Fields in bold must be filled. Missing fields:
 </source>
         <translation>Les champs dont le nom est en gras sont requis. Champs incorrects :
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="103"/>
+        <location filename="../../gui/form_rdp_news.py" line="106"/>
         <source>Submit</source>
         <translation>Envoyer</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="205"/>
+        <location filename="../../gui/form_rdp_news.py" line="225"/>
         <source>- News is not long enough (25 characters at least).
 </source>
         <translation>- Le contenu de la news doit faire au moins 25 caractères.
 </translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="288"/>
+        <location filename="../../gui/form_rdp_news.py" line="308"/>
         <source>Issue form URL opened in default system web browser.</source>
         <translation>Le formulaire prérempli a été ouvert dans le navigateur web par défaut du système.</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="295"/>
+        <location filename="../../gui/form_rdp_news.py" line="315"/>
         <source>Opening issue form URL in default system web browser failed. Check if there is any special characters in form fields and try again.</source>
         <translation>L&apos;ouverture de l&apos;URL par le navigateur par défaut du système a échoué. Vérifier qu&apos;il n&apos;y a pas de caractère trop spécial dans les champs renseignés et réessayer.</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.py" line="267"/>
+        <location filename="../../gui/form_rdp_news.py" line="287"/>
         <source>Prefilled with </source>
         <translation>Prérempli avec </translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_rdp_news.py" line="113"/>
+        <source>
+ If not, I give some details in the comment area.</source>
+        <translation>
+ Si c&apos;est le cas, ne pas cocher et donner des précisions en commentaire.</translation>
     </message>
 </context>
 <context>
@@ -438,22 +525,22 @@
     <message>
         <location filename="../../gui/form_rdp_news.ui" line="292"/>
         <source>License:</source>
-        <translation>Licence :</translation>
+        <translation type="obsolete">Licence :</translation>
     </message>
     <message>
         <location filename="../../gui/form_rdp_news.ui" line="299"/>
         <source>I accept that my contribution is published under the CC BY-NC-SA 4.0</source>
-        <translation>J&apos;accepte que ma contribution soit publiée en CC BY-NC-SA 4.0</translation>
+        <translation type="obsolete">J&apos;accepte que ma contribution soit publiée en CC BY-NC-SA 4.0</translation>
     </message>
     <message>
-        <location filename="../../gui/form_rdp_news.ui" line="316"/>
+        <location filename="../../gui/form_rdp_news.ui" line="288"/>
         <source>Comment:</source>
         <translation>Commentaire libre :</translation>
     </message>
     <message>
         <location filename="../../gui/form_rdp_news.ui" line="330"/>
         <source>Transparency:</source>
-        <translation>Transparence :</translation>
+        <translation type="obsolete">Transparence :</translation>
     </message>
     <message>
         <location filename="../../gui/form_rdp_news.ui" line="206"/>
@@ -483,7 +570,7 @@
     <message>
         <location filename="../../gui/form_rdp_news.ui" line="309"/>
         <source>I&apos;m not related to the published content. If not, I give some details in the comment area.</source>
-        <translation>Ceci n&apos;est pas une autopromotion, une publicité ou un simple copié/collé d&apos;un CP etc.
+        <translation type="obsolete">Ceci n&apos;est pas une autopromotion, une publicité ou un simple copié/collé d&apos;un CP etc.
 Si c&apos;est le cas, ne pas cocher et donner des précisions en commentaire.</translation>
     </message>
     <message>
@@ -497,9 +584,9 @@ Si c&apos;est le cas, ne pas cocher et donner des précisions en commentaire.</t
         <translation>Corps du texte au format Markdown :</translation>
     </message>
     <message>
-        <location filename="../../gui/form_article.ui" line="231"/>
+        <location filename="../../gui/form_article.ui" line="220"/>
         <source>I&apos;m sure that the content fit with editing rules. If not, I give some details in the comment area.</source>
-        <translation>Ceci n&apos;est pas une publicité ou un simple copié/collé d&apos;un CP etc.
+        <translation type="obsolete">Ceci n&apos;est pas une publicité ou un simple copié/collé d&apos;un CP etc.
 Si c&apos;est le cas, ne pas cocher et donner des précisions en commentaire.</translation>
     </message>
     <message>
@@ -521,6 +608,26 @@ Si c&apos;est le cas, ne pas cocher et donner des précisions en commentaire.</t
         <location filename="../../gui/form_rdp_news.ui" line="266"/>
         <source>Enter text in body editiing box and click on preview button to see your Markdown text rendered here.</source>
         <translation>Commencer à taper un corps de texte et cliquer sur le bouton &amp;quot;Prévisualiser&amp;quot; pour voir s&apos;afficher ici un rendu du Markdown.</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_article.ui" line="227"/>
+        <source>GenAI editing policy:</source>
+        <translation type="obsolete">Charte éditorIAle :</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_article.ui" line="250"/>
+        <source>Contributions must be original and not copied and pasted from a prompt, as described in the editing charter.</source>
+        <translation type="obsolete">La contribution doit émaner de votre originalité, et non découler d&apos;un copier / coller issu d&apos;un prompt, comme décrit dans la charte.</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_article.ui" line="253"/>
+        <source>I&apos;m aware of the guidelines regarding the use of GenAI for contributions.</source>
+        <translation type="obsolete">Je suis au fait des lignes directrices concernant l&apos;usage de l&apos;IA.</translation>
+    </message>
+    <message>
+        <location filename="../../gui/form_article.ui" line="263"/>
+        <source>See editing policy</source>
+        <translation type="obsolete">Voir la charte éditoriale</translation>
     </message>
 </context>
 <context>
@@ -561,32 +668,32 @@ Si c&apos;est le cas, ne pas cocher et donner des précisions en commentaire.</t
         <translation>Activer la notification push</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="391"/>
+        <location filename="../../gui/dlg_settings.ui" line="342"/>
         <source>Miscellaneous</source>
         <translation>Divers</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="412"/>
+        <location filename="../../gui/dlg_settings.ui" line="363"/>
         <source>Enable debug mode.</source>
         <translation>Activer le mode DEBUG.</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="421"/>
+        <location filename="../../gui/dlg_settings.ui" line="372"/>
         <source>Debug mode (degraded performances)</source>
         <translation>Mode DEBUG (performances dégradées)</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="465"/>
+        <location filename="../../gui/dlg_settings.ui" line="416"/>
         <source>Version used to save settings:</source>
         <translation>Version des paramètres :</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="478"/>
+        <location filename="../../gui/dlg_settings.ui" line="429"/>
         <source>Report an issue</source>
         <translation>Créer un ticket</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="495"/>
+        <location filename="../../gui/dlg_settings.ui" line="446"/>
         <source>Help</source>
         <translation>Aide en ligne</translation>
     </message>
@@ -613,10 +720,10 @@ Si c&apos;est le cas, ne pas cocher et donner des précisions en commentaire.</t
     <message>
         <location filename="../../gui/dlg_settings.ui" line="320"/>
         <source>Accept publication license globally</source>
-        <translation>Accepter une fois pour toutes la licence de publication</translation>
+        <translation type="obsolete">Accepter une fois pour toutes la licence de publication</translation>
     </message>
     <message>
-        <location filename="../../gui/dlg_settings.ui" line="511"/>
+        <location filename="../../gui/dlg_settings.ui" line="462"/>
         <source>Reset to factory defaults</source>
         <translation>Réinitialise les paramètres à leur valeur par défaut</translation>
     </message>
@@ -643,17 +750,17 @@ Si c&apos;est le cas, ne pas cocher et donner des précisions en commentaire.</t
     <message>
         <location filename="../../gui/dlg_settings.ui" line="330"/>
         <source>Open GeoRDP publication license</source>
-        <translation>Consulter la licence par défaut des GeoRDP</translation>
+        <translation type="obsolete">Consulter la licence par défaut des GeoRDP</translation>
     </message>
     <message>
         <location filename="../../gui/dlg_settings.ui" line="346"/>
         <source>Open editorial policy</source>
-        <translation>Consulter la charte éditoriale</translation>
+        <translation type="obsolete">Consulter la charte éditoriale</translation>
     </message>
     <message>
         <location filename="../../gui/dlg_settings.ui" line="359"/>
         <source>I have read and understood the editorial policy</source>
-        <translation>J&apos;ai lu et compris la charte éditoriale</translation>
+        <translation type="obsolete">J&apos;ai lu et compris la charte éditoriale</translation>
     </message>
 </context>
 <context>
