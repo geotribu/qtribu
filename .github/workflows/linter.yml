@@ -17,14 +17,13 @@ env:
   PROJECT_FOLDER: "qtribu"
   PYTHON_VERSION: 3.9
 
-permissions:
-  contents: read
-
 jobs:
   lint-py:
     name: Python 🐍
 
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
       - name: Get source code
