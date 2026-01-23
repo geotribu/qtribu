@@ -81,24 +81,11 @@ jobs:
 
       - name: Install Python requirements
         run: |
-          apt update && apt install -y python3-pip python3-venv pipx
-          # Create a virtual environment
-          cd /home/root/
-          pipx run qgis-venv-creator --venv-name ".venv"
-          # Activate the virtual environment
-          . .venv/bin/activate
-          # Install the requirements
+          python3 -m pip install -U pip setuptools wheel
           python3 -m pip install -U -r requirements/testing.txt
 
       - name: Run Unit tests
-        run: |
-          cd /home/root/
-          # Activate the virtual environment
-          . .venv/bin/activate
-          # Run the tests
-          # xvfb-run is used to run the tests in a virtual framebuffer
-          # This is necessary because QGIS requires a display to run
-          xvfb-run python3 -m pytest tests/qgis --junitxml=junit/test-results-qgis.xml --cov-report=xml:coverage-reports/coverage-qgis.xml
+        run: pytest tests/qgis --junitxml=junit/test-results-qgis.xml --cov-report=xml:coverage-reports/coverage-qgis.xml
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
