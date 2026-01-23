@@ -11,7 +11,7 @@
     },
     // Python
     "python.analysis.autoFormatStrings": false, // incompatible with PyQt5 translation engine
-    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.typeCheckingMode": "standard",
     "python.terminal.activateEnvInCurrentTerminal": true,
     "python.terminal.activateEnvironment": true,
     "[python]": {
