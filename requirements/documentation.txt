@@ -1,10 +1,11 @@
 # Documentation (for devs)
 # -----------------------
 
+keepachangelog>=2.0.0
 myst-parser[linkify]>=2
 sphinx-autobuild>=2024
 sphinx-autodoc-typehints>=1.25
-sphinx-copybutton>=0.5,<1
-sphinxext-opengraph>=0.7
-sphinx-rtd-theme>=1,<4
+sphinx-copybutton>=0.5
+sphinxext-opengraph[social-cards]>=0.13.0
+sphinx-rtd-theme>=1
 sphinx-sitemap>=2.5.1

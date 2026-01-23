@@ -2,14 +2,6 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
-<!--
-
-Unreleased
-
-## [{version_tag}](https://github.com/geotribu/qtribu/releases/tag/{version_tag}) - YYYY-DD-mm
-
--->
-
 ## 1.4.1 - 2026-01-16
 
 * fix(ui): restore contents browser action by @Guts in <https://github.com/geotribu/qtribu/pull/270>
