@@ -32,9 +32,9 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
-          python-version: ${{ env.PYTHON_VERSION }}
           cache: "pip"
           cache-dependency-path: "requirements/testing.txt"
+          python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Install Python requirements
         run: |
@@ -42,10 +42,14 @@ jobs:
           python -m pip install -U -r requirements/testing.txt
 
       - name: Run Unit tests
-        run: pytest tests/unit/
+        run: pytest -p no:qgis tests/unit/
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
+        with:
+          env_vars: PYTHON
+          flags: unittests
+          name: Code Coverage for unittests on Ubuntu.python-${{ env.PYTHON_VERSION }}]
 
   test-qgis:
     runs-on: ubuntu-latest
@@ -77,11 +81,24 @@ jobs:
 
       - name: Install Python requirements
         run: |
-          python3 -m pip install -U pip setuptools wheel
+          apt update && apt install -y python3-pip python3-venv pipx
+          # Create a virtual environment
+          cd /home/root/
+          pipx run qgis-venv-creator --venv-name ".venv"
+          # Activate the virtual environment
+          . .venv/bin/activate
+          # Install the requirements
           python3 -m pip install -U -r requirements/testing.txt
 
       - name: Run Unit tests
-        run: pytest tests/qgis/
+        run: |
+          cd /home/root/
+          # Activate the virtual environment
+          . .venv/bin/activate
+          # Run the tests
+          # xvfb-run is used to run the tests in a virtual framebuffer
+          # This is necessary because QGIS requires a display to run
+          xvfb-run python3 -m pytest tests/qgis --junitxml=junit/test-results-qgis.xml --cov-report=xml:coverage-reports/coverage-qgis.xml
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5

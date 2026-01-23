@@ -17,6 +17,9 @@ env:
   PROJECT_FOLDER: "qtribu"
   PYTHON_VERSION: 3.9
 
+permissions:
+  contents: read
+
 jobs:
   lint-py:
     name: Python 🐍

@@ -39,14 +39,16 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: "pip"
 
-      - name: Install system requirements
+      - name: Install translation requirements
         run: |
           sudo apt update
           sudo apt install qt5-qmake qttools5-dev-tools
           python3 -m pip install -U pyqt5-tools
 
       - name: Update translations
-        run: pylupdate5 -noobsolete -verbose ${{ env.PROJECT_FOLDER }}/resources/i18n/plugin_translation.pro
+        run: |
+          python3 scripts/generate_translation_profile.py
+          pylupdate5 -noobsolete -verbose ${{ env.PROJECT_FOLDER }}/resources/i18n/plugin_translation.pro
 
       - name: Compile translations
         run: lrelease ${{ env.PROJECT_FOLDER }}/resources/i18n/*.ts
@@ -73,9 +75,9 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v6
         with:
-          python-version: ${{ env.PYTHON_VERSION }}
           cache: "pip"
           cache-dependency-path: "requirements/packaging.txt"
+          python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Install project requirements
         run: |
@@ -87,9 +89,6 @@ jobs:
         with:
           name: translations-build
           path: ${{ env.PROJECT_FOLDER }}
-
-      - name: List files
-        run: tree ${{ env.PROJECT_FOLDER }}
 
       - name: Amend gitignore to include compiled translations and add it to tracked files
         run: |
@@ -123,6 +122,8 @@ jobs:
   release:
     name: "🚀 Release on tag"
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     needs:
       - translation
 
@@ -135,9 +136,9 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v6
         with:
-          python-version: ${{ env.PYTHON_VERSION }}
           cache: "pip"
           cache-dependency-path: "requirements/packaging.txt"
+          python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Install project requirements
         run: |
