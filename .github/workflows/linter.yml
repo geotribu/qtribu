@@ -22,6 +22,8 @@ jobs:
     name: Python 🐍
 
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
       - name: Get source code

@@ -32,9 +32,9 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
-          python-version: ${{ env.PYTHON_VERSION }}
           cache: "pip"
           cache-dependency-path: "requirements/testing.txt"
+          python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Install Python requirements
         run: |
@@ -42,10 +42,14 @@ jobs:
           python -m pip install -U -r requirements/testing.txt
 
       - name: Run Unit tests
-        run: pytest tests/unit/
+        run: pytest -p no:qgis tests/unit/
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
+        with:
+          env_vars: PYTHON
+          flags: unittests
+          name: Code Coverage for unittests on Ubuntu.python-${{ env.PYTHON_VERSION }}]
 
   test-qgis:
     runs-on: ubuntu-latest
@@ -81,7 +85,7 @@ jobs:
           python3 -m pip install -U -r requirements/testing.txt
 
       - name: Run Unit tests
-        run: pytest tests/qgis/
+        run: pytest tests/qgis --junitxml=junit/test-results-qgis.xml --cov-report=xml:coverage-reports/coverage-qgis.xml
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5

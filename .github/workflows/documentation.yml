@@ -1,5 +1,17 @@
 name: "📚 Documentation"
 
+# Global environment variables
+env:
+  CONDITION_IS_PUSH: ${{ github.event_name == 'push' && (startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main') }}
+  CONDITION_IS_WORKFLOW_RUN: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' }}
+  PROJECT_FOLDER: qtribu
+  PYTHON_VERSION: 3.12
+
+# Allow one concurrent deployment per branch/pr
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 on:
   push:
     branches:
@@ -24,19 +36,12 @@ on:
   workflow_dispatch:
 
   workflow_run:
+    branches:
+      - main
     workflows:
       - "📦 Packaging & 🚀 Release"
     types:
       - completed
-
-# Allow one concurrent deployment per branch/pr
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
-
-env:
-  PROJECT_FOLDER: "qtribu"
-  PYTHON_VERSION: 3.9
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -59,6 +64,14 @@ jobs:
           cache-dependency-path: "requirements/documentation.txt"
           python-version: ${{ env.PYTHON_VERSION }}
 
+      - name: Cache Sphinx cache
+        uses: actions/cache@v4
+        with:
+          path: docs/_build/cache
+          key: ${{ runner.os }}-sphinx-${{ hashFiles('docs/**/*') }}
+          restore-keys: |
+            ${{ runner.os }}-sphinx-
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip setuptools wheel
@@ -70,13 +83,13 @@ jobs:
       - name: Save build doc as artifact
         uses: actions/upload-artifact@v6
         with:
+          if-no-files-found: error
           name: documentation
           path: docs/_build/html/*
-          if-no-files-found: error
           retention-days: 30
 
       - name: Download artifact from build workflow
-        if: github.event_name == 'push' && (startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main')
+        if: ${{ env.CONDITION_IS_PUSH || env.CONDITION_IS_WORKFLOW_RUN }}
         uses: dawidd6/action-download-artifact@v12
         with:
           allow_forks: false
@@ -91,15 +104,15 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
-        if: github.event_name == 'push' && (startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main')
+        if: ${{ env.CONDITION_IS_PUSH || env.CONDITION_IS_WORKFLOW_RUN }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
-        if: github.event_name == 'push' && (startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main')
+        if: ${{ env.CONDITION_IS_PUSH || env.CONDITION_IS_WORKFLOW_RUN }}
         with:
           path: docs/_build/html/
 
       - name: Deploy to GitHub Pages
         id: deployment
-        if: github.event_name == 'push' && (startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main')
+        if: ${{ env.CONDITION_IS_PUSH || env.CONDITION_IS_WORKFLOW_RUN }}
         uses: actions/deploy-pages@v4
