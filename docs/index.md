@@ -16,6 +16,7 @@ caption: Manuel d'utilisation
 maxdepth: 1
 ---
 installation
+usage/with_qdt
 usage/feature_latest_article
 usage/splash_changer
 usage/settings

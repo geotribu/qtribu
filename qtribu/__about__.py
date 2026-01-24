@@ -17,7 +17,7 @@ from typing import Optional
 # ############################################################################
 # ########## Globals ###############
 # ##################################
-__all__ = [
+__all__: list[str] = [
     "__author__",
     "__copyright__",
     "__email__",
@@ -29,8 +29,8 @@ __all__ = [
 ]
 
 
-DIR_PLUGIN_ROOT = Path(__file__).parent
-PLG_METADATA_FILE = DIR_PLUGIN_ROOT.resolve() / "metadata.txt"
+DIR_PLUGIN_ROOT: Path = Path(__file__).parent
+PLG_METADATA_FILE: Path = DIR_PLUGIN_ROOT.resolve() / "metadata.txt"
 
 
 # ############################################################################
@@ -58,36 +58,38 @@ def plugin_metadata_as_dict() -> dict:
 # ##################################
 
 # store full metadata.txt as dict into a var
-__plugin_md__ = plugin_metadata_as_dict()
+__plugin_md__: dict = plugin_metadata_as_dict()
 
-__author__ = __plugin_md__.get("general").get("author")
-__copyright__ = f"2021 - {date.today().year}, {__author__}"
-__email__ = __plugin_md__.get("general").get("email")
-__icon_path__ = DIR_PLUGIN_ROOT.resolve() / __plugin_md__.get("general").get("icon")
-__keywords__ = [
+__author__: str = __plugin_md__.get("general").get("author")
+__copyright__: str = f"2021 - {date.today().year}, {__author__}"
+__email__: str = __plugin_md__.get("general").get("email")
+__icon_path__: Path = DIR_PLUGIN_ROOT.resolve() / __plugin_md__.get("general").get(
+    "icon"
+)
+__keywords__: list = [
     t.strip() for t in __plugin_md__.get("general").get("repository").split("tags")
 ]
-__license__ = "MIT"
+__license__: str = "MIT"
 __plugin_dependencies__: list[Optional[str]] = [
     dep.strip()
     for dep in __plugin_md__.get("general").get("plugin_dependencies", "").split(",")
     if dep.strip()
 ]
-__summary__ = "{}\n{}".format(
+__summary__: str = "{}\n{}".format(
     __plugin_md__.get("general").get("description"),
     __plugin_md__.get("general").get("about"),
 )
 
-__title__ = __plugin_md__.get("general").get("name")
-__title_clean__ = "".join(e for e in __title__ if e.isalnum())
+__title__: str = __plugin_md__.get("general").get("name")
+__title_clean__: str = "".join(e for e in __title__ if e.isalnum())
 
-__uri_homepage__ = __plugin_md__.get("general").get("homepage")
-__uri_repository__ = __plugin_md__.get("general").get("repository")
-__uri_tracker__ = __plugin_md__.get("general").get("tracker")
-__uri__ = __uri_repository__
+__uri_homepage__: str = __plugin_md__.get("general").get("homepage")
+__uri_repository__: str = __plugin_md__.get("general").get("repository")
+__uri_tracker__: str = __plugin_md__.get("general").get("tracker")
+__uri__: str = __uri_repository__
 
-__version__ = __plugin_md__.get("general").get("version")
-__version_info__ = tuple(
+__version__: str = __plugin_md__.get("general").get("version")
+__version_info__: tuple = tuple(
     [
         int(num) if num.isdigit() else num
         for num in __version__.replace("-", ".", 1).split(".")
