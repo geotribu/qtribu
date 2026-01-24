@@ -51,6 +51,9 @@ jobs:
   qt6-check:
     name: PyQt6 6️⃣
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
     container:
       image: registry.gitlab.com/oslandia/qgis/pyqgis-4-checker/pyqgis-qt-checker:latest
       volumes:

@@ -24,6 +24,8 @@ env:
 jobs:
   tests-unit:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
       - name: Get source code
@@ -53,6 +55,8 @@ jobs:
 
   test-qgis:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     container:
       image: qgis/qgis:release-3_28
