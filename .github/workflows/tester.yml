@@ -44,14 +44,21 @@ jobs:
           python -m pip install -U -r requirements/testing.txt
 
       - name: Run Unit tests
-        run: pytest -p no:qgis tests/unit/
+        run: pytest -p no:qgis tests/unit/ -o junit_family=legacy --junitxml=junit.xml
+
+      - name: Upload test results to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/test-results-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
         with:
-          env_vars: PYTHON
+          env_vars: PYTHON_VERSION
           flags: unittests
           name: Code Coverage for unittests on Ubuntu.python-${{ env.PYTHON_VERSION }}]
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   test-qgis:
     runs-on: ubuntu-latest
@@ -89,7 +96,12 @@ jobs:
           python3 -m pip install -U -r requirements/testing.txt
 
       - name: Run Unit tests
-        run: pytest tests/qgis --junitxml=junit/test-results-qgis.xml --cov-report=xml:coverage-reports/coverage-qgis.xml
+        run: pytest tests/qgis -o junit_family=legacy --junitxml=junit.xml
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
+        with:
+          env_vars: PYTHON_VERSION
+          flags: qgis-tests
+          name: Code Coverage for QGIS tests
+          token: ${{ secrets.CODECOV_TOKEN }}
