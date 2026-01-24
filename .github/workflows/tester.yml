@@ -95,7 +95,7 @@ jobs:
 
       - name: Install Python requirements
         run: |
-          apt update && apt install -y python3-pip python3-venv pipx
+          apt update && apt install -y curl python3-pip python3-venv pipx
           # Create a virtual environment
           cd /home/root/
           pipx run qgis-venv-creator --venv-name ".venv"
