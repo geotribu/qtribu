@@ -66,7 +66,7 @@ jobs:
       contents: read
 
     container:
-      image: qgis/qgis:release-3_28
+      image: qgis/qgis:3.40
       env:
         CI: true
         DISPLAY: ":1"
@@ -75,7 +75,13 @@ jobs:
         PYTHONPATH: "/usr/share/qgis/python/plugins:/usr/share/qgis/python:."
         QT_QPA_PLATFORM: "offscreen"
         WITH_PYTHON_PEP: false
-      options: -v /tmp/.X11-unix:/tmp/.X11-unix -v ${{ github.workspace }}:/tests_directory
+      # be careful, things have changed since QGIS 3.40. So if you are using this setup
+      #  with a QGIS version older than 3.40, you may need to change the way you set up the container
+      volumes:
+        # Mount the X11 socket to allow GUI applications to run
+        - /tmp/.X11-unix:/tmp/.X11-unix
+        # Mount the workspace directory to the container
+        - ${{ github.workspace }}:/home/root/
 
     steps:
       - name: Get source code
@@ -87,16 +93,26 @@ jobs:
       - name: Print Python version
         run: python3 --version
 
-      - name: Setup plugin
-        run: qgis_setup.sh qtribu
-
       - name: Install Python requirements
         run: |
-          python3 -m pip install -U pip setuptools wheel
+          apt update && apt install -y curl python3-pip python3-venv pipx
+          # Create a virtual environment
+          cd /home/root/
+          pipx run qgis-venv-creator --venv-name ".venv"
+          # Activate the virtual environment
+          . .venv/bin/activate
+          # Install the requirements
           python3 -m pip install -U -r requirements/testing.txt
 
       - name: Run Unit tests
-        run: pytest tests/qgis -o junit_family=legacy --junitxml=junit.xml
+        run: |
+          cd /home/root/
+          # Activate the virtual environment
+          . .venv/bin/activate
+          # Run the tests
+          # xvfb-run is used to run the tests in a virtual framebuffer
+          # This is necessary because QGIS requires a display to run
+          xvfb-run python3 -m pytest tests/qgis -o junit_family=legacy --junitxml=junit.xml
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
