@@ -85,7 +85,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         """Called to permanently apply the settings shown in the options page (e.g. \
         save them to QgsSettings objects). This is usually called when the options \
         dialog is accepted."""
-        settings = self.plg_settings.get_plg_settings()
+        settings: PlgSettingsStructure = self.plg_settings.get_plg_settings()
 
         # features
         settings.browser = self.opt_browser_group.checkedId()
