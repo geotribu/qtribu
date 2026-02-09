@@ -1,12 +1,11 @@
 #! python3  # noqa: E265
 
-"""
-Plugin settings.
-"""
+"""Plugin settings."""
 
 # standard
 from dataclasses import asdict, dataclass, fields
 from pathlib import Path
+from typing import Any
 
 # PyQGIS
 from qgis.core import Qgis, QgsSettings
@@ -15,10 +14,36 @@ from qgis.core import Qgis, QgsSettings
 import qtribu.toolbelt.log_handler as log_hdlr
 from qtribu.__about__ import __title__, __version__
 from qtribu.toolbelt.application_folder import get_app_dir
+from qtribu.toolbelt.env_var_parser import EnvVarParser
+
+# -- Globals --
+PREFIX_ENV_VARIABLE = "QGIS_PLG_QTRIBU_"
 
 # ############################################################################
 # ########## Classes ###############
 # ##################################
+
+
+@dataclass
+class PlgEnvVariableSettings:
+    """Plugin settings from environnement variable"""
+
+    def env_variable_used(self, attribute: str, default_from_name: bool = True) -> str:
+        """Get environnement variable used for environnement variable settings.
+
+        :param attribute: attribute to check
+        :type attribute: str
+        :param default_from_name: define default environnement value from attribute name
+            PREFIX_ENV_VARIABLE_<upper case attribute>
+        :type default_from_name: bool
+        :return: environnement variable used
+        :rtype: str
+        """
+        settings_env_variable: dict[str, Any] = asdict(self)
+        env_variable = settings_env_variable.get(attribute, "")
+        if not env_variable and default_from_name:
+            env_variable: str = f"{PREFIX_ENV_VARIABLE}{attribute}".upper()
+        return env_variable
 
 
 @dataclass
@@ -90,6 +115,7 @@ class PlgOptionsManager:
         """
         # get dataclass fields definition
         settings_fields = fields(PlgSettingsStructure)
+        env_variable_settings = PlgEnvVariableSettings()
 
         # retrieve settings from QGIS/Qt
         settings = QgsSettings()
@@ -98,9 +124,17 @@ class PlgOptionsManager:
         # map settings values to preferences object
         li_settings_values = []
         for i in settings_fields:
-            li_settings_values.append(
-                settings.value(key=i.name, defaultValue=i.default, type=i.type)
-            )
+            try:
+                value = settings.value(key=i.name, defaultValue=i.default, type=i.type)
+                # If environnement variable used, get value from environnement variable
+                env_variable = env_variable_settings.env_variable_used(i.name)
+                if env_variable:
+                    value = EnvVarParser.get_env_var(env_variable, value)
+                li_settings_values.append(value)
+            except TypeError:
+                li_settings_values.append(
+                    settings.value(key=i.name, defaultValue=i.default)
+                )
 
         # instanciate new settings object
         options = PlgSettingsStructure(*li_settings_values)
