@@ -291,7 +291,7 @@ class RdpNewsForm(QDialog):
             f"&in_author_mail={self.wdg_author.lne_email.text()}"
             f"&in_author_linkedin={self.wdg_author.lne_linkedin_account.text()}"
             f"&in_author_mastodon={self.wdg_author.lne_mastodon_account.text()}"
-            f"&in_author_twitter={self.wdg_author.lne_twitter_account.text()}"
+            f"&in_author_bluesky={self.wdg_author.lne_bluesky_account.text()}"
             f"&in_author_license=true"
             f"&cb_author_content_relationship={self.wdg_editing_compliance.chb_transparency.isChecked()}"
             f"&dr_news_category={self.cbb_category.currentText()}"
