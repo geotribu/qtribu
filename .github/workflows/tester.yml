@@ -53,7 +53,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         with:
           env_vars: PYTHON_VERSION
           flags: unittests
@@ -115,7 +115,7 @@ jobs:
           xvfb-run python3 -m pytest tests/qgis -o junit_family=legacy --junitxml=junit.xml
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         with:
           env_vars: PYTHON_VERSION
           flags: qgis-tests
