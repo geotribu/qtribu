@@ -103,7 +103,7 @@ jobs:
           workflow: packager.yml
 
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
         if: ${{ env.CONDITION_IS_PUSH || env.CONDITION_IS_WORKFLOW_RUN }}
 
       - name: Upload artifact
