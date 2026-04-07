@@ -77,7 +77,7 @@ class WebViewer:
 
             self.log(
                 message=self.tr("Last article from Geotribu loaded and displayed."),
-                log_level=3,
+                log_level=Qgis.MessageLevel.Success,
                 push=False,
             )
         except Exception as err:

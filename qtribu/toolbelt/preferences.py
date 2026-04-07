@@ -99,7 +99,8 @@ class PlgSettingsStructure:
             return "system"
         else:
             log_hdlr.PlgLogger.log(
-                message=f"Invalid browser code: {self.browser}", log_level=1
+                message=f"Invalid browser code: {self.browser}",
+                log_level=Qgis.MessageLevel.Warning,
             )
             return "qgis"
 
@@ -203,13 +204,15 @@ class PlgOptionsManager:
             settings.setValue(key, value)
             out_value = True
             log_hdlr.PlgLogger.log(
-                f"Setting `{key}` saved with value `{value}`", log_level=4
+                f"Setting `{key}` saved with value `{value}`",
+                log_level=Qgis.MessageLevel.NoLevel,
             )
         except Exception as err:
             log_hdlr.PlgLogger.log(
                 message="Error occurred trying to set settings: {}.Trace: {}".format(
                     key, err
-                )
+                ),
+                log_level=Qgis.MessageLevel.Critical,
             )
             out_value = False
 

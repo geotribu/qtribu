@@ -137,13 +137,13 @@ class NetworkRequestsManager:
                 self.log(
                     message=self.ntwk_requester.errorMessage(),
                     log_level=Qgis.MessageLevel.Critical,
-                    push=1,
+                    push=True,
                 )
                 raise ConnectionError(self.ntwk_requester.errorMessage())
 
             self.log(
                 message=f"Request to {url} succeeded.",
-                log_level=3,
+                log_level=Qgis.MessageLevel.Success,
                 push=False,
             )
 
@@ -179,7 +179,8 @@ class NetworkRequestsManager:
             Path(local_path).parent.mkdir(parents=True, exist_ok=True)
 
         self.log(
-            message=f"Downloading file from {remote_url} to {local_path}", log_level=4
+            message=f"Downloading file from {remote_url} to {local_path}",
+            log_level=Qgis.MessageLevel.NoLevel,
         )
         # download it
         loop = QEventLoop()
@@ -191,6 +192,7 @@ class NetworkRequestsManager:
         loop.exec()
 
         self.log(
-            message=f"Download of {remote_url} to {local_path} succeedeed", log_level=3
+            message=f"Download of {remote_url} to {local_path} succeedeed",
+            log_level=Qgis.MessageLevel.Success,
         )
         return local_path

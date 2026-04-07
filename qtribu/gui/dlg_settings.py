@@ -9,7 +9,7 @@ from functools import partial
 from pathlib import Path
 
 # PyQGIS
-from qgis.core import QgsApplication
+from qgis.core import Qgis, QgsApplication
 from qgis.gui import QgsOptionsPageWidget, QgsOptionsWidgetFactory
 from qgis.PyQt import uic
 from qgis.PyQt.QtGui import QIcon
@@ -107,7 +107,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         if __debug__:
             self.log(
                 message="DEBUG - Settings successfully saved.",
-                log_level=4,
+                log_level=Qgis.MessageLevel.NoLevel,
             )
 
     def load_settings(self) -> None:
@@ -136,7 +136,7 @@ class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
         # inform end user
         self.log(
             message=self.tr("Read history has been reset."),
-            log_level=3,
+            log_level=Qgis.MessageLevel.Success,
             duration=2,
             push=True,
         )

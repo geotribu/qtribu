@@ -194,7 +194,10 @@ class ArticleForm(QDialog):
             "\n---\n\n" + self.tr("Prefilled with ") + f"{__title__} {__version__}"
             f"&title=[Proposition] {self.lne_title.text()} - {__title__} {__version__}"
         )
-        self.log(message=f"Opening issue form: {completed_url}", log_level=4)
+        self.log(
+            message=f"Opening issue form: {completed_url}",
+            log_level=Qgis.MessageLevel.NoLevel,
+        )
         url_opened: bool = open_url_in_browser(url=completed_url)
         if url_opened:
             self.log(
