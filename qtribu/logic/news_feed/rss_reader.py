@@ -1,16 +1,13 @@
 #! python3  # noqa: E265
 
 
-"""
-Minimalist RSS reader.
-"""
+"""Minimalist RSS reader."""
 
 # ############################################################################
 # ########## Imports ###############
 # ##################################
 
 # Standard library
-import logging
 import xml.etree.ElementTree as ET
 from email.utils import parsedate
 from pathlib import Path
@@ -28,12 +25,7 @@ from qtribu.logic.news_feed.mdl_rss_item import RssItem
 from qtribu.toolbelt import PlgLogger, PlgOptionsManager
 from qtribu.toolbelt.file_stats import is_file_older_than
 from qtribu.toolbelt.network_manager import NetworkRequestsManager
-
-# ############################################################################
-# ########## Globals ###############
-# ##################################
-
-logger = logging.getLogger(__name__)
+from qtribu.toolbelt.preferences import PlgSettingsStructure
 
 # ############################################################################
 # ########## Classes ###############
@@ -54,11 +46,18 @@ class RssMiniReader:
         self,
         action_read: Optional[QAction] = None,
         on_read_button: Optional[Callable] = None,
-    ):
-        """Class initialization."""
+    ) -> None:
+        """Initializes the RSS reader.
+
+        :param action_read: QAction to change color if a new item is available, defaults to None
+        :type action_read: Optional[QAction], optional
+        :param on_read_button: function to call when the read button is clicked, defaults to None
+        :type on_read_button: Optional[Callable], optional
+        """
+
         self.log = PlgLogger().log
         self.ntwk_manager = NetworkRequestsManager()
-        self.plg_settings = PlgOptionsManager.get_plg_settings()
+        self.plg_settings: PlgSettingsStructure = PlgOptionsManager.get_plg_settings()
         self.local_feed_filepath: Path = self.plg_settings.local_app_folder.joinpath(
             "rss.xml"
         )
@@ -66,7 +65,7 @@ class RssMiniReader:
         self.on_read_button = on_read_button
 
     def process(self) -> None:
-        """Download, parse and read RSS feed than store items as attribute."""
+        """Download, parse and read RSS feed then store items as attribute."""
         # download remote RSS feed to cache folder
         self.download_feed()
         if not self.local_feed_filepath.exists():
@@ -77,7 +76,7 @@ class RssMiniReader:
                         self.local_feed_filepath
                     )
                 ),
-                log_level=Qgis.MessageLevel.Critical,
+                log_level=Qgis.MessageLevel.Warning,
             )
             return
 
@@ -91,9 +90,10 @@ class RssMiniReader:
                 log_level=Qgis.MessageLevel.NoLevel,
             )
             return
+
         # notify
         if isinstance(self.latest_item, RssItem):
-            latest_item = self.latest_item
+            latest_item: RssItem = self.latest_item
             self.log(
                 message="{} {}".format(
                     self.tr("New content published:"),
@@ -150,8 +150,8 @@ class RssMiniReader:
         :rtype: list[RssItem]
         """
         feed_items: list[RssItem] = []
-        tree = ET.parse(self.local_feed_filepath)
-        items = tree.findall("channel/item")
+        tree: ET.ElementTree[ET.Element[str]] = ET.parse(self.local_feed_filepath)
+        items: list[ET.Element[str]] = tree.findall("channel/item")
         for item in items:
             try:
                 # filter on included pattern
@@ -160,7 +160,8 @@ class RssMiniReader:
                         message="Item ignored because unmatches the include pattern: {}".format(
                             item.find("title").text
                         ),
-                        log_level=Qgis.MessageLevel.NoLevel,
+                        log_level=Qgis.MessageLevel.Warning,
+                        push=False,
                     )
                     continue
 
@@ -178,8 +179,7 @@ class RssMiniReader:
                     title=item.find("title").text,
                     url=item.find("link").text,
                 )
-                if item.find("enclosure") is not None:
-                    item_enclosure = item.find("enclosure")
+                if item_enclosure := item.find("enclosure"):
                     feed_item_obj.image_length = item_enclosure.attrib.get("length")
                     feed_item_obj.image_type = item_enclosure.attrib.get("type")
                     feed_item_obj.image_url = item_enclosure.attrib.get("url")
@@ -191,7 +191,7 @@ class RssMiniReader:
                 if hasattr(items, "index"):
                     item_idx = items.index(item)
 
-                err_msg = f"Feed item {item_idx} triggers an error. Trace: {err}"
+                err_msg: str = f"Feed item {item_idx} triggers an error. Trace: {err}"
                 self.log(message=err_msg, log_level=Qgis.MessageLevel.Critical)
 
         # store feed items as attribute and return it
@@ -206,30 +206,14 @@ class RssMiniReader:
         :rtype: RssItem
         """
         if not self.FEED_ITEMS:
-            logger.warning(
-                "Feed has not been loaded, so it's impossible to "
-                "return the latest item."
+            self.log(
+                message="Feed has not been loaded, so it's impossible to "
+                "return the latest item.",
+                log_level=Qgis.MessageLevel.Warning,
             )
             return None
 
         return self.FEED_ITEMS[0]
-
-    def latest_items(self, count: int = 36) -> list[RssItem]:
-        """Returns the latest feed items.
-        :param count: number of items to fetch
-        :type count: int
-        :return: latest feed items
-        :rtype: List[RssItem]
-        """
-        if count <= 0:
-            raise ValueError("Number of RSS items to get must be > 0")
-        if not self.FEED_ITEMS:
-            logger.warning(
-                "Feed has not been loaded, so it's impossible to "
-                "return the latest item."
-            )
-            return []
-        return self.FEED_ITEMS[:count]
 
     @property
     def has_new_content(self) -> bool:
@@ -239,7 +223,7 @@ class RssMiniReader:
         :return: True is a newer item has been published.
         :rtype: bool
         """
-        settings = PlgOptionsManager.get_plg_settings()
+        settings: PlgSettingsStructure = PlgOptionsManager.get_plg_settings()
         if (
             isinstance(self.latest_item, RssItem)
             and self.latest_item.guid != settings.latest_content_guid
@@ -264,7 +248,7 @@ class RssMiniReader:
         # news-feed\items\httpsfeedqgisorg\entries\items\65\link=https://www.osgeo.org/foundation-news/eu-cyber-resilience-act/
         # news-feed\items\httpsfeedqgisorg\entries\items\65\sticky=false
 
-        plg_settings = PlgOptionsManager.get_plg_settings()
+        plg_settings: PlgSettingsStructure = PlgOptionsManager.get_plg_settings()
         if not plg_settings.integration_qgis_news_feed:
             self.log(
                 message="The QGIS news feed integration is disabled. Abort!",
