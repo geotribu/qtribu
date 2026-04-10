@@ -2,6 +2,21 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## 1.4.4 - 2026-04-10
+
+### Features and enhancements 🎉
+
+* refacto(rss-reader): remove standard Python logger by @Guts in <https://github.com/geotribu/qtribu/pull/296>
+* improve(logger): only use enum for QgsMessageLog log level by @Guts in <https://github.com/geotribu/qtribu/pull/297>
+
+### Tooling 🔧
+
+* update(ci): use official pyqgis4-checker image by @Guts in <https://github.com/geotribu/qtribu/pull/294>
+
+### Other Changes
+
+* update(packaging): remove supportsQt6 flag by @Guts in <https://github.com/geotribu/qtribu/pull/298>
+
 ## 1.4.3 - 2026-02-09
 
 * Feature: expose settings as environement variables by @Guts in <https://github.com/geotribu/qtribu/pull/282>
