@@ -52,7 +52,7 @@ class GeotribuPlugin:
         self.log(
             message=f"Translation: {self.locale}, {locale_path} "
             f"(exists={locale_path.exists()})",
-            log_level=4,
+            log_level=Qgis.MessageLevel.NoLevel,
         )
         if locale_path.exists():
             self.translator = QTranslator()

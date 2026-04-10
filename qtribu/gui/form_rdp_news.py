@@ -164,7 +164,8 @@ class RdpNewsForm(QDialog):
         icon_local_path = selected_icon.local_path()
         if not icon_local_path.is_file():
             self.log(
-                message=f"Icon doesn't exist locally: {icon_local_path}", log_level=4
+                message=f"Icon doesn't exist locally: {icon_local_path}",
+                log_level=Qgis.MessageLevel.NoLevel,
             )
             icon_local_path.parent.mkdir(parents=True, exist_ok=True)
             self.qntwk.download_file_to(
@@ -302,7 +303,10 @@ class RdpNewsForm(QDialog):
             "\n---\n\n" + self.tr("Prefilled with ") + f"{__title__} {__version__}"
             f"&title=[GeoRDP] {self.lne_title.text()} - {__title__} {__version__}"
         )
-        self.log(message=f"Opening issue form: {completed_url}", log_level=4)
+        self.log(
+            message=f"Opening issue form: {completed_url}",
+            log_level=Qgis.MessageLevel.NoLevel,
+        )
         url_opened: bool = open_url_in_browser(url=completed_url)
         if url_opened:
             self.log(

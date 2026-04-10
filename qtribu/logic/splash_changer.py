@@ -99,7 +99,7 @@ class SplashChanger:
                 message=self.tr(
                     "Splash screen: QGIS default restored. Please, restart."
                 ),
-                log_level=3,
+                log_level=Qgis.MessageLevel.Success,
                 push=True,
             )
             PlgOptionsManager.set_value_from_key(
@@ -114,7 +114,7 @@ class SplashChanger:
             )
             self.log(
                 message=self.tr("Splash screen: custom applied. Please, restart."),
-                log_level=3,
+                log_level=Qgis.MessageLevel.Success,
                 push=True,
             )
             return True
