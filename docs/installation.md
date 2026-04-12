@@ -4,7 +4,7 @@
 
 Certaines fonctionnalités du plugin reposent sur des dépendances logicielles tierces non incluses dans le packaging de QGIS sur certaines plateformes :
 
-- QGISChat: (Py)QtMutimedia, (Py)QtWebEngine, (Py)QtWebSockets,
+- Navigateur web intégré : (Py)QtWebEngine
 
 ### Linux
 
