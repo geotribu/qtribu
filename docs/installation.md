@@ -8,13 +8,19 @@ Certaines fonctionnalités du plugin reposent sur des dépendances logicielles t
 
 ### Linux
 
-> Par exemple sur Ubuntu 22.04. Adapter à votre distribution.
+> Par exemple sur Ubuntu 24.04. Adapter à votre distribution.
 
-Ouvrir un terminal et exécuter la commande suivante :
+- Avec QGIS 3 (Qt 5), ouvrir un terminal et exécuter la commande suivante :
 
-```sh
-sudo apt install python3-pyqt5.qtmultimedia python3-pyqt5.qtwebengine python3-pyqt5.qtwebsockets
-```
+    ```sh
+    sudo apt install python3-pyqt5.qtwebengine
+    ```
+
+- Avec QGIS 4 (Qt 6), ouvrir un terminal et exécuter la commande suivante :
+
+    ```sh
+    sudo apt install python3-pyqt6.qtwebengine
+    ```
 
 ----
 
