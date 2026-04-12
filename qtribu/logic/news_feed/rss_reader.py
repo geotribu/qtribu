@@ -173,9 +173,6 @@ class RssMiniReader:
                     or None,
                     date_pub=parsedate(item.find("pubDate").text),
                     guid=item.find("guid").text,
-                    image_length=item.find("enclosure").attrib.get("length"),
-                    image_type=item.find("enclosure").attrib.get("type"),
-                    image_url=item.find("enclosure").attrib.get("url"),
                     title=item.find("title").text,
                     url=item.find("link").text,
                 )
