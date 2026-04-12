@@ -41,7 +41,7 @@ def open_url_in_webviewer(url: str, window_title: str) -> None:
             message="The embedded webviewer is not avaible, probably because "
             "of unfilled system dependencies (QtWebEngine). Using default system "
             "browser as fallback.",
-            log_level=Qgis.MessageLevel.Critical,
+            log_level=Qgis.MessageLevel.Warning,
         )
         open_url_in_browser(url=url)
         return
