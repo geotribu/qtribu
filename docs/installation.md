@@ -22,6 +22,12 @@ Certaines fonctionnalités du plugin reposent sur des dépendances logicielles t
     sudo apt install python3-pyqt6.qtwebengine
     ```
 
+### Windows et macOS
+
+Les installeurs de QGIS 3 (Qt 5) incluent déjà les dépendances nécessaires pour le navigateur web intégré.
+
+En revanche, les installeurs de QGIS 4 (Qt 6) ne les incluent pas à date de la 4.0.1. En effet, le paquet `python3-pyqtwebengine` disponible dans l'OSGEo4W est toujours celui basé sur PyQt5 (voir [le sujet sur le plugin qgis2threjs](https://github.com/minorua/Qgis2threejs/wiki/How-to-use-Qt-WebEngine-view-with-Qgis2threejs)). Le navigateur système est utilisé par défaut de façon transparente.
+
 ----
 
 ## Version stable (recommandée)
