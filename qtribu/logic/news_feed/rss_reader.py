@@ -176,10 +176,19 @@ class RssMiniReader:
                     title=item.find("title").text,
                     url=item.find("link").text,
                 )
-                if item_enclosure := item.find("enclosure"):
+                if (item_enclosure := item.find("enclosure")) is not None:
                     feed_item_obj.image_length = item_enclosure.attrib.get("length")
                     feed_item_obj.image_type = item_enclosure.attrib.get("type")
                     feed_item_obj.image_url = item_enclosure.attrib.get("url")
+                else:
+                    self.log(
+                        message=self.tr(
+                            "DEBUG: No illustration (enclosure) found of this feed item: {}.".format(
+                                item.find("title").text
+                            )
+                        ),
+                        log_level=Qgis.MessageLevel.NoLevel,
+                    )
 
                 # add items to the feed
                 feed_items.append(feed_item_obj)
@@ -257,7 +266,7 @@ class RssMiniReader:
 
         # get latest QGIS item id
         latest_geotribu_article = self.latest_item
-        item_id = 99
+        item_id = 999
 
         qsettings.setValue(
             key=f"news-feed/items/httpsfeedqgisorg/entries/items/{item_id}/title",
@@ -281,6 +290,11 @@ class RssMiniReader:
         qsettings.setValue(
             key=f"news-feed/items/httpsfeedqgisorg/entries/items/{item_id}/link",
             value=latest_geotribu_article.url,
+            section=QgsSettings.Section.App,
+        )
+        qsettings.setValue(
+            key=f"news-feed/items/httpsfeedqgisorg/entries/items/{item_id}/sticky",
+            value=True,
             section=QgsSettings.Section.App,
         )
 
