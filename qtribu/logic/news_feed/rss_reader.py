@@ -155,7 +155,7 @@ class RssMiniReader:
         for item in items:
             try:
                 # filter on included pattern
-                if not any([i in item.find("link").text for i in self.PATTERN_INCLUDE]):
+                if not any(i in item.find("link").text for i in self.PATTERN_INCLUDE):
                     self.log(
                         message="Item ignored because unmatches the include pattern: {}".format(
                             item.find("title").text
