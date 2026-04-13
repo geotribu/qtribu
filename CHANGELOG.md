@@ -2,19 +2,17 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
-## 1.4.4 - 2026-04-10
+## 1.4.5 - 2026-04-13
 
-### Features and enhancements 🎉
+* fix(rss-reader): remove duplicate rss item enclosure retrieval by @Guts in <https://github.com/geotribu/qtribu/pull/300>
+* update(docs): add install instructions for qgis4 and remove qchat deps by @Guts in <https://github.com/geotribu/qtribu/pull/299>
+* update(packaging): remove QChat version to allow automatic latest version (based on QGIS version) installation by @Guts in <https://github.com/geotribu/qtribu/pull/301>
+
+## 1.4.4 - 2026-04-10
 
 * refacto(rss-reader): remove standard Python logger by @Guts in <https://github.com/geotribu/qtribu/pull/296>
 * improve(logger): only use enum for QgsMessageLog log level by @Guts in <https://github.com/geotribu/qtribu/pull/297>
-
-### Tooling 🔧
-
 * update(ci): use official pyqgis4-checker image by @Guts in <https://github.com/geotribu/qtribu/pull/294>
-
-### Other Changes
-
 * update(packaging): remove supportsQt6 flag by @Guts in <https://github.com/geotribu/qtribu/pull/298>
 
 ## 1.4.3 - 2026-02-09
