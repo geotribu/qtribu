@@ -20,7 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 ## 1.4.3 - 2026-02-09
 
 * Feature: expose settings as environement variables by @Guts in <https://github.com/geotribu/qtribu/pull/282>
-* fix(forms): replace latest refs to Twitter by Bluseksy by @Guts in <https://github.com/geotribu/qtribu/pull/286>
+* fix(forms): replace latest refs to Twitter by Bluesky by @Guts in <https://github.com/geotribu/qtribu/pull/286>
 
 ## 1.4.2 - 2026-01-24
 

@@ -4,17 +4,29 @@
 
 Certaines fonctionnalités du plugin reposent sur des dépendances logicielles tierces non incluses dans le packaging de QGIS sur certaines plateformes :
 
-- QGISChat: (Py)QtMutimedia, (Py)QtWebEngine, (Py)QtWebSockets,
+- Navigateur web intégré : (Py)QtWebEngine
 
 ### Linux
 
-> Par exemple sur Ubuntu 22.04. Adapter à votre distribution.
+> Par exemple sur Ubuntu 24.04. Adapter à votre distribution.
 
-Ouvrir un terminal et exécuter la commande suivante :
+- Avec QGIS 3 (Qt 5), ouvrir un terminal et exécuter la commande suivante :
 
-```sh
-sudo apt install python3-pyqt5.qtmultimedia python3-pyqt5.qtwebengine python3-pyqt5.qtwebsockets
-```
+    ```sh
+    sudo apt install python3-pyqt5.qtwebengine
+    ```
+
+- Avec QGIS 4 (Qt 6), ouvrir un terminal et exécuter la commande suivante :
+
+    ```sh
+    sudo apt install python3-pyqt6.qtwebengine
+    ```
+
+### Windows et macOS
+
+Les installeurs de QGIS 3 (Qt 5) incluent déjà les dépendances nécessaires pour le navigateur web intégré.
+
+En revanche, les installeurs de QGIS 4 (Qt 6) ne les incluent pas à date de la 4.0.1. En effet, le paquet `python3-pyqtwebengine` disponible dans l'OSGEo4W est toujours celui basé sur PyQt5 (voir [le sujet sur le plugin qgis2threjs](https://github.com/minorua/Qgis2threejs/wiki/How-to-use-Qt-WebEngine-view-with-Qgis2threejs)). Le navigateur système est utilisé par défaut de façon transparente.
 
 ----
 
