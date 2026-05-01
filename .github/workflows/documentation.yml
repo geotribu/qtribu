@@ -107,7 +107,7 @@ jobs:
         if: ${{ env.CONDITION_IS_PUSH || env.CONDITION_IS_WORKFLOW_RUN }}
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5
         if: ${{ env.CONDITION_IS_PUSH || env.CONDITION_IS_WORKFLOW_RUN }}
         with:
           path: docs/_build/html/
