@@ -5,6 +5,8 @@ Plugin settings form integrated into QGIS 'Options' menu.
 """
 
 # standard
+from __future__ import annotations
+
 from functools import partial
 from pathlib import Path
 
@@ -13,7 +15,7 @@ from qgis.core import Qgis, QgsApplication
 from qgis.gui import QgsOptionsPageWidget, QgsOptionsWidgetFactory
 from qgis.PyQt import uic
 from qgis.PyQt.QtGui import QIcon
-from qgis.PyQt.QtWidgets import QButtonGroup
+from qgis.PyQt.QtWidgets import QButtonGroup, QWidget
 
 # project
 from qtribu.__about__ import (
@@ -28,29 +30,26 @@ from qtribu.toolbelt.commons import open_url_in_browser
 from qtribu.toolbelt.preferences import PlgSettingsStructure
 
 # ############################################################################
-# ########## Globals ###############
-# ##################################
-
-FORM_CLASS, _ = uic.loadUiType(Path(__file__).parent / f"{Path(__file__).stem}.ui")
-
-# ############################################################################
 # ########## Classes ###############
 # ##################################
 
 
-class ConfigOptionsPage(FORM_CLASS, QgsOptionsPageWidget):
+class ConfigOptionsPage(QgsOptionsPageWidget):
     """Settings form embedded into QGIS 'options' menu."""
 
-    def __init__(self, parent=None):
+    def __init__(self, parent: QWidget | None = None):
         """Constructor."""
         super().__init__(parent)
         self.log = PlgLogger().log
         self.plg_settings = PlgOptionsManager()
 
         # load UI and set objectName
-        self.setupUi(self)
+        uic.loadUi(Path(__file__).parent / f"{Path(__file__).stem}.ui", self)
         self.setObjectName(f"mOptionsPage{__title__}")
+        self.initGui()
 
+    def initGui(self) -> None:  # noqa: N802
+        """Set up UI elements."""
         # header
         self.lbl_title.setText(f"{__title__} - Version {__version__}")
 
