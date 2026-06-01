@@ -44,8 +44,7 @@ jobs:
       - name: Install translation requirements
         run: |
           sudo apt update
-          sudo apt install qt5-qmake qttools5-dev-tools
-          python3 -m pip install -U pyqt5-tools
+          sudo apt install pyqt5-dev-tools qt5-qmake qttools5-dev-tools
 
       - name: Update translations
         run: |
