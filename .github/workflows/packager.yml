@@ -118,6 +118,7 @@ jobs:
           name: ${{ env.PROJECT_FOLDER }}-latest
           path: |
             plugins.xml
+            plugins.xsl
             ${{ env.PROJECT_FOLDER }}.*.zip
           if-no-files-found: error
 
