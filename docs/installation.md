@@ -71,7 +71,7 @@ Selon votre configuration, redémarrer QGIS peut être nécessaire, le gestionna
 
 Si vous vous considérez comme un *early adopter*, un testeur ou que vous ne pouvez attendre qu'une version soit publiée (même dans le canal expérimental du dépôt officiel de QGIS !), vous pouvez utiliser la version automatiquement packagée pour chaque commit poussé sur la branche principale.
 
-Pour cela, il faut ajouter cette URL dans [les dépôts référencés du gestionnaire d'extensions de QGIS](https://docs.qgis.org/3.34/fr/docs/user_manual/plugins/plugins.html#the-settings-tab) :
+Pour cela, il faut ajouter [cette URL](../plugins.xml) dans [les dépôts référencés du gestionnaire d'extensions de QGIS](https://docs.qgis.org/3.34/fr/docs/user_manual/plugins/plugins.html#the-settings-tab) :
 
 ```html
 https://qtribu.geotribu.fr/plugins.xml
