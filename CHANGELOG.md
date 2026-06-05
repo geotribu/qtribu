@@ -2,6 +2,11 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## 1.4.6 - 2026-06-05
+
+* update(ci): bump Python version to 3.10 for tests and 3.12 for packaging by @Guts in <https://github.com/geotribu/qtribu/pull/310>
+* update(packaging): add new qgis-plugin-ci 2.10+ options by @Guts in <https://github.com/geotribu/qtribu/pull/311>
+
 ## 1.4.5 - 2026-04-13
 
 * fix(rss-reader): remove duplicate rss item enclosure retrieval by @Guts in <https://github.com/geotribu/qtribu/pull/300>
