@@ -20,7 +20,7 @@ usage/with_qdt
 usage/feature_latest_article
 usage/splash_changer
 usage/settings
-Dépôt personnalisé<../plugins.xml#http://>
+Dépôt personnalisé <https://qtribu.geotribu.fr/plugins.xml>
 ```
 
 ```{toctree}
