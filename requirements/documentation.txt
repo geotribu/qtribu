@@ -3,7 +3,7 @@
 
 keepachangelog>=2.0.0
 myst-parser[linkify]>=2
-sphinx-autobuild>=2024
+sphinx-autobuild>=2025.8.25
 sphinx-autodoc-typehints>=1.25
 sphinx-copybutton>=0.5.2
 sphinxext-opengraph[social-cards]>=0.13.0
