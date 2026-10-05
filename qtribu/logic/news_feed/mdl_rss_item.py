@@ -1,21 +1,20 @@
-#! python3  # noqa: E265
+#! python3
 
 # Standard library
 from dataclasses import dataclass
-from typing import Optional
 
 
 @dataclass
 class RssItem:
     """Dataclass describing a RSS channel item."""
 
-    abstract: Optional[str] = None
-    authors: Optional[list[Optional[str]]] = None
-    categories: Optional[list[Optional[str]]] = None
-    date_pub: Optional[tuple[int, ...]] = None
-    guid: Optional[str] = None
-    image_length: Optional[str] = None
-    image_type: Optional[str] = None
-    image_url: Optional[str] = None
-    title: Optional[str] = None
-    url: Optional[str] = None
+    abstract: str | None = None
+    authors: list[str | None] | None = None
+    categories: list[str | None] | None = None
+    date_pub: tuple[int, ...] | None = None
+    guid: str | None = None
+    image_length: str | None = None
+    image_type: str | None = None
+    image_url: str | None = None
+    title: str | None = None
+    url: str | None = None

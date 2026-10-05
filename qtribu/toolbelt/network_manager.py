@@ -1,4 +1,4 @@
-#! python3  # noqa: E265
+#! python3
 
 """
 Perform network request.
@@ -12,7 +12,6 @@ Perform network request.
 import logging
 from functools import lru_cache
 from pathlib import Path
-from typing import Optional, Union
 from urllib.parse import urlparse, urlunparse
 
 # PyQGIS
@@ -89,11 +88,11 @@ class NetworkRequestsManager:
 
     def get_from_source(
         self,
-        url: Optional[str] = None,
-        headers: Optional[dict] = None,
+        url: str | None = None,
+        headers: dict | None = None,
         response_expected_content_type: str = "application/xml",
         use_cache: bool = True,
-    ) -> Optional[QByteArray]:
+    ) -> QByteArray | None:
         """Method to retrieve a RSS feed from a referenced source in preferences. \
         Can use cache if wanted, or not.
 
@@ -161,7 +160,7 @@ class NetworkRequestsManager:
             logger.error(err_msg)
             self.log(message=err_msg, log_level=Qgis.MessageLevel.Critical, push=True)
 
-    def download_file_to(self, remote_url: str, local_path: Union[Path, str]) -> str:
+    def download_file_to(self, remote_url: str, local_path: Path | str) -> str:
         """Download a file from a remote web server accessible through HTTP.
 
         :param remote_url: remote URL

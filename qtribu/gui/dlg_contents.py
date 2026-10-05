@@ -1,11 +1,11 @@
-#! python3  # noqa: E265
+#! python3
 
 """
 QDialog to browse Geotribu contents.
 """
 
+from collections.abc import Callable
 from pathlib import Path
-from typing import Callable, Dict, List, Optional
 
 from qgis.core import QgsApplication
 from qgis.PyQt import QtCore, QtWidgets, uic
@@ -28,9 +28,9 @@ MARKER_VALUE = "---"
 
 
 class GeotribuContentsDialog(QDialog):
-    contents: Dict[int, List[RssItem]] = {}
+    contents: dict[int, list[RssItem]] = {}
 
-    def __init__(self, parent: Optional[QWidget] = None):
+    def __init__(self, parent: QWidget | None = None):
         """
         QDialog for geotribu contents
 

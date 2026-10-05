@@ -1,11 +1,10 @@
-#! python3  # noqa: E265
+#! python3
 
 """Main plugin module."""
 
 # standard
 from functools import partial
 from pathlib import Path
-from typing import Optional
 
 # PyQGIS
 from qgis.core import Qgis, QgsApplication, QgsSettings
@@ -73,9 +72,9 @@ class GeotribuPlugin:
         self.splash_chgr = SplashChanger(self)
 
         # -- Forms
-        self.form_article: Optional[ArticleForm] = None
-        self.form_contents: Optional[GeotribuContentsDialog] = None
-        self.form_rdp_news: Optional[RdpNewsForm] = None
+        self.form_article: ArticleForm | None = None
+        self.form_contents: GeotribuContentsDialog | None = None
+        self.form_rdp_news: RdpNewsForm | None = None
 
     def initGui(self):
         """Set up plugin UI elements."""

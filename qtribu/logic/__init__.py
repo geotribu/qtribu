@@ -1,2 +1,2 @@
-#! python3  # noqa: E265
+#! python3
 from .splash_changer import SplashChanger  # noqa: F401

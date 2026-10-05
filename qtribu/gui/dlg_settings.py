@@ -1,4 +1,4 @@
-#! python3  # noqa: E265
+#! python3
 
 """
 Plugin settings form integrated into QGIS 'Options' menu.
@@ -48,7 +48,7 @@ class ConfigOptionsPage(QgsOptionsPageWidget):
         self.setObjectName(f"mOptionsPage{__title__}")
         self.initGui()
 
-    def initGui(self) -> None:  # noqa: N802
+    def initGui(self) -> None:
         """Set up UI elements."""
         # header
         self.lbl_title.setText(f"{__title__} - Version {__version__}")
