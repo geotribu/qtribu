@@ -1,7 +1,6 @@
 # standard
 from functools import partial
 from pathlib import Path
-from typing import Optional
 
 # PyQGIS
 from qgis.core import QgsApplication
@@ -16,7 +15,7 @@ from qtribu.toolbelt.preferences import PlgSettingsStructure
 
 
 class EditingPolicyWidget(QWidget):
-    def __init__(self, parent: Optional[QWidget] = None) -> None:
+    def __init__(self, parent: QWidget | None = None) -> None:
         """QWidget to set user informations.
 
         :param parent: parent widget or application

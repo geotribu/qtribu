@@ -1,4 +1,4 @@
-#! python3  # noqa: E265
+#! python3
 
 
 """Minimalist RSS reader."""
@@ -9,9 +9,9 @@
 
 # Standard library
 import xml.etree.ElementTree as ET
+from collections.abc import Callable
 from email.utils import parsedate
 from pathlib import Path
-from typing import Callable, Optional
 
 # QGIS
 from qgis.core import Qgis, QgsSettings
@@ -35,7 +35,7 @@ from qtribu.toolbelt.preferences import PlgSettingsStructure
 class RssMiniReader:
     """Minimalist RSS feed parser."""
 
-    FEED_ITEMS: Optional[list[RssItem]] = None
+    FEED_ITEMS: list[RssItem] | None = None
     HEADERS: dict = {
         b"Accept": b"application/xml",
         b"User-Agent": bytes(f"{__title__}/{__version__}", "utf8"),
@@ -44,8 +44,8 @@ class RssMiniReader:
 
     def __init__(
         self,
-        action_read: Optional[QAction] = None,
-        on_read_button: Optional[Callable] = None,
+        action_read: QAction | None = None,
+        on_read_button: Callable | None = None,
     ) -> None:
         """Initializes the RSS reader.
 
@@ -71,10 +71,8 @@ class RssMiniReader:
         if not self.local_feed_filepath.exists():
             self.log(
                 message=self.tr(
-                    "The RSS feed is not available locally: {}. "
-                    "Features related to the RSS reader are disabled.".format(
-                        self.local_feed_filepath
-                    )
+                    f"The RSS feed is not available locally: {self.local_feed_filepath}. "
+                    "Features related to the RSS reader are disabled."
                 ),
                 log_level=Qgis.MessageLevel.Warning,
             )
@@ -193,7 +191,7 @@ class RssMiniReader:
                 # add items to the feed
                 feed_items.append(feed_item_obj)
             except Exception as err:
-                item_idx: Optional[int] = None
+                item_idx: int | None = None
                 if hasattr(items, "index"):
                     item_idx = items.index(item)
 
@@ -205,7 +203,7 @@ class RssMiniReader:
         return feed_items
 
     @property
-    def latest_item(self) -> Optional[RssItem]:
+    def latest_item(self) -> RssItem | None:
         """Returns the latest feed item, based on index 0.
 
         :return: latest feed item.

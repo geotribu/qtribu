@@ -1,11 +1,10 @@
-#! python3  # noqa: E265
+#! python3
 
 """Plugin constants."""
 
 # standard
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Optional
 from urllib.parse import urlparse
 
 # 3rd party
@@ -32,7 +31,7 @@ class RdpNewsCategory:
     name: str
     description: str
     order: int
-    example: Optional[str] = None
+    example: str | None = None
 
 
 @dataclass
@@ -40,7 +39,7 @@ class GeotribuImage:
     name: str
     url: str
     kind: str
-    description: Optional[str] = None
+    description: str | None = None
 
     def local_path(self, base_path: Path = Path().home() / ".geotribu/cdn/") -> Path:
         """Get expected local path.

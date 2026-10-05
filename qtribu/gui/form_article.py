@@ -1,4 +1,4 @@
-#! python3  # noqa: E265
+#! python3
 
 """
     Form to submit a news for a GeoRDP.
@@ -9,7 +9,6 @@ https://github.com/baudren/NoteOrganiser/blob/devel/noteorganiser/syntax.py
 # standard
 from functools import partial
 from pathlib import Path
-from typing import Optional, Union
 
 # PyQGIS
 from qgis.core import Qgis
@@ -38,7 +37,7 @@ class ArticleForm(QDialog):
     wdg_author: AuthoringWidget
     wdg_editing_compliance: EditingPolicyWidget
 
-    def __init__(self, parent: Optional[QWidget] = None):
+    def __init__(self, parent: QWidget | None = None):
         """Constructor.
 
         :param parent: parent widget or application
@@ -165,7 +164,7 @@ class ArticleForm(QDialog):
 
         return True
 
-    def on_btn_submit(self) -> Union[bool, str, None]:
+    def on_btn_submit(self) -> bool | str | None:
         """Check if required form fields are correctly filled and submit to Github issue
         form.
 

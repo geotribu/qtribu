@@ -1,4 +1,4 @@
-#! python3  # noqa E265
+#! python3
 
 """Generate documentation table of settings and environment variables."""
 

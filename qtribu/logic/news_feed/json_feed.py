@@ -1,4 +1,4 @@
-#! python3  # noqa: E265
+#! python3
 
 """
 JSON Feed wrapper.
@@ -10,7 +10,7 @@ JSON Feed wrapper.
 
 import json
 from datetime import datetime
-from typing import Any, List, Optional
+from typing import Any
 
 # 3rd party
 from qgis.PyQt.QtCore import QByteArray
@@ -37,8 +37,8 @@ class JsonFeedClient:
     Class representing a client for JSON feed built with Mkdocs website with RSS plugin.
     """
 
-    items: Optional[List[RssItem]] = None
-    last_fetch_date: Optional[datetime] = None
+    items: list[RssItem] | None = None
+    last_fetch_date: datetime | None = None
 
     def __init__(
         self, url: str = PlgOptionsManager.get_plg_settings().json_feed_source

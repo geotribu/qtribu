@@ -1,6 +1,5 @@
 # standard
 from pathlib import Path
-from typing import Optional
 
 # PyQGIS
 from qgis.PyQt import uic
@@ -12,7 +11,7 @@ from qtribu.toolbelt import PlgLogger, PlgOptionsManager
 
 
 class AuthoringWidget(QWidget):
-    def __init__(self, parent: Optional[QWidget] = None):
+    def __init__(self, parent: QWidget | None = None):
         """QWidget to set user informations.
 
         :param parent: parent widget or application

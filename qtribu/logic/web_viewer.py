@@ -1,4 +1,4 @@
-#! python3  # noqa: E265
+#! python3
 
 
 """
@@ -11,7 +11,6 @@ Minimalist RSS reader.
 
 # Standard library
 import logging
-from typing import Optional
 
 # PyQGIS
 from qgis.core import Qgis
@@ -45,7 +44,7 @@ class WebViewer:
     def __init__(self):
         """Class initialization."""
         self.log = PlgLogger().log
-        self.wdg_web: Optional[QWidget] = None
+        self.wdg_web: QWidget | None = None
 
     def display_web_page(self, url: str):
         """Parse the feed XML as string and store items into an ordered tuple of tuples.
